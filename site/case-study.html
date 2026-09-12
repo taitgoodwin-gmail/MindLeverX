@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Our own scorecard — MindLeverX</title>
+<meta name="description" content="A historical review of the original MindLeverX build, dated 27 July 2026. File-inspection observations are distinct from unavailable engine measurements; no composite is reported.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,400&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --surface:#ffffff; --surface-2:#f7f7f8; --ink:#1d1f23; --body:#43464b; --muted:#63666b;
+    --line:#e7e8ea; --accent:#932c21; --accent-h:#791b11; --on-accent:#fff;
+    --brass:#7e5c2a; --brass-fill:#b99056; --pos:#236436; --pos-fill:#439458;
+    --font-d:'Spectral',Georgia,serif; --font-b:'IBM Plex Sans',system-ui,sans-serif; --font-m:'IBM Plex Mono',ui-monospace,monospace;
+    --maxw:1120px; --measure:720px;
+    --dur-fast:120ms; --dur-base:200ms; --dur-reveal:280ms;
+    --ease-out:cubic-bezier(0.2,0,0,1); --ease-exp:cubic-bezier(0,0,0.3,1);
+  }
+  [data-theme="dark"]{
+    --surface:#141619; --surface-2:#1b1e22; --ink:#f4f5f7; --body:#c3c6cb; --muted:#8f9298;
+    --line:#2a2d31; --accent:#dc5f52; --accent-h:#ed7665; --on-accent:#141619;
+    --brass:#b99056; --brass-fill:#b99056; --pos:#62bb78; --pos-fill:#62bb78;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--surface);color:var(--ink);font-family:var(--font-b);line-height:1.6;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 40px}
+  .col{max-width:var(--measure);margin:0 auto;padding:0 40px}
+  a{color:inherit;text-decoration:none}
+  h1,h2,h3{font-family:var(--font-d);font-weight:500;letter-spacing:-0.02em;line-height:1.1;color:var(--ink)}
+  .kicker{font-family:var(--font-m);font-size:12px;letter-spacing:0.06em;text-transform:uppercase;color:var(--accent);margin-bottom:16px;display:inline-flex;align-items:center;gap:9px}
+  .kicker .dot{width:6px;height:6px;border-radius:50%;background:var(--accent)}
+  .btn{display:inline-block;background:var(--accent);color:var(--on-accent);font-weight:500;font-size:15px;padding:13px 26px;border-radius:10px;border:none;cursor:pointer;transition:background var(--dur-fast) ease-out,transform var(--dur-fast) ease-out}
+  .btn:hover{background:var(--accent-h)}
+  .textlink{color:var(--accent);font-weight:500;font-size:15px}
+  .textlink:hover{text-decoration:underline}
+  .lead{font-size:20px;line-height:1.55;color:var(--body);font-weight:400}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:3px}
+  .navlinks a,.fcols a{transition:color 150ms ease-out}
+
+  .secnum{font-family:var(--font-m);font-size:12px;letter-spacing:0.08em;color:var(--muted);display:flex;align-items:center;gap:12px;margin-bottom:16px;text-transform:uppercase}
+  .secnum::before{content:"";width:28px;height:1px;background:var(--muted)}
+  .darkband .secnum{color:#a9acb2}
+  .darkband .secnum::before{background:#a9acb2}
+
+  /* ticker */
+  .ticker{background:var(--ink);color:#eef0f2;font-family:var(--font-m);font-size:13px;display:flex;align-items:center;height:44px;overflow:hidden;position:relative}
+  [data-theme="dark"] .ticker{background:#0e1013}
+  .ticker .tag{display:flex;align-items:center;gap:9px;padding:0 20px;height:100%;flex-shrink:0;color:var(--brass-fill);letter-spacing:0.1em;font-size:12px;font-weight:500;background:rgba(0,0,0,0.25);z-index:2}
+  .ticker .live{width:8px;height:8px;border-radius:50%;background:var(--brass-fill);animation:pulse 2s ease-in-out infinite}
+  @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.45;transform:scale(.8)}}
+  .ticker .mask{flex:1;overflow:hidden}
+  .ticker .track{display:inline-flex;gap:44px;white-space:nowrap;padding-left:44px;animation:scroll 38s linear infinite;will-change:transform}
+  @keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  .ticker .track span{color:#c9cbce}
+  .ticker .track span b{color:#fff;font-weight:500}
+  .ticker .track span em{color:#62bb78;font-style:normal;margin-left:5px}
+  .ticker:hover .track{animation-play-state:paused}
+  .ticker.paused .track{animation-play-state:paused}
+  .ticker.paused .live{animation-play-state:paused}
+  .ticker .tkbtn{flex-shrink:0;height:100%;width:38px;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.25);border:none;border-left:1px solid rgba(255,255,255,0.08);color:#c9cbce;cursor:pointer;z-index:2;font-size:12px;line-height:1}
+  .ticker .tkbtn:hover{color:#fff}
+  .ticker .tkbtn:focus-visible{outline:2px solid #f4f5f7;outline-offset:-2px}
+  .ticker .smp{padding:0 20px;color:#8a8d92;font-size:12px;letter-spacing:0.1em;background:rgba(0,0,0,0.25);z-index:2}
+  @media(prefers-reduced-motion:reduce){.ticker .track{animation:none}.ticker .live{animation:none}.kf .fk .ld{animation:none}}
+
+  /* header */
+  header{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--surface) 84%,transparent);backdrop-filter:saturate(180%) blur(18px);border-bottom:1px solid var(--line)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:62px}
+  .logo{font-family:var(--font-d);font-size:22px;font-weight:600;letter-spacing:-0.01em}
+  .logo b{color:var(--accent)}
+  .navlinks{display:flex;align-items:center;gap:30px;font-size:15px;color:var(--body)}
+  .navlinks a:hover{color:var(--ink)}
+  .navlinks a.active{color:var(--ink);font-weight:500}
+  .toggle{background:none;border:1px solid var(--line);color:var(--body);cursor:pointer;font-size:13px;font-family:var(--font-m);padding:7px 12px;border-radius:20px}
+  .menubtn{display:none;background:none;border:none;color:var(--ink);font-size:22px;cursor:pointer}
+  .mobnav{display:none;border-top:1px solid var(--line);background:var(--surface)}
+  .mobnav a{display:block;padding:13px 0;font-size:16px;color:var(--body);border-bottom:1px solid var(--line)}
+  .mobnav .toggle{margin-top:14px;display:inline-block}
+
+  /* article hero */
+  .crumb{font-family:var(--font-m);font-size:12px;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);padding-top:40px}
+  .crumb a:hover{color:var(--ink)}
+  .ahero{padding:24px 0 56px;max-width:var(--measure);margin:0 auto}
+  .ahero h1{font-size:58px;font-weight:500;letter-spacing:-0.03em;line-height:1.03;margin:14px 0 22px}
+  .ahero .lead{max-width:58ch}
+  .metarow{display:flex;gap:26px;flex-wrap:wrap;margin-top:26px;font-family:var(--font-m);font-size:12px;letter-spacing:0.04em;color:var(--muted);text-transform:uppercase;border-top:1px solid var(--line);padding-top:20px}
+  .metarow b{color:var(--ink);font-weight:500}
+
+  /* key findings — the dark contrast beat, answer-first */
+  .darkband{background:var(--ink);padding:56px 0}
+  [data-theme="dark"] .darkband{background:#0e1013}
+  .kf{max-width:var(--measure);margin:0 auto;padding:0 40px}
+  .kf .fk{font-family:var(--font-m);font-size:12px;letter-spacing:0.09em;color:#f4f5f7;text-transform:uppercase;display:flex;align-items:center;gap:9px;margin-bottom:24px}
+  .kf .fk .ld{width:7px;height:7px;border-radius:50%;background:var(--brass-fill);animation:pulse 2s ease-in-out infinite}
+  .kf .fk .s{margin-left:auto;font-size:12px;color:var(--brass-fill);border:1px solid rgba(185,144,86,0.45);padding:2px 7px;border-radius:4px}
+  .kf ol{list-style:none;counter-reset:kf}
+  .kf li{counter-increment:kf;display:grid;grid-template-columns:44px 1fr;gap:22px;padding:18px 0;border-top:1px solid rgba(255,255,255,0.12);align-items:baseline}
+  .kf li::before{content:counter(kf);font-family:var(--font-d);font-size:24px;color:#f4f5f7}
+  .kf li p{font-size:17px;color:#eef0f2;font-weight:400;line-height:1.55;max-width:56ch}
+  .kf li p b{font-weight:500;color:#fff}
+
+  /* reading column */
+  .article{padding:72px 0 8px}
+  .aprose h2{font-size:32px;margin:56px 0 20px;max-width:24ch}
+  .aprose h2:first-of-type{margin-top:0}
+  .aprose p{font-size:17px;color:var(--body);font-weight:400;margin-top:18px;line-height:1.7}
+  .aprose p strong{color:var(--ink);font-weight:500}
+  .aprose .secnum{margin-top:56px;margin-bottom:0}
+  .aprose .secnum+h2{margin-top:16px}
+
+  .pull{margin:40px 0;padding:26px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .pull blockquote{font-family:var(--font-d);font-size:27px;line-height:1.32;font-weight:400;color:var(--ink);max-width:26ch;letter-spacing:-0.01em}
+  .pull figcaption{font-family:var(--font-m);font-size:12px;color:var(--muted);margin-top:14px;letter-spacing:0.05em}
+
+  /* data exhibit */
+  .exhibit{margin:36px 0;border:1px solid var(--line);border-top:3px solid var(--brass-fill);border-radius:14px;overflow:hidden}
+  .exhibit .xh{display:flex;justify-content:space-between;align-items:center;padding:12px 20px;border-bottom:1px solid var(--line);font-family:var(--font-m);font-size:12px;letter-spacing:0.09em;color:var(--muted);text-transform:uppercase}
+  .exhibit .xh .s{font-size:12px;color:var(--brass);border:1px solid color-mix(in srgb,var(--brass-fill) 45%,transparent);padding:2px 7px;border-radius:4px}
+  .exhibit table{width:100%;border-collapse:collapse;font-size:14px}
+  .exhibit th{font-family:var(--font-m);font-size:12px;letter-spacing:0.08em;text-transform:uppercase;text-align:left;padding:12px 20px;background:var(--surface-2);color:var(--muted);border-bottom:1px solid var(--line);font-weight:500}
+  .exhibit td{padding:14px 20px;border-bottom:1px solid var(--line);color:var(--body);font-weight:400}
+  .exhibit tr:last-child td{border-bottom:none}
+  .exhibit td:first-child{font-family:var(--font-m);font-size:12px;letter-spacing:0.05em;color:var(--ink);text-transform:uppercase}
+  .exhibit td .up{font-family:var(--font-m);font-size:12px;color:var(--pos);font-weight:500}
+  .exhibit td .dn{font-family:var(--font-m);font-size:12px;color:var(--muted);font-weight:500}
+  .exhibit td b{font-family:var(--font-d);font-size:19px;font-weight:500;color:var(--ink)}
+  .kf .cap{font-family:var(--font-m);font-size:12px;letter-spacing:0.06em;color:#8a8d92;margin-top:20px;text-transform:uppercase}
+  .tabcap{font-family:var(--font-m);font-size:12px;letter-spacing:0.06em;color:var(--muted);margin-top:-24px;margin-bottom:36px;text-transform:uppercase}
+
+  /* method + sources */
+  .prov-box{margin:44px 0 0;border:1px solid var(--line);border-radius:14px;background:var(--surface-2);padding:26px 30px}
+  .prov-box .tl{font-family:var(--font-m);font-size:12px;letter-spacing:0.09em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
+  .prov-box p{font-size:14px;color:var(--body);font-weight:400;line-height:1.6}
+  .sources{margin-top:44px;border-top:1px solid var(--line);padding-top:28px}
+  .sources .tl{font-family:var(--font-m);font-size:12px;letter-spacing:0.09em;text-transform:uppercase;color:var(--muted);margin-bottom:18px}
+  .sources ol{list-style:none;counter-reset:s}
+  .sources li{counter-increment:s;position:relative;padding-left:34px;font-size:14px;color:var(--body);font-weight:400;margin-top:14px;line-height:1.5}
+  .sources li::before{content:counter(s);position:absolute;left:0;top:0;font-family:var(--font-m);font-size:12px;color:var(--muted);border:1px solid var(--line);border-radius:5px;width:22px;height:22px;display:flex;align-items:center;justify-content:center}
+  .sources li b{color:var(--ink);font-weight:500}
+  .sources li .mono{font-family:var(--font-m);font-size:12px;color:var(--muted)}
+
+  /* colophon CTA */
+  .final{text-align:center;padding:96px 0}
+  .final .colo{width:56px;height:1px;background:var(--muted);margin:0 auto 20px}
+  .final .fk2{font-family:var(--font-m);font-size:12px;letter-spacing:0.08em;color:var(--muted);margin-bottom:18px;text-transform:uppercase}
+  .final h2{font-size:44px;font-weight:500;max-width:18ch;margin:0 auto 20px}
+  .form{display:flex;gap:12px;justify-content:center;max-width:480px;margin:32px auto 0}
+  .form input{flex:1;font-family:var(--font-b);font-size:15px;padding:14px 18px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink);outline:none}
+  .form input:focus{border-color:var(--accent)}
+  .form input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .note{font-family:var(--font-m);font-size:12px;color:var(--muted);margin-top:16px}
+
+  footer{background:var(--surface-2);padding:56px 0 36px;font-size:14px;color:var(--muted);border-top:1px solid var(--line)}
+  .fcols{display:flex;justify-content:space-between;flex-wrap:wrap;gap:40px}
+  .fcols a{color:var(--body);display:block;margin-top:11px}
+  .fcols a:hover{color:var(--ink)}
+  .fhead{color:var(--ink);font-weight:500;font-size:15px}
+  .fbot{margin-top:40px;padding-top:22px;border-top:1px solid var(--line);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-family:var(--font-m);font-size:12px}
+  .fnote2{margin-top:40px;padding-top:22px;border-top:1px solid var(--line);font-family:var(--font-m);font-size:12px;letter-spacing:0.05em;color:var(--muted);line-height:1.9;max-width:86ch}
+
+  /* ── motion system ── */
+  @media(prefers-reduced-motion:no-preference){
+    html{scroll-behavior:smooth}
+    @keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+    @keyframes flash{from{opacity:0}to{opacity:1}}
+    .flash{animation:flash 150ms ease-out}
+    html.anim .rv{opacity:0;transform:translateY(16px);transition:opacity var(--dur-reveal) var(--ease-out),transform var(--dur-reveal) var(--ease-out)}
+    html.anim .rv.in{opacity:1;transform:none}
+    html.anim .rv.d1{transition-delay:80ms}
+    html.anim .rv.d2{transition-delay:160ms}
+    /* expressive beat: headline lands, then the findings file in */
+    html.anim .ahero{animation:rise 400ms var(--ease-exp) 100ms both}
+    html.anim .kf li{animation:rise 300ms var(--ease-out) both}
+    html.anim .kf li:nth-child(1){animation-delay:350ms}
+    html.anim .kf li:nth-child(2){animation-delay:430ms}
+    html.anim .kf li:nth-child(3){animation-delay:510ms}
+    html.anim .btn:hover{transform:translateY(-1px)}
+    html.anim .btn:active{transform:none}
+  }
+
+  @media(max-width:880px){
+    .ahero h1{font-size:44px}
+    .aprose h2{font-size:28px}
+    .final h2{font-size:28px}
+    .pull blockquote{font-size:22px}
+    .navlinks{display:none}
+    .menubtn{display:block}
+    .col,.kf{padding:0 24px}
+    .wrap{padding:0 24px}
+    .exhibit table{font-size:13px}
+    .exhibit th,.exhibit td{padding:10px 12px}
+    .kf li{grid-template-columns:32px 1fr;gap:14px}
+  }
+
+  /* v3.1.1 HEADER FIT — desktop nav cannot fit ~881px-1040px: .navlinks holds
+     its row so link TEXT wraps instead, nav height 49px -> 96px, wordmark
+     collision (0px separation at 924px). Isolated to the nav: the 880px query
+     also carries grid and type changes that must not move. */
+  .navlinks a{white-space:nowrap}
+  @media(max-width:1040px){
+    .navlinks{display:none}
+    .menubtn{display:block}
+  }
+</style>
+<script src="/runtime.js"></script>
+<link rel="stylesheet" href="shared.css" data-inline>
+</head>
+<body>
+<a class="skip-link" href="#top">Skip to main content</a>
+<aside class="preview-banner" id="local-preview" hidden><div class="wrap"><b>Local preview</b><span>Example measurements. Requests stay in this workspace.</span><a href="/app/">Open workspace →</a></div></aside>
+
+<div class="ticker" id="ticker">
+  <div class="tag"><span class="live"></span>AI VISIBILITY · SAMPLE FEED</div>
+  <div class="mask"><div class="track" id="tick">
+    <span title="Share of AI answers that cite your pages">Citations <b>34%</b><em>▲2</em></span>
+    <span title="Times your brand is named in an answer, with or without a link">Mentions <b>51%</b><em>▲1</em></span>
+    <span title="Your citation share versus the whole category">Share of voice <b>18%</b><em>▲1</em></span>
+    <span title="AI crawler visits to your site per day">AI crawls <b>214/day</b><em>▲12</em></span>
+    <span title="Visits arriving from AI answer links per week">Referrals <b>57/wk</b><em>▲4</em></span>
+    <span title="Your composite GEO Readiness Score (0–100)">Readiness <b>87/100</b><em>▲3</em></span>
+  </div></div>
+  <button class="tkbtn" id="tkBtn" aria-label="Pause sample ticker" aria-pressed="false" title="Pause ticker">❚❚</button>
+  <div class="smp">SAMPLE</div>
+</div>
+
+
+<header>
+  <div class="wrap nav">
+    <a href="index.html" class="logo">MindLever<b>X.</b></a>
+    <nav class="navlinks" aria-label="Main navigation">
+      <a href="index.html#services">Services</a>
+      <a href="method.html">Method</a>
+      <a href="index.html#score">Readiness</a>
+      <a href="what-is-geo.html">What is GEO?</a>
+      <a href="research-hub.html">Research</a>
+      <a href="index.html#cta" class="textlink">Request a free audit</a>
+      <button class="toggle" id="tg">☾ Dark</button>
+    </nav>
+    <button class="menubtn" id="menubtn" aria-label="Open menu" aria-controls="mobnav" aria-expanded="false">☰</button>
+  </div>
+  <div class="mobnav wrap" id="mobnav" aria-label="Mobile navigation">
+    <a href="index.html#services">Services</a>
+    <a href="method.html">Method</a>
+    <a href="index.html#score">Readiness</a>
+    <a href="what-is-geo.html">What is GEO?</a>
+    <a href="research-hub.html">Research</a>
+    <a href="index.html#cta">Request a free audit</a>
+    <button class="toggle" id="tg2">☾ Dark</button>
+  </div>
+</header>
+
+<main id="top">
+
+  <div class="wrap">
+    <div class="crumb"><a href="index.html">Home</a> &nbsp;/&nbsp; <a href="research-hub.html">Research</a> &nbsp;/&nbsp; Our own scorecard</div>
+  </div>
+  <div class="ahero" style="padding-left:40px;padding-right:40px">
+    <div class="kicker"><span class="dot"></span>Case study · Ourselves</div>
+    <h1>We run the method on ourselves.</h1><p class="note">Historical review · 27 July 2026. The readings below describe the original build and have not been re-measured for this preview.</p>
+    <p class="lead">Every competitor's case study is a marketing artifact. This one is an instrument reading — the same four dimensions we sell, applied to our own site, with <b>NOT MEASURED</b> printed wherever a reading does not exist yet.</p>
+    <div class="metarow"><span>Read · <b>27 JUL 2026</b></span><span>Methodology · <b>V1.0</b></span><span>Subject · <b>MINDLEVERX.COM</b></span><span>Numbers · <b>MEASURED OR NOT MEASURED</b></span></div>
+  </div>
+
+
+  <div class="darkband">
+    <div class="kf">
+      <div class="fk"><span class="ld"></span>THE READING, IN THREE FINDINGS<span class="s">MEASURED (TOOL)</span></div>
+      <ol>
+        <li><p><b>The site was not yet deployed when this reading was taken.</b> mindleverx.com returned no A record on 27 Jul 2026 — the domain is owned, nothing is served from it. Everything below is measured against the build artifact that would be served, not against a live origin.</p></li>
+        <li><p><b>Two of the four dimensions can be measured today; two cannot.</b> Technical access and content quotability are readable from the artifact itself. Off-site authority and measured visibility require a live domain and a locked prompt panel — neither exists yet.</p></li>
+        <li><p><b>There is no composite score, on purpose.</b> Methodology V1.0's composite is the unweighted mean of four dimensions. Averaging two readings with two absences produces a number that looks like a score and is not one, so this page publishes none.</p></li>
+      </ol>
+      <div class="cap">FIG. 01 · MEASURED (TOOL) 27 JUL 2026 — DNS LOOKUP AND FILE INSPECTION. METHOD IN 04 BELOW.</div>
+    </div>
+  </div>
+
+
+  <article class="article">
+    <div class="col aprose">
+      <div class="secnum">01 · The panel</div>
+      <h2>The panel is not locked yet — so it is not published yet.</h2>
+      <p>Measured visibility is the dimension every buyer wants first, and it is the one that cannot be faked. It requires a <strong>prompt panel</strong>: a fixed set of category questions, locked at a baseline, re-run on a schedule so that a later reading is comparable with an earlier one. A panel that changes between runs makes every trend meaningless — which is why the panel is versioned and why extension sets never edit the locked one.</p>
+      <p><strong>MindLeverX has not locked its own panel.</strong> No baseline run exists, so there is nothing to publish here and nothing to trend. When the panel is locked, this section will carry the panel itself — the prompts, the version, the collection window — because a benchmark whose inputs are secret is a claim rather than a measurement.</p>
+      <div class="exhibit">
+        <div class="xh"><span>PANEL STATUS · 27 JUL 2026</span><span class="s">NOT MEASURED</span></div>
+        <table>
+          <thead><tr><th>Item</th><th>Reading</th><th>Unlocks when</th></tr></thead>
+          <tbody>
+            <tr><td>Baseline prompt panel</td><td><b>NOT MEASURED</b></td><td>The panel is locked at a baseline version</td></tr>
+            <tr><td>Scheduled runs completed</td><td><b>NOT MEASURED</b></td><td>The monitoring runner is wired to the engine APIs</td></tr>
+            <tr><td>Engines covered</td><td><b>NOT MEASURED</b></td><td>First run completes against the locked panel</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="tabcap">TABLE 01 · NOT MEASURED — NO PANEL EXISTS AS OF 27 JUL 2026. NO ILLUSTRATIVE VALUES SUBSTITUTED.</div>
+
+      <div class="secnum">02 · The scorecard</div>
+      <h2>Four dimensions. Two readings. No composite.</h2>
+      <p>Methodology V1.0 scores technical access, content quotability, off-site authority and measured visibility, then takes their unweighted mean. Two of those four are properties of the artifact and can be read right now. The other two are properties of the world — how the wider web treats the brand, and what the engines actually answer — and neither was measured in the original 27 July 2026 review.</p>
+      <div class="exhibit">
+        <div class="xh"><span>METHODOLOGY V1.0 · DIMENSION STATUS</span><span class="s">MEASURED (TOOL)</span></div>
+        <table>
+          <thead><tr><th>Dimension</th><th>Status</th><th>Basis / unlock condition</th></tr></thead>
+          <tbody>
+            <tr><td>Technical access</td><td><b>MEASURED (tool)</b></td><td>Read from the build artifact, 27 Jul 2026 — checks below</td></tr>
+            <tr><td>Content quotability</td><td><b>MEASURED (tool)</b></td><td>Read from the build artifact, 27 Jul 2026 — checks below</td></tr>
+            <tr><td>Off-site authority</td><td><b>NOT MEASURED</b></td><td>Unlocks when the site is live and off-site citations can be crawled</td></tr>
+            <tr><td>Measured visibility</td><td><b>NOT MEASURED</b></td><td>Unlocks when the panel is locked and the first run completes</td></tr>
+            <tr><td>Composite</td><td><b>NOT MEASURED</b></td><td>Unlocks when all four dimensions carry readings of the same provenance</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="tabcap">TABLE 02 · MEASURED (TOOL) 27 JUL 2026 · MINDLEVERX METHODOLOGY V1.0. DIMENSION SCORES ARE NOT PUBLISHED AS NUMBERS — THE SCORER THAT PRODUCES THEM IS NOT BUILT, AND A HAND-ASSIGNED SCORE WOULD BE AN INVENTED NUMBER.</div>
+
+      <p>What follows is the evidence underneath the two measured dimensions: the individual checks, each a real reading taken from the 6 pages of the build on 27 Jul 2026. They are published as counts rather than rolled into a dimension score, because the scorer that would weight them does not exist yet.</p>
+
+      <div class="exhibit">
+        <div class="xh"><span>TECHNICAL ACCESS · 6 PAGES CHECKED</span><span class="s">MEASURED (TOOL)</span></div>
+        <table>
+          <thead><tr><th>Check</th><th>Reading</th><th>Note</th></tr></thead>
+          <tbody>
+            <tr><td>Content readable without JavaScript</td><td><b>6/6</b></td><td>Every page's content is in the HTML; nothing waits on a script</td></tr>
+            <tr><td>Exactly one H1 per page</td><td><b>6/6</b></td><td>Document outline unambiguous for a parser</td></tr>
+            <tr><td>Heading levels skipped</td><td><b>0</b></td><td>No H2 → H4 jumps across the build</td></tr>
+            <tr><td>Unique, descriptive titles</td><td><b>6/6</b></td><td>No duplicate or templated titles</td></tr>
+            <tr><td>Meta description present</td><td><b>6/6</b></td><td>All over 50 characters</td></tr>
+            <tr><td>Structured data (JSON-LD)</td><td><b>0/6</b></td><td>Held in a separate fragment by build decision — a real gap, published as one</td></tr>
+            <tr><td>AI crawler policy stated</td><td><b>13 agents</b></td><td>robots.txt names training and retrieval crawlers separately; no blanket disallow</td></tr>
+            <tr><td>llms.txt published</td><td><b>2,731 bytes</b></td><td>Answer-first summary of what the practice is and does</td></tr>
+            <tr><td>Sitemap entries</td><td><b>6</b></td><td>Served pages only</td></tr>
+            <tr><td>Pages blocked from indexing</td><td><b>0</b></td><td>No noindex directives</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="tabcap">TABLE 03 · MEASURED (TOOL) 27 JUL 2026 — HEADLESS CHROMIUM RENDER PLUS FILE INSPECTION OF THE 6-PAGE BUILD. NOT A LIVE-DOMAIN READING.</div>
+
+      <div class="exhibit">
+        <div class="xh"><span>CONTENT QUOTABILITY · 6 PAGES CHECKED</span><span class="s">MEASURED (TOOL)</span></div>
+        <table>
+          <thead><tr><th>Check</th><th>Reading</th><th>Note</th></tr></thead>
+          <tbody>
+            <tr><td>Answer-first definition blocks</td><td><b>2</b></td><td>Self-contained paragraphs of 52 and 41 words — quotable with zero surrounding context</td></tr>
+            <tr><td>Definitional pillar pages</td><td><b>1</b></td><td>what-is-geo.html — the term the practice competes on</td></tr>
+            <tr><td>FAQ questions published</td><td><b>5</b></td><td>Question-shaped headings, each answered in place</td></tr>
+            <tr><td>Glossary terms published</td><td><b>0</b></td><td>The glossary is specified and not built — a real gap, published as one</td></tr>
+            <tr><td>External sources cited</td><td><b>2</b></td><td>Named, dated, third-party — excludes anything carrying a SAMPLE label</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="tabcap">TABLE 04 · MEASURED (TOOL) 27 JUL 2026 — FILE INSPECTION OF THE 6-PAGE BUILD.</div>
+
+      <figure class="pull rv">
+        <blockquote>NOT MEASURED, with the condition that unlocks it, is a stronger claim than a confident number nobody can check.</blockquote>
+        <figcaption>— MINDLEVERX, ON PUBLISHING ITS OWN SCORE</figcaption>
+      </figure>
+
+      <div class="secnum">03 · What moved and what didn't</div>
+      <h2>Nothing has moved yet, because there is no history.</h2>
+      <p>Trends are derived from an append-only history of readings. This is the first reading, so <strong>there is no movement to report</strong> — no deltas, no arrows, no quarter-over-quarter. Publishing a change here would require a previous measurement to compare against, and none exists.</p>
+      <p>The first genuine movement this page can show is technical: the difference between an artifact on a disk and a site an engine can reach. That is a deployment, not an optimisation, and it will be labelled as one when it happens.</p>
+      <div class="exhibit">
+        <div class="xh"><span>HISTORY · 27 JUL 2026</span><span class="s">NOT MEASURED</span></div>
+        <table>
+          <thead><tr><th>Series</th><th>Readings held</th><th>First trend possible when</th></tr></thead>
+          <tbody>
+            <tr><td>Technical access checks</td><td><b>1</b></td><td>A second reading is taken after deployment</td></tr>
+            <tr><td>Content quotability checks</td><td><b>1</b></td><td>A second reading is taken after the glossary ships</td></tr>
+            <tr><td>Citation rate · mention rate · share of voice</td><td><b>0</b></td><td>The locked panel completes its first scheduled run</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="tabcap">TABLE 05 · MEASURED (TOOL) 27 JUL 2026 — COUNT OF READINGS HELD, NOT AN ESTIMATE OF FUTURE ONES.</div>
+
+      <div class="secnum">04 · Method</div>
+      <h2>How these numbers were taken.</h2>
+      <p>Deployment status was checked by DNS lookup of mindleverx.com on 27 Jul 2026; the result was no A record, which is why every other reading on this page is scoped to the build artifact rather than a live origin. The rendering check loaded each page twice in headless Chromium — once with JavaScript enabled and once disabled — and compared the text of the main content region; a page passes only if disabling scripts removes nothing. The remaining checks are direct inspection of the 6 HTML files and of robots.txt, llms.txt and sitemap.xml.</p>
+      <p>Dimension scores are deliberately absent. Methodology V1.0 defines the four dimensions and the unweighted-mean composite, but the scorer that converts checks into a 0–100 dimension score is not built. Assigning one by hand would be an invented number wearing a methodology's name. <a href="what-is-geo.html" class="textlink" style="font-size:inherit">The methodology is defined here →</a></p>
+      <div class="prov-box">
+        <div class="tl">Provenance</div>
+        <p>6 pages · read 27 JUL 2026 · headless Chromium render plus file inspection · scored against Methodology V1.0. Every figure on this page is <strong>MEASURED (tool)</strong> against the build artifact, or <strong>NOT MEASURED</strong> with its unlock condition stated. <strong>No SAMPLE or illustrative value appears in any table on this page.</strong> Readings taken from the artifact are never compared with readings that would come from a live domain or a panel run — those are different provenance and are not interchangeable.</p>
+      </div>
+
+      <div class="sources">
+        <div class="tl">Sources</div>
+        <ol>
+          <li><b>MindLeverX Methodology V1.0</b> — four dimensions, unweighted-mean composite, versioned. Defined in <a href="what-is-geo.html" class="textlink" style="font-size:inherit">What is GEO?</a></li>
+          <li><b>DNS lookup of mindleverx.com</b>, 27 Jul 2026 — no A record. <span class="mono">MEASURED (TOOL)</span></li>
+          <li><b>Build artifact inspection</b>, 27 Jul 2026 — 6 HTML pages plus robots.txt, llms.txt and sitemap.xml. <span class="mono">MEASURED (TOOL)</span></li>
+        </ol>
+      </div>
+    </div>
+  </article>
+
+
+  <div class="final wrap">
+    <div class="colo"></div>
+    <div class="fk2">The audit</div>
+    <h2>The same reading, taken on your domain.</h2>
+    <p class="lead" style="max-width:52ch;margin:0 auto">A free GEO audit runs this methodology against your site and labels every number the same way — measured, or not measured yet.</p>
+    <p style="margin-top:32px"><a href="index.html#cta" class="btn">Request a free audit</a></p>
+    <div class="note">No credit card. The audit form is on the homepage.</div>
+  </div>
+</main>
+
+<footer><div class="wrap">
+  <div class="fcols">
+    <div style="max-width:30ch"><div class="logo" style="font-size:19px">MindLever<b>X.</b></div><p style="margin-top:11px;font-weight:400">Generative engine optimization for mid-market B2B SaaS. Own the answer.</p></div>
+    <div><div class="fhead">Product</div><a href="index.html#services">Services</a><a href="method.html">Method</a><a href="index.html#score">Readiness</a></div>
+    <div><div class="fhead">Learn</div><a href="what-is-geo.html">What is GEO?</a><a href="research-hub.html">Research</a><a href="case-study.html">Case studies</a></div>
+    <div><div class="fhead">Company</div><a href="about.html">About</a><a href="about.html#contact">Contact</a></div>
+  </div>
+  <div class="fnote2">PLANNED MEASUREMENTS USE ENGINE APIS AGAINST A FIXED PROMPT PANEL; API ANSWERS ARE A PROXY FOR THE LIVE CONSUMER PRODUCTS, WHICH DIFFER IN RETRIEVAL, PERSONALIZATION AND INTERFACE. · METHODOLOGY V1.0</div>
+  <div class="fbot"><span>© 2026 MindLeverX</span><span>OWN THE ANSWER.</span></div>
+</div></footer>
+
+<script src="shared.js" data-inline></script>
+</body>
+</html>

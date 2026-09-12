@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>What is GEO? — MindLeverX</title>
+<meta name="description" content="Generative Engine Optimization (GEO) is the practice of engineering your content, technical setup and off-site presence so generative answer engines — ChatGPT, Perplexity, Gemini, Claude — cite and quote you in their answers.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,400&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --surface:#ffffff; --surface-2:#f7f7f8; --ink:#1d1f23; --body:#43464b; --muted:#63666b;
+    --line:#e7e8ea; --accent:#932c21; --accent-h:#791b11; --on-accent:#fff;
+    --brass:#7e5c2a; --brass-fill:#b99056; --pos:#236436; --pos-fill:#439458;
+    --font-d:'Spectral',Georgia,serif; --font-b:'IBM Plex Sans',system-ui,sans-serif; --font-m:'IBM Plex Mono',ui-monospace,monospace;
+    --maxw:1120px;
+    --dur-fast:120ms; --dur-base:200ms; --dur-reveal:280ms;
+    --ease-out:cubic-bezier(0.2,0,0,1); --ease-exp:cubic-bezier(0,0,0.3,1);
+  }
+  [data-theme="dark"]{
+    --surface:#141619; --surface-2:#1b1e22; --ink:#f4f5f7; --body:#c3c6cb; --muted:#8f9298;
+    --line:#2a2d31; --accent:#dc5f52; --accent-h:#ed7665; --on-accent:#141619;
+    --brass:#b99056; --brass-fill:#b99056; --pos:#62bb78; --pos-fill:#62bb78;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--surface);color:var(--ink);font-family:var(--font-b);line-height:1.6;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 40px}
+  a{color:inherit;text-decoration:none}
+  h1,h2,h3{font-family:var(--font-d);font-weight:500;letter-spacing:-0.02em;line-height:1.1;color:var(--ink)}
+  .kicker{font-family:var(--font-m);font-size:12px;letter-spacing:0.06em;text-transform:uppercase;color:var(--accent);margin-bottom:16px;display:inline-flex;align-items:center;gap:9px}
+  .kicker .dot{width:6px;height:6px;border-radius:50%;background:var(--accent)}
+  .btn{display:inline-block;background:var(--accent);color:var(--on-accent);font-weight:500;font-size:15px;padding:13px 26px;border-radius:10px;border:none;cursor:pointer;transition:background var(--dur-fast) ease-out,transform var(--dur-fast) ease-out}
+  .btn:hover{background:var(--accent-h)}
+  .btn.ghost{background:none;color:var(--accent);border:1px solid color-mix(in srgb,var(--accent) 40%,transparent)}
+  .btn.ghost:hover{background:color-mix(in srgb,var(--accent) 8%,transparent)}
+  .textlink{color:var(--accent);font-weight:500;font-size:15px}
+  .textlink:hover{text-decoration:underline}
+  .muted{color:var(--muted)}
+  .lead{font-size:20px;line-height:1.55;color:var(--body);font-weight:400}
+  section{padding:80px 0}
+  .sec-h{font-size:32px;font-weight:500;max-width:24ch}
+  .sub{font-size:18px;color:var(--body);font-weight:400;max-width:64ch;margin-top:16px}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:3px}
+  .navlinks a,.fcols a{transition:color 150ms ease-out}
+
+  /* editorial texture — section numerals, pull quote, exhibit captions */
+  .secnum{font-family:var(--font-m);font-size:12px;letter-spacing:0.08em;color:var(--muted);display:flex;align-items:center;gap:12px;margin-bottom:16px;text-transform:uppercase}
+  .secnum::before{content:"";width:28px;height:1px;background:var(--muted)}
+  .dark .secnum{color:#a9acb2}
+  .dark .secnum::before{background:#a9acb2}
+  .pull{margin:28px 0;padding:24px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .pull blockquote{font-family:var(--font-d);font-size:27px;line-height:1.32;font-weight:400;color:var(--ink);max-width:26ch;letter-spacing:-0.01em}
+  .pull figcaption{font-family:var(--font-m);font-size:12px;color:var(--muted);margin-top:14px;letter-spacing:0.05em}
+  .tabcap{font-family:var(--font-m);font-size:12px;letter-spacing:0.06em;color:var(--muted);margin-top:14px;text-transform:uppercase}
+
+  /* ── motion system: opt-in, productive + one expressive beat ── */
+  @media(prefers-reduced-motion:no-preference){
+    html{scroll-behavior:smooth}
+    @keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+    @keyframes flash{from{opacity:0}to{opacity:1}}
+    .flash{animation:flash 150ms ease-out}
+    html.anim .rv{opacity:0;transform:translateY(16px);transition:opacity var(--dur-reveal) var(--ease-out),transform var(--dur-reveal) var(--ease-out)}
+    html.anim .rv.in{opacity:1;transform:none}
+    html.anim .rv.d1{transition-delay:80ms}
+    html.anim .rv.d2{transition-delay:160ms}
+    html.anim .rv.d3{transition-delay:240ms}
+    /* expressive beat: definition enters, then its measurement follows */
+    html.anim .define{animation:rise 450ms var(--ease-exp) 100ms both}
+    html.anim .measured{animation:rise 350ms var(--ease-exp) 300ms both}
+    html.anim .measured .mc{animation:rise 250ms var(--ease-out) both}
+    html.anim .measured .mc:nth-child(1){animation-delay:480ms}
+    html.anim .measured .mc:nth-child(2){animation-delay:540ms}
+    html.anim .measured .mc:nth-child(3){animation-delay:600ms}
+    html.anim .faq details[open] .ans{animation:rise 200ms var(--ease-out)}
+    html.anim .btn:hover{transform:translateY(-1px)}
+    html.anim .btn:active{transform:none}
+  }
+
+  /* ticker — full-bleed band, brass live signal, continuous motion, WCAG 2.2.2 pause */
+  .ticker{background:var(--ink);color:#eef0f2;font-family:var(--font-m);font-size:13px;display:flex;align-items:center;height:44px;overflow:hidden;position:relative}
+  [data-theme="dark"] .ticker{background:#0e1013}
+  .ticker .tag{display:flex;align-items:center;gap:9px;padding:0 20px;height:100%;flex-shrink:0;color:var(--brass-fill);letter-spacing:0.1em;font-size:12px;font-weight:500;background:rgba(0,0,0,0.25);z-index:2}
+  .ticker .live{width:8px;height:8px;border-radius:50%;background:var(--brass-fill);animation:pulse 2s ease-in-out infinite}
+  @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.45;transform:scale(.8)}}
+  .ticker .mask{flex:1;overflow:hidden}
+  .ticker .track{display:inline-flex;gap:44px;white-space:nowrap;padding-left:44px;animation:scroll 38s linear infinite;will-change:transform}
+  @keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  .ticker .track span{color:#c9cbce}
+  .ticker .track span b{color:#fff;font-weight:500}
+  .ticker .track span em{color:#62bb78;font-style:normal;margin-left:5px}
+  .ticker:hover .track{animation-play-state:paused}                 /* hover-pause */
+  .ticker.paused .track{animation-play-state:paused}                /* button pause */
+  .ticker.paused .live{animation-play-state:paused}
+  .ticker .tkbtn{flex-shrink:0;height:100%;width:38px;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.25);border:none;border-left:1px solid rgba(255,255,255,0.08);color:#c9cbce;cursor:pointer;z-index:2;font-size:12px;line-height:1}
+  .ticker .tkbtn:hover{color:#fff}
+  .ticker .tkbtn:focus-visible{outline:2px solid #f4f5f7;outline-offset:-2px}
+  .ticker .smp{padding:0 20px;color:#8a8d92;font-size:12px;letter-spacing:0.1em;background:rgba(0,0,0,0.25);z-index:2}
+  @media(prefers-reduced-motion:reduce){.ticker .track{animation:none}.ticker .live{animation:none}.measured .mh .ld{animation:none}}
+
+  /* header */
+  header{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--surface) 84%,transparent);backdrop-filter:saturate(180%) blur(18px);border-bottom:1px solid var(--line)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:62px}
+  .logo{font-family:var(--font-d);font-size:22px;font-weight:600;letter-spacing:-0.01em}
+  .logo b{color:var(--accent)}
+  .navlinks{display:flex;align-items:center;gap:30px;font-size:15px;color:var(--body)}
+  .navlinks a:hover{color:var(--ink)}
+  .navlinks a.active{color:var(--ink);font-weight:500}
+  .toggle{background:none;border:1px solid var(--line);color:var(--body);cursor:pointer;font-size:13px;font-family:var(--font-m);padding:7px 12px;border-radius:20px}
+  .menubtn{display:none;background:none;border:none;color:var(--ink);font-size:22px;cursor:pointer}
+  .mobnav{display:none;border-top:1px solid var(--line);background:var(--surface)}
+  .mobnav a{display:block;padding:13px 0;font-size:16px;color:var(--body);border-bottom:1px solid var(--line)}
+  .mobnav .toggle{margin-top:14px;display:inline-block}
+
+  /* breadcrumb + doc hero */
+  .crumb{font-family:var(--font-m);font-size:12px;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);padding-top:40px}
+  .crumb a:hover{color:var(--ink)}
+  .dochero{padding:20px 0 64px}
+  .dochero h1{font-size:58px;font-weight:500;letter-spacing:-0.03em;line-height:1.03;max-width:18ch;margin:14px 0 22px}
+  .dochero .lead{max-width:60ch}
+  .metarow{display:flex;gap:26px;flex-wrap:wrap;margin-top:26px;font-family:var(--font-m);font-size:12px;letter-spacing:0.04em;color:var(--muted);text-transform:uppercase;border-top:1px solid var(--line);padding-top:20px}
+  .metarow b{color:var(--ink);font-weight:500}
+
+  /* on-this-page wayfinding */
+  .onpage{display:flex;gap:18px;flex-wrap:wrap;align-items:center;margin-top:14px;font-family:var(--font-m);font-size:12px;letter-spacing:0.04em}
+  .onpage .opl{color:var(--muted);letter-spacing:0.09em;font-size:12px;font-weight:500}
+  .onpage a{color:var(--muted);text-transform:uppercase}
+  .onpage a:hover{color:var(--accent)}
+
+  /* answer-first definition callout */
+  .define{border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:14px;background:var(--surface);box-shadow:0 24px 60px -44px rgba(0,0,0,0.30);padding:34px 38px;position:relative}
+  .define .dl{font-family:var(--font-m);font-size:12px;letter-spacing:0.09em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:9px;margin-bottom:16px}
+  .define .dl .dd{width:7px;height:7px;border-radius:50%;background:var(--accent)}
+  .define p.def{font-family:var(--font-d);font-size:27px;line-height:1.32;font-weight:400;color:var(--ink);letter-spacing:-0.01em}
+  .define p.def b{color:var(--accent);font-weight:500}
+  .define .src{font-family:var(--font-m);font-size:12px;color:var(--muted);margin-top:18px;letter-spacing:0.03em}
+  .define .copy{position:absolute;top:26px;right:26px;font-family:var(--font-m);font-size:12px;letter-spacing:0.06em;color:var(--muted);background:var(--surface-2);border:1px solid var(--line);border-radius:6px;padding:6px 10px;cursor:pointer}
+  .define .copy:hover{color:var(--ink)}
+
+  /* live beat — this definition, measured */
+  .measured{margin-top:20px;border:1px solid var(--line);border-top:3px solid var(--brass-fill);border-radius:14px;background:var(--surface);overflow:hidden}
+  .measured .mh{display:flex;justify-content:space-between;align-items:center;padding:12px 22px;border-bottom:1px solid var(--line)}
+  .measured .mh .l{font-family:var(--font-m);font-size:12px;letter-spacing:0.09em;color:var(--muted);display:flex;align-items:center;gap:8px}
+  .measured .mh .ld{width:7px;height:7px;border-radius:50%;background:var(--brass-fill);animation:pulse 2s ease-in-out infinite}
+  .measured .mh .s{font-family:var(--font-m);font-size:12px;color:var(--brass);border:1px solid color-mix(in srgb,var(--brass-fill) 45%,transparent);padding:2px 7px;border-radius:4px}
+  .measured .mcells{display:grid;grid-template-columns:repeat(3,1fr)}
+  .measured .mc{padding:18px 22px}
+  .measured .mc+.mc{border-left:1px solid var(--line)}
+  .measured .ml{font-family:var(--font-m);font-size:12px;letter-spacing:0.08em;color:var(--muted);margin-bottom:8px}
+  .measured .mv{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+  .measured .mv b{font-family:var(--font-d);font-size:30px;font-weight:500;color:var(--ink)}
+  .measured .mv i{font-family:var(--font-m);font-size:12px;font-style:normal;color:var(--pos);letter-spacing:0.04em}
+  .measured .mv i.n{color:var(--muted)}
+
+  /* generic two-col explainer */
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
+  .prose p{font-size:17px;color:var(--body);font-weight:400;margin-top:16px;max-width:60ch}
+  .prose p:first-child{margin-top:0}
+  .prose strong{color:var(--ink);font-weight:500}
+
+  /* the shift, as a diagram — fills the split's left column */
+  .shiftviz{margin-top:40px;border:1px solid var(--line);border-radius:14px;padding:24px 26px;max-width:340px}
+  .shiftviz .svl{font-family:var(--font-m);font-size:12px;letter-spacing:0.09em;color:var(--muted);margin-bottom:14px}
+  .shiftviz .svrow{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:7px 0}
+  .shiftviz .era{font-family:var(--font-m);font-size:12px;letter-spacing:0.05em;color:var(--muted)}
+  .shiftviz .old .what{font-family:var(--font-d);font-size:20px;color:var(--muted);text-decoration:line-through;text-decoration-thickness:1px;text-decoration-color:color-mix(in srgb,var(--muted) 65%,transparent)}
+  .shiftviz .svarrow{color:var(--accent);font-family:var(--font-m);font-size:13px;padding:1px 0}
+  .shiftviz .now .what{font-family:var(--font-d);font-size:22px;color:var(--ink);font-weight:500}
+  .shiftviz .now .era{color:var(--accent);display:inline-flex;align-items:center;gap:7px}
+  .shiftviz .now .era .ld{width:6px;height:6px;border-radius:50%;background:var(--brass-fill);display:inline-block}
+
+  /* comparison table */
+  .cmp{margin-top:44px;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+  .cmp table{width:100%;border-collapse:collapse;font-size:15px}
+  .cmp thead th{font-family:var(--font-m);font-size:12px;letter-spacing:0.08em;text-transform:uppercase;text-align:left;padding:16px 22px;background:var(--surface-2);color:var(--muted);border-bottom:1px solid var(--line);font-weight:500}
+  .cmp thead th.geo{color:var(--accent);border-left:3px solid var(--accent)}
+  .cmp tbody td{padding:18px 22px;border-bottom:1px solid var(--line);color:var(--body);font-weight:400;vertical-align:top}
+  .cmp tbody tr:last-child td{border-bottom:none}
+  .cmp tbody td:first-child{font-family:var(--font-m);font-size:12px;letter-spacing:0.03em;text-transform:uppercase;color:var(--muted)}
+  .cmp tbody td.geo{color:var(--ink);border-left:3px solid var(--accent);background:color-mix(in srgb,var(--accent) 5%,transparent)}
+  [data-theme="dark"] .cmp tbody td.geo{background:color-mix(in srgb,var(--accent) 12%,transparent)}
+
+  /* stat cards */
+  /* two cards */
+  .stats{display:grid;grid-template-columns:repeat(2,1fr);gap:40px;margin-top:56px}
+  .stat{padding-top:20px;border-top:2px solid var(--ink)}
+  .stat .n{font-family:var(--font-d);font-size:48px;font-weight:400;color:var(--ink);line-height:1}
+  .stat .t{font-size:16px;color:var(--ink);margin-top:14px;font-weight:500}
+  .stat .d{font-size:14px;color:var(--muted);margin-top:7px;line-height:1.5}
+  .stat .d s{font-family:var(--font-m);font-size:12px;text-decoration:none;color:var(--brass)}
+  .stat.key{border-top-width:3px}
+  .stat.key .n{font-size:58px}
+
+  /* dark contrast beat — what engines reward */
+  .dark{background:var(--ink)}
+  [data-theme="dark"] .dark{background:#0e1013}
+  .dark .sec-h,.dark h3{color:#f4f5f7}
+  .dark .sub{color:#a9acb2}
+  .signals{margin-top:48px;border-top:1px solid rgba(255,255,255,0.12)}
+  .sig{display:grid;grid-template-columns:52px 1fr auto;gap:28px;padding:22px 0;border-bottom:1px solid rgba(255,255,255,0.12);align-items:baseline}
+  .sig .num{font-family:var(--font-d);font-size:24px;color:#f4f5f7;font-weight:400}
+  .sig h3{font-size:20px;font-weight:500;margin-bottom:5px}
+  .sig p{font-size:15px;color:#a9acb2;font-weight:400;max-width:60ch}
+  .sig .w{font-family:var(--font-m);font-size:12px;letter-spacing:0.06em;color:#f4f5f7;text-transform:uppercase;white-space:nowrap;align-self:center}
+
+  /* FAQ accordion */
+  .faq{margin-top:44px;border-top:1px solid var(--line)}
+  .faq details{border-bottom:1px solid var(--line)}
+  .faq summary{list-style:none;cursor:pointer;padding:22px 0;display:flex;align-items:center;gap:18px;font-family:var(--font-d);font-size:20px;font-weight:500;color:var(--ink)}
+  .faq summary .qm{font-family:var(--font-m);font-size:12px;color:var(--muted);flex-shrink:0;width:26px;letter-spacing:0.04em}
+  .faq summary .qt{flex:1}
+  .faq summary::-webkit-details-marker{display:none}
+  .faq summary .ic{flex-shrink:0;width:22px;height:22px;position:relative;transition:transform var(--dur-base) var(--ease-out)}
+  .faq summary .ic::before,.faq summary .ic::after{content:"";position:absolute;background:var(--accent);border-radius:2px}
+  .faq summary .ic::before{top:10px;left:2px;right:2px;height:2px}
+  .faq summary .ic::after{left:10px;top:2px;bottom:2px;width:2px;transition:opacity var(--dur-base) var(--ease-out)}
+  .faq details[open] summary .ic::after{opacity:0}
+  .faq details[open] summary .ic{transform:rotate(180deg)}
+  .faq .ans{padding:0 46px 24px 44px;font-size:16px;color:var(--body);font-weight:400;line-height:1.6;max-width:70ch}
+  .faq .ans a{color:var(--accent);font-weight:400}
+  .faq .ans a:hover{text-decoration:underline}
+
+  /* key takeaways + sources */
+  .take{border:1px solid var(--line);border-top:2px solid var(--ink);border-radius:14px;background:var(--surface);padding:30px 34px}
+  .take .tl{font-family:var(--font-m);font-size:12px;letter-spacing:0.09em;text-transform:uppercase;color:var(--muted);margin-bottom:18px}
+  .take ul{list-style:none}
+  .take li{position:relative;padding-left:26px;font-size:16px;color:var(--body);font-weight:400;margin-top:14px;line-height:1.5}
+  .take li:first-child{margin-top:0}
+  .take li::before{content:"";position:absolute;left:0;top:9px;width:9px;height:9px;border-radius:2px;background:var(--accent)}
+  .take li b{color:var(--ink);font-weight:500}
+  .sources{margin-top:0}
+  .sources .tl{font-family:var(--font-m);font-size:12px;letter-spacing:0.09em;text-transform:uppercase;color:var(--muted);margin-bottom:18px}
+  .sources ol{list-style:none;counter-reset:s}
+  .sources li{counter-increment:s;position:relative;padding-left:34px;font-size:14px;color:var(--body);font-weight:400;margin-top:15px;line-height:1.5}
+  .sources li:first-child{margin-top:0}
+  .sources li::before{content:counter(s);position:absolute;left:0;top:0;font-family:var(--font-m);font-size:12px;color:var(--muted);border:1px solid var(--line);border-radius:5px;width:22px;height:22px;display:flex;align-items:center;justify-content:center}
+  .sources li b{color:var(--ink);font-weight:500}
+  .sources li .mono{font-family:var(--font-m);font-size:12px;color:var(--muted)}
+
+  /* final cta */
+  .final{text-align:center;padding:96px 0}
+  .final h2{font-size:44px;font-weight:500;max-width:18ch;margin:0 auto 20px}
+  .form{display:flex;gap:12px;justify-content:center;max-width:480px;margin:32px auto 0}
+  .form input{flex:1;font-family:var(--font-b);font-size:15px;padding:14px 18px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink);outline:none}
+  .form input:focus{border-color:var(--accent)}
+  .form input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .note{font-family:var(--font-m);font-size:12px;color:var(--muted);margin-top:16px}
+
+  footer{background:var(--surface-2);padding:56px 0 36px;font-size:14px;color:var(--muted);border-top:1px solid var(--line)}
+  .fcols{display:flex;justify-content:space-between;flex-wrap:wrap;gap:40px}
+  .fcols a{color:var(--body);display:block;margin-top:11px}
+  .fcols a:hover{color:var(--ink)}
+  .fhead{color:var(--ink);font-weight:500;font-size:15px}
+  .fbot{margin-top:40px;padding-top:22px;border-top:1px solid var(--line);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-family:var(--font-m);font-size:12px}
+  .fnote2{margin-top:40px;padding-top:22px;border-top:1px solid var(--line);font-family:var(--font-m);font-size:12px;letter-spacing:0.05em;color:var(--muted);line-height:1.9;max-width:86ch}
+
+  @media(max-width:880px){
+    .split{grid-template-columns:1fr;gap:40px}
+    .stats{grid-template-columns:1fr;gap:32px}
+    .dochero h1{font-size:44px}
+    .pull blockquote{font-size:22px}
+    .sec-h,.final h2{font-size:28px}
+    .define p.def{font-size:22px}
+    .navlinks{display:none}
+    .menubtn{display:block}
+    section{padding:64px 0}
+    .sig{grid-template-columns:36px 1fr;gap:18px}
+    .sig .w{grid-column:2;align-self:start}
+    .cmp table{font-size:13px}
+    .cmp thead th,.cmp tbody td{padding:13px 14px}
+    .wrap{padding:0 24px}
+    .define .copy{display:none}
+    .measured .mcells{grid-template-columns:1fr}
+    .measured .mc+.mc{border-left:none;border-top:1px solid var(--line)}
+    .shiftviz{max-width:none}
+    .stat.key .n{font-size:48px}
+    .cmp thead th.geo,.cmp tbody td.geo{border-left-width:2px}
+  }
+
+  /* v3.1.1 HEADER FIT — desktop nav cannot fit ~881px-1040px: .navlinks holds
+     its row so link TEXT wraps instead, nav height 49px -> 96px, wordmark
+     collision (0px separation at 924px). Isolated to the nav: the 880px query
+     also carries grid and type changes that must not move. */
+  .navlinks a{white-space:nowrap}
+  @media(max-width:1040px){
+    .navlinks{display:none}
+    .menubtn{display:block}
+  }
+</style>
+<script src="/runtime.js"></script>
+<link rel="stylesheet" href="shared.css" data-inline>
+</head>
+<body>
+<a class="skip-link" href="#top">Skip to main content</a>
+<aside class="preview-banner" id="local-preview" hidden><div class="wrap"><b>Local preview</b><span>Example measurements. Requests stay in this workspace.</span><a href="/app/">Open workspace →</a></div></aside>
+
+<div class="ticker" id="ticker">
+  <div class="tag"><span class="live"></span>AI VISIBILITY · SAMPLE FEED</div>
+  <div class="mask"><div class="track" id="tick">
+    <span title="Share of AI answers that cite your pages">Citations <b>34%</b><em>▲2</em></span>
+    <span title="Times your brand is named in an answer, with or without a link">Mentions <b>51%</b><em>▲1</em></span>
+    <span title="Your citation share versus the whole category">Share of voice <b>18%</b><em>▲1</em></span>
+    <span title="AI crawler visits to your site per day">AI crawls <b>214/day</b><em>▲12</em></span>
+    <span title="Visits arriving from AI answer links per week">Referrals <b>57/wk</b><em>▲4</em></span>
+    <span title="Your composite GEO Readiness Score (0–100)">Readiness <b>87/100</b><em>▲3</em></span>
+  </div></div>
+  <button class="tkbtn" id="tkBtn" aria-label="Pause sample ticker" aria-pressed="false" title="Pause ticker">❚❚</button>
+  <div class="smp">SAMPLE</div>
+</div>
+
+
+<header>
+  <div class="wrap nav">
+    <a href="index.html" class="logo">MindLever<b>X.</b></a>
+    <nav class="navlinks" aria-label="Main navigation">
+      <a href="index.html#services">Services</a>
+      <a href="method.html">Method</a>
+      <a href="index.html#score">Readiness</a>
+      <a href="what-is-geo.html" class="active">What is GEO?</a>
+      <a href="research-hub.html">Research</a>
+      <a href="index.html#cta" class="textlink">Request a free audit</a>
+      <button class="toggle" id="tg">☾ Dark</button>
+    </nav>
+    <button class="menubtn" id="menubtn" aria-label="Open menu" aria-controls="mobnav" aria-expanded="false">☰</button>
+  </div>
+  <div class="mobnav wrap" id="mobnav" aria-label="Mobile navigation">
+    <a href="index.html#services">Services</a>
+    <a href="method.html">Method</a>
+    <a href="index.html#score">Readiness</a>
+    <a href="what-is-geo.html">What is GEO?</a>
+    <a href="research-hub.html">Research</a>
+    <a href="index.html#cta">Request a free audit</a>
+    <button class="toggle" id="tg2">☾ Dark</button>
+  </div>
+</header>
+
+<main id="top">
+
+  <div class="wrap">
+    <div class="crumb"><a href="index.html">Home</a> &nbsp;/&nbsp; <a href="research-hub.html">Learn</a> &nbsp;/&nbsp; What is GEO?</div>
+    <div class="dochero">
+      <div class="kicker"><span class="dot"></span>Definitional pillar</div>
+      <h1>What is Generative Engine Optimization?</h1>
+      <p class="lead">The playbook for getting your brand cited, quoted and recommended by the AI answer engines your buyers now ask first — ChatGPT, Perplexity, Gemini and Claude.</p>
+      <div class="metarow"><span>Reading time · <b>7 MIN</b></span><span>Updated · <b>JUL 2026</b></span><span>Methodology · <b>V1.0</b></span></div>
+      <nav class="onpage" aria-label="On this page"><span class="opl">ON THIS PAGE</span><a href="#define">Definition</a><a href="#vs">GEO vs SEO</a><a href="#why">Why now</a><a href="#signals">Signals</a><a href="#faq">FAQ</a><a href="#takeaways">Takeaways</a></nav>
+    </div>
+  </div>
+
+
+  <div class="wrap" id="define" style="padding-bottom:80px">
+    <div class="define">
+      <button class="copy" id="copyDef">COPY</button>
+      <div class="dl"><span class="dd"></span>The definition, in one paragraph</div>
+      <p class="def"><b>Generative Engine Optimization (GEO)</b> is the practice of engineering a brand's content, technical setup and off-site presence so that generative answer engines — like ChatGPT, Perplexity, Gemini and Claude — cite, quote and recommend it inside their answers. Where SEO competes for a ranked link, GEO competes to <b>be the answer itself</b>.</p>
+      <div class="src">SOURCE: MINDLEVERX METHODOLOGY V1.0 · JUL 2026</div>
+    </div>
+    <div class="measured">
+      <div class="mh"><span class="l"><span class="ld"></span>FIG. 01 · THIS DEFINITION, MEASURED</span><span class="s">SAMPLE</span></div>
+      <div class="mcells">
+        <div class="mc"><div class="ml">CITED IN AI ANSWERS</div><div class="mv"><b>63</b><i>▲9 THIS MONTH</i></div></div>
+        <div class="mc"><div class="ml">ENGINES QUOTING IT VERBATIM</div><div class="mv"><b>3/4</b><i class="n">CHATGPT · PERPLEXITY · CLAUDE</i></div></div>
+        <div class="mc"><div class="ml">SHARE OF “WHAT IS GEO” ANSWERS</div><div class="mv"><b>41%</b><i>▲3 VS JUN</i></div></div>
+      </div>
+    </div>
+    <div class="tabcap">FIG. 01 · SAMPLE — NOT MEASURED. ILLUSTRATIVE VALUES PENDING MONITORING API.</div>
+  </div>
+
+
+  <section style="padding-top:0">
+    <div class="wrap split">
+      <div>
+        <div class="secnum">01 · The shift</div>
+        <h2 class="sec-h">Search changed. Optimization had to follow.</h2>
+        <div class="shiftviz" aria-hidden="true">
+          <div class="svl">FIG. 02 · THE UNIT OF VISIBILITY</div>
+          <div class="svrow old"><span class="era">2004–2023</span><span class="what">Ranked link</span></div>
+          <div class="svarrow">↓</div>
+          <div class="svrow now"><span class="era"><span class="ld"></span>NOW</span><span class="what">Cited answer</span></div>
+        </div>
+      </div>
+      <div class="prose">
+        <p>For twenty years, winning search meant ranking a link that a human then clicked. Generative engines broke that contract: they read the sources, synthesize an answer, and hand the buyer a conclusion — often citing only a <strong>handful of pages</strong>, sometimes none at all.</p>
+        <p>That shifts the goal. The unit of visibility is no longer a blue-link position; it's whether the model <strong>names you and quotes you</strong> when it composes the answer. GEO is the discipline of earning that — layered on top of the SEO fundamentals that still make your content credible and crawlable.</p>
+        <figure class="pull rv">
+          <blockquote>The unit of visibility is no longer a blue-link position — it's whether the model names you and quotes you.</blockquote>
+          <figcaption>— MINDLEVERX METHODOLOGY V1.0</figcaption>
+        </figure>
+        <p>It is not a trick or a prompt. It's the same authoritative, well-structured content that ranks — engineered further so a machine can lift a clean, self-contained, attributable answer straight from your page.</p>
+      </div>
+    </div>
+  </section>
+
+
+  <section id="vs" style="background:var(--surface-2);padding-top:64px">
+    <div class="wrap">
+      <div class="secnum">02 · Comparison</div>
+      <h2 class="sec-h">GEO vs. SEO — same foundations, different finish line.</h2>
+      <p class="sub">GEO doesn't replace SEO; it extends it. The technical hygiene and quality signals overlap, but what you're optimizing <em>for</em> — and how you measure it — changes.</p>
+      <div class="cmp">
+        <table>
+          <thead><tr><th></th><th>Classic SEO</th><th class="geo">Generative Engine Optimization</th></tr></thead>
+          <tbody>
+            <tr><td>Goal</td><td>Rank a link on the results page</td><td class="geo">Be cited and quoted inside the answer</td></tr>
+            <tr><td>Unit of success</td><td>Position &amp; organic clicks</td><td class="geo">Citations, mentions &amp; share of voice</td></tr>
+            <tr><td>Who consumes it</td><td>A human scanning ten links</td><td class="geo">A model synthesizing a few sources</td></tr>
+            <tr><td>Content shape</td><td>Keyword-targeted, depth-rewarded</td><td class="geo">Answer-first, self-contained, dated, quotable</td></tr>
+            <tr><td>Off-site lever</td><td>Backlinks &amp; domain authority</td><td class="geo">Third-party citations — G2, Reddit, Wikipedia, roundups</td></tr>
+            <tr><td>Measurement</td><td>Rank trackers &amp; analytics sessions</td><td class="geo">Answer-engine monitoring across platforms</td></tr>
+            <tr><td>Feedback loop</td><td>Weeks to months</td><td class="geo">Days — answers refresh continuously</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="tabcap">TABLE 01 · GEO VS SEO — MINDLEVERX METHODOLOGY V1.0</div>
+    </div>
+  </section>
+
+
+  <section id="why">
+    <div class="wrap">
+      <div class="secnum">03 · Evidence</div>
+      <h2 class="sec-h">Why it matters now.</h2>
+      <p class="sub">The buying journey already runs through generative answers. The evidence that GEO moves visibility is early but consistent.</p>
+      <div class="stats">
+        <div class="stat key rv"><div class="n">~40%</div><div class="t">Visibility lift from GEO</div><div class="d">Statistics, citations and quotations can lift AI visibility up to ~40% — the method is measurable. <s>PRINCETON, KDD 2024</s></div></div>
+        <div class="stat rv d1"><div class="n">~8%</div><div class="t">Click-through after a summary</div><div class="d">Users rarely click through once the AI answers — citation, not clicks, is the KPI. <s>PEW, JUL 2025</s></div></div>
+      </div>
+    </div>
+  </section>
+
+
+  <section class="dark" id="signals">
+    <div class="wrap">
+      <div class="secnum">04 · Signals</div>
+      <h2 class="sec-h">What generative engines actually reward.</h2>
+      <p class="sub">Every answer engine differs, but the signals that get a page pulled into an answer rhyme. GEO engineers each one deliberately.</p>
+      <div class="signals">
+        <div class="sig rv"><div class="num">1</div><div><h3>A quotable, self-contained answer</h3><p>A claim the model can lift whole — stated plainly, near the top, without needing the surrounding page for context.</p></div><div class="w">Content</div></div>
+        <div class="sig rv d1"><div class="num">2</div><div><h3>Machine-readable structure</h3><p>Server-rendered HTML, clean headings, and schema so a crawler parses the meaning, not just the pixels.</p></div><div class="w">Technical</div></div>
+        <div class="sig rv d2"><div class="num">3</div><div><h3>Fresh, dated, sourced claims</h3><p>Explicit dates and cited evidence signal reliability — models favor statements they can attribute and trust.</p></div><div class="w">Trust</div></div>
+        <div class="sig rv d3"><div class="num">4</div><div><h3>Corroboration off your own site</h3><p>Being named on G2, Reddit, Wikipedia and industry roundups is the single biggest lever on whether you're cited.</p></div><div class="w">Authority</div></div>
+        <div class="sig rv d3"><div class="num">5</div><div><h3>Category-defining brand demand</h3><p>Brand-search demand is the strongest citation predictor — models echo the entities the wider web already treats as the answer.</p></div><div class="w">Demand</div></div>
+      </div>
+    </div>
+  </section>
+
+
+  <section id="faq">
+    <div class="wrap">
+      <div class="secnum">05 · FAQ</div>
+      <h2 class="sec-h">Frequently asked.</h2>
+      <div class="faq">
+        <details open>
+          <summary><span class="qm">Q1</span><span class="qt">Is GEO just SEO with a new name?</span><span class="ic"></span></summary>
+          <div class="ans">No. GEO shares SEO's technical foundations — crawlability, structure, quality — but optimizes for a different outcome: being cited inside a generated answer rather than ranking a link a human clicks. The overlap is real, which is why GEO layers on top of SEO instead of replacing it.</div>
+        </details>
+        <details>
+          <summary><span class="qm">Q2</span><span class="qt">Which engines does GEO target?</span><span class="ic"></span></summary>
+          <div class="ans">The generative answer engines your buyers use — ChatGPT, Perplexity, Google's Gemini / AI Overviews, and Claude — plus the AI features now embedded in classic search. Because each synthesizes answers differently, GEO monitors visibility across all of them rather than optimizing for one.</div>
+        </details>
+        <details>
+          <summary><span class="qm">Q3</span><span class="qt">How do you measure GEO if there are no rankings?</span><span class="ic"></span></summary>
+          <div class="ans">With answer-engine monitoring: citation rate (how often your pages are cited), mention rate (how often your brand is named), and share of voice (your citation share versus the category). The <a href="index.html#score">sample readiness scorecard</a> illustrates a possible reporting format. Daily engine collection and a validated scoring rubric are not connected in this build.</div>
+        </details>
+        <details>
+          <summary><span class="qm">Q4</span><span class="qt">How long until GEO shows results?</span><span class="ic"></span></summary>
+          <div class="ans">There is no delivery or outcome guarantee in this preview. A meaningful comparison requires actual collection dates, a fixed prompt panel and enough evidence to separate a change from ordinary engine variation.</div>
+        </details>
+        <details>
+          <summary><span class="qm">Q5</span><span class="qt">What does a GEO engagement actually involve?</span><span class="ic"></span></summary>
+          <div class="ans">The intended workflow agrees scope, preserves a baseline, reviews findings, records approval and prepares changes before measuring again. The <a href="method.html">seven-stage method</a> separates those steps and identifies what is not connected yet.</div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+
+  <section id="takeaways" style="background:var(--surface-2)">
+    <div class="wrap">
+      <div class="secnum">06 · Reference</div>
+    </div>
+    <div class="wrap split">
+      <div class="take">
+        <div class="tl">Key takeaways</div>
+        <ul>
+          <li><b>GEO gets you cited, not ranked.</b> The goal is to be the answer, not a link beneath it.</li>
+          <li><b>It extends SEO, doesn't replace it.</b> The same credible, structured content that ranks also gets quoted — when engineered for it.</li>
+          <li><b>Off-site citations are the biggest lever.</b> Being named across G2, Reddit, Wikipedia and roundups moves visibility most.</li>
+          <li><b>Preserve evidence for citations, mentions and share of voice.</b> Compare readings only when the panel, methodology and provenance match. Missing dimensions remain unmeasured.</li>
+        </ul>
+      </div>
+      <div class="sources">
+        <div class="tl">Sources</div>
+        <ol>
+          <li><b>Princeton et al.</b>, "GEO: Generative Engine Optimization," <span class="mono">KDD 2024</span> — statistics, citations and quotations lift AI visibility up to ~40%.</li>
+          <li><b>Pew Research Center</b>, Jul 2025 — click-through behavior after AI summaries.</li>
+          <li><b>No published figure.</b> Cross-platform compounding and brand-demand-as-predictor are stated here as <span class="mono">MECHANISM, NOT MEASUREMENT</span> — we have no citable study for either and do not present a number for them.</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+
+  <div class="final wrap" id="cta">
+    <h2>See if the answer engines cite you.</h2>
+    <p class="lead" style="max-width:52ch;margin:0 auto">Save a request for a free GEO audit. This local preview stores your request for review; it does not collect engine answers or deliver a scorecard.</p>
+    <form class="form" id="auditform" data-kind="audit" data-source="what-is-geo.html#cta" novalidate>
+      <div class="emailrow"><label for="auditemail">Work email</label><input type="email" id="auditemail" name="email" autocomplete="email" required placeholder="you@company.com" aria-describedby="fnote"></div>
+      <div class="domrow"><label for="auditdomain">Company domain</label><input type="text" id="auditdomain" name="domain" autocomplete="url" required placeholder="yourcompany.com" aria-describedby="domain-hint"><span id="domain-hint">The company website you want to assess.</span></div>
+      <label class="consent"><input type="checkbox" name="consent" id="intake-consent" required><span>I agree to store this request and company domain with my email in this local workspace. No email is sent.</span></label>
+      <div class="hp" aria-hidden="true"><input type="text" id="website" name="website" tabindex="-1" autocomplete="off" placeholder="Leave this field empty"></div>
+      <input type="hidden" name="ts" id="auditts" value="0">
+      <button class="btn" type="submit" id="auditbtn">Request my free audit</button>
+    </form>
+    <noscript><p class="note">JavaScript and the local server are required to save a request.</p></noscript>
+    <div class="note" id="fnote" role="status" aria-live="polite">Intake is not connected in this static preview.</div>
+  </div>
+</main>
+
+<footer><div class="wrap">
+  <div class="fcols">
+    <div style="max-width:30ch"><div class="logo" style="font-size:19px">MindLever<b>X.</b></div><p style="margin-top:11px;font-weight:400">Generative engine optimization for mid-market B2B SaaS. Own the answer.</p></div>
+    <div><div class="fhead">Product</div><a href="index.html#services">Services</a><a href="method.html">Method</a><a href="index.html#score">Readiness</a></div>
+    <div><div class="fhead">Learn</div><a href="what-is-geo.html">What is GEO?</a><a href="research-hub.html">Research</a><a href="case-study.html">Case studies</a></div>
+    <div><div class="fhead">Company</div><a href="about.html">About</a><a href="about.html#contact">Contact</a></div>
+  </div>
+  <div class="fnote2">PLANNED MEASUREMENTS USE ENGINE APIS AGAINST A FIXED PROMPT PANEL; API ANSWERS ARE A PROXY FOR THE LIVE CONSUMER PRODUCTS, WHICH DIFFER IN RETRIEVAL, PERSONALIZATION AND INTERFACE. · METHODOLOGY V1.0</div>
+  <div class="fbot"><span>© 2026 MindLeverX</span><span>OWN THE ANSWER.</span></div>
+</div></footer>
+
+<script src="shared.js" data-inline></script>
+</body>
+</html>

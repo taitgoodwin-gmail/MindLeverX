@@ -1,0 +1,38 @@
+# MindLeverX — robots.txt
+#
+# AI crawler policy is a business decision here, not a default (FR-6.1).
+# Decision, Tait, 27 Jul 2026: ALLOW BOTH GROUPS.
+# Rationale: MindLeverX sells generative-search visibility. Blocking the crawlers
+# it advises clients to court is a position it would have to defend in a sales
+# call. Reversible — change the group below and note it in site/DECISIONS.md.
+
+# ── Group 1 · TRAINING crawlers ──────────────────────────────────────────────
+# Ingest content into model training corpora. Drives unprompted model-memory
+# mentions. Does NOT fetch at answer time.
+User-agent: GPTBot
+User-agent: CCBot
+User-agent: Google-Extended
+User-agent: anthropic-ai
+User-agent: ClaudeBot
+User-agent: Applebot-Extended
+User-agent: meta-externalagent
+Allow: /
+
+# ── Group 2 · RETRIEVAL crawlers ─────────────────────────────────────────────
+# Fetch at answer time to cite a live source. These are the ones that put a
+# link in the answer.
+User-agent: OAI-SearchBot
+User-agent: ChatGPT-User
+User-agent: PerplexityBot
+User-agent: Perplexity-User
+User-agent: Google-CloudVertexBot
+Allow: /
+
+# ── Everything else ──────────────────────────────────────────────────────────
+User-agent: *
+Allow: /
+Disallow: /style-guide.html
+Disallow: /head-schema.html
+Disallow: /dist/
+
+Sitemap: https://mindleverx.com/sitemap.xml

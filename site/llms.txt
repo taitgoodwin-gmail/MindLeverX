@@ -1,0 +1,23 @@
+# MindLeverX
+
+> A generative engine optimization practice in development for mid-market B2B SaaS.
+
+Own the answer.
+
+## Current build
+
+This is a local preview with request intake and a workspace for organizing evidence, drafts and review decisions. Automated audits, engine collection, email delivery and subscriptions are not connected. Numerical exhibits are SAMPLE — NOT MEASURED, except explicitly dated historical file-inspection observations in the case study.
+
+## Intended method
+
+Agree scope, preserve a fixed prompt panel and baseline, review findings, record approval, prepare draft fixes and collect a comparable reading when collection is available. Technical access, content quotability, off-site authority and measured visibility are separate dimensions. Missing dimensions remain unmeasured; a composite requires compatible evidence for all four. API answers are a proxy for the live consumer products.
+
+## Pages
+
+- [Homepage](https://mindleverx.com/): project preview and local audit intake.
+- [Method](https://mindleverx.com/method.html): intended seven-stage workflow.
+- [What is GEO?](https://mindleverx.com/what-is-geo.html): the GEO explainer.
+- [Research](https://mindleverx.com/research-hub.html): reference pages and sample report format.
+- [Sample Answer Engine Index](https://mindleverx.com/answer-engine-index-q3-2026.html): illustrative figures; no panel was run.
+- [Historical case study](https://mindleverx.com/case-study.html): observations of the original build, dated 27 July 2026.
+- [About](https://mindleverx.com/about.html): scope and current status.

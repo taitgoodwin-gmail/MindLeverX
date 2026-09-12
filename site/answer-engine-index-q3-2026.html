@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Answer Engine Index: Q3 2026 — MindLeverX Research</title>
+<meta name="description" content="An illustrative Answer Engine Index showing a possible quarterly benchmark format. All figures and interpretations are sample data; no panel was run for this report.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,400&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --surface:#ffffff; --surface-2:#f7f7f8; --ink:#1d1f23; --body:#43464b; --muted:#63666b;
+    --line:#e7e8ea; --accent:#932c21; --accent-h:#791b11; --on-accent:#fff;
+    --brass:#7e5c2a; --brass-fill:#b99056; --pos:#236436; --pos-fill:#439458;
+    --font-d:'Spectral',Georgia,serif; --font-b:'IBM Plex Sans',system-ui,sans-serif; --font-m:'IBM Plex Mono',ui-monospace,monospace;
+    --maxw:1120px; --measure:720px;
+    --dur-fast:120ms; --dur-base:200ms; --dur-reveal:280ms;
+    --ease-out:cubic-bezier(0.2,0,0,1); --ease-exp:cubic-bezier(0,0,0.3,1);
+  }
+  [data-theme="dark"]{
+    --surface:#141619; --surface-2:#1b1e22; --ink:#f4f5f7; --body:#c3c6cb; --muted:#8f9298;
+    --line:#2a2d31; --accent:#dc5f52; --accent-h:#ed7665; --on-accent:#141619;
+    --brass:#b99056; --brass-fill:#b99056; --pos:#62bb78; --pos-fill:#62bb78;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--surface);color:var(--ink);font-family:var(--font-b);line-height:1.6;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 40px}
+  .col{max-width:var(--measure);margin:0 auto;padding:0 40px}
+  a{color:inherit;text-decoration:none}
+  h1,h2,h3{font-family:var(--font-d);font-weight:500;letter-spacing:-0.02em;line-height:1.1;color:var(--ink)}
+  .kicker{font-family:var(--font-m);font-size:12px;letter-spacing:0.06em;text-transform:uppercase;color:var(--accent);margin-bottom:16px;display:inline-flex;align-items:center;gap:9px}
+  .kicker .dot{width:6px;height:6px;border-radius:50%;background:var(--accent)}
+  .btn{display:inline-block;background:var(--accent);color:var(--on-accent);font-weight:500;font-size:15px;padding:13px 26px;border-radius:10px;border:none;cursor:pointer;transition:background var(--dur-fast) ease-out,transform var(--dur-fast) ease-out}
+  .btn:hover{background:var(--accent-h)}
+  .textlink{color:var(--accent);font-weight:500;font-size:15px}
+  .textlink:hover{text-decoration:underline}
+  .lead{font-size:20px;line-height:1.55;color:var(--body);font-weight:400}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:3px}
+  .navlinks a,.fcols a{transition:color 150ms ease-out}
+
+  .secnum{font-family:var(--font-m);font-size:12px;letter-spacing:0.08em;color:var(--muted);display:flex;align-items:center;gap:12px;margin-bottom:16px;text-transform:uppercase}
+  .secnum::before{content:"";width:28px;height:1px;background:var(--muted)}
+  .darkband .secnum{color:#a9acb2}
+  .darkband .secnum::before{background:#a9acb2}
+
+  /* ticker */
+  .ticker{background:var(--ink);color:#eef0f2;font-family:var(--font-m);font-size:13px;display:flex;align-items:center;height:44px;overflow:hidden;position:relative}
+  [data-theme="dark"] .ticker{background:#0e1013}
+  .ticker .tag{display:flex;align-items:center;gap:9px;padding:0 20px;height:100%;flex-shrink:0;color:var(--brass-fill);letter-spacing:0.1em;font-size:12px;font-weight:500;background:rgba(0,0,0,0.25);z-index:2}
+  .ticker .live{width:8px;height:8px;border-radius:50%;background:var(--brass-fill);animation:pulse 2s ease-in-out infinite}
+  @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.45;transform:scale(.8)}}
+  .ticker .mask{flex:1;overflow:hidden}
+  .ticker .track{display:inline-flex;gap:44px;white-space:nowrap;padding-left:44px;animation:scroll 38s linear infinite;will-change:transform}
+  @keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  .ticker .track span{color:#c9cbce}
+  .ticker .track span b{color:#fff;font-weight:500}
+  .ticker .track span em{color:#62bb78;font-style:normal;margin-left:5px}
+  .ticker:hover .track{animation-play-state:paused}
+  .ticker.paused .track{animation-play-state:paused}
+  .ticker.paused .live{animation-play-state:paused}
+  .ticker .tkbtn{flex-shrink:0;height:100%;width:38px;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.25);border:none;border-left:1px solid rgba(255,255,255,0.08);color:#c9cbce;cursor:pointer;z-index:2;font-size:12px;line-height:1}
+  .ticker .tkbtn:hover{color:#fff}
+  .ticker .tkbtn:focus-visible{outline:2px solid #f4f5f7;outline-offset:-2px}
+  .ticker .smp{padding:0 20px;color:#8a8d92;font-size:12px;letter-spacing:0.1em;background:rgba(0,0,0,0.25);z-index:2}
+  @media(prefers-reduced-motion:reduce){.ticker .track{animation:none}.ticker .live{animation:none}.kf .fk .ld{animation:none}}
+
+  /* header */
+  header{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--surface) 84%,transparent);backdrop-filter:saturate(180%) blur(18px);border-bottom:1px solid var(--line)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:62px}
+  .logo{font-family:var(--font-d);font-size:22px;font-weight:600;letter-spacing:-0.01em}
+  .logo b{color:var(--accent)}
+  .navlinks{display:flex;align-items:center;gap:30px;font-size:15px;color:var(--body)}
+  .navlinks a:hover{color:var(--ink)}
+  .navlinks a.active{color:var(--ink);font-weight:500}
+  .toggle{background:none;border:1px solid var(--line);color:var(--body);cursor:pointer;font-size:13px;font-family:var(--font-m);padding:7px 12px;border-radius:20px}
+  .menubtn{display:none;background:none;border:none;color:var(--ink);font-size:22px;cursor:pointer}
+  .mobnav{display:none;border-top:1px solid var(--line);background:var(--surface)}
+  .mobnav a{display:block;padding:13px 0;font-size:16px;color:var(--body);border-bottom:1px solid var(--line)}
+  .mobnav .toggle{margin-top:14px;display:inline-block}
+
+  /* article hero */
+  .crumb{font-family:var(--font-m);font-size:12px;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);padding-top:40px}
+  .crumb a:hover{color:var(--ink)}
+  .ahero{padding:24px 0 56px;max-width:var(--measure);margin:0 auto}
+  .ahero h1{font-size:58px;font-weight:500;letter-spacing:-0.03em;line-height:1.03;margin:14px 0 22px}
+  .ahero .lead{max-width:58ch}
+  .metarow{display:flex;gap:26px;flex-wrap:wrap;margin-top:26px;font-family:var(--font-m);font-size:12px;letter-spacing:0.04em;color:var(--muted);text-transform:uppercase;border-top:1px solid var(--line);padding-top:20px}
+  .metarow b{color:var(--ink);font-weight:500}
+
+  /* key findings — the dark contrast beat, answer-first */
+  .darkband{background:var(--ink);padding:56px 0}
+  [data-theme="dark"] .darkband{background:#0e1013}
+  .kf{max-width:var(--measure);margin:0 auto;padding:0 40px}
+  .kf .fk{font-family:var(--font-m);font-size:12px;letter-spacing:0.09em;color:#f4f5f7;text-transform:uppercase;display:flex;align-items:center;gap:9px;margin-bottom:24px}
+  .kf .fk .ld{width:7px;height:7px;border-radius:50%;background:var(--brass-fill);animation:pulse 2s ease-in-out infinite}
+  .kf .fk .s{margin-left:auto;font-size:12px;color:var(--brass-fill);border:1px solid rgba(185,144,86,0.45);padding:2px 7px;border-radius:4px}
+  .kf ol{list-style:none;counter-reset:kf}
+  .kf li{counter-increment:kf;display:grid;grid-template-columns:44px 1fr;gap:22px;padding:18px 0;border-top:1px solid rgba(255,255,255,0.12);align-items:baseline}
+  .kf li::before{content:counter(kf);font-family:var(--font-d);font-size:24px;color:#f4f5f7}
+  .kf li p{font-size:17px;color:#eef0f2;font-weight:400;line-height:1.55;max-width:56ch}
+  .kf li p b{font-weight:500;color:#fff}
+
+  /* reading column */
+  .article{padding:72px 0 8px}
+  .aprose h2{font-size:32px;margin:56px 0 20px;max-width:24ch}
+  .aprose h2:first-of-type{margin-top:0}
+  .aprose p{font-size:17px;color:var(--body);font-weight:400;margin-top:18px;line-height:1.7}
+  .aprose p strong{color:var(--ink);font-weight:500}
+  .aprose .secnum{margin-top:56px;margin-bottom:0}
+  .aprose .secnum+h2{margin-top:16px}
+
+  .pull{margin:40px 0;padding:26px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .pull blockquote{font-family:var(--font-d);font-size:27px;line-height:1.32;font-weight:400;color:var(--ink);max-width:26ch;letter-spacing:-0.01em}
+  .pull figcaption{font-family:var(--font-m);font-size:12px;color:var(--muted);margin-top:14px;letter-spacing:0.05em}
+
+  /* data exhibit */
+  .exhibit{margin:36px 0;border:1px solid var(--line);border-top:3px solid var(--brass-fill);border-radius:14px;overflow:hidden}
+  .exhibit .xh{display:flex;justify-content:space-between;align-items:center;padding:12px 20px;border-bottom:1px solid var(--line);font-family:var(--font-m);font-size:12px;letter-spacing:0.09em;color:var(--muted);text-transform:uppercase}
+  .exhibit .xh .s{font-size:12px;color:var(--brass);border:1px solid color-mix(in srgb,var(--brass-fill) 45%,transparent);padding:2px 7px;border-radius:4px}
+  .exhibit table{width:100%;border-collapse:collapse;font-size:14px}
+  .exhibit th{font-family:var(--font-m);font-size:12px;letter-spacing:0.08em;text-transform:uppercase;text-align:left;padding:12px 20px;background:var(--surface-2);color:var(--muted);border-bottom:1px solid var(--line);font-weight:500}
+  .exhibit td{padding:14px 20px;border-bottom:1px solid var(--line);color:var(--body);font-weight:400}
+  .exhibit tr:last-child td{border-bottom:none}
+  .exhibit td:first-child{font-family:var(--font-m);font-size:12px;letter-spacing:0.05em;color:var(--ink);text-transform:uppercase}
+  .exhibit td .up{font-family:var(--font-m);font-size:12px;color:var(--pos);font-weight:500}
+  .exhibit td .dn{font-family:var(--font-m);font-size:12px;color:var(--muted);font-weight:500}
+  .exhibit td b{font-family:var(--font-d);font-size:19px;font-weight:500;color:var(--ink)}
+  .kf .cap{font-family:var(--font-m);font-size:12px;letter-spacing:0.06em;color:#8a8d92;margin-top:20px;text-transform:uppercase}
+  .tabcap{font-family:var(--font-m);font-size:12px;letter-spacing:0.06em;color:var(--muted);margin-top:-24px;margin-bottom:36px;text-transform:uppercase}
+
+  /* method + sources */
+  .prov-box{margin:44px 0 0;border:1px solid var(--line);border-radius:14px;background:var(--surface-2);padding:26px 30px}
+  .prov-box .tl{font-family:var(--font-m);font-size:12px;letter-spacing:0.09em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
+  .prov-box p{font-size:14px;color:var(--body);font-weight:400;line-height:1.6}
+  .sources{margin-top:44px;border-top:1px solid var(--line);padding-top:28px}
+  .sources .tl{font-family:var(--font-m);font-size:12px;letter-spacing:0.09em;text-transform:uppercase;color:var(--muted);margin-bottom:18px}
+  .sources ol{list-style:none;counter-reset:s}
+  .sources li{counter-increment:s;position:relative;padding-left:34px;font-size:14px;color:var(--body);font-weight:400;margin-top:14px;line-height:1.5}
+  .sources li::before{content:counter(s);position:absolute;left:0;top:0;font-family:var(--font-m);font-size:12px;color:var(--muted);border:1px solid var(--line);border-radius:5px;width:22px;height:22px;display:flex;align-items:center;justify-content:center}
+  .sources li b{color:var(--ink);font-weight:500}
+  .sources li .mono{font-family:var(--font-m);font-size:12px;color:var(--muted)}
+
+  /* colophon CTA */
+  .final{text-align:center;padding:96px 0}
+  .final .colo{width:56px;height:1px;background:var(--muted);margin:0 auto 20px}
+  .final .fk2{font-family:var(--font-m);font-size:12px;letter-spacing:0.08em;color:var(--muted);margin-bottom:18px;text-transform:uppercase}
+  .final h2{font-size:44px;font-weight:500;max-width:18ch;margin:0 auto 20px}
+  .form{display:flex;gap:12px;justify-content:center;max-width:480px;margin:32px auto 0}
+  .form input{flex:1;font-family:var(--font-b);font-size:15px;padding:14px 18px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink);outline:none}
+  .form input:focus{border-color:var(--accent)}
+  .form input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .note{font-family:var(--font-m);font-size:12px;color:var(--muted);margin-top:16px}
+
+  footer{background:var(--surface-2);padding:56px 0 36px;font-size:14px;color:var(--muted);border-top:1px solid var(--line)}
+  .fcols{display:flex;justify-content:space-between;flex-wrap:wrap;gap:40px}
+  .fcols a{color:var(--body);display:block;margin-top:11px}
+  .fcols a:hover{color:var(--ink)}
+  .fhead{color:var(--ink);font-weight:500;font-size:15px}
+  .fbot{margin-top:40px;padding-top:22px;border-top:1px solid var(--line);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-family:var(--font-m);font-size:12px}
+  .fnote2{margin-top:40px;padding-top:22px;border-top:1px solid var(--line);font-family:var(--font-m);font-size:12px;letter-spacing:0.05em;color:var(--muted);line-height:1.9;max-width:86ch}
+
+  /* ── motion system ── */
+  @media(prefers-reduced-motion:no-preference){
+    html{scroll-behavior:smooth}
+    @keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+    @keyframes flash{from{opacity:0}to{opacity:1}}
+    .flash{animation:flash 150ms ease-out}
+    html.anim .rv{opacity:0;transform:translateY(16px);transition:opacity var(--dur-reveal) var(--ease-out),transform var(--dur-reveal) var(--ease-out)}
+    html.anim .rv.in{opacity:1;transform:none}
+    html.anim .rv.d1{transition-delay:80ms}
+    html.anim .rv.d2{transition-delay:160ms}
+    /* expressive beat: headline lands, then the findings file in */
+    html.anim .ahero{animation:rise 400ms var(--ease-exp) 100ms both}
+    html.anim .kf li{animation:rise 300ms var(--ease-out) both}
+    html.anim .kf li:nth-child(1){animation-delay:350ms}
+    html.anim .kf li:nth-child(2){animation-delay:430ms}
+    html.anim .kf li:nth-child(3){animation-delay:510ms}
+    html.anim .btn:hover{transform:translateY(-1px)}
+    html.anim .btn:active{transform:none}
+  }
+
+  @media(max-width:880px){
+    .ahero h1{font-size:44px}
+    .aprose h2{font-size:28px}
+    .final h2{font-size:28px}
+    .pull blockquote{font-size:22px}
+    .navlinks{display:none}
+    .menubtn{display:block}
+    .col,.kf{padding:0 24px}
+    .wrap{padding:0 24px}
+    .exhibit table{font-size:13px}
+    .exhibit th,.exhibit td{padding:10px 12px}
+    .kf li{grid-template-columns:32px 1fr;gap:14px}
+  }
+
+  /* v3.1.1 HEADER FIT — desktop nav cannot fit ~881px-1040px: .navlinks holds
+     its row so link TEXT wraps instead, nav height 49px -> 96px, wordmark
+     collision (0px separation at 924px). Isolated to the nav: the 880px query
+     also carries grid and type changes that must not move. */
+  .navlinks a{white-space:nowrap}
+  @media(max-width:1040px){
+    .navlinks{display:none}
+    .menubtn{display:block}
+  }
+</style>
+<script src="/runtime.js"></script>
+<link rel="stylesheet" href="shared.css" data-inline>
+</head>
+<body>
+<a class="skip-link" href="#top">Skip to main content</a>
+<aside class="preview-banner" id="local-preview" hidden><div class="wrap"><b>Local preview</b><span>Example measurements. Requests stay in this workspace.</span><a href="/app/">Open workspace →</a></div></aside>
+
+<div class="ticker" id="ticker">
+  <div class="tag"><span class="live"></span>AI VISIBILITY · SAMPLE FEED</div>
+  <div class="mask"><div class="track" id="tick">
+    <span title="Share of AI answers that cite your pages">Citations <b>34%</b><em>▲2</em></span>
+    <span title="Times your brand is named in an answer, with or without a link">Mentions <b>51%</b><em>▲1</em></span>
+    <span title="Your citation share versus the whole category">Share of voice <b>18%</b><em>▲1</em></span>
+    <span title="AI crawler visits to your site per day">AI crawls <b>214/day</b><em>▲12</em></span>
+    <span title="Visits arriving from AI answer links per week">Referrals <b>57/wk</b><em>▲4</em></span>
+    <span title="Your composite GEO Readiness Score (0–100)">Readiness <b>87/100</b><em>▲3</em></span>
+  </div></div>
+  <button class="tkbtn" id="tkBtn" aria-label="Pause sample ticker" aria-pressed="false" title="Pause ticker">❚❚</button>
+  <div class="smp">SAMPLE</div>
+</div>
+
+
+<header>
+  <div class="wrap nav">
+    <a href="index.html" class="logo">MindLever<b>X.</b></a>
+    <nav class="navlinks" aria-label="Main navigation">
+      <a href="index.html#services">Services</a>
+      <a href="method.html">Method</a>
+      <a href="index.html#score">Readiness</a>
+      <a href="what-is-geo.html">What is GEO?</a>
+      <a href="research-hub.html" class="active">Research</a>
+      <a href="index.html#cta" class="textlink">Request a free audit</a>
+      <button class="toggle" id="tg">☾ Dark</button>
+    </nav>
+    <button class="menubtn" id="menubtn" aria-label="Open menu" aria-controls="mobnav" aria-expanded="false">☰</button>
+  </div>
+  <div class="mobnav wrap" id="mobnav" aria-label="Mobile navigation">
+    <a href="index.html#services">Services</a>
+    <a href="method.html">Method</a>
+    <a href="index.html#score">Readiness</a>
+    <a href="what-is-geo.html">What is GEO?</a>
+    <a href="research-hub.html">Research</a>
+    <a href="index.html#cta">Request a free audit</a>
+    <button class="toggle" id="tg2">☾ Dark</button>
+  </div>
+</header>
+
+<main id="top">
+
+  <div class="wrap">
+    <div class="crumb"><a href="index.html">Home</a> &nbsp;/&nbsp; <a href="research-hub.html">Research</a> &nbsp;/&nbsp; Answer Engine Index Q3 2026</div>
+  </div>
+  <div class="ahero" style="padding-left:40px;padding-right:40px">
+    <div class="kicker"><span class="dot"></span>Sample benchmark · Not measured</div>
+    <h1>Answer Engine Index: Q3 2026.</h1>
+    <p class="lead">This sample article demonstrates how a quarterly benchmark could present results. Every numerical finding and engine-specific interpretation below is illustrative; no research panel was run for this report.</p>
+    <div class="metarow"><span>By <b>MINDLEVERX RESEARCH</b></span><span>Example period · <b>JUL 2026</b></span><span>Reading · <b>12 MIN</b></span><span>Methodology · <b>V1.0</b></span></div>
+  </div>
+
+
+  <div class="darkband">
+    <div class="kf">
+      <div class="fk"><span class="ld"></span>THREE ILLUSTRATIVE FINDINGS<span class="s">SAMPLE</span></div>
+      <ol>
+        <li><p><b>Average citation rate rose to 11.4%</b> (+1.2pt vs Q2) across 1,200 tracked prompts — engines are citing more, not less, as answer surfaces mature.</p></li>
+        <li><p><b>Top-decile brands now take 61% of all citations</b> (+4pt). Visibility is concentrating: the engines increasingly agree on who the answer is.</p></li>
+        <li><p><b>Freshness beat authority on Perplexity</b> for the first time — pages updated within 90 days out-cited older, higher-authority pages in head-to-head prompts.</p></li>
+      </ol>
+      <div class="cap">FIG. 01 · SAMPLE — NOT MEASURED. ILLUSTRATIVE VALUES PENDING MONITORING API.</div>
+    </div>
+  </div>
+
+
+  <article class="article">
+    <div class="col aprose">
+      <div class="secnum">01 · Headline results</div>
+      <h2>Every engine moved. Three moved up.</h2>
+      <p>The example assumes a panel of 1,200 prompts — 300 per engine, spanning definitional, comparative and recommendation intents. These are illustrative inputs, not a completed Q3 or Q2 run. Citation rate measures how often a tracked brand's own domain appears as a cited source inside the answer.</p>
+
+      <div class="exhibit">
+        <div class="xh"><span>Q3 2026 · CITATION RATE BY ENGINE</span><span class="s">SAMPLE</span></div>
+        <table>
+          <thead><tr><th>Engine</th><th>Citation rate</th><th>vs Q2</th><th>Dominant signal</th></tr></thead>
+          <tbody>
+            <tr><td>Perplexity</td><td><b>13.6%</b></td><td><span class="up">▲2.1</span></td><td>Freshness — updated-within-90-days pages win</td></tr>
+            <tr><td>ChatGPT</td><td><b>12.8%</b></td><td><span class="up">▲0.9</span></td><td>Entity strength — brand-search demand echoes</td></tr>
+            <tr><td>Claude</td><td><b>11.2%</b></td><td><span class="up">▲1.9</span></td><td>Attribution — dated, sourced claims quoted most</td></tr>
+            <tr><td>Gemini</td><td><b>8.1%</b></td><td><span class="dn">▼0.4</span></td><td>Schema — structured pages over prose-only</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="tabcap">TABLE 01 · 300 PROMPTS PER ENGINE, JUL 2026 · MINDLEVERX METHODOLOGY V1.0 · SAMPLE — NOT MEASURED. ILLUSTRATIVE VALUES PENDING MONITORING API.</div>
+
+      <p>Perplexity's jump is the quarter's outlier, and it isn't random: its retrieval now visibly favors recently updated pages. In matched-pair prompts where an older authoritative page competed with a fresher mid-authority page, <strong>the fresher page won 58% of citations</strong> — a reversal from Q2.</p>
+
+      <div class="secnum">02 · What changed inside the engines</div>
+      <h2>Fewer sources, chosen harder.</h2>
+      <p>ChatGPT tightened its source pool again: unique domains cited per answer fell from 3.1 to 2.6 quarter-over-quarter. Gemini leaned further into structured data — pages with complete schema out-cited prose-only equivalents nearly two to one. Claude remained the most attribution-hungry engine, quoting dated and sourced claims at the highest rate of the four.</p>
+      <figure class="pull rv">
+        <blockquote>Concentration is the story: the engines are converging on fewer, stronger sources.</blockquote>
+        <figcaption>— ANSWER ENGINE INDEX, Q3 2026</figcaption>
+      </figure>
+      <p>The combined effect is a market where the middle is disappearing. Brands in the top decile of our panel gained four points of citation share this quarter; brands below the median lost ground on every engine except Perplexity, where a freshness push can still buy visibility that authority alone no longer can.</p>
+
+      <div class="secnum">03 · What the top decile does</div>
+      <h2>The cited brands run the same four plays.</h2>
+      <p>Reading across the top-decile brands, the pattern is consistent — and it maps directly onto the <a href="index.html#method" class="textlink" style="font-size:inherit">five moves</a> we rank by leverage. They own a <strong>definitional pillar</strong> the engines quote verbatim. They put <strong>dated statistics inside quotable passages</strong>, not beside them. They are <strong>corroborated off their own site</strong> — G2, Reddit, Wikipedia, category roundups. And they <strong>monitor all four engines</strong>, because a Gemini schema fix does nothing for a Perplexity freshness problem.</p>
+
+      <div class="secnum">04 · Method notes</div>
+      <h2>How to read these numbers.</h2>
+      <p>The proposed panel would preserve prompts, categories and collection windows across comparison periods. Actual sampling and scoring rules must be specified and validated before a collected benchmark is published.</p>
+      <div class="prov-box">
+        <div class="tl">Provenance</div>
+        <p>Illustrative setup: 1,200 prompts · 4 engines · example collection period JUL 1–14, 2026. No collection took place for this article. All figures on this page are <strong>SAMPLE data</strong> illustrating the Index format until the monitoring API is wired to the live panel.</p>
+      </div>
+
+      <div class="sources">
+        <div class="tl">Sources</div>
+        <ol>
+          <li><b>MindLeverX Answer Engine Index panel</b>, Q3 2026 collection. <span class="mono">SAMPLE</span></li>
+          <li><b>Princeton et al.</b>, "GEO: Generative Engine Optimization," <span class="mono">KDD 2024</span> — baseline for the quotable-passage protocol.</li>
+          <li><b>Pew Research Center</b>, Jul 2025 — click-through behavior after AI summaries.</li>
+        </ol>
+      </div>
+    </div>
+  </article>
+
+
+  <div class="final wrap" id="cta">
+    <div class="colo"></div>
+    <div class="fk2">Your numbers</div>
+    <h2>See where your brand sits in the Index.</h2>
+    <p class="lead" style="max-width:52ch;margin:0 auto">Register your domain for an audit request. The local workspace saves the request; engine collection and audit delivery are not connected.</p>
+    <form class="form" id="auditform" data-kind="audit" data-source="answer-engine-index-q3-2026.html#cta" novalidate>
+      <div class="emailrow"><label for="auditemail">Work email</label><input type="email" id="auditemail" name="email" autocomplete="email" required placeholder="you@company.com" aria-describedby="fnote"></div>
+      <div class="domrow"><label for="auditdomain">Company domain</label><input type="text" id="auditdomain" name="domain" autocomplete="url" required placeholder="yourcompany.com" aria-describedby="domain-hint"><span id="domain-hint">The company website you want to assess.</span></div>
+      <label class="consent"><input type="checkbox" name="consent" id="intake-consent" required><span>I agree to store this request and company domain with my email in this local workspace. No email is sent.</span></label>
+      <div class="hp" aria-hidden="true"><input type="text" id="website" name="website" tabindex="-1" autocomplete="off" placeholder="Leave this field empty"></div>
+      <input type="hidden" name="ts" id="auditts" value="0">
+      <button class="btn" type="submit" id="auditbtn">Request my free audit</button>
+    </form>
+    <noscript><p class="note">JavaScript and the local server are required to save a request.</p></noscript>
+    <div class="note" id="fnote" role="status" aria-live="polite">Intake is not connected in this static preview.</div>
+  </div>
+</main>
+
+<footer><div class="wrap">
+  <div class="fcols">
+    <div style="max-width:30ch"><div class="logo" style="font-size:19px">MindLever<b>X.</b></div><p style="margin-top:11px;font-weight:400">Generative engine optimization for mid-market B2B SaaS. Own the answer.</p></div>
+    <div><div class="fhead">Product</div><a href="index.html#services">Services</a><a href="method.html">Method</a><a href="index.html#score">Readiness</a></div>
+    <div><div class="fhead">Learn</div><a href="what-is-geo.html">What is GEO?</a><a href="research-hub.html">Research</a><a href="case-study.html">Case studies</a></div>
+    <div><div class="fhead">Company</div><a href="about.html">About</a><a href="about.html#contact">Contact</a></div>
+  </div>
+  <div class="fnote2">PLANNED MEASUREMENTS USE ENGINE APIS AGAINST A FIXED PROMPT PANEL; API ANSWERS ARE A PROXY FOR THE LIVE CONSUMER PRODUCTS, WHICH DIFFER IN RETRIEVAL, PERSONALIZATION AND INTERFACE. · METHODOLOGY V1.0</div>
+  <div class="fbot"><span>© 2026 MindLeverX</span><span>OWN THE ANSWER.</span></div>
+</div></footer>
+
+<script src="shared.js" data-inline></script>
+</body>
+</html>

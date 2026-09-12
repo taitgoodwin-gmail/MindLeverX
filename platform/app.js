@@ -1,0 +1,430 @@
+'use strict';
+
+const $ = (selector, root = document) => root.querySelector(selector);
+const escapeHtml = value => String(value ?? '').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
+const attr = escapeHtml;
+const e = escapeHtml;
+const state = { csrf: '', clients: [], reviews: [], leads: [], activity: [], panels: [], loaded: false, menuOpen: false, leadFilter: 'new', search: '', busy: false };
+const stageNames = ['Intake', 'Agreement', 'Baseline', 'Findings', 'Scope', 'Fixes', 'Monitoring'];
+const stageDescriptions = ['Record the request and agree the next step.', 'Agree the pages, competitors and buyer questions.', 'Version the prompt panel and establish a baseline.', 'Review evidence and identify the gaps.', 'Record which fixes are selected for this cycle.', 'Review drafts and record deployment and verification.', 'Review readings and prepare the next cycle.'];
+const iconPaths = {
+  grid:'<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>',
+  users:'<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2m20 0v-2a4 4 0 0 0-3-3.9M15 3.1a4 4 0 0 1 0 7.8"/><circle cx="9" cy="7" r="4"/>',
+  inbox:'<path d="m3 3-2 12v6h22v-6L21 3H3Zm-2 12h6l2 3h6l2-3h6"/>',
+  history:'<path d="M3 12a9 9 0 1 0 2.6-6.4M3 3v6h6m3-2v5l3 2"/>',
+  arrow:'<path d="M4 12h16m-6-6 6 6-6 6"/>',
+  arrowUp:'<path d="M6 18 18 6M6 6h12v12"/>',
+  back:'<path d="M20 12H4m6-6-6 6 6 6"/>',
+  chevron:'<path d="m9 5 7 7-7 7"/>',
+  check:'<path d="m5 12 4 4L19 6"/>',
+  alert:'<path d="m12 3 10 18H2L12 3Zm0 6v5m0 3v.1"/>',
+  file:'<path d="M14 2H4v20h16V8l-6-6Zm0 0v6h6M8 13h8m-8 4h6"/>',
+  layers:'<path d="m12 3 10 5-10 5L2 8l10-5Zm-10 9 10 5 10-5M2 16l10 5 10-5"/>',
+  search:'<circle cx="10.5" cy="10.5" r="7.5"/><path d="m16 16 5 5"/>',
+  plus:'<path d="M12 5v14M5 12h14"/>',
+  refresh:'<path d="M20 7a9 9 0 0 0-15-1L2 9m0-6v6h6m-4 8a9 9 0 0 0 15 1l3-3m0 6v-6h-6"/>',
+  menu:'<path d="M4 6h16M4 12h16M4 18h16"/>',
+  close:'<path d="m6 6 12 12M6 18 18 6"/>',
+  lock:'<rect x="4" y="10" width="16" height="12" rx="2"/><path d="M8 10V6a4 4 0 0 1 8 0v4m-4 6v2"/>',
+  globe:'<circle cx="12" cy="12" r="10"/><ellipse cx="12" cy="12" rx="4" ry="10"/><path d="M2 12h20"/>',
+  print:'<path d="M6 9V2h12v7M6 18H2V9h20v9h-4M6 14h12v8H6v-8ZM18 12h.01"/>',
+  eye:'<path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12Z"/><circle cx="12" cy="12" r="3"/>',
+  return:'<path d="m8 3-5 5 5 5M3 8h11a6 6 0 0 1 0 12h-3"/>',
+  clock:'<circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>'
+};
+const icon = name => `<svg viewBox="0 0 24 24" aria-hidden="true">${iconPaths[name] || iconPaths.file}</svg>`;
+const pill = (text, cls = '') => `<span class="pill ${attr(cls)}">${e(text)}</span>`;
+const sample = () => pill('Sample', 'sample');
+const sampleNotice = (text = 'This record uses fictional sample data to demonstrate the workflow. No live engine measurements are represented.') => `<div class="sample-notice">${sample()}<span>${e(text)}</span></div>`;
+const date = (value, withTime = false) => {
+  if (!value) return 'Not recorded';
+  const parsed = new Date(value);
+  if (Number.isNaN(parsed.getTime())) return String(value);
+  return new Intl.DateTimeFormat(undefined, {month:'short', day:'numeric', year:'numeric', ...(withTime ? {hour:'2-digit', minute:'2-digit'} : {})}).format(parsed);
+};
+const timeHtml = value => `<time datetime="${attr(value || '')}">${e(date(value, true))}</time>`;
+const clientById = id => state.clients.find(client => client.id === id);
+const reviewById = id => state.reviews.find(review => review.id === id);
+const clientReviews = id => state.reviews.filter(review => review.client_id === id);
+const clientPanels = id => state.panels.filter(panel => panel.client_id === id).sort((a,b) => Number(b.version)-Number(a.version) || String(b.created_at).localeCompare(String(a.created_at)));
+const pendingReviews = () => state.reviews.filter(review => review.status === 'pending');
+const newLeads = () => state.leads.filter(lead => lead.status === 'new');
+const newest = items => [...items].sort((a,b) => String(b.created_at).localeCompare(String(a.created_at)));
+const kindName = kind => ({report:'Report review', finding:'Draft review', anomaly:'Run held'}[kind] || kind);
+const kindIcon = kind => ({report:'file',finding:'layers',anomaly:'alert'}[kind] || 'file');
+const statusName = status => ({pending:'Needs review',approved:'Approved',returned:'Returned',active:'Active',paused:'Paused',new:'New',reviewed:'Reviewed',archived:'Archived'}[status] || status);
+const humanize = value => String(value || '').replace(/[._-]/g,' ').replace(/^./, char => char.toUpperCase());
+const safeUrl = value => { try { const url = new URL(value); return ['https:', 'http:'].includes(url.protocol) ? url.href : null; } catch { return null; } };
+const button = (text, href, cls = '', glyph = '') => `<a class="button ${attr(cls)}" href="${attr(href)}">${glyph ? icon(glyph) : ''}${e(text)}</a>`;
+const empty = (title, description, action = '', glyph = 'inbox') => `<div class="empty">${icon(glyph)}<h3>${e(title)}</h3><p>${e(description)}</p>${action}</div>`;
+const route = () => {
+  const parts = location.hash.replace(/^#\/?/, '').split('/').filter(Boolean);
+  let id = parts[1] || null;
+  try { if (id) id = decodeURIComponent(id); } catch { id = null; }
+  return {page:parts[0] || 'console', id};
+};
+
+async function api(path, options = {}) {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(),15000);
+  try {
+    const response = await fetch(path, {
+      ...options,
+      signal:controller.signal,
+      headers: {'Accept':'application/json', ...(options.body ? {'Content-Type':'application/json'} : {}), ...(options.method && options.method !== 'GET' ? {'X-CSRF-Token':state.csrf} : {}), ...options.headers},
+      body: options.body ? JSON.stringify(options.body) : undefined
+    });
+    const payload = await response.json().catch(() => null);
+    if (!response.ok || payload?.ok === false) throw new Error(payload?.error || `Request failed (${response.status}). Please try again.`);
+    return payload;
+  } catch (reason) {
+    if (reason.name === 'AbortError') throw new Error('The request timed out. Refresh the workspace to check whether your change was saved.');
+    throw reason;
+  } finally { clearTimeout(timeout); }
+}
+
+async function loadWorkspace() {
+  const result = await api('/api/workspace');
+  for (const key of ['clients','reviews','leads','activity','panels']) state[key] = Array.isArray(result[key]) ? result[key] : [];
+  state.loaded = true;
+}
+
+let toastTimer;
+function toast(message) {
+  const node = $('#toast');
+  node.textContent = message;
+  node.classList.add('visible');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => node.classList.remove('visible'), 5000);
+}
+
+function sidebar(page, id) {
+  const active = (name, label, glyph, count = '') => `<a class="nav-item ${page === name ? 'active' : ''}" href="#/${name}" ${page === name ? 'aria-current="page"' : ''}>${icon(glyph)}<span>${e(label)}</span>${count !== '' ? `<span class="nav-count">${e(count)}</span>` : ''}</a>`;
+  return `<button class="mobile-scrim ${state.menuOpen ? 'open' : ''}" data-action="close-menu" aria-label="Close navigation" tabindex="${state.menuOpen ? '0' : '-1'}"></button>
+    <aside class="sidebar ${state.menuOpen ? 'open' : ''}" aria-label="Workspace navigation">
+      <a class="sidebar-brand" href="#/console"><span class="wordmark">MindLever<span>X.</span></span><div class="sidebar-kicker">OPERATOR WORKSPACE</div></a>
+      <nav aria-label="Main navigation"><div class="nav-label">Your workspace</div>
+      ${active('console','Needs me','grid',pendingReviews().length)}${active('clients','Clients','users')}${active('leads','Leads','inbox',newLeads().length)}${active('activity','Activity','history')}
+      <div class="nav-label">Clients</div>
+      ${state.clients.slice(0,6).map(client => `<a class="nav-item sidebar-client ${page === 'clients' && id === client.id ? 'active' : ''}" href="#/clients/${attr(client.id)}"><span class="client-dot"></span><span>${e(client.name)}</span></a>`).join('') || '<div class="nav-item muted">No clients yet</div>'}
+      </nav>
+      <div class="sidebar-bottom"><div class="mode-mark"><span class="client-dot"></span>Local workspace</div><p>Changes are saved on this computer. Sample records are labeled.</p><a href="/">Visit public website ${icon('arrowUp')}</a></div>
+    </aside>`;
+}
+
+function shell(content, crumb = '') {
+  const {page,id} = route();
+  const names = {console:'Needs me',clients:'Clients',reviews:'Review',leads:'Leads',activity:'Activity',panels:'Prompt panels'};
+  return `<div class="app-layout">${sidebar(page,id)}<div class="workspace">
+    <header class="topbar"><button class="icon-button menu-toggle" data-action="toggle-menu" aria-label="${state.menuOpen ? 'Close' : 'Open'} navigation" aria-expanded="${state.menuOpen}">${icon('menu')}</button>
+    <div class="breadcrumb"><span class="breadcrumb-root">Workspace</span>${icon('chevron')}<span>${e(crumb || names[page] || 'Workspace')}</span></div>
+    <div class="topbar-right"><span class="topbar-label">Thoughtful work. Traceable evidence.</span><button class="icon-button" data-action="refresh" aria-label="Refresh workspace" title="Refresh workspace">${icon('refresh')}</button><span class="avatar" title="Local operator">OP</span></div></header>
+    <main id="main" class="content" tabindex="-1">${content}<footer class="page-footer"><span>MindLeverX · Operator workspace</span><span>Local records · Sample measurements are labeled</span></footer></main>
+  </div></div>`;
+}
+
+function pageHead(eyebrow, title, description = '', actions = '') {
+  return `<div class="page-head"><div><span class="eyebrow">${e(eyebrow)}</span><h1>${e(title)}</h1>${description ? `<p>${e(description)}</p>` : ''}</div>${actions ? `<div class="page-head-actions">${actions}</div>` : ''}</div>`;
+}
+
+function reviewCard(review) {
+  const client = clientById(review.client_id);
+  return `<article class="review-card ${attr(review.kind)}"><div class="review-card-top">${pill(kindName(review.kind),review.kind === 'anomaly' ? 'anomaly' : '')}${review.sample ? sample() : ''}<span class="client-name">${e(client?.name || 'Client')}</span></div>
+    <h3><a href="#/reviews/${attr(review.id)}">${e(review.title)}</a></h3><p>${e(review.summary)}</p><div class="review-card-bottom">${button(review.kind === 'anomaly' ? 'Inspect evidence' : 'Read & review',`#/reviews/${review.id}`,'small',review.kind === 'anomaly' ? 'search' : 'arrow')}${timeHtml(review.created_at)}</div></article>`;
+}
+
+function stat(label, value, detail, href, accent = false) {
+  return `<div class="stat ${accent ? 'accent' : ''}"><div class="stat-label">${e(label)}</div><div class="stat-value">${e(value)}</div><div class="stat-bottom">${e(detail)}</div><a class="stat-top-link" href="${attr(href)}" aria-label="View ${attr(label.toLowerCase())}">${icon('arrowUp')}</a></div>`;
+}
+
+function consolePage() {
+  const pending = pendingReviews();
+  const active = state.clients.filter(client => client.status === 'active');
+  const held = pending.filter(review => review.kind === 'anomaly');
+  const summary = pending.length ? `${pending.length} ${pending.length === 1 ? 'item is' : 'items are'} ready for your judgment. Open the evidence, record a decision, and keep the work moving.` : 'Your review queue is clear. Client records, evidence and decisions are together here.';
+  return pageHead('The operator console','A clear view of what needs you.',summary,button('Add client','#/clients/new','primary','plus')) +
+    `<div class="summary-grid">${stat('Needs your review',pending.length,'Decisions awaiting an operator','#/console',true)}${stat('Active clients',active.length,`${state.clients.filter(c => c.sample).length} sample records included`,'#/clients')}${stat('New requests',newLeads().length,'Submitted through local intake','#/leads')}${stat('Held reviews',held.length,'Evidence needs a closer look','#/console')}</div>
+    <div class="content-grid"><div><div class="section-head"><h2>Your review queue<span class="count">${pending.length}</span></h2><span class="mono muted">EVIDENCE BEFORE ACTION</span></div>
+      <div class="queue-list">${pending.map(reviewCard).join('') || empty('Nothing waiting on you','New review records will appear here when they are ready. You can inspect existing client records at any time.',button('View clients','#/clients','small'),'check')}</div>
+      <div class="section-gap"><div class="section-head"><h2>Recently recorded</h2><a class="text-link" href="#/activity">All activity ${icon('arrow')}</a></div><div class="panel">${historyList(newest(state.activity).slice(0,3),true)}</div></div>
+    </div><aside class="console-aside"><section class="side-card"><span class="eyebrow">Client pulse</span><h2>Each engagement, in view.</h2><p>Open a record to see its stage, evidence and next decision.</p>
+      ${state.clients.slice(0,5).map(client => `<a href="#/clients/${attr(client.id)}" class="client-mini"><div><span class="client-mini-name">${e(client.name)}</span><small>${e(stageNames[(client.stage || 1)-1])} · ${e(statusName(client.status))}</small></div><div class="mini-score">${client.score !== null && client.score !== undefined ? `${e(client.score)}${client.sample ? sample() : ''}` : '<span class="muted">—</span>'}</div></a>`).join('') || '<p>No client records yet.</p>'}
+    </section><section class="quiet-card"><span class="eyebrow">The working principle</span><h3>Every decision leaves a trail.</h3><p>Review the source. Add your reasoning. The decision stays with the record, so the next person can see what changed and why.</p></section></aside></div>`;
+}
+
+function clientRows(clients) {
+  return clients.map(client => `<tr><td><a class="table-title" href="#/clients/${attr(client.id)}">${e(client.name)}</a><div class="table-sub">${e(client.domain)}</div></td><td>${pill(statusName(client.status),client.status)}</td><td><span class="mono">${String(client.stage || 1).padStart(2,'0')}</span> <span class="muted">${e(stageNames[(client.stage || 1)-1])}</span></td><td class="nowrap">${client.score !== null && client.score !== undefined ? `<span class="table-number">${e(client.score)}</span>${client.sample ? sample() : ''}` : '<span class="muted">Not measured</span>'}</td><td>${clientReviews(client.id).filter(review => review.status === 'pending').length}</td><td><a href="#/clients/${attr(client.id)}" class="icon-button" aria-label="Open ${attr(client.name)}">${icon('arrow')}</a></td></tr>`).join('');
+}
+
+function clientsPage() {
+  const filtered = state.clients.filter(client => `${client.name} ${client.domain}`.toLowerCase().includes(state.search.toLowerCase()));
+  return pageHead('Engagements','Clients','A shared record of the work, from the first agreement through every review cycle.',button('Add client','#/clients/new','primary','plus')) +
+    `<div class="search-bar"><label class="search-field">${icon('search')}<span class="visually-hidden">Search clients</span><input type="search" id="client-search" placeholder="Search name or domain" value="${attr(state.search)}"></label><span class="search-count" id="client-count">${filtered.length} ${filtered.length === 1 ? 'CLIENT' : 'CLIENTS'}</span></div>
+    <div class="table-wrap" tabindex="0" role="region" aria-label="Scrollable records table"><table><thead><tr><th scope="col">Client</th><th scope="col">Status</th><th scope="col">Stage</th><th scope="col">Readiness</th><th scope="col">To review</th><th scope="col"><span class="visually-hidden">Open</span></th></tr></thead><tbody id="client-rows">${clientRows(filtered) || '<tr><td colspan="6" class="muted">No clients match this search.</td></tr>'}</tbody></table></div>
+    <p class="field-help" style="margin-top:15px">Sample clients demonstrate the workflow. New clients start with no score or measurements.</p>`;
+}
+
+function newClientPage() {
+  return `<a class="back-link" href="#/clients">${icon('back')} All clients</a>` + pageHead('New engagement','Start with a client record.','Add the details you know. Measurements and evidence can follow when they exist.') +
+    `<div class="detail-layout"><section class="panel"><h2>Client details</h2><p class="panel-intro">This creates a local record. It does not contact the client.</p><form id="client-create"><div class="form-error" role="alert"></div><div class="form-grid"><div class="field"><label for="client-name">Client name</label><input id="client-name" name="name" autocomplete="organization" required maxlength="100" placeholder="Company name"></div><div class="field"><label for="client-domain">Website domain</label><input id="client-domain" name="domain" inputmode="url" required maxlength="253" placeholder="example.com" autocomplete="url"></div></div><div class="field"><label for="client-notes">Engagement notes <span class="muted">(optional)</span></label><textarea id="client-notes" name="notes" maxlength="5000" rows="5" placeholder="What should the next person know?"></textarea></div><div class="form-actions"><button type="submit" class="button primary">${icon('plus')} Create client</button>${button('Cancel','#/clients')}</div></form></section>
+    <aside class="quiet-card"><span class="eyebrow">A clean starting point</span><h3>No score without evidence.</h3><p>A new client begins at intake with no readiness score, engine data or reports. Use its stage and notes to record the work as it happens.</p></aside></div>`;
+}
+
+function stageStrip(client) {
+  const current = Math.min(7,Math.max(1,Number(client.stage) || 1));
+  return `<div class="stage-strip" aria-label="Engagement at stage ${current}: ${attr(stageNames[current-1])}">${stageNames.map((name,index) => `<div class="stage-item ${index+1 < current ? 'done' : index+1 === current ? 'current' : ''}"><span class="stage-num">${String(index+1).padStart(2,'0')}</span><span class="stage-name">${e(name)}</span><span class="stage-state">${index+1 < current ? 'PREVIOUS' : index+1 === current ? 'CURRENT' : 'AHEAD'}</span></div>`).join('')}</div><p class="stage-caption">${e(stageDescriptions[current-1])}</p>`;
+}
+
+function scoreCard(client) {
+  if (client.score === null || client.score === undefined) return `<span class="eyebrow">Readiness</span><h2>Not measured yet.</h2><p class="score-detail">No score has been recorded. A client record alone is not evidence of visibility or readiness.</p>`;
+  const delta = client.previous_score == null ? null : client.score-client.previous_score;
+  return `<span class="eyebrow">Readiness ${client.sample ? sample() : ''}</span><div class="score-display"><strong>${e(client.score)}</strong><span class="score-denom">/100</span>${delta === null ? '' : `<span class="score-delta">${delta > 0 ? '+' : ''}${e(delta)}${client.sample ? ' · SAMPLE' : ''}</span>`}</div><p class="score-detail">${client.sample ? 'Illustrative readiness score. The underlying scoring model is not implemented.' : 'Recorded readiness score.'}</p>${client.previous_score == null ? '' : `<div class="datum-row"><span>Previous reading</span><span>${e(client.previous_score)} ${client.sample ? sample() : ''}</span></div>`}`;
+}
+
+function clientPage(id) {
+  const client = clientById(id);
+  if (!client) return notFound('Client record');
+  const reviews = clientReviews(id);
+  const panels = clientPanels(id);
+  const latestReport = newest(reviews.filter(review => review.kind === 'report'))[0];
+  const clientActivity = newest(state.activity.filter(event => event.entity_id === id || reviews.some(review => review.id === event.entity_id) || panels.some(panel => panel.id === event.entity_id)));
+  return `<a class="back-link" href="#/clients">${icon('back')} All clients</a><div class="page-head"><div><span class="eyebrow">Client record</span><div class="entity-heading"><h1>${e(client.name)}</h1>${pill(statusName(client.status),client.status)}${client.sample ? sample() : ''}</div><div class="entity-meta"><span>${e(client.domain)}</span><span>·</span><span>Created ${e(date(client.created_at))}</span></div></div><div class="page-head-actions">${latestReport ? button('Report preview',`#/preview/${latestReport.id}`,'','eye') : button('Prompt panels',`#/panels/${client.id}`,'','layers')}</div></div>
+    ${client.sample ? sampleNotice() : ''}<div class="detail-layout"><div class="detail-main"><section class="panel"><div class="section-head"><h2>Where the engagement is</h2><span class="mono muted">STAGE ${e(client.stage || 1)} / 7</span></div>${stageStrip(client)}</section>
+    <section><div class="section-head"><h2>Review work<span class="count">${reviews.length}</span></h2></div>${reviews.length ? `<div class="queue-list">${reviews.map(review => review.status === 'pending' ? reviewCard(review) : `<article class="review-card"><div class="review-card-top">${pill(kindName(review.kind))}${pill(statusName(review.status),review.status)}${review.sample ? sample() : ''}</div><h3><a href="#/reviews/${attr(review.id)}">${e(review.title)}</a></h3><p>${e(review.summary)}</p><a class="text-link" href="#/reviews/${attr(review.id)}">View decision ${icon('arrow')}</a></article>`).join('')}</div>` : empty('No reviews yet','Evidence and draft reviews will appear here when they are recorded. You can define a prompt panel now.',button('Create prompt panel',`#/panels/${id}`,'small','layers'),'file')}</section>
+    <section class="panel"><div class="section-head"><h2>Prompt panel</h2><a class="text-link" href="#/panels/${attr(id)}">${panels.length ? 'View versions' : 'Create panel'} ${icon('arrow')}</a></div><p class="panel-intro">A versioned set of buyer questions, kept intact so changes remain visible.</p>${panels.length ? `<div class="datum-row"><span>Latest version</span><strong>${e(versionLabel(panels[0].version))} ${panels[0].sample ? sample() : ''}</strong></div><div class="datum-row"><span>Questions</span><span>${Array.isArray(panels[0].prompts) ? panels[0].prompts.length : 0} ${panels[0].sample ? sample() : ''}</span></div><div class="datum-row"><span>Recorded</span><span>${e(date(panels[0].created_at))}</span></div>` : '<p class="muted">No prompt panel has been recorded.</p>'}</section>
+    <section class="panel"><h2>Record history</h2>${historyList(clientActivity.slice(0,12))}</section></div>
+    <aside class="detail-aside"><section class="panel">${scoreCard(client)}</section><section class="panel"><h2>Manage engagement</h2><form id="client-update" data-id="${attr(id)}"><div class="form-error" role="alert"></div><div class="field"><label for="engagement-status">Status</label><select id="engagement-status" name="status"><option value="active" ${client.status === 'active' ? 'selected' : ''}>Active</option><option value="paused" ${client.status === 'paused' ? 'selected' : ''}>Paused</option></select></div><div class="field"><label for="engagement-stage">Current stage</label><select id="engagement-stage" name="stage">${stageNames.map((name,index) => `<option value="${index+1}" ${Number(client.stage) === index+1 ? 'selected' : ''}>${String(index+1).padStart(2,'0')} · ${e(name)}</option>`).join('')}</select><span class="field-help">Records your operational status; it does not trigger automation.</span></div><div class="field"><label for="engagement-notes">Notes</label><textarea id="engagement-notes" name="notes" rows="5" maxlength="5000">${e(client.notes || '')}</textarea></div><button type="submit" class="button primary">Save changes</button></form></section></aside></div>`;
+}
+
+function evidenceList(review) {
+  const evidence = Array.isArray(review.evidence) ? review.evidence : [];
+  return evidence.length ? `<div class="evidence-list">${evidence.map(item => `<div class="evidence-item"><span class="eyebrow">${e(item.label || 'Evidence')} ${review.sample ? sample() : ''}</span><p>${e(item.detail || '')}</p>${safeUrl(item.url) ? `<a href="${attr(safeUrl(item.url))}" target="_blank" rel="noopener noreferrer">Open source ${icon('arrowUp')}</a>` : ''}</div>`).join('')}</div>` : '<p class="panel-intro">No evidence has been attached to this review.</p>';
+}
+
+function reviewPage(id) {
+  const review = reviewById(id);
+  if (!review) return notFound('Review');
+  const client = clientById(review.client_id);
+  const history = newest(state.activity.filter(event => event.entity_id === id));
+  return `<a class="back-link" href="#/clients/${attr(review.client_id)}">${icon('back')} ${e(client?.name || 'Client record')}</a>` + pageHead(kindName(review.kind),review.title,review.summary,review.kind === 'report' ? button('Report preview',`#/preview/${id}`,'','eye') : '') +
+    `<div class="review-meta">${pill(statusName(review.status),review.status)}${review.sample ? sample() : ''}<span class="mono muted">${e(client?.name || 'Client')} · ${e(date(review.created_at,true))}</span></div>${review.sample ? sampleNotice('The content and evidence below are fictional sample records. Your review decision and note are saved locally.') : ''}
+    <div class="detail-layout"><div class="detail-main"><section class="panel"><span class="eyebrow">${review.kind === 'anomaly' ? 'What needs attention' : 'Review content'}</span><div class="body-copy">${e(review.body || review.summary)}</div></section><section class="panel"><h2>Evidence, alongside the work.</h2><p class="panel-intro">Use these source records to assess the review. Sample evidence describes an illustrative scenario.</p>${evidenceList(review)}</section><section class="panel"><h2>Decision history</h2>${historyList(history)}</section></div>
+    <aside class="detail-aside"><section class="panel"><span class="eyebrow">Your judgment</span><h2>${review.status === 'pending' ? 'Record a decision.' : `${e(statusName(review.status))}.`}</h2>${review.status === 'pending' ? `<p class="panel-intro">${review.kind === 'anomaly' ? 'Approve the review when the evidence is sufficient, or return it with the issue that needs attention. This does not retry a run.' : 'Leave the reasoning that makes this decision useful to the next person. Approval records your review; it does not send a report.'}</p><form id="review-decision" data-id="${attr(id)}"><div class="form-error" role="alert"></div><div class="field"><label for="decision-note">Decision note <span class="muted">(required)</span></label><textarea id="decision-note" name="note" rows="6" required minlength="3" maxlength="3000" placeholder="What did you verify, or what needs to change?"></textarea></div><div class="form-actions"><button class="button primary" type="submit" name="decision" value="approved">${icon('check')} Approve</button><button class="button" type="submit" name="decision" value="returned">${icon('return')} Return</button></div></form>` : `<p class="panel-intro">Recorded ${e(date(review.decided_at,true))}.</p><div class="decision-note">${e(review.note || 'No note recorded.')}</div><p class="field-help" style="margin-top:15px">This decision is retained with the review record.</p>`}</section><section class="quiet-card"><span class="eyebrow">Review boundary</span><h3>Evidence leads. People decide.</h3><p>A recorded approval is a local workflow decision. Report delivery, site publishing and live engine runs are not connected here.</p></section></aside></div>`;
+}
+
+function leadsPage() {
+  const filtered = newest(state.leads.filter(lead => state.leadFilter === 'all' || lead.status === state.leadFilter));
+  return pageHead('Intake','Leads','Requests submitted through the local website appear here. Review status records your follow-up work.') +
+    `<div class="tabs" role="group" aria-label="Filter leads">${[['new','New'],['reviewed','Reviewed'],['archived','Archived'],['all','All requests']].map(([value,label]) => `<button class="tab ${state.leadFilter === value ? 'active' : ''}" data-action="filter-leads" data-filter="${value}" aria-pressed="${state.leadFilter === value}">${label} <span class="mono">${value === 'all' ? state.leads.length : state.leads.filter(lead => lead.status === value).length}</span></button>`).join('')}</div>
+    ${filtered.length ? `<div class="table-wrap" tabindex="0" role="region" aria-label="Scrollable records table"><table><thead><tr><th scope="col">Request</th><th scope="col">Type</th><th scope="col">Received</th><th scope="col">Status</th><th scope="col">Record action</th></tr></thead><tbody>${filtered.map(lead => `<tr><td><span class="table-title">${e(lead.domain || lead.email)}</span><div class="table-sub">${e(lead.email)}</div><div class="table-sub">${e(lead.source || 'Website intake')}</div></td><td>${pill(lead.kind === 'subscription' ? 'Research interest' : 'Audit request')}${lead.sample ? sample() : ''}</td><td class="nowrap"><span class="table-sub">${e(date(lead.created_at,true))}</span></td><td>${pill(statusName(lead.status),lead.status)}</td><td><div class="table-actions">${lead.status !== 'reviewed' ? `<button class="button small" data-action="lead-status" data-id="${attr(lead.id)}" data-status="reviewed">Mark reviewed</button>` : ''}${lead.status !== 'archived' ? `<button class="button small" data-action="lead-status" data-id="${attr(lead.id)}" data-status="archived">Archive</button>` : `<button class="button small" data-action="lead-status" data-id="${attr(lead.id)}" data-status="new">Restore</button>`}</div></td></tr>`).join('')}</tbody></table></div>` : empty(state.leadFilter === 'new' ? 'No new requests.' : 'Nothing in this view.',state.leads.length ? 'Choose another status to see the rest of your intake.' : 'Local website submissions will appear here after they are saved. The sample clients do not generate leads.',button('Open website','/','small','globe'),'inbox')}
+    <p class="field-help" style="margin-top:18px">Changing a request’s status saves a local record. It does not send email or subscribe anyone to a mailing service.</p>`;
+}
+
+function historyList(events, compact = false) {
+  if (!events.length) return '<p class="panel-intro" style="margin-bottom:0">No activity has been recorded here yet.</p>';
+  return `<ol class="history-list ${compact ? 'wide-history' : ''}">${events.map(event => `<li class="history-item"><span class="history-symbol">${icon(event.entity_type === 'review' ? 'check' : event.entity_type === 'lead' ? 'inbox' : 'history')}</span><div><strong>${e(humanize(event.action))}</strong>${event.detail ? `<p>${e(typeof event.detail === 'string' ? event.detail : JSON.stringify(event.detail))}</p>` : ''}${timeHtml(event.created_at)}<span class="actor mono muted">· ${e(event.actor || 'Local operator')}</span></div></li>`).join('')}</ol>`;
+}
+
+function activityPage() {
+  return pageHead('The record','Activity','Client changes, review decisions and intake updates, with the actor and time attached.') + `<section class="panel">${state.activity.length ? historyList(newest(state.activity),true) : empty('A fresh record.','Create a client or review an item. Saved actions will appear here.',button('View workspace','#/console','small'),'history')}</section>`;
+}
+
+function versionLabel(value) { return /^v/i.test(String(value)) ? String(value) : `v${value}`; }
+
+function panelsPage(id) {
+  const client = clientById(id);
+  if (!client) return notFound('Client record');
+  const panels = clientPanels(id);
+  return `<a class="back-link" href="#/clients/${attr(id)}">${icon('back')} ${e(client.name)}</a>` + pageHead('Methodology in the record','Prompt panels','Keep the questions intact. Add a new version when the panel changes, with a note explaining why.') +
+    `<div class="detail-layout"><div><div class="section-head"><h2>Recorded versions<span class="count">${panels.length}</span></h2><span class="mono muted">IMMUTABLE HISTORY</span></div>${panels.length ? panels.map((panel,index) => `<details class="version-card" ${index === 0 ? 'open' : ''}><summary>${icon('lock')}<strong>Panel ${e(versionLabel(panel.version))}</strong>${index === 0 ? pill('Latest') : ''}${panel.sample ? sample() : ''}<span class="mono muted">${Array.isArray(panel.prompts) ? panel.prompts.length : 0} QUESTIONS</span></summary><div class="version-body"><p class="field-help" style="margin-top:16px">Recorded ${e(date(panel.created_at,true))}</p><ol class="prompt-list">${(panel.prompts || []).map(prompt => `<li>${e(typeof prompt === 'string' ? prompt : prompt.text || '')}</li>`).join('')}</ol><p class="version-note">${e(panel.note || 'No version note recorded.')}</p></div></details>`).join('') : empty('Define the first panel.','Record the buyer questions you plan to examine. Saving a panel does not send them to an engine.','','layers')}</div>
+    <aside class="panel"><h2>${panels.length ? 'Create a new version.' : 'Create the first version.'}</h2><p class="panel-intro">Existing versions stay unchanged. Each line becomes one question.</p><form id="panel-create" data-id="${attr(id)}"><div class="form-error" role="alert"></div><div class="field"><label for="panel-prompts">Buyer questions</label><textarea id="panel-prompts" name="prompts" required rows="10" maxlength="25050" placeholder="Which tools help a SaaS team measure product usage?&#10;How should a growing SaaS team compare billing platforms?"></textarea><span class="field-help">One question per line. Up to 50 questions, 500 characters each.</span></div><div class="field"><label for="panel-note">Version note <span class="muted">(required)</span></label><textarea id="panel-note" name="note" required minlength="3" maxlength="1500" rows="3" placeholder="Why this set? What changed from the previous version?"></textarea></div><button type="submit" class="button primary">${icon('lock')} Save new version</button></form></aside></div>`;
+}
+
+function previewPage(id) {
+  const review = reviewById(id);
+  const client = clientById(review?.client_id);
+  if (!review || !client || review.kind !== 'report') return shell(notFound('Report preview'));
+  return `<div class="preview-page"><header class="preview-topbar"><a class="wordmark" href="#/console">MindLever<span>X.</span></a><div class="preview-toolbar">${button('Back to review',`#/reviews/${id}`,'small','back')}<button class="button small" data-action="print">${icon('print')} Print / save PDF</button></div></header><main id="main" class="preview-content" tabindex="-1"><div class="preview-status"><strong>Internal report preview</strong> · ${pill(statusName(review.status),review.status)} · This preview has not been delivered to a client.</div>${review.sample ? sampleNotice('This report contains fictional sample measurements and evidence. It demonstrates the report format; it is not a measured client report.') : ''}
+    <div class="preview-head"><div><span class="eyebrow">${e(client.name)} · Engagement report</span><h1>${e(review.title)}</h1><p class="muted">${e(review.summary)}</p><span class="preview-date">${e(date(review.created_at))} · ${e(client.domain)}</span></div><div class="preview-score">${scoreCard(client)}</div></div>
+    <section class="panel"><h2>Where the engagement is</h2>${stageStrip(client)}</section><section class="preview-body"><span class="eyebrow">The reading</span><div class="body-copy">${e(review.body || review.summary)}</div></section><section><h2>The evidence behind the report</h2>${evidenceList(review)}</section>${review.status !== 'pending' ? `<section class="preview-body"><h2>Review decision</h2><p class="preview-date">${e(statusName(review.status))} · ${e(date(review.decided_at,true))}</p><div class="decision-note">${e(review.note)}</div></section>` : ''}
+    <p class="preview-disclaimer">${review.sample ? 'All displayed scores and evidence are SAMPLE, not measured. The scoring model and engine collection are not implemented in this local workspace. ' : ''}Engine API answers, when measured, are a proxy for consumer products, which can differ in retrieval, personalization and interface. This report preview is available to the local operator and is not an authenticated client portal.</p><footer class="page-footer"><span>MindLeverX · Evidence before assertion.</span><span>${review.sample ? 'Sample report' : 'Internal preview'}</span></footer></main></div>`;
+}
+
+function notFound(label = 'Page') {
+  return empty(`${label} not found.`, 'This link does not match a record in the local workspace.',button('Return to workspace','#/console','primary','back'),'search');
+}
+
+function render() {
+  if (!state.loaded) return;
+  const {page,id} = route();
+  let content;
+  let crumb;
+  if (page === 'preview') { $('#app').innerHTML = previewPage(id); document.title = `Report preview · MindLeverX`; return; }
+  if (page === 'console') content = consolePage();
+  else if (page === 'clients' && id === 'new') { content = newClientPage(); crumb = 'Clients / New client'; }
+  else if (page === 'clients' && id) { content = clientPage(id); crumb = `Clients / ${clientById(id)?.name || 'Record'}`; }
+  else if (page === 'clients') content = clientsPage();
+  else if (page === 'reviews') { content = reviewPage(id); crumb = `${clientById(reviewById(id)?.client_id)?.name || 'Workspace'} / Review`; }
+  else if (page === 'leads') content = leadsPage();
+  else if (page === 'activity') content = activityPage();
+  else if (page === 'panels') { content = panelsPage(id); crumb = `${clientById(id)?.name || 'Client'} / Prompt panels`; }
+  else content = notFound();
+  $('#app').innerHTML = shell(content,crumb);
+  syncNavigation();
+  const title = $('#main h1')?.textContent || 'Workspace';
+  document.title = `${title} · MindLeverX`;
+}
+
+function syncNavigation() {
+  const isMobile = window.matchMedia('(max-width: 760px)').matches;
+  const sidebarNode = $('.sidebar');
+  const scrim = $('.mobile-scrim');
+  const toggle = $('.menu-toggle');
+  if (sidebarNode) {
+    sidebarNode.inert = isMobile && !state.menuOpen;
+    sidebarNode.classList.toggle('open',state.menuOpen);
+  }
+  if (scrim) {
+    scrim.classList.toggle('open',state.menuOpen);
+    scrim.setAttribute('tabindex',isMobile && state.menuOpen ? '0' : '-1');
+  }
+  if (toggle) {
+    toggle.setAttribute('aria-expanded',String(state.menuOpen));
+    toggle.setAttribute('aria-label',`${state.menuOpen ? 'Close' : 'Open'} navigation`);
+  }
+}
+
+window.matchMedia('(max-width: 760px)').addEventListener('change', syncNavigation);
+
+async function mutate(path, method, body, message, form, destination) {
+  if (state.busy) return;
+  state.busy = true;
+  const error = form ? $('.form-error', form) : null;
+  if (error) error.textContent = '';
+  const controls = form ? [...form.querySelectorAll('button,input,select,textarea')] : [];
+  controls.forEach(control => control.disabled = true);
+  try {
+    const result = await api(path,{method,body});
+    await loadWorkspace();
+    if (destination) {
+      const target = typeof destination === 'function' ? destination(result) : destination;
+      if (location.hash !== target) location.hash = target;
+      else render();
+    } else render();
+    toast(message);
+  } catch (reason) {
+    if (error) { error.textContent = reason.message; error.scrollIntoView({block:'nearest'}); }
+    else toast(reason.message);
+    controls.forEach(control => control.disabled = false);
+  } finally { state.busy = false; }
+}
+
+document.addEventListener('submit', event => {
+  const form = event.target;
+  if (!(form instanceof HTMLFormElement)) return;
+  event.preventDefault();
+  const fields = new FormData(form);
+  const id = form.dataset.id;
+  if (form.id === 'client-create') {
+    const name = String(fields.get('name') || '').trim();
+    const domain = String(fields.get('domain') || '').trim();
+    if (!name || !domain) { $('.form-error',form).textContent = 'Enter a client name and domain.'; return; }
+    mutate('/api/clients','POST',{name,domain,notes:String(fields.get('notes') || '').trim()},'Client created. No measurements have been added.',form,result => {
+      const createdId = result.client?.id || result.id || state.clients.find(client => client.name === name && !client.sample)?.id;
+      return createdId ? `#/clients/${createdId}` : '#/clients';
+    });
+  } else if (form.id === 'client-update') {
+    mutate(`/api/clients/${encodeURIComponent(id)}`,'PATCH',{status:fields.get('status'),stage:Number(fields.get('stage')),notes:String(fields.get('notes') || '').trim()},'Engagement changes saved.',form);
+  } else if (form.id === 'review-decision') {
+    const note = String(fields.get('note') || '').trim();
+    const decision = event.submitter?.value;
+    if (note.length < 3) { $('.form-error',form).textContent = 'Add a decision note with at least 3 characters.'; return; }
+    if (!['approved','returned'].includes(decision)) return;
+    mutate(`/api/reviews/${encodeURIComponent(id)}/decision`,'POST',{decision,note},decision === 'approved' ? 'Approval and note saved locally.' : 'Review returned with your note.',form);
+  } else if (form.id === 'panel-create') {
+    const prompts = String(fields.get('prompts') || '').split(/\r?\n/).map(prompt => prompt.trim()).filter(Boolean);
+    const note = String(fields.get('note') || '').trim();
+    if (!prompts.length || note.length < 3) { $('.form-error',form).textContent = 'Add at least one question and a version note.'; return; }
+    if (prompts.length > 50 || prompts.some(prompt => prompt.length > 500)) { $('.form-error',form).textContent = 'Use up to 50 questions, with no more than 500 characters per question.'; return; }
+    mutate(`/api/clients/${encodeURIComponent(id)}/panels`,'POST',{prompts,note},'New panel version saved. Existing versions are unchanged.',form);
+  }
+});
+
+document.addEventListener('input', event => {
+  if (event.target.id !== 'client-search') return;
+  state.search = event.target.value;
+  const filtered = state.clients.filter(client => `${client.name} ${client.domain}`.toLowerCase().includes(state.search.toLowerCase()));
+  $('#client-rows').innerHTML = clientRows(filtered) || '<tr><td colspan="6" class="muted">No clients match this search.</td></tr>';
+  $('#client-count').textContent = `${filtered.length} ${filtered.length === 1 ? 'CLIENT' : 'CLIENTS'}`;
+});
+
+document.addEventListener('click', async event => {
+  if (event.target.closest('.skip-link')) {
+    event.preventDefault();
+    $('#main')?.focus({preventScroll:true});
+    $('#main')?.scrollIntoView({block:'start'});
+    return;
+  }
+  const navLink = event.target.closest('.sidebar a[href^="#/"]');
+  if (navLink && state.menuOpen) {
+    state.menuOpen = false;
+    syncNavigation();
+    if (navLink.getAttribute('href') === location.hash) $('#main')?.focus({preventScroll:true});
+  }
+  const control = event.target.closest('[data-action]');
+  if (!control) return;
+  const action = control.dataset.action;
+  if (action === 'toggle-menu' || action === 'close-menu') {
+    state.menuOpen = action === 'close-menu' ? false : !state.menuOpen;
+    syncNavigation();
+    if (state.menuOpen) $('.sidebar a')?.focus();
+    else $('.menu-toggle')?.focus();
+  } else if (action === 'refresh') {
+    control.disabled = true;
+    try { await loadWorkspace(); render(); toast('Workspace refreshed.'); } catch (reason) { toast(reason.message); control.disabled = false; }
+  } else if (action === 'filter-leads') {
+    state.leadFilter = control.dataset.filter;
+    render();
+    $(`[data-filter="${state.leadFilter}"]`)?.focus();
+  } else if (action === 'lead-status') {
+    control.disabled = true;
+    await mutate(`/api/leads/${encodeURIComponent(control.dataset.id)}`,'PATCH',{status:control.dataset.status},'Request status saved.');
+    if (control.isConnected) control.disabled = false;
+  } else if (action === 'print') window.print();
+});
+
+document.addEventListener('keydown', event => {
+  if (event.key === 'Tab' && state.menuOpen && window.matchMedia('(max-width: 760px)').matches) {
+    const links = [...document.querySelectorAll('.sidebar a[href],.sidebar button:not([disabled])')];
+    const first = links[0];
+    const last = links[links.length-1];
+    if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
+    else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
+  }
+  if (event.key === 'Escape' && state.menuOpen) {
+    state.menuOpen = false;
+    syncNavigation();
+    $('.menu-toggle')?.focus();
+  }
+});
+
+window.addEventListener('hashchange', () => {
+  state.menuOpen = false;
+  render();
+  window.scrollTo(0,0);
+  $('#main')?.focus({preventScroll:true});
+});
+
+async function start() {
+  try {
+    const session = await api('/api/session');
+    state.csrf = session.csrf_token;
+    await loadWorkspace();
+    render();
+  } catch (reason) {
+    $('#app').innerHTML = `<main id="main" class="boot"><span class="wordmark">MindLever<span>X.</span></span><div class="panel" style="max-width:540px;text-align:left"><h1 style="font-size:30px">The workspace could not open.</h1><p class="muted">${e(reason.message)}</p><p class="field-help">Start the local application server, then try again.</p><button class="button primary" id="retry-start">Try again</button> ${button('Public website','/')}</div></main>`;
+    $('#retry-start').addEventListener('click',start);
+  }
+}
+
+start();

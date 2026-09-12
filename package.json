@@ -1,0 +1,15 @@
+{
+  "name": "mindleverx",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "MindLeverX website and local operator workspace",
+  "engines": { "node": ">=24.0.0" },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "dev": "npm run build && node server/start.mjs",
+    "start": "node server/start.mjs",
+    "test": "node --test tests/*.test.mjs",
+    "check": "npm run build && node scripts/check-site.mjs && node scripts/check-platform.mjs && npm test"
+  }
+}
