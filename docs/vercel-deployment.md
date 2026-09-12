@@ -4,6 +4,10 @@ The first Vercel deployment publishes the seven public website pages. Audit requ
 
 The Vercel project is `mindleverx` in the **MindLeverX** team (slug `mind-lever-gmail`). Its connected Git repository is `taitgoodwin-gmail/MindLeverX`. Vercel uses Node.js 24.x, the Other framework preset, `npm run build:public`, and the `public-dist` output directory. The local project link and downloaded environment files are ignored by Git.
 
+Production website: **https://mindleverx.vercel.app/**. Project dashboard: https://vercel.com/mind-lever-gmail/mindleverx. Pushes to `main` trigger production builds through the GitHub integration.
+
+The first production deployment was verified on September 12, 2026: all seven pages and four support files returned HTTP 200; page canonical URLs used the production hostname; public pages contained no forms. The operator workspace, API, database, environment-file and source-page paths returned HTTP 404. Desktop and mobile browser checks verified layout, navigation and theme switching. The public build checks and all nine local integration tests passed.
+
 ## Build and verify
 
 ```sh
