@@ -43,6 +43,11 @@ function publicPage(html) {
     ['Request a free audit', 'Audit availability'],
     ['Request an audit', 'Audit availability'],
     ['Start with the audit →', 'Audit availability →'],
+    ['Local request storage, no payment', 'Requests open when the service is available'],
+    ['Start with an audit request', 'Audit availability'],
+    ['A free GEO audit runs this methodology against your site and labels every number the same way — measured, or not measured yet.', 'The planned GEO audit would apply this methodology to your site, distinguishing measured evidence from unmeasured dimensions.'],
+    ['Process guarantees only — the method is fixed, the numbers are what they are.', 'The intended process preserves evidence and methodology versions.'],
+    ['Content artifacts are delivered as drafts for your approval.', 'The intended workflow prepares content artifacts as drafts for your approval.'],
   ];
   for (const [before, after] of copy) html = html.replaceAll(before, after);
   return html;

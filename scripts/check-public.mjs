@@ -19,7 +19,7 @@ for (const page of expectedPages) {
   const visible = html.replace(/<(?:script|style)\b[^>]*>[\s\S]*?<\/(?:script|style)>/g, '');
   check(!/<(?:form|input|textarea|select)\b/i.test(html), `${page}: public pages must not collect input.`);
   check(!/id="local-preview"|href="\/app\/|(?:src|href)="\/api\//.test(html), `${page}: local workspace leaked into public output.`);
-  check(!/local (?:preview|workspace|server|intake|form)|requests? (?:is |are )?(?:saved|stored) locally|form (?:saves|records)|records interest only/i.test(visible), `${page}: visible copy incorrectly describes local intake.`);
+  check(!/local (?:preview|workspace|server|intake|form|request storage)|requests? (?:is |are )?(?:saved|stored) locally|form (?:saves|records)|records interest only/i.test(visible), `${page}: visible copy incorrectly describes local intake.`);
   check(!/Start the local server|fetch\(|MLX_INTAKE_TOKEN|auditform/.test(html), `${page}: public pages must not include the local intake client.`);
   const canonical = html.match(/<link rel="canonical" href="([^"]+)">/)?.[1];
   if (canonical) {
