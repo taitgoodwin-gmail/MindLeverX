@@ -4,7 +4,7 @@ import vm from 'node:vm';
 import { fileURLToPath } from 'node:url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const directory = path.join(root, 'dist');
+const directory = path.join(root, process.argv.includes('--public') ? 'public-dist' : 'dist');
 const pages = (await fs.readdir(directory)).filter(name => name.endsWith('.html'));
 const files = new Map();
 const errors = [];

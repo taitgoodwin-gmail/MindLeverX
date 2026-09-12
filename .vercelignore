@@ -1,0 +1,12 @@
+.git/
+.env
+.env.*
+data/
+artifacts/
+reference/
+dist/
+public-dist/
+node_modules/
+server/
+platform/
+tests/

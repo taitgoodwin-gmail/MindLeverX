@@ -1,5 +1,7 @@
 node_modules/
 dist/
+public-dist/
+.vercel/
 data/
 .env
 .env.*

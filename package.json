@@ -7,6 +7,7 @@
   "engines": { "node": ">=24.0.0" },
   "scripts": {
     "build": "node scripts/build.mjs",
+    "build:public": "node scripts/build.mjs --public && node scripts/check-public.mjs",
     "dev": "npm run build && node server/start.mjs",
     "start": "node server/start.mjs",
     "test": "node --test tests/*.test.mjs",

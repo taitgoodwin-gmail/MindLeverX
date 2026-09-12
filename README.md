@@ -35,6 +35,10 @@ Persistent data is stored at `data/mindleverx.sqlite` and is ignored by Git. Kee
 
 The generated static `dist/` has an unconnected intake runtime by default. The local server provides `/runtime.js` with the local intake configuration. Uploading `dist/` alone does not provide a backend or authenticated platform.
 
+## Public website deployment
+
+`npm run build:public` creates and verifies the website-only `public-dist/` artifact used by Vercel. Public pages show that audit requests and newsletter subscriptions are not open yet. The operator workspace, API and SQLite records stay local. See [Vercel deployment notes](docs/vercel-deployment.md) for configuration and canonical URLs.
+
 ## Project layout
 
 | Path | Purpose |
