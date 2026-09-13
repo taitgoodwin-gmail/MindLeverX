@@ -16,7 +16,8 @@
   }
   let savedTheme;
   try { savedTheme = localStorage.getItem('mlx-theme'); } catch {}
-  setTheme(savedTheme ? savedTheme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches);
+  // Use light unless the visitor has explicitly saved a dark-theme choice.
+  setTheme(savedTheme === 'dark');
   for (const id of ['tg', 'tg2']) $(id)?.addEventListener('click', () => {
     const dark = document.documentElement.dataset.theme !== 'dark';
     setTheme(dark);
