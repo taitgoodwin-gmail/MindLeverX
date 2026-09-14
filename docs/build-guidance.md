@@ -28,6 +28,8 @@ Sources checked 2026-09-13: [Firecrawl pricing](https://www.firecrawl.dev/pricin
 
 ## Applying this to the next task
 
+Latest authorization, 13 September 2026 Eastern: the owner requested review, red teaming and production activation of the unattended team workflow. Follow [unattended delivery protocol](unattended-work.md) for the bounded coordinator and daily report. This supersedes the historical no-standing-loop statement below for orchestration only; product scope, spending, appearance and release boundaries are retained.
+
 September13 execution checkpoint: the owner authorized a bounded local report-package builder and one review trial; see [frozen slice and trial criteria](report-builder-slice.md) and the existing MIN-7 task. This is a task-specific authorization, not adoption of a standing improvement loop. No recurring schedule or new standing review instruction is added here. The older broad implementation hold in the plan is superseded only for this local slice.
 
 Define the recurring pilot's business, question panel, collection method, retained evidence, report, improvement scope, success criteria, and effort/spending cap using the existing plan. Verify the collection-to-report workflow and its actual review effort before broadening automation. Use [implementation status](implementation-status.md) for local product boundaries and [deployment notes](vercel-deployment.md) for the already-published website.
