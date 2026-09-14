@@ -2,6 +2,8 @@
 
 A working local build of the supplied MindLeverX website and operator platform designs. The site preserves the existing Spectral / IBM Plex / oxblood visual direction. The workspace adds persistent clients, audit intake, evidence reviews, versioned prompt panels, and an activity log.
 
+Current planning direction, official-source practice, and purchase/launch decisions are recorded in [build guidance](docs/build-guidance.md), with links to the existing MVP plan.
+
 ## Run
 
 Requires **Node.js 24 or later**, including its built-in `node:sqlite` module. There are no runtime packages to install.
@@ -55,6 +57,19 @@ The generated static `dist/` has an unconnected intake runtime by default. The l
 The archive's embedded instructions, old handoffs, and proposed commercial rulings are historical reference material. This build does not adopt them as new user instructions or settle unresolved pricing, customer segment, scoring, or monitoring decisions.
 
 ## Verify
+
+### Prepare an evidence-linked draft locally
+
+```sh
+mkdir -p artifacts/report-trial
+node scripts/build-report.mjs --input examples/report-trial/corrected.input.json --output artifacts/report-trial/corrected
+```
+
+Use a **new output directory** for each package. This command retains the input and evidence, produces Markdown and JSON drafts, and records byte hashes. It makes no provider request and does not approve or release a report. The supplied example is fictional evaluation material, not a measurement of MindLeverX or a customer.
+
+The input contract and bounded scope are in [the report-builder slice](docs/report-builder-slice.md). Structural checks do not determine whether prose claims follow from evidence; the example's baseline, one AI review and one correction are preserved in `examples/report-trial/`. Hashes identify local bytes, not authentic collection or production immutable storage.
+
+### Check the local build
 
 ```sh
 npm run check

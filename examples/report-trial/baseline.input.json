@@ -1,0 +1,169 @@
+{
+  "schemaVersion": "mlx-report-input-v1",
+  "reportId": "fixture-review-baseline-v1",
+  "subject": {
+    "name": "FixtureCo (fictional)",
+    "website": "https://fixtureco.example"
+  },
+  "preparedAt": "2026-09-14T01:20:00.000Z",
+  "fixture": true,
+  "method": {
+    "id": "fixture-only-report-review",
+    "version": "1",
+    "description": "Hand-authored fictional cases adapted from server/seed.mjs. No real collection, score formula or consumer observation."
+  },
+  "limitations": [
+    "Fictional evaluation material; no real business or platform was measured.",
+    "Ordinary search performance is not measured.",
+    "Structural validity does not establish claim correctness. This baseline intentionally contains defects for a bounded review trial."
+  ],
+  "evidence": [
+    {
+      "id": "api-answer",
+      "family": "model_api",
+      "surface": "Fictional API response",
+      "status": "observed",
+      "capturedAt": "2026-07-28T08:00:00.000Z",
+      "sourceUrl": null,
+      "content": "FICTIONAL: The retained answer includes one source link to FixtureCo. The illustrative parser produced an empty citations array. Expected citations: 1; parsed citations: 0. No engine was called.",
+      "limitation": "Illustrative parser discrepancy, not evidence of zero citations or actual market visibility.",
+      "context": {
+        "question": "Which providers should a buyer compare with FixtureCo?",
+        "locale": null,
+        "engine": "Fictional API",
+        "model": null,
+        "panelVersion": "fixture-v1"
+      }
+    },
+    {
+      "id": "illustrative-scores",
+      "family": "website_readiness",
+      "surface": "Fictional design scores",
+      "status": "observed",
+      "capturedAt": "2026-07-28T08:00:00.000Z",
+      "sourceUrl": null,
+      "content": "FICTIONAL: Current design number74/100; previous68/100. Numbers are hand-authored, with no implemented scoring formula or weights. A rewrite and an index update occur in the same fictional period; their effects cannot be isolated.",
+      "limitation": "The two illustrative numbers are not a valid measured or causal before/after result.",
+      "context": {
+        "question": null,
+        "locale": null,
+        "engine": null,
+        "model": null,
+        "panelVersion": null
+      }
+    },
+    {
+      "id": "surface-boundary",
+      "family": "model_api",
+      "surface": "Fictional API context note",
+      "status": "observed",
+      "capturedAt": "2026-07-28T08:00:00.000Z",
+      "sourceUrl": null,
+      "content": "FICTIONAL: These API examples are not observations of consumer ChatGPT. No consumer ChatGPT session was captured. API/provider behavior must be labeled separately.",
+      "limitation": "Cannot establish what potential customers see in ChatGPT.",
+      "context": {
+        "question": null,
+        "locale": null,
+        "engine": "Fictional API",
+        "model": null,
+        "panelVersion": "fixture-v1"
+      }
+    },
+    {
+      "id": "company-facts",
+      "family": "website_readiness",
+      "surface": "Fictional content review",
+      "status": "observed",
+      "capturedAt": "2026-07-28T08:00:00.000Z",
+      "sourceUrl": "https://fixtureco.example/about",
+      "content": "FICTIONAL: Company founding date: NEEDS VERIFICATION. Customer count: NEEDS VERIFICATION. The sample page begins with a slogan and lacks a self-contained category definition.",
+      "limitation": "Founding date and customer count remain unknown.",
+      "context": {
+        "question": null,
+        "locale": null,
+        "engine": null,
+        "model": null,
+        "panelVersion": null
+      }
+    },
+    {
+      "id": "search-unmeasured",
+      "family": "search_performance",
+      "surface": "No connected search account",
+      "status": "not_measured",
+      "capturedAt": null,
+      "sourceUrl": null,
+      "content": "",
+      "limitation": "Search performance data is unavailable in this fixture.",
+      "context": {
+        "question": null,
+        "locale": null,
+        "engine": null,
+        "model": null,
+        "panelVersion": null
+      }
+    },
+    {
+      "id": "consumer-failed",
+      "family": "consumer_ai",
+      "surface": "Fictional ChatGPT collection attempt",
+      "status": "failed",
+      "capturedAt": "2026-07-28T08:00:00.000Z",
+      "sourceUrl": null,
+      "content": "FICTIONAL: The attempted capture failed before any answer was retained.",
+      "limitation": "No answer was observed; consumer visibility remains unknown, not zero.",
+      "context": {
+        "question": "Which providers should a buyer compare with FixtureCo?",
+        "locale": null,
+        "engine": "ChatGPT (fictional failed attempt)",
+        "model": null,
+        "panelVersion": "fixture-v1"
+      }
+    }
+  ],
+  "findings": [
+    {
+      "id": "F1",
+      "text": "The parser's empty citations list establishes zero citations in the captured answer.",
+      "evidenceIds": [
+        "api-answer"
+      ],
+      "limitations": []
+    },
+    {
+      "id": "F2",
+      "text": "The rewrite caused a six-point improvement in website readiness, from68 to74.",
+      "evidenceIds": [
+        "illustrative-scores"
+      ],
+      "limitations": []
+    },
+    {
+      "id": "F3",
+      "text": "The API example confirms that potential customers see FixtureCo recommended in consumer ChatGPT.",
+      "evidenceIds": [
+        "surface-boundary",
+        "consumer-failed"
+      ],
+      "limitations": []
+    },
+    {
+      "id": "F4",
+      "text": "FixtureCo was founded in2018 and serves500 customers.",
+      "evidenceIds": [
+        "company-facts"
+      ],
+      "limitations": []
+    },
+    {
+      "id": "F5",
+      "text": "Consider a self-contained category definition to make the page easier to understand. An AI visibility improvement has not been established.",
+      "evidenceIds": [
+        "company-facts"
+      ],
+      "limitations": [
+        "This is a content hypothesis, not approval to change the website."
+      ]
+    }
+  ]
+}

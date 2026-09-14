@@ -1,5 +1,7 @@
 # Vercel website deployment
 
+September 13 plan and billing follow-up: see the [purchase and release record](build-guidance.md#purchases-and-release-record) for the owner's intended upgrade timing and Vercel's commercial-use requirement. The currently deployed marketing website and the future functional application are separate release states.
+
 The first Vercel deployment publishes the seven public website pages. Audit requests and newsletter subscriptions are not open yet, and the published pages show this directly without collecting email addresses or company domains.
 
 The Vercel project is `mindleverx` in the **MindLeverX** team (slug `mind-lever-gmail`). Its connected Git repository is `taitgoodwin-gmail/MindLeverX`. Vercel uses Node.js 24.x, the Other framework preset, `npm run build:public`, and the `public-dist` output directory. The local project link and downloaded environment files are ignored by Git.

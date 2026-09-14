@@ -1,5 +1,9 @@
 # Implementation status · 12 September 2026
 
+## September 13 local report preparation update
+
+The local evidence-to-report builder is implemented and verified with supplied fictional inputs: exact input/evidence retention, draft Markdown/JSON, byte hashes, explicit measurement states and no overwrite/release. See [slice verification and remaining limits](report-builder-verification.md). A single bounded AI review/correction trial is complete; ongoing adoption remains undecided. The older integration and missing-source inventory below describes the September 12 checkpoint: requirements have since been recovered and reviewed, and the website is already deployed separately from the still-local operator application. No live collector, production identity or client delivery is established by the new report builder.
+
 ## Delivered locally
 
 The archive contained six self-contained website source pages, a generated copy, design canvases, and historical planning documents. It did not contain an application backend, a reproducible build, or the master requirements register cited by those documents.
