@@ -73,4 +73,3 @@ Strategic rank is not a build order. Evidence and the pilot remain essential dep
 AI contribution rationale: evidence qualification4 for detecting gaps and proposing appropriate questions; report5 for grounded interpretation and prioritization; offer4 for challenging assumptions and tradeoffs; paid workflow3 because reliable deterministic processing is often sufficient; pilot4 for synthesizing feedback and errors; recurring delivery5 for interpreting comparable changes and updating useful recommendations. These are hypotheses to test against a simpler baseline, not proof of model quality.
 
 The [metric pressure test](metric-methodology.md) also checks weight sensitivity: recurring delivery stays highest in three illustrative scenarios, but report/workflow ordering changes. One-point differences should not decide the build order.
-

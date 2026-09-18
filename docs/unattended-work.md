@@ -55,3 +55,11 @@ Checked 13 September 2026 Eastern:
 Rechecked 14 September 2026: https://learn.chatgpt.com/docs/automations?surface=app supports testing prompts manually, reviewing early runs, durable instructions and local availability prerequisites. The first three scheduled runs and postmortem are retained under artifacts/unattended-work/.
 
 Those are documented platform capabilities/recommendations. Our daily cadence, 30-minute batch, 20% reserve, retry limit, 8 a.m. report and finite queue are coordinator implementation choices. Local preflight/connector checks are not proof of uptime, full security isolation or autonomous commercial readiness.
+
+## Actual runtime limitation — 18 September 2026
+
+The morning heartbeat delivered its daily brief, then a later clock check showed77minutes14seconds since its initial clock, exceeding the intended30-minute wall-time cap. The intervening gap is unexplained; native browser inventory also reported a locked Mac, but that does not prove the cause. The run stopped substantive work when the excess was observed and retained a partial qualification checkpoint. It is not an accepted example of bounded execution.
+
+For the next explicitly scoped overnight-development batch, recommended correction: check actual elapsed time immediately before and after external/browser calls as well as before each work unit, checkpoint before a potentially blocking dependency, and use tool timeouts when available. If the session resumes after the deadline, permit checkpointing only. These measures improve detection and recovery; they do not supply a hard scheduler/runtime guarantee. Validate interruption/resume behavior before describing time enforcement as reliable. This paragraph records the proposed correction; the active automation has not been changed, and no new overnight schedule/backlog is authorized here.
+
+Keep three statuses separate: the seven-tenet decision method is finalized; the MIN-5 qualification/specification remains incomplete; overnight timing/recovery needs correction and verification. Next product sequence remains MIN-5 → accepted MIN-6 collection → MIN-7 private real-report review. Hosting-plan resolution gates publication, not internal evidence qualification. Today's daily briefing is already delivered; any tracker retry must not send another briefing.

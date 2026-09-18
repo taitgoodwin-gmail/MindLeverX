@@ -21,7 +21,7 @@ The standard skill-creator validator passed after PyYAML 6.0.2 was installed in 
 
 A separate agent received the skill and five raw offline user requests, without the proposed acceptance table or intended answers. It read both conditional references. Actual responses and coordinator review are retained in [the trial record](../thinking-partner-trial.md). The trial tested claim caution, automation versus human effort, behavioral diagnosis, a simple heading edit and portal prioritization. A claim-presentation concern prompted one targeted revision and follow-up test; see that record for its outcome.
 
-These are bounded AI-assisted trials, not representative customer tests, proof of enduring reliability, a benchmark of the model or automatic skill discovery. The agent explicitly read the skill; fresh-session implicit discovery remains unverified. A future task should confirm discovery before relying on persistence. No continuously running specialist team is implied.
+These are bounded AI-assisted trials, not representative customer tests, proof of enduring reliability, a benchmark of the model or automatic skill discovery. The agent explicitly read the skill; fresh-session implicit discovery remains unverified. On18September, the available-skills catalog included the skill and this task received the project instructions. That confirms presence/discovery; reliable implicit selection and future adherence remain unverified. No continuously running specialist team is implied.
 
 ## Official packaging basis
 

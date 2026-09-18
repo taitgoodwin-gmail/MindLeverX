@@ -66,4 +66,3 @@ Rate each from 1 to 5: **1 weak**, **2 limited**, **3 moderate**, **4 strong**, 
 Record owner UX and client UX separately. For this assessment, use the lower of the two as the combined UX rating so one side's friction cannot be hidden by averaging. This is a coordinator assessment choice.
 
 Weighted total out of 100 = sum of `(rating / 5) × weight`. Strategic ranks compare expected contribution, not execution sequence, implementation readiness, scientific certainty or percentage completion. Preserve dependencies and state evidence confidence alongside scores. Reassess after the real-report review, paid pilot and first repeat cycle; do not change scores merely to show progress.
-
