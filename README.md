@@ -4,6 +4,8 @@ A working local build of the supplied MindLeverX website and operator platform d
 
 Current planning direction, official-source practice, and purchase/launch decisions are recorded in [build guidance](docs/build-guidance.md), with links to the existing MVP plan.
 
+The [product and business tenets](docs/product-tenets.md) define recurring revenue, repeatability, automation, AI intelligence, competitive leadership, premier owner/client UI/UX and evidence-informed behavioral design. The [MVP roadmap assessment](docs/mvp-tenet-assessment.md) maps the six delivery stages to those principles and separates proposed value from verified readiness.
+
 ## Run
 
 Requires **Node.js 24 or later**, including its built-in `node:sqlite` module. There are no runtime packages to install.

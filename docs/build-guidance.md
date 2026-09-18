@@ -4,7 +4,17 @@ Recorded 13 September 2026 from the owner's instructions in the MVP side convers
 
 ## Existing plan
 
+### Product and business tenets — 17 September 2026
+
+The owner directs all work toward recurring revenue, repeatability, automation, AI intelligence distinct from automation, competitive leadership, premier UI/UX with low to no friction for both owner and client, and evidence-informed behavioral design. The canonical definitions are in [product and business tenets](product-tenets.md). Apply them to scope, prioritization, design and operation; do not defer experience quality to a final cosmetic pass. The [MVP roadmap assessment](mvp-tenet-assessment.md) maps every stage to all seven criteria, with dependency-based priorities and explicit validation gaps; earlier numerical scores are historical only. Scores describe proposed contribution, not implementation progress or proven competitive advantage. The owner-directed tenets are distinct from coordinator-selected weights and acceptance proposals. [Metric definitions and proposed targets](tenet-metrics.md) specify what evidence to collect for each tenet and the cross-cutting safeguards.
+
 Continue from [PLAN — Tomorrow's MVP.md](https://drive.google.com/file/d/1EI9FAoPqz-oQfOUEYrwdTyZn7M8YyhJv/view) and its [Recurring service decision brief](https://drive.google.com/file/d/16v-u6j8Gu1Rigl4Z63-ZIq0cMabibdc5/view). These are in the [Preparation & Reference Library](https://drive.google.com/drive/folders/1e7G_b0SuEkIoSPZlEjlEw-HSH-d-r2d4). Preserve the recurring-revenue, repeatability, automation, and low-owner-effort goals. The precise customer package, pilot specification, price, and build scope remain to be defined.
+
+The seventh tenet uses consumer psychology for buyer attraction, decisions, engagement and renewal, and retains I-O psychology for human work, teams and adoption. The [behavioral lens](../.agents/skills/evidence-led-thinking-partner/references/behavioral-design.md) supplies sourced ideas and proposed measures; no intervention or new numerical weighting is implemented. The reusable method is finalized for this repository; particular interventions remain hypotheses until tested.
+
+## Thinking-partner practice — 17 September 2026
+
+The owner asks for continuing evidence-led challenge, benchmarking and methodology, not agreement alone. The repository-root [working agreement](../AGENTS.md) records this behavior and routes future work to the tenets. [Metric methodology](metric-methodology.md) records the first pressure test, source provenance, revised targets and sensitivity analysis. Keep advice proportional to the decision; do not turn the practice into repetitive approvals or extra scheduling. The repository-scoped [thinking-partner skill](../.agents/skills/evidence-led-thinking-partner/SKILL.md) is finalized. Its [release record](skill-proposals/evidence-led-thinking-partner-proposal.md) records validation and limits. No global installation or memory setting is changed.
 
 ## Official-source practice
 
@@ -28,7 +38,9 @@ Sources checked 2026-09-13: [Firecrawl pricing](https://www.firecrawl.dev/pricin
 
 ## Applying this to the next task
 
-Latest authorization, 13 September 2026 Eastern: the owner requested review, red teaming and production activation of the unattended team workflow. Follow [unattended delivery protocol](unattended-work.md) for the bounded coordinator and daily report. This supersedes the historical no-standing-loop statement below for orchestration only; product scope, spending, appearance and release boundaries are retained.
+14 September 2026: owner approved applying the unattended-work postmortem improvements and running an independent bounded test. The current protocol uses daily 8 a.m. Eastern reporting, prerequisite checks and a 30-minute total ready-work batch. This authorizes coordinator improvements and verification, without approving unresolved product/provider/commercial decisions. See [unattended delivery protocol](unattended-work.md).
+
+Earlier authorization, 13 September 2026 Eastern: the owner requested review, red teaming and production activation of the unattended team workflow. Follow [unattended delivery protocol](unattended-work.md) for the bounded coordinator and daily report. This supersedes the historical no-standing-loop statement below for orchestration only; product scope, spending, appearance and release boundaries are retained.
 
 September13 execution checkpoint: the owner authorized a bounded local report-package builder and one review trial; see [frozen slice and trial criteria](report-builder-slice.md) and the existing MIN-7 task. This is a task-specific authorization, not adoption of a standing improvement loop. No recurring schedule or new standing review instruction is added here. The older broad implementation hold in the plan is superseded only for this local slice.
 

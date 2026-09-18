@@ -36,3 +36,11 @@ The public build selects the origin for canonical links, Open Graph URLs, struct
 The local HTTP server binds to loopback and rejects other Host/Origin values. Its session token protects local actions but does not authenticate an operator. It also stores sessions in process memory and persists business records to a local SQLite file. Public operator access requires production authentication and authorization, a durable hosted data store, and a deployment-compatible API. Those changes are outside this website deployment.
 
 Sample measurement labels and the dated case-study context remain visible on the published site. Engine collection, automated audit execution, email delivery, subscriptions and billing remain unconnected.
+
+## Release checkpoint — 17 September 2026
+
+Owner requested harmonization/finalization followed by GitHub push and Vercel deployment. Framework and project skill release contains no public HTML, CSS, theme or runtime changes. Existing local report-builder code is included in the branch but remains excluded from the public website artifact. `npm run check` passed all 55 tests and site/platform checks; `npm run build:public` passed the website-only boundary check. No new live audit, payment workflow or private client delivery is established by this release.
+
+Read-only billing inspection on 17 September Eastern showed **Hobby Plan — Active**, with no payment method. Current [Vercel Hobby guidance](https://vercel.com/docs/plans/hobby), checked the same date, restricts Hobby to personal noncommercial use. New production publication is therefore held pending a suitable plan; no upgrade, card entry or new paid usage is authorized by a deployment request alone. The current production deployment remains `0fc5498` / `dpl_9vdh6v363WrvL6usAfYNhre2xBG5`, READY when inspected.
+
+The prepared work will be backed up as Git tag `codex/tenets-v1-2026-09-17`, preserving a reviewable GitHub checkpoint without moving the production branch or the preview branch. No GitHub Actions workflows are present in this repository. Branch release and production deployment remain pending the hosting-plan decision. Verify the remote tag and Vercel deployment list after pushing. This records a coordinator hold, not a Vercel build rejection.
