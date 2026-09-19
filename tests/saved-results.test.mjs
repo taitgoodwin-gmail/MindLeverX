@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
 import { savedResults } from '../server/saved-results.mjs';
 
 const source = [
@@ -31,4 +32,16 @@ test('vendor markup remains exact text data and missing dates remain unknown', (
   assert.equal(result.answers[0].vendorTimestamp,null);
   assert.equal(result.aggregate.numerator,0);
   assert.ok(result.issues.some(issue => issue.field === 'timestamp'));
+});
+test('UTF-8 BOM exports retain exact answers, counts and original-byte provenance', () => {
+  const jsonBytes = Buffer.from(JSON.stringify(source));
+  const bytes = Buffer.concat([Buffer.from([0xef, 0xbb, 0xbf]), jsonBytes]);
+  const result = savedResults(bytes, 'MindLeverX');
+  assert.equal(result.state, 'complete');
+  assert.deepEqual(result.answers.map(row => row.answer), source.map(row => row.response_text));
+  assert.equal(result.aggregate.numerator, 1);
+  assert.equal(result.aggregate.denominator, 2);
+  assert.equal(result.source.bytes, bytes.length);
+  assert.equal(result.source.sha256, createHash('sha256').update(bytes).digest('hex'));
+  assert.notEqual(result.source.sha256, createHash('sha256').update(jsonBytes).digest('hex'));
 });

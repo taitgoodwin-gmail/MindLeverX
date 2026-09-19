@@ -11,7 +11,7 @@ export function savedResults(bytes, brand) {
     aggregate: inspection.aggregate,
   };
   if (inspection.status !== 'complete') return { ...base, answers: [], platforms: [] };
-  const records = JSON.parse(bytes.toString('utf8'));
+  const records = JSON.parse(new TextDecoder('utf-8', { fatal: true }).decode(bytes));
   const answers = inspection.rows.map(row => ({ ...row, answer: records[row.row - 1].response_text }));
   const engines = [...new Set(answers.map(row => row.engine))];
   return {
