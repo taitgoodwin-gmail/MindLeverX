@@ -1,0 +1,225 @@
+{
+  "schemaVersion": "mlx-pilot-panel-draft-v1",
+  "panelId": "mlx-internal-coverage",
+  "version": 1,
+  "state": "draft",
+  "collectionStatus": "blocked",
+  "subject": {
+    "brand": "MindLeverX",
+    "domain": "mindleverx.com"
+  },
+  "purpose": "Explore the buyer questions relevant to MindLeverX and the usefulness of a future consumer-ChatGPT observation panel. This is a reviewable candidate set, not an accepted collection design.",
+  "preparedBy": "Codex — AI-assisted draft",
+  "owner": "MindLeverX owner — approval pending",
+  "language": "en",
+  "market": null,
+  "locale": null,
+  "collectionSurface": null,
+  "repetitions": null,
+  "sources": [
+    {
+      "id": "direction",
+      "title": "Accepted product direction",
+      "kind": "owner_direction",
+      "reference": "docs/build-guidance.md",
+      "sha256": "68988a30f868fbf8c548bb98c78d12b44085861c7dad7d10ec37eb55f20b104c",
+      "limitation": "Owner direction is evidence of intended outcome, not buyer demand or implemented capability."
+    },
+    {
+      "id": "efficiency",
+      "title": "Question-selection correction",
+      "kind": "owner_direction",
+      "reference": "docs/pilot-prompt-benchmarks-2026-09-19.md",
+      "sha256": "98517706370072cbe9e4a61d2af85a3a2c5d22bf13152d22e8b3ae803437e4ac",
+      "limitation": "Competitor counts are references; no sample size or repetition rule is accepted."
+    },
+    {
+      "id": "website",
+      "title": "Current local website copy",
+      "kind": "draft_website",
+      "reference": "site/index.html",
+      "sha256": "d4f14e2474b51e147c0928c82a32ddc65fe7002f7b432b2523b85caf4eee7f57",
+      "limitation": "Contains planned services, illustrative B2B SaaS examples and unresolved free-audit copy; not proof of buyer demand or a selected offer."
+    },
+    {
+      "id": "offer",
+      "title": "Paid-pilot offer proposal",
+      "kind": "draft_offer",
+      "reference": "artifacts/unattended-work/paid-pilot-offer-draft.md",
+      "sha256": "774ede776cfec5d9f8514150bcf3ae6d4c9de40c07b9a540b52b12dce07629ef",
+      "limitation": "Buyer, price, scope, cadence and numbers are unaccepted hypotheses; local ignored source is not included in Git backup."
+    },
+    {
+      "id": "saved_prompt",
+      "title": "Question in the retained vendor export",
+      "kind": "saved_observation",
+      "reference": "artifacts/unattended-work/evidence/2026-09-17-otterly/raw-answers.json",
+      "sha256": "dfb34e1b540066b1990b32d0b599cb0968993a3a2d810fac907c883d08be5b58",
+      "limitation": "Proves only that this exact question occurs in the retained sample; buyer frequency and original selection rationale are unknown. Raw source stays private/local."
+    }
+  ],
+  "intents": [
+    {
+      "id": "discovery_problem",
+      "title": "Discovery and problem",
+      "definition": "Finding a service or understanding the problem before knowing its solution category."
+    },
+    {
+      "id": "comparison",
+      "title": "Compare approaches",
+      "definition": "Comparing materially different ways to solve the visibility-assessment problem."
+    },
+    {
+      "id": "trust_method",
+      "title": "Evidence and ongoing usefulness",
+      "definition": "Evaluating evidence quality and the value of repeating an assessment."
+    },
+    {
+      "id": "direct_brand",
+      "title": "Direct-brand facts",
+      "definition": "Asking explicitly about MindLeverX; kept separate from spontaneous discovery."
+    }
+  ],
+  "questions": [
+    {
+      "id": "MLX-Q-001",
+      "text": "What are the best generative engine optimization services?",
+      "version": 1,
+      "intentId": "discovery_problem",
+      "anchoring": "unanchored",
+      "role": "discovery_candidate",
+      "headlineEligibility": "unresolved",
+      "provenance": "retained_observed_prompt",
+      "sourceIds": [
+        "saved_prompt",
+        "efficiency"
+      ],
+      "rationale": "Preserve the one known service-discovery question as a candidate for future comparable observation.",
+      "uncertainty": "Earlier answers are a selected historical sample, not a baseline under this new panel; buyer frequency and original selection rationale are unknown."
+    },
+    {
+      "id": "MLX-Q-002",
+      "text": "How can I find out whether ChatGPT recommends my business to potential customers?",
+      "version": 1,
+      "intentId": "discovery_problem",
+      "anchoring": "unanchored",
+      "role": "discovery_candidate",
+      "headlineEligibility": "unresolved",
+      "provenance": "ai_generated_hypothesis",
+      "sourceIds": [
+        "direction",
+        "website"
+      ],
+      "rationale": "Explore the buyer problem without requiring prior familiarity with the term GEO.",
+      "uncertainty": "This wording is AI-generated, not a recorded buyer query; whether it elicits useful provider or measurement recommendations is untested."
+    },
+    {
+      "id": "MLX-Q-003",
+      "text": "Should I use an AI visibility monitoring tool or hire a GEO service to assess how my business appears in ChatGPT?",
+      "version": 1,
+      "intentId": "comparison",
+      "anchoring": "unanchored",
+      "role": "exploratory_candidate",
+      "headlineEligibility": "excluded",
+      "provenance": "ai_generated_hypothesis",
+      "sourceIds": [
+        "offer",
+        "website"
+      ],
+      "rationale": "Examine a credible alternative: self-service tooling versus assisted interpretation.",
+      "uncertainty": "No buyer segment, budget or named competitors are selected; comparison answers are not automatically service-discovery visibility observations."
+    },
+    {
+      "id": "MLX-Q-004",
+      "text": "What evidence should a GEO audit provide before I trust its findings about ChatGPT visibility?",
+      "version": 1,
+      "intentId": "trust_method",
+      "anchoring": "unanchored",
+      "role": "exploratory_candidate",
+      "headlineEligibility": "excluded",
+      "provenance": "ai_generated_hypothesis",
+      "sourceIds": [
+        "direction",
+        "offer"
+      ],
+      "rationale": "Explore what evidence and limitations could help a buyer judge a report.",
+      "uncertainty": "The question expresses a design hypothesis about buyer trust, not validated demand or a factual assessment of any provider."
+    },
+    {
+      "id": "MLX-Q-005",
+      "text": "What is worth monitoring regularly after an initial ChatGPT visibility audit?",
+      "version": 1,
+      "intentId": "trust_method",
+      "anchoring": "unanchored",
+      "role": "exploratory_candidate",
+      "headlineEligibility": "excluded",
+      "provenance": "ai_generated_hypothesis",
+      "sourceIds": [
+        "direction",
+        "offer",
+        "website"
+      ],
+      "rationale": "Explore continuing usefulness without assuming monthly cadence, automatic subscription or implementation service.",
+      "uncertainty": "An answer cannot establish willingness to pay, actual renewal or whether repeated reports change customer decisions."
+    },
+    {
+      "id": "MLX-Q-006",
+      "text": "What is MindLeverX, and what does it offer?",
+      "version": 1,
+      "intentId": "direct_brand",
+      "anchoring": "brand_anchored",
+      "role": "brand_diagnostic",
+      "headlineEligibility": "excluded",
+      "provenance": "ai_generated_hypothesis",
+      "sourceIds": [
+        "website",
+        "direction"
+      ],
+      "rationale": "Inspect direct-brand factual representation separately from spontaneous discovery.",
+      "uncertainty": "Any answer must be compared with current authorized business facts; planned services in website copy are not proof of delivered capabilities."
+    }
+  ],
+  "alternatives": [
+    {
+      "text": "Best GEO agencies / best AI visibility services / spelling variants",
+      "decision": "deferred",
+      "reason": "Likely overlap with Q001, but equivalent answer behavior is untested. Keep as future exploratory alternatives."
+    },
+    {
+      "text": "What is GEO? / How is GEO different from SEO?",
+      "decision": "deferred",
+      "reason": "Adds category-education coverage. Revisit if actual buyer evidence or the selected claims require it."
+    },
+    {
+      "text": "Best GEO agency for B2B SaaS",
+      "decision": "deferred",
+      "reason": "The site uses this in illustrative copy; B2B SaaS is not the accepted buyer decision or observed demand."
+    },
+    {
+      "text": "Named competitors, geographic variants and price/budget questions",
+      "decision": "deferred",
+      "reason": "Competitor set, market, geography and commercial package remain unselected."
+    },
+    {
+      "text": "Multiple MindLeverX praise or recommendation variants",
+      "decision": "deferred",
+      "reason": "Anchored questions cannot establish spontaneous discovery; avoid selecting only wording that favors the brand."
+    },
+    {
+      "text": "How much will GEO improve my rankings or revenue?",
+      "decision": "deferred",
+      "reason": "Requires outcome evidence beyond this diagnostic pilot; do not imply a performance guarantee."
+    }
+  ],
+  "gaps": [
+    "Actual buyer language, frequency and relative intent importance are not available.",
+    "The first commercial buyer, market and exact offer remain unselected. English describes these prompt strings; collection locale is unresolved.",
+    "Question overlap and answer variation have not been observed for this candidate set.",
+    "The desired consumer-ChatGPT focus is accepted, but the qualified provider/surface and downstream reporting boundaries remain open in MIN-12.",
+    "Panel approval, repetition count, collection window, attempt/retry limits, eligible-sample policy and uncertainty rules remain unresolved.",
+    "No new observations have been collected. Q001 historical observations remain under their original scope and limitations.",
+    "Broader platform coverage remains an ambition; this artifact does not silently select or rule out other platforms.",
+    "A useful report and repeatable delivery must be validated separately from this draft and from actual payment or renewal."
+  ],
+  "measurementBoundary": "Keep discovery/problem, comparison, trust/method and direct-brand results separate. Only Q001–Q002 are proposed discovery candidates, and their eligibility remains unresolved. Q003–Q005 are provisionally excluded from this proposed discovery metric; this does not establish a universal eligibility rule for unbranded questions. Q006 is excluded from unanchored visibility because it names MindLeverX. No headline denominator, sample adequacy, representativeness or trend comparability is approved. Future stable comparison and exploratory sets must remain separately versioned; nothing in this draft is frozen. Reusing Q001 does not turn its historical selected export into a baseline under this new panel."
+}
