@@ -1,0 +1,68 @@
+# MindLeverX — corrected Codex handoff
+
+## Start here — 19 September 2026, MIN-14
+
+This section supersedes older status/count statements below. Current owner focus is delivery governance and recoverability before returning to product work. Use [delivery governance](delivery-governance.md) for ownership, decision boundaries, evidence and the work cycle; [chunk plan](chunk-plan.md) for owner-visible steps and active Linear navigation. The owner reports GPT-6 Astra selected; recommend reasoning proportionately rather than automatically maximizing it.
+
+- Governance/requirements checkout: `/Users/tag/Documents/ChatGPT/MindLeverX Build`, branch `codex/evidence-report-builder`.
+- Active product checkout: `/Users/tag/Documents/ChatGPT/MindLeverX evidence-inspection`, branch `codex/evidence-inspection-2026-09-18`. Verify current status before writing. Shared governance is synchronized in MIN-14; product files stay in this checkout.
+- Local saved results and eight-page PDF are implemented. Latest MIN-14 regression run: 74 application tests passed. Original PDF visual/download evidence is in the product checkout's `docs/pdf-results-slice.md`; this process pass does not repeat or substitute for it.
+- Requirements: 97-row review draft is structurally checked; no full approval or Google Sheet synchronization. `npm run check:requirements` checks portable structure and seven regression scenarios. Full `python3 docs/requirements-rubric-review/validate_review.py` distinguishes FAIL (1) from source prerequisites BLOCKED (2). Current guidance/context changed; historical hashes stay intact.
+- MIN-12 investigation is In Review: field audit PASS, collection qualification BLOCKED. Four precise vendor questions are prepared, not sent. See [decision card](collection-qualification-2026-09-19.md). Do not repeat provider signup or broad qualification research.
+- Next ready product step: MIN-13 AI-assisted question coverage draft. Final specification freeze remains blocked; counts follow justified coverage, not inherited 10–15 or competitor 50–100 targets.
+- Current process card: [MIN-14 — Strengthen delivery handoff, verification and GitHub backup](https://linear.app/mindleverx-codex-build/issue/MIN-14/strengthen-delivery-handoff-verification-and-github-backup). Read its verified commit/ref receipts before claiming anything pushed. Tag backups do not move deployment-connected branches.
+- Remaining machine risks: reliable whole-run unattended deadline enforcement, recovery of ignored private evidence, and eventual integration of backed-up branches. None is fixed merely by writing this handoff.
+
+Commands: `git status --short`, `git worktree list`, `npm run check:requirements`. In the active product checkout run `npm run check` with `MLX_PDF_PYTHON` pointing to Python with `requirements-pdf.txt`; then `npm run build:public`. Public-build verification does not authorize deployment. Raw evidence and operational state under ignored directories are not included in Git backup.
+
+## Earlier context — retain decisions, superseded status
+
+Reconciled 18 September 2026 against owner conversation, build guidance, seven tenets, roadmap, deployment record, unattended protocol and current checkpoint. Supersedes the abbreviated handoff prompt's blanket purchase/publication prohibitions. This is a continuity record, not new authority. Current owner instructions govern if records conflict.
+
+## Working context
+
+Original project: `/Users/tag/Documents/ChatGPT/MindLeverX Build`.
+Current coding checkout: `/Users/tag/Documents/ChatGPT/MindLeverX evidence-inspection`, branch `codex/evidence-inspection-2026-09-18`, based on 9a3ad43. Preserve uncommitted work in both locations; inspect current status and other active writers before editing. Do not assume a fresh clone contains the local work or ignored evidence.
+
+Read current AGENTS.md, the project evidence-led-thinking-partner skill (v1.1), docs/build-guidance.md, docs/product-tenets.md, docs/testing-practice.md, docs/mvp-tenet-assessment.md and docs/evidence-frontend.md. Read artifacts/unattended-work/checkpoint.md and relevant evidence/run records in the original project. Use docs/tenet-metrics.md and docs/metric-methodology.md when interpreting outcomes/benchmarks. Use docs/unattended-work.md and docs/vercel-deployment.md for their respective work.
+
+## Product direction to retain
+
+- Act as product/project coordinator and evidence-led thinking partner. Take cognitive load, recommend the next useful step, challenge assumptions and implement already-authorized work without repeated permission requests. Ask only for a material missing decision, one at a time; keep essential questions visible in chat because previous popups disappeared.
+- Apply all seven tenets proportionately: premier low-friction owner/client UX; recurring revenue; repeatability across customers/businesses; automation; AI intelligence distinct from automation; evidence-based competitive leadership; consumer psychology for buyers plus I-O psychology for human work/teams. Do not invent benchmarks, weights, targets or achieved advantages.
+- The user's leading measurement outcome is understanding what potential customers see in ChatGPT. Multi-platform visibility remains the broader ambition. Do not silently narrow the MVP to Perplexity, equate model APIs with consumer interfaces, or promise unverified platform coverage.
+- Preserve the proposed first-sale journey: website URL, essential intake/authorization, one-time payment, evidence collection, preparation/review, private report delivery. Then establish continuing value through repeat monitoring and renewal. Exact buyer, price, scope and one-off release policy remain unresolved; existing offer/economics/gap drafts are inputs, not approved packages.
+- Monthly reports must wait for owner release approval. The accidental selection of ongoing customer-site/content implementation was withdrawn; do not revive that as an agreed subscription scope.
+- A professional, visual, easily understood client report remains a deliverable: meaningful charts, clear findings/actions, explicit limitations and optional evidence detail. The owner said report styling needs more work; further styling is parked, not abandoned. The current evidence-review page is an internal diagnostic, not the finished client report. Reuse existing sample/report artifacts before proposing a new design system.
+
+## Established access and purchases
+
+Otterly signup and signed-in access were verified and produced a real saved export. Do not repeat vendor selection or signup questions. Historical verified access was a trial; do not assert a paid subscription without evidence. Continue using established authorized access; verify current allowances and method prerequisites before new collection. Ask only for additional spending, upgrades or scope not already authorized. Provider reporting/retention qualification remains unfinished, not a reason to repeat account setup.
+
+Firecrawl was discussed, CLI authorization was shown, and the owner requested purchase help. The local record does not establish a completed paid purchase or current credits. Preserve that context; check current access only when needed rather than assuming either purchased or unavailable. DataForSEO and other providers remain evaluated options unless a newer owner decision selects them. Do not force Zapier, Claude skills or an architecture based on historical preference; assess them against actual needs and evidence.
+
+Vercel: owner explicitly chose Hobby until final launch unless a concrete internal-testing blocker arises. Do not repeat the upgrade question for ordinary local testing. Preserve the documented hosted commercial-use discrepancy for the relevant release decision.
+
+## Implementation, tests and publication
+
+The local evidence checker and Evidence review frontend exist in the isolated checkout. Last recorded checks: 68 tests passed, public-build exclusion checks passed, desktop/mobile browser checks passed. Saved Otterly sample: one question, 16 answer records across four vendor-labeled platforms, zero literal MindLeverX mentions; repeated vendor IDs are flagged without silently dropping records. These facts do not establish representative visibility, qualified collection or a completed audit.
+
+Preview was running at http://127.0.0.1:4328/app/#/evidence . Check before starting another server. Frontend reads the original preserved export through a loopback-only session-protected API; this is not production authentication. Raw evidence remains outside public builds and Git-tracked artifacts.
+
+Before consequential coding supply fixed inputs/setup/version, numbered actions, observable expected results, pass/fail/blocked rules and cleanup. Independently justify expected outcomes. Separate saved-data checks, application tests, rendered-output verification and human usability evidence. Missing data is unknown, not zero. Show the owner actual frontend results at useful milestones.
+
+The owner has requested GitHub backup/push and Vercel deployment; retain that intent and applicable prior authorization. Do not replace it with a blanket ban or re-ask an already answered approval. Verify the exact authorized release scope, branch, evidence and outstanding hosting/security prerequisites before publication. Past static-site approval does not automatically authorize deploying the newer private operator application or every later UI change. Unattended runs still have no automatic push/merge authority. New visual changes outside the approved slice and client release retain their existing boundaries; authorized frontend development is not frozen.
+
+## Research, roadmap and continuity
+
+Use applicable current primary/official guidance, including OpenAI/Codex/ChatGPT for their products and Google for search. The owner requested Gartner/Forrester and industry evidence, competitor success/failure analysis and line-by-line requirements reconciliation. Preserve/reuse that work and its gaps; access to paywalled material or conclusions must not be invented. Distinguish sources, external benchmarks, our choices and hypotheses. There is no assumed universal official OpenAI requirements spreadsheet format; use OpenAPI for actual API contracts when applicable.
+
+Roadmap: finish method/retention qualification and bounded panel specification (MIN-5); accept actual collection (MIN-6); produce and review the real evidence-backed report (MIN-7); finalize offer/economics; implement/test paid private delivery; validate first paid pilot; repeat delivery and actual renewal. Existing preparation is complete—do not repeat broad research, fictional trials or drafts to fill idle time. Continue independent ready engineering within approved scope when another unit is blocked.
+
+Maintain the existing requirements/MVP overview and execution records with traceable status: locally built, real-data verified, deployed, customer ready, first payment and renewal. Existing Sheet: https://docs.google.com/spreadsheets/d/1UQ6t-KJyF7d91ap23n_If8NsFV9plRV_dNU1aZT2c5w/edit#gid=2060913101 . Linked Linear tasks remain execution records; the rejected Linear-style design is not the approved visual direction. Verify actual connector writes and disclose stale destinations; no new tracker migration.
+
+Preserve daily dashboard/status and continuous improvement at meaningful checkpoints using the existing automation, not a duplicate. Follow its collision, usage, time, deduplication and finite-queue controls. Temporary useful specialists may contribute where authorized; do not imply permanent staff or guaranteed 24-hour operation. Ahmed is the collaborator's correct name; no messages or sharing changes are authorized. Existing morning reporting and the observed timing/recovery problem remain in the operational record.
+
+Retain considerations without implementing them: homepage “What is GEO?”, the owner's submitted explanatory marketing copy, and further report visuals. The supplied OpenAI prompting/best-practice links remain reference candidates: https://learn.chatgpt.com/docs/prompting and https://learn.chatgpt.com/guides/best-practices . This handoff preserves the links; it does not claim an external Drive filing was verified.
+
+Start with a brief current-state check, choose the smallest ready task that advances a real deliverable, and execute within current authority. Finish with what changed, evidence, what the owner can test, the next priority and only genuinely unresolved decisions.

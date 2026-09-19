@@ -6,6 +6,7 @@
   "description": "MindLeverX website and local operator workspace",
   "engines": { "node": ">=24.0.0" },
   "scripts": {
+    "check:requirements": "python3 docs/requirements-rubric-review/validate_review.py --structure-only && python3 docs/requirements-rubric-review/test_validate_review.py",
     "build": "node scripts/build.mjs",
     "report:build": "node scripts/build-report.mjs",
     "build:public": "node scripts/build.mjs --public && node scripts/check-public.mjs",

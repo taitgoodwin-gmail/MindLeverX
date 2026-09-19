@@ -1,5 +1,7 @@
 # MindLeverX
 
+For current work, begin with the [handoff](docs/codex-handoff.md) and [delivery governance](docs/delivery-governance.md). They identify the active coding checkout, review-draft requirements, verified local features and release boundaries. Run `npm run check:requirements` for portable document checks; this does not certify source freshness or product acceptance.
+
 A working local build of the supplied MindLeverX website and operator platform designs. The site preserves the existing Spectral / IBM Plex / oxblood visual direction. The workspace adds persistent clients, audit intake, evidence reviews, versioned prompt panels, and an activity log.
 
 Current planning direction, official-source practice, and purchase/launch decisions are recorded in [build guidance](docs/build-guidance.md), with links to the existing MVP plan.
