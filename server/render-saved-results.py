@@ -153,7 +153,7 @@ def render(data):
     for offset in range(0,len(answers),3):
         group = answers[offset:offset+3]
         add([p('03 / SUPPORTING EVIDENCE','label'),p(f'Answer records {group[0]["row"]}-{group[-1]["row"]}','heading'),
-             p('Excerpts identify the source; counting uses the full answer. Full text is available in the local results page under the same row number. These vendor claims are not endorsed.','small')])
+             p('Excerpts identify the source; counting uses the full answer. Locate the full retained answer using this report’s source SHA-256 and row number. These vendor claims are not endorsed.','small')])
         for row in group:
             title = f'Row {row["row"]} / {engine(row["engine"])} / {"Literal mention" if row["literalMention"] else "No literal mention"}'
             heading = Paragraph(f'<a name="row-{row["row"]}"/>' + escape(clean(title)),STYLES['card'])

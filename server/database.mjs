@@ -41,6 +41,18 @@ export function openDatabase(path, seed = true) {
       id TEXT PRIMARY KEY, action TEXT NOT NULL, entity_type TEXT NOT NULL,
       entity_id TEXT NOT NULL, actor TEXT NOT NULL, detail TEXT NOT NULL, created_at TEXT NOT NULL
     );
+    CREATE TABLE IF NOT EXISTS report_revisions (
+      id TEXT PRIMARY KEY, client_id TEXT NOT NULL REFERENCES clients(id),
+      version INTEGER NOT NULL CHECK(version > 0), review_id TEXT NOT NULL UNIQUE REFERENCES reviews(id),
+      source_sha256 TEXT NOT NULL, processing_identity TEXT NOT NULL,
+      source_bytes BLOB NOT NULL, report_bytes BLOB NOT NULL, pdf_bytes BLOB NOT NULL,
+      snapshot_json TEXT NOT NULL, snapshot_sha256 TEXT NOT NULL, created_at TEXT NOT NULL,
+      UNIQUE(client_id, version), UNIQUE(client_id, source_sha256, processing_identity)
+    );
+    CREATE TRIGGER IF NOT EXISTS report_revisions_no_update
+      BEFORE UPDATE ON report_revisions BEGIN
+        SELECT RAISE(ABORT, 'Stored report revisions are immutable; create a successor.');
+      END;
   `);
   if (!db.prepare("SELECT value FROM metadata WHERE key='initialized'").get()) {
     db.exec('BEGIN IMMEDIATE');

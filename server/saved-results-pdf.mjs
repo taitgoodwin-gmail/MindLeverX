@@ -2,6 +2,8 @@ import { execFile } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 
 const script = fileURLToPath(new URL('./render-saved-results.py', import.meta.url));
+// Bump when renderer behavior/assets change; stored revisions keep their exact PDF bytes.
+export const SAVED_RESULTS_RENDERER_VERSION = 'mlx-saved-results-pdf-v2';
 export function savedResultsPdf(report, { python = process.env.MLX_PDF_PYTHON || 'python3' } = {}) {
   if (report?.state !== 'complete') return Promise.reject(new Error('Complete saved results required.'));
   return new Promise((accept, reject) => {

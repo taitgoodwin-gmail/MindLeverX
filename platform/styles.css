@@ -19,3 +19,5 @@
 .pilot-question summary strong{min-width:0;overflow-wrap:anywhere}.pilot-question .pill{white-space:normal}
 
 .pilot-coverage{list-style:none;padding:0;margin:0 0 10px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.pilot-coverage li{border:1px solid var(--line);border-radius:4px;background:var(--surface);padding:18px;min-width:0}.pilot-coverage li>div{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}.pilot-coverage strong{font-size:14px;font-weight:500}.pilot-coverage p{font-size:14px;color:var(--muted);margin:10px 0 0}@media(max-width:700px){.pilot-coverage{grid-template-columns:1fr}}
+
+.report-answer{margin:18px 0}.report-answer pre{white-space:pre-wrap;overflow-wrap:anywhere;font:inherit;font-size:14px;line-height:1.7}.report-answer summary{overflow-wrap:anywhere}
