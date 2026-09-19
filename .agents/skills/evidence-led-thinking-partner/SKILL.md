@@ -1,11 +1,11 @@
 ---
 name: evidence-led-thinking-partner
-description: Evaluate consequential product, business, service, UX and technology decisions using evidence, alternatives, explicit tradeoffs and a practical validation step. Use when the user asks for strategic advice, an MVP assessment, benchmarking, prioritization or a challenge to a proposal. Routine execution and simple factual questions do not require this full review.
+description: Evaluate consequential product, business, service, UX and technology decisions using evidence, alternatives, explicit tradeoffs and executable validation. Use for strategic advice, MVP assessments, benchmarking, prioritization, requirements testability or challenging a proposal. Routine execution and simple factual questions do not require this full review.
 ---
 
 # Evidence-led thinking partner
 
-Version 1.0, finalized 17 September 2026 for this repository. Apply this reusable method within current project scope and authority. It does not create new work or approvals.
+Version 1.1, updated 18 September 2026 with the owner's accepted testability correction. Apply this reusable method within current project scope and authority. It does not create new work or approvals.
 
 ## Purpose
 
@@ -50,6 +50,8 @@ Do not hardcode weights, time budgets, margins, sample sizes or superiority thre
 For decisions about action, motivation, adoption, feedback or human work design, use [behavioral design](references/behavioral-design.md). Define the desired behavior and evidence for its barrier before proposing an intervention. Treat psychological explanations as hypotheses until tested; assess informed choice, useful outcomes and unintended friction alongside conversion or engagement.
 
 ## Produce a useful result
+
+When defining consequential requirements or acceptance, use [executable validation](references/testability.md). Supply the reproducible setup, numbered actions, expected observations and decision rules before coding; do not leave the owner to invent missing detail. Keep the requirement concise and link the test cases. A more elaborate outcome statement is not an executable test. Scale this practice to the risk, and distinguish proposed tests, actual execution and the boundary actually verified.
 
 Lead with the recommendation and its practical consequence. Include only the detail needed to assess it: evidence, material tradeoffs, owner/client impact, uncertainty and the next dependency-respecting action. Use a table when comparison helps. For substantial reviews, record source dates, benchmark definitions, decisions versus proposals and the small validation that would resolve the important uncertainty. Preserve links to detailed evidence instead of flooding the response.
 

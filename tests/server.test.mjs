@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { once } from 'node:events';
-import { mkdtemp, rm } from 'node:fs/promises';
+import { mkdtemp, rm, writeFile } from 'node:fs/promises';
 import { request as httpRequest } from 'node:http';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
@@ -299,4 +299,125 @@ test('public intake enforces token age, consent, honeypot, and duplicate throttl
   const leads = workspace.data.leads.filter(lead => lead.email === payload.email);
   assert.equal(leads.length, 1);
   assert.equal(leads[0].id, accepted.data.lead_id);
+});
+
+
+test('saved evidence API requires a local session and returns no fabricated empty-state data', async t => {
+  const app = await startApp({seed:false});
+  t.after(()=>app.close());
+  assert.equal((await app.request('/api/evidence-inspection')).status,401);
+  await app.login();
+  assert.deepEqual((await app.request('/api/evidence-inspection')).data,{available:false});
+  assert.equal((await app.request('/api/evidence-inspection',{headers:{Origin:'https://foreign.invalid'}})).status,403);
+});
+
+test('saved evidence API calculates from configured bytes without exposing answers or local paths', async t => {
+  const dir = await mkdtemp(path.join(tmpdir(),'mlx-evidence-api-'));
+  t.after(()=>rm(dir,{recursive:true,force:true}));
+  const source=path.join(dir,'private-source.json');
+  await writeFile(source,JSON.stringify([{response_id:'synthetic',engine:'synthetic',timestamp:'2026-09-18',prompt:'Synthetic question?',response_text:'MindLeverX PRIVATE_ANSWER_BODY'}]));
+  const app=await startApp({seed:false,evidenceInputPath:source});
+  t.after(()=>app.close());
+  await app.login();
+  const {status,data,response}=await app.request('/api/evidence-inspection?input=/arbitrary/file');
+  assert.equal(status,200);
+  assert.equal(response.headers.get('cache-control'),'no-store');
+  assert.equal(data.inspection.aggregate.numerator,1);
+  assert.equal(data.inspection.aggregate.denominator,1);
+  assert.equal(data.inspection.collectionQualification,'required');
+  assert.ok(!JSON.stringify(data).includes('PRIVATE_ANSWER_BODY'));
+  assert.ok(!JSON.stringify(data).includes(dir));
+  await writeFile(source,JSON.stringify([{prompt:'Question?',engine:'synthetic',response_text:''}]));
+  const blocked=await app.request('/api/evidence-inspection');
+  assert.equal(blocked.data.inspection.status,'blocked');
+  assert.equal(blocked.data.inspection.aggregate,null);
+});
+
+test('unreadable saved evidence returns a recoverable error without disclosing its path', async t => {
+  const app=await startApp({seed:false,evidenceInputPath:'/missing-private-directory/secret.json'});
+  t.after(()=>app.close());
+  await app.login();
+  const result=await app.request('/api/evidence-inspection');
+  assert.equal(result.status,503);
+  assert.ok(!JSON.stringify(result.data).includes('missing-private-directory'));
+});
+
+test('saved results keep source behind local session, origin and server configuration boundaries', async t => {
+  const dir=await mkdtemp(path.join(tmpdir(),'mlx-results-api-'));
+  const source=path.join(dir,'source.json');
+  await writeFile(source,JSON.stringify([
+    {engine:'alpha',prompt:'Question?',timestamp:'2026-09-19',response_id:'1',response_text:'MiNdLeVeRx',private_other_field:'NOT_ALLOWED'},
+    {engine:'beta',prompt:'Question?',timestamp:'2026-09-19',response_id:'2',response_text:'Another brand'}
+  ]));
+  const app=await startApp({seed:false,evidenceInputPath:source});
+  t.after(async()=>{await app.close();await rm(dir,{recursive:true,force:true});});
+  assert.equal((await app.request('/api/saved-results')).status,401);
+  assert.equal((await app.request('/api/saved-results/draft.txt')).status,401);
+  assert.equal((await app.request('/api/saved-results/draft.pdf')).status,401);
+  await app.login();
+  assert.equal((await app.request('/api/saved-results',{headers:{Origin:'https://foreign.invalid'}})).status,403);
+  assert.equal((await app.request('/api/saved-results/draft.pdf',{headers:{Origin:'https://foreign.invalid'}})).status,403);
+  const result=await app.request('/api/saved-results?input=/other-source.json');
+  assert.equal(result.status,200);
+  assert.equal(result.response.headers.get('cache-control'),'no-store');
+  assert.equal(result.data.report.aggregate.numerator,1);
+  assert.equal(result.data.report.aggregate.denominator,2);
+  assert.equal(result.data.report.answers[0].answer,'MiNdLeVeRx');
+  assert.ok(!JSON.stringify(result.data).includes('NOT_ALLOWED'));
+  assert.ok(!JSON.stringify(result.data).includes(dir));
+  const download=await app.request('/api/saved-results/draft.txt');
+  assert.equal(download.status,200);
+  assert.match(download.response.headers.get('content-disposition'),/attachment/);
+  assert.match(download.data,/Full saved sample: 1\/2/);
+  assert.match(download.data,/LOCAL DRAFT/);
+  assert.match(download.data,/Another brand/);
+  assert.equal((await app.request('/api/saved-results/draft.txt?sha256=changed')).status,409);
+  assert.equal((await app.request('/api/saved-results/draft.pdf?sha256=changed')).status,409);
+  const pdf=await app.request(`/api/saved-results/draft.pdf?sha256=${result.data.report.source.sha256}`);
+  assert.equal(pdf.status,200);
+  assert.equal(pdf.response.headers.get('content-type'),'application/pdf');
+  assert.equal(pdf.response.headers.get('cache-control'),'no-store');
+  assert.match(pdf.response.headers.get('content-disposition'),/attachment.*\.pdf/);
+  assert.match(pdf.data,/^%PDF-/);
+  assert.match(pdf.data,/%%EOF\s*$/);
+  await writeFile(source,'{');
+  const blocked=await app.request('/api/saved-results');
+  assert.equal(blocked.data.report.state,'blocked');
+  assert.equal(blocked.data.report.aggregate,null);
+  assert.deepEqual(blocked.data.report.answers,[]);
+  assert.equal((await app.request('/api/saved-results/draft.txt')).status,409);
+  assert.equal((await app.request('/api/saved-results/draft.pdf')).status,409);
+  await rm(source);
+  const missing=await app.request('/api/saved-results');
+  assert.equal(missing.status,503);
+  assert.equal((await app.request('/api/saved-results/draft.pdf')).status,503);
+  assert.ok(!JSON.stringify(missing.data).includes(dir));
+  await writeFile(source,JSON.stringify([{engine:'alpha',prompt:'Question?',response_text:'Recovered MindLeverX'}]));
+  assert.equal((await app.request('/api/saved-results')).data.report.aggregate.numerator,1);
+});
+
+test('saved results empty state and local page do not fabricate results', async t => {
+  const app=await startApp({seed:false});
+  t.after(()=>app.close());
+  await app.login();
+  assert.deepEqual((await app.request('/api/saved-results')).data,{available:false});
+  assert.equal((await app.request('/api/saved-results/draft.pdf')).status,404);
+  const page=await app.request('/results/');
+  assert.equal(page.status,200);
+  assert.match(page.data,/Not a completed audit/);
+  assert.ok(!page.data.includes('0 / 16'));
+});
+
+test('unavailable PDF runtime fails without a success attachment or local path disclosure', async t => {
+  const dir=await mkdtemp(path.join(tmpdir(),'mlx-pdf-runtime-'));
+  const source=path.join(dir,'source.json');
+  await writeFile(source,JSON.stringify([{engine:'synthetic',prompt:'Question?',response_text:'MindLeverX'}]));
+  const app=await startApp({seed:false,evidenceInputPath:source,pdfPython:'/unavailable-private-python'});
+  t.after(async()=>{await app.close();await rm(dir,{recursive:true,force:true});});
+  await app.login();
+  const result=await app.request('/api/saved-results/draft.pdf');
+  assert.equal(result.status,503);
+  assert.equal(result.response.headers.get('content-disposition'),null);
+  assert.ok(!JSON.stringify(result.data).includes('unavailable-private-python'));
+  assert.equal((await app.request('/api/saved-results')).data.report.state,'complete');
 });

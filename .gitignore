@@ -10,3 +10,6 @@ data/
 artifacts/
 *.log
 reference/
+output/
+tmp/
+__pycache__/

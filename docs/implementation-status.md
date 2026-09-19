@@ -1,5 +1,13 @@
 # Implementation status · 12 September 2026
 
+## September 18 frontend update
+
+The [local evidence-review frontend](evidence-frontend.md) now displays saved real evidence through the tested inspection API: summary, platform coverage, filterable records and limitations. It is available in the isolated evidence-inspection checkout at http://127.0.0.1:4328/app/#/evidence while the local server runs. 68 tests and desktop/mobile browser checks passed. No production deployment or real-report acceptance.
+
+## September 18 local export-inspection update
+
+The local Otterly-format evidence checker is implemented in an isolated checkout, not merged into this checkout or deployed. It checks retained answer text, preserves input fingerprints, blocks incomplete/ambiguous aggregates and refuses to overwrite files. Ten new tests and the full 65-test check passed; the saved 16-answer real export reproduced 0/16 literal mentions and remained unchanged. See [implementation, exact test cases and evidence](evidence-inspection.md). This supports MIN-5; qualification, approved collection and real-report acceptance remain open. Later dated updates and the [current roadmap](mvp-tenet-assessment.md) supersede the historical next-slice recommendations below.
+
 ## September 13 local report preparation update
 
 The local evidence-to-report builder is implemented and verified with supplied fictional inputs: exact input/evidence retention, draft Markdown/JSON, byte hashes, explicit measurement states and no overwrite/release. See [slice verification and remaining limits](report-builder-verification.md). A single bounded AI review/correction trial is complete; ongoing adoption remains undecided. The older integration and missing-source inventory below describes the September 12 checkpoint: requirements have since been recovered and reviewed, and the website is already deployed separately from the still-local operator application. No live collector, production identity or client delivery is established by the new report builder.

@@ -4,14 +4,18 @@
   "private": true,
   "type": "module",
   "description": "MindLeverX website and local operator workspace",
-  "engines": { "node": ">=24.0.0" },
+  "engines": {
+    "node": ">=24.0.0"
+  },
   "scripts": {
     "build": "node scripts/build.mjs",
     "report:build": "node scripts/build-report.mjs",
+    "evidence:inspect": "node scripts/inspect-evidence.mjs",
     "build:public": "node scripts/build.mjs --public && node scripts/check-public.mjs",
     "dev": "npm run build && node server/start.mjs",
     "start": "node server/start.mjs",
     "test": "node --test tests/*.test.mjs",
-    "check": "npm run build && node scripts/check-site.mjs && node scripts/check-platform.mjs && npm test"
+    "check": "npm run build && node scripts/check-site.mjs && node scripts/check-platform.mjs && npm test",
+    "check:requirements": "python3 docs/requirements-rubric-review/validate_review.py --structure-only && python3 docs/requirements-rubric-review/test_validate_review.py"
   }
 }

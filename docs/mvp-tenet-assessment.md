@@ -10,9 +10,15 @@ Design and validate the owner and client journeys alongside the first real repor
 
 ## Priorities and readiness
 
+### 18 September implementation update
+
+The owner approved the lightweight [testing practice](testing-practice.md) and asked to start coding. The thinking-partner skill is now v1.1 and routes consequential requirements to executable validation. The [local export-inspection slice](evidence-inspection.md) is built in isolated branch `codex/evidence-inspection-2026-09-18`: 10 new tests and the complete 65-test project check pass; saved real input reproduces 0/16 literal mentions with provenance and repeated-ID warnings. This is a concrete support tool for stage 1, not collection qualification or a completed report. Commands run in the isolated checkout named in the slice document.
+
+Next sequence remains: finish Otterly method/retention qualification and bounded question-panel specification; accept suitable collected evidence; map it into the report contract and execute an end-to-end report-generation case; review usefulness and effort; finalize offer; implement and test paid private delivery; validate repeat delivery and renewal. Do not require a new purchase or broader research simply to continue local development. Sheet/Linear synchronization is not claimed by this repository update.
+
 | Priority / step | Current evidence | Acceptance outcome / dependency |
 | --- | --- | --- |
-| P0 — 1. Qualify measurement | Otterly access and a limited retained export verified; full method/panel qualification incomplete. | Accepted method, permitted use/retention, bounded specification and explicit gaps before new collection. |
+| P0 — 1. Qualify measurement | Otterly access and a limited retained export verified; local export checker built and tested on real saved data; full method/panel qualification incomplete. | Accepted method, permitted use/retention, bounded specification and explicit gaps before new collection. |
 | P0 — 2. First real report | Local builder and fictional tests exist; no accepted complete real report. | Supported findings, sample limits, understandable actions and independent review after accepted evidence. |
 | P1 — 3. Offer and economics | Drafts already exist; final scope, price and economics remain open. | Use the report and measured effort to decide a credible first-sale package and recurring value; do not repeat completed drafts. |
 | P1 — 4. Paid delivery workflow | Production payment and private delivery are not verified. | Approved scope, payment, recoverable job, required review and private recipient access tested together. |

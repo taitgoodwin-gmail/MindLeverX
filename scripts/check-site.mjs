@@ -43,6 +43,11 @@ for (const page of pages) {
 }
 for (const [page, { html }] of files) {
   for (const [, href] of html.matchAll(/<a\b[^>]*\bhref="([^"]*)"/g)) {
+    if (href === '/results/') {
+      try { await fs.access(path.join(directory, 'results/index.html')); }
+      catch { errors.push(`${page}: missing results page`); }
+      continue;
+    }
     if (/^(?:https?:|mailto:|tel:)/.test(href) || href === '/app/') continue;
     const [pathname, fragment] = href.split('#');
     const target = pathname || page;

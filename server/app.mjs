@@ -4,6 +4,9 @@ import { readFile, stat } from 'node:fs/promises';
 import { resolve, extname, sep } from 'node:path';
 import { domainToASCII } from 'node:url';
 import { openDatabase } from './database.mjs';
+import { inspectEvidence } from './evidence-inspection.mjs';
+import { savedResults, savedResultsText } from './saved-results.mjs';
+import { savedResultsPdf } from './saved-results-pdf.mjs';
 
 class HttpError extends Error {
   constructor(status, message) { super(message); this.status = status; }
@@ -55,7 +58,7 @@ function equal(a, b) {
 }
 
 /** Local-only HTTP application. No external engine, email, payment, or publishing calls. */
-export function createApp({ dbPath = resolve('data/mindleverx.sqlite'), seed = true, distDir = resolve('dist') } = {}) {
+export function createApp({ dbPath = resolve('data/mindleverx.sqlite'), seed = true, distDir = resolve('dist'), evidenceInputPath = null, evidenceBrand = 'MindLeverX', pdfPython = process.env.MLX_PDF_PYTHON || 'python3' } = {}) {
   const db = openDatabase(dbPath, seed);
   const publicDir = resolve(distDir);
   const sessions = new Map();
@@ -161,6 +164,30 @@ export function createApp({ dbPath = resolve('data/mindleverx.sqlite'), seed = t
         const s = session(req,res);
         if (!s) fail(401, 'Open the local workspace to start a session.');
         if (!['GET','HEAD'].includes(method)) csrf(req,s);
+        if (['/api/evidence-inspection', '/api/saved-results', '/api/saved-results/draft.txt', '/api/saved-results/draft.pdf'].includes(path) && method === 'GET') {
+          if (!evidenceInputPath) {
+            if (/\/draft\.(txt|pdf)$/.test(path)) fail(404, 'No saved evidence is connected.');
+            return json(res, 200, { available: false });
+          }
+          let bytes;
+          try { bytes = await readFile(evidenceInputPath); }
+          catch { fail(503, 'Saved evidence is unavailable. Check the local source and refresh.'); }
+          if (/\/draft\.(txt|pdf)$/.test(path)) {
+            const report = savedResults(bytes, evidenceBrand);
+            if (report.state !== 'complete') fail(409, 'Correct the saved evidence before downloading a draft.');
+            if (url.searchParams.has('sha256') && url.searchParams.get('sha256') !== report.source.sha256) fail(409, 'The saved source changed. Reload results before downloading.');
+            const pdf = path.endsWith('.pdf');
+            let output;
+            try { output = pdf ? await savedResultsPdf(report, { python: pdfPython }) : savedResultsText(report); }
+            catch { fail(503, 'PDF generation is unavailable. Check the local PDF runtime and try again.'); }
+            res.writeHead(200, { 'Content-Type': pdf ? 'application/pdf' : types['.txt'], 'Cache-Control': 'no-store', 'Content-Disposition': `attachment; filename="mindleverx-saved-results-draft.${pdf ? 'pdf' : 'txt'}"` });
+            res.end(output);
+            return;
+          }
+          return json(res, 200, path === '/api/saved-results'
+            ? { available: true, report: savedResults(bytes, evidenceBrand) }
+            : { available: true, inspection: inspectEvidence(bytes, { brand: evidenceBrand }) });
+        }
         if (path === '/api/workspace' && method === 'GET') {
           return json(res,200,{
             clients:db.prepare('SELECT * FROM clients ORDER BY sample DESC, created_at DESC, name').all().map(parseClient),
@@ -247,8 +274,8 @@ export function createApp({ dbPath = resolve('data/mindleverx.sqlite'), seed = t
         fail(404,'API route not found.');
       }
       if (!['GET','HEAD'].includes(method)) fail(405,'Method not allowed.');
-      if (path === '/app') {
-        res.writeHead(302,{Location:'/app/'}); res.end(); return;
+      if (path === '/app' || path === '/results') {
+        res.writeHead(302,{Location:`${path}/`}); res.end(); return;
       }
       const relative = path.endsWith('/') ? `${path}index.html` : path;
       let file = resolve(publicDir,`.${relative}`);

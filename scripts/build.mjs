@@ -102,6 +102,7 @@ if (publicBuild) {
 }
 await fs.writeFile(path.join(output, 'llms.txt'), llms);
 if (!publicBuild) {
+  await fs.cp(path.join(root, 'results'), path.join(output, 'results'), { recursive: true });
   try { await fs.access(path.join(root, 'platform')); await fs.cp(path.join(root, 'platform'), path.join(output, 'app'), { recursive: true }); }
   catch (error) { if (error.code !== 'ENOENT') throw error; }
 }

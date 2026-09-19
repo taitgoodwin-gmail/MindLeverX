@@ -5,6 +5,9 @@ const escapeHtml = value => String(value ?? '').replace(/[&<>"']/g, char => ({'&
 const attr = escapeHtml;
 const e = escapeHtml;
 const state = { csrf: '', clients: [], reviews: [], leads: [], activity: [], panels: [], loaded: false, menuOpen: false, leadFilter: 'new', search: '', busy: false };
+state.inspection = null;
+state.inspectionError = '';
+state.evidenceFilter = '';
 const stageNames = ['Intake', 'Agreement', 'Baseline', 'Findings', 'Scope', 'Fixes', 'Monitoring'];
 const stageDescriptions = ['Record the request and agree the next step.', 'Agree the pages, competitors and buyer questions.', 'Version the prompt panel and establish a baseline.', 'Review evidence and identify the gaps.', 'Record which fixes are selected for this cycle.', 'Review drafts and record deployment and verification.', 'Review readings and prepare the next cycle.'];
 const iconPaths = {
@@ -86,6 +89,9 @@ async function api(path, options = {}) {
 async function loadWorkspace() {
   const result = await api('/api/workspace');
   for (const key of ['clients','reviews','leads','activity','panels']) state[key] = Array.isArray(result[key]) ? result[key] : [];
+  try { state.inspection = await api('/api/evidence-inspection'); state.inspectionError = ''; }
+  catch (reason) { state.inspection = null; state.inspectionError = reason.message; }
+  if (!state.inspection?.inspection?.rows.some(row => row.engine === state.evidenceFilter)) state.evidenceFilter = '';
   state.loaded = true;
 }
 
@@ -104,7 +110,7 @@ function sidebar(page, id) {
     <aside class="sidebar ${state.menuOpen ? 'open' : ''}" aria-label="Workspace navigation">
       <a class="sidebar-brand" href="#/console"><span class="wordmark">MindLever<span>X.</span></span><div class="sidebar-kicker">OPERATOR WORKSPACE</div></a>
       <nav aria-label="Main navigation"><div class="nav-label">Your workspace</div>
-      ${active('console','Needs me','grid',pendingReviews().length)}${active('clients','Clients','users')}${active('leads','Leads','inbox',newLeads().length)}${active('activity','Activity','history')}
+      ${active('console','Needs me','grid',pendingReviews().length)}${active('evidence','Evidence review','search')}${active('clients','Clients','users')}${active('leads','Leads','inbox',newLeads().length)}${active('activity','Activity','history')}
       <div class="nav-label">Clients</div>
       ${state.clients.slice(0,6).map(client => `<a class="nav-item sidebar-client ${page === 'clients' && id === client.id ? 'active' : ''}" href="#/clients/${attr(client.id)}"><span class="client-dot"></span><span>${e(client.name)}</span></a>`).join('') || '<div class="nav-item muted">No clients yet</div>'}
       </nav>
@@ -114,7 +120,7 @@ function sidebar(page, id) {
 
 function shell(content, crumb = '') {
   const {page,id} = route();
-  const names = {console:'Needs me',clients:'Clients',reviews:'Review',leads:'Leads',activity:'Activity',panels:'Prompt panels'};
+  const names = {console:'Needs me',evidence:'Evidence review',clients:'Clients',reviews:'Review',leads:'Leads',activity:'Activity',panels:'Prompt panels'};
   return `<div class="app-layout">${sidebar(page,id)}<div class="workspace">
     <header class="topbar"><button class="icon-button menu-toggle" data-action="toggle-menu" aria-label="${state.menuOpen ? 'Close' : 'Open'} navigation" aria-expanded="${state.menuOpen}">${icon('menu')}</button>
     <div class="breadcrumb"><span class="breadcrumb-root">Workspace</span>${icon('chevron')}<span>${e(crumb || names[page] || 'Workspace')}</span></div>
@@ -254,6 +260,39 @@ function notFound(label = 'Page') {
   return empty(`${label} not found.`, 'This link does not match a record in the local workspace.',button('Return to workspace','#/console','primary','back'),'search');
 }
 
+const engineName = value => ({ chatgpt: 'ChatGPT', perplexity: 'Perplexity', google: 'Google', copilot: 'Copilot' }[value] || value || 'Unknown platform');
+function evidenceRows(rows) {
+  return rows.map(row => `<tr><td class="mono">${e(row.row)}</td><td>${e(engineName(row.engine))}</td><td>${e(date(row.vendorTimestamp))}</td><td>${e(row.prompt || 'Question missing')}</td><td>${row.literalMention === null ? pill('Missing answer','pending') : row.literalMention ? pill('Mention found','active') : '<span class="muted">Not mentioned</span>'}</td></tr>`).join('') || '<tr><td colspan="5">No answers match this filter.</td></tr>';
+}
+function evidencePage() {
+  const head = pageHead('Saved evidence · Local review', 'What do the answers show?', 'Review the saved answers before they become a client report.', '<button class="button" data-action="refresh">'+icon('refresh')+'Refresh saved data</button>');
+  if (state.inspectionError) return head + `<div class="error-note" role="alert">${e(state.inspectionError)}</div><p class="muted">Your other workspace records are still available. Refresh to try again.</p>`;
+  if (!state.inspection?.available) return head + empty('No saved evidence connected', 'Connect a local export to inspect real results here. No measurement has been made.', '', 'file');
+  const data = state.inspection.inspection;
+  const engines = [...new Set(data.rows.map(row => row.engine).filter(Boolean))];
+  const questions = [...new Set(data.rows.map(row => row.prompt).filter(Boolean))];
+  const repeated = data.issues.filter(item => item.code === 'repeated_vendor_response_id').length;
+  const blocked = data.status === 'blocked';
+  const filtered = data.rows.filter(row => !state.evidenceFilter || row.engine === state.evidenceFilter);
+  const summary = (label, value, help) => `<div class="stat"><div class="stat-label">${e(label)}</div><div class="stat-value">${e(value)}</div><div class="stat-bottom">${e(help)}</div></div>`;
+  return head + `<div class="evidence-banner">${pill('Saved sample','sample')}<span>Real retained answers. This limited sample is <strong>not a completed client audit</strong>.</span></div>
+    <div class="summary-grid">${summary('Answers retained',data.recordCount ?? 'Unknown','Records in this export')}${summary('Literal brand mentions',data.aggregate ? data.aggregate.numerator+' / '+data.aggregate.denominator : 'Unavailable','Answer text only; case-insensitive')}${summary('Platforms',engines.length || 'Unknown','As labeled by the provider')}${summary('Questions',questions.length || 'Unknown','Coverage of this saved sample')}</div>
+    <div class="evidence-columns"><section class="panel evidence-finding"><span class="eyebrow">The finding</span><h2>${blocked ? 'Resolve the evidence gaps first.' : data.aggregate.numerator === 0 ? 'No literal mentions in these answers.' : e(data.brand)+' appears in '+data.aggregate.numerator+' saved answers.'}</h2><p>${blocked ? 'Some records are incomplete or ambiguous. A total is withheld so missing evidence cannot appear as zero visibility.' : 'We checked for the exact text “'+e(data.brand)+'” in each saved answer, ignoring capitalization. Name variations and citations are not included.'}</p><p class="muted">This does not establish overall AI visibility or explain why a business was included or omitted.</p><div class="evidence-next"><strong>Next step</strong><p>Confirm the collection method and question coverage before using these findings in a client report.</p></div></section>
+    <section class="panel"><h2>Coverage by platform</h2><p class="panel-intro">Answers retained, not a visibility score.</p><div class="coverage-bars">${engines.map(engine => { const rows = data.rows.filter(row => row.engine === engine); return `<div class="coverage-row"><div><span>${e(engineName(engine))}</span><strong>${rows.length} answers</strong></div><div class="coverage-track" aria-hidden="true"><span style="width:${100*rows.length/Math.max(1,data.recordCount)}%"></span></div></div>`; }).join('')}</div></section></div>
+    <section class="panel section-gap"><div class="section-head"><h2>What needs attention</h2>${pill(blocked ? 'Count blocked' : 'Review required','pending')}</div><p>${repeated ? e(repeated)+' records reuse a provider response ID. All rows are retained; platform and date help distinguish them.' : 'Provider method, collection context and permitted reporting use still need review.'}</p><p class="muted">A completed data check is not approval to release a report.</p>${data.issues.some(item=>item.severity==='error') ? '<ul>'+data.issues.filter(item=>item.severity==='error').map(item=>'<li>'+e(humanize(item.code))+(item.row ? ' · row '+e(item.row) : '')+(item.field ? ' · '+e(humanize(item.field)) : '')+'</li>').join('')+'</ul>' : ''}</section>
+    <section class="section-gap" aria-labelledby="answers-heading"><div class="section-head"><h2 id="answers-heading">Inspect the answer records</h2><span id="evidence-count" class="mono" role="status">${filtered.length} of ${data.rows.length} records</span></div><div class="evidence-filter field"><label for="evidence-platform">Filter by platform</label><select id="evidence-platform"><option value="">All platforms</option>${engines.map(engine=>'<option value="'+attr(engine)+'" '+(state.evidenceFilter===engine?'selected':'')+'>'+e(engineName(engine))+'</option>').join('')}</select></div><div class="table-wrap"><table><caption class="evidence-caption">Saved vendor dates; exact collection timing is unverified.</caption><thead><tr><th scope="col">Record</th><th scope="col">Platform</th><th scope="col">Vendor date</th><th scope="col">Question</th><th scope="col">Literal brand check</th></tr></thead><tbody id="evidence-rows">${evidenceRows(filtered)}</tbody></table></div></section>
+    <details class="panel section-gap evidence-source"><summary>Source details &amp; limitations</summary><dl><dt>Source fingerprint (SHA-256)</dt><dd class="mono">${e(data.source.sha256)}</dd><dt>Original size</dt><dd>${e(data.source.bytes.toLocaleString())} bytes</dd><dt>Matching rule</dt><dd>Literal substring in answer text. Each matching answer counts once.</dd></dl><ul>${data.limitations.map(item=>'<li>'+e(item)+'</li>').join('')}</ul></details>`;
+}
+
+document.addEventListener('change', event => {
+  if (event.target.id !== 'evidence-platform') return;
+  state.evidenceFilter = event.target.value;
+  const rows = state.inspection.inspection.rows;
+  const filtered = rows.filter(row => !state.evidenceFilter || row.engine === state.evidenceFilter);
+  $('#evidence-rows').innerHTML = evidenceRows(filtered);
+  $('#evidence-count').textContent = `${filtered.length} of ${rows.length} records`;
+});
+
 function render() {
   if (!state.loaded) return;
   const {page,id} = route();
@@ -261,6 +300,7 @@ function render() {
   let crumb;
   if (page === 'preview') { $('#app').innerHTML = previewPage(id); document.title = `Report preview · MindLeverX`; return; }
   if (page === 'console') content = consolePage();
+  else if (page === 'evidence') content = evidencePage();
   else if (page === 'clients' && id === 'new') { content = newClientPage(); crumb = 'Clients / New client'; }
   else if (page === 'clients' && id) { content = clientPage(id); crumb = `Clients / ${clientById(id)?.name || 'Record'}`; }
   else if (page === 'clients') content = clientsPage();
