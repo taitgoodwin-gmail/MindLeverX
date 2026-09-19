@@ -85,6 +85,8 @@ Browser path: Evidence review → prepare the matching internal draft → linked
 
 ## Actual results
 
+Subsequent local capability: [portable report export](report-export-slice.md) packages this exact revision and its local review snapshot for offline verification. The earlier standalone `/report.json` route remains a measurement projection.
+
 **Local engineering slice complete; MIN-7 remains In Progress.** All four steps are finished within the boundaries below. Owner review, collection qualification and full supported-report acceptance remain outstanding.
 
 | Verification | Actual result and scope |
