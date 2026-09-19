@@ -2,6 +2,8 @@
 
 Finalized 17 September 2026. Canonical principles and current qualitative rubric: [Product and business tenets](product-tenets.md). All ratings describe intended contribution, not measured performance or completion. Historical six-criterion arithmetic is retained at the end; it no longer ranks current priorities.
 
+**Current reading path — 19 September 2026:** Use [the current handoff](codex-handoff.md) for verified checkout, implementation and next-work status. The dated implementation summaries below are historical checkpoints; their test counts do not describe the latest revision. The six-stage roadmap remains a dependency map, not evidence that its stages are complete.
+
 ## Outcome and interpretation
 
 The proposed MVP is a trustworthy paid audit followed by a repeatable recurring service: website URL → essential intake and authorization → payment → evidence collection → report preparation → review/approval → private delivery → recurring monitoring. Exact package, price, customer segment and one-time audit release policy remain decisions. Monthly brief owner approval is already required. Monitoring plus prioritized recommendations remains a proposed initial recurring offer; customer-site implementation was not selected.

@@ -16,6 +16,14 @@ Read the current linked terms, reconciled provider documentation with the saved 
 
 **Next executable work:** draft the AI-assisted question coverage map under MIN-13. Drafting is already allowed alongside qualification; final freeze and collection remain dependent on its resolution. Use evidence-backed buyer intents, group overlap, and identify gaps before selecting a count. Competitor prompt counts are references, not targets.
 
+### Clarification after requirements review — 19 September
+
+Do not treat every unavailable metadata field as a universal collection blocker. The current review draft INV-003 requires available context; [T21, step 2](requirements-rubric-review/acceptance-tests.md#t21) explicitly permits missing model context with a disclosed limitation. Unknown exact model/session details prevent claims that depend on controlling those details, but do not alone invalidate a clearly labeled vendor observation.
+
+Full attempt accounting remains required by MEA-008 for accepted planned collection and by any claim about attempt success/failure rates. Counts of mentions within the retained answers describe only those retained answers; they are not completion rates or a representative visibility baseline. Actual execution time, panel/version and eligible-sample rules must be assessed against the intended claim; vendor dates must not be relabeled as execution times. This clarification does not waive the unresolved collection qualification or freeze gate.
+
+Full-answer reproduction is the particular reporting use still awaiting rights clarification. The broader feasibility of a paid report containing supported findings, citations and permitted excerpts is a separate design question, not automatically prohibited or automatically qualified. Prepare that alternative if needed; do not silently change the report promise. The four vendor questions below remain prepared and unsent. No new legal conclusion, provider permission, policy acceptance or collection authorization follows from this wording correction.
+
 ## Four-step chunk and traceability
 
 | Step | Done condition | Actual result |
@@ -25,7 +33,7 @@ Read the current linked terms, reconciled provider documentation with the saved 
 | 3. Write decision card | Every intended use has a supported disposition and precise next evidence | Complete; qualification remains blocked |
 | 4. Update Linear and show result | Read back the updated MIN-12 card and open it | Recorded in Linear at handoff |
 
-Estimate given before execution: 20–30 minutes. One coordinator; no specialist agents or independent reviewer. Model recommendation: GPT-6 Astra for this mixed research/technical task, based on [OpenAI's model page](https://developers.openai.com/api/docs/models/gpt-6-astra), checked today; reasoning-effort settings and app model were not changed. Project Next guided dependency selection; OpenAI Docs guided model research; the installed Linear connector supplied tracker access. These are assistant capabilities, not implemented MindLeverX AI features.
+Original MIN-12 execution: estimate given before execution was 20–30 minutes. One coordinator; no specialist agents or independent reviewer in that original pass. The clarification above was separately reviewed during the MIN-14 follow-up. Model recommendation: GPT-6 Astra for this mixed research/technical task, based on [OpenAI's model page](https://developers.openai.com/api/docs/models/gpt-6-astra), checked 19 September 2026; reasoning-effort settings and app model were not changed. Project Next guided dependency selection; OpenAI Docs guided model research; the installed Linear connector supplied tracker access. These are assistant capabilities, not implemented MindLeverX AI features.
 
 Current requirement narratives are **review drafts**, preserved in the [revised register](requirements-rubric-review/revised-requirements.md):
 
