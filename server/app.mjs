@@ -7,6 +7,7 @@ import { openDatabase } from './database.mjs';
 import { inspectEvidence } from './evidence-inspection.mjs';
 import { savedResults, savedResultsText } from './saved-results.mjs';
 import { savedResultsPdf } from './saved-results-pdf.mjs';
+import { defaultPilotPanelPath, readPilotPanelDraft } from './pilot-panel-draft.mjs';
 
 class HttpError extends Error {
   constructor(status, message) { super(message); this.status = status; }
@@ -58,7 +59,7 @@ function equal(a, b) {
 }
 
 /** Local-only HTTP application. No external engine, email, payment, or publishing calls. */
-export function createApp({ dbPath = resolve('data/mindleverx.sqlite'), seed = true, distDir = resolve('dist'), evidenceInputPath = null, evidenceBrand = 'MindLeverX', pdfPython = process.env.MLX_PDF_PYTHON || 'python3' } = {}) {
+export function createApp({ dbPath = resolve('data/mindleverx.sqlite'), seed = true, distDir = resolve('dist'), evidenceInputPath = null, evidenceBrand = 'MindLeverX', pdfPython = process.env.MLX_PDF_PYTHON || 'python3', pilotPanelPath = defaultPilotPanelPath } = {}) {
   const db = openDatabase(dbPath, seed);
   const publicDir = resolve(distDir);
   const sessions = new Map();
@@ -164,6 +165,10 @@ export function createApp({ dbPath = resolve('data/mindleverx.sqlite'), seed = t
         const s = session(req,res);
         if (!s) fail(401, 'Open the local workspace to start a session.');
         if (!['GET','HEAD'].includes(method)) csrf(req,s);
+        if (path === '/api/pilot-panel-draft' && method === 'GET') {
+          try { return json(res, 200, await readPilotPanelDraft(pilotPanelPath)); }
+          catch { fail(503, 'The pilot question draft is unavailable or needs a data check. Check the saved draft, then retry.'); }
+        }
         if (['/api/evidence-inspection', '/api/saved-results', '/api/saved-results/draft.txt', '/api/saved-results/draft.pdf'].includes(path) && method === 'GET') {
           if (!evidenceInputPath) {
             if (/\/draft\.(txt|pdf)$/.test(path)) fail(404, 'No saved evidence is connected.');

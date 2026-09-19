@@ -8,6 +8,10 @@ const state = { csrf: '', clients: [], reviews: [], leads: [], activity: [], pan
 state.inspection = null;
 state.inspectionError = '';
 state.evidenceFilter = '';
+state.pilotDraft = null;
+state.pilotDraftError = '';
+state.pilotDraftLoading = false;
+state.pilotDraftLoaded = false;
 const stageNames = ['Intake', 'Agreement', 'Baseline', 'Findings', 'Scope', 'Fixes', 'Monitoring'];
 const stageDescriptions = ['Record the request and agree the next step.', 'Agree the pages, competitors and buyer questions.', 'Version the prompt panel and establish a baseline.', 'Review evidence and identify the gaps.', 'Record which fixes are selected for this cycle.', 'Review drafts and record deployment and verification.', 'Review readings and prepare the next cycle.'];
 const iconPaths = {
@@ -95,6 +99,21 @@ async function loadWorkspace() {
   state.loaded = true;
 }
 
+async function loadPilotDraft() {
+  if (state.pilotDraftLoading) return;
+  state.pilotDraftLoading = true;
+  state.pilotDraftError = '';
+  state.pilotDraft = null;
+  if (route().page === 'pilot-panel') render();
+  try { state.pilotDraft = await api('/api/pilot-panel-draft'); }
+  catch (reason) { state.pilotDraftError = reason.message; }
+  finally {
+    state.pilotDraftLoading = false;
+    state.pilotDraftLoaded = true;
+    if (route().page === 'pilot-panel') render();
+  }
+}
+
 let toastTimer;
 function toast(message) {
   const node = $('#toast');
@@ -110,7 +129,7 @@ function sidebar(page, id) {
     <aside class="sidebar ${state.menuOpen ? 'open' : ''}" aria-label="Workspace navigation">
       <a class="sidebar-brand" href="#/console"><span class="wordmark">MindLever<span>X.</span></span><div class="sidebar-kicker">OPERATOR WORKSPACE</div></a>
       <nav aria-label="Main navigation"><div class="nav-label">Your workspace</div>
-      ${active('console','Needs me','grid',pendingReviews().length)}${active('evidence','Evidence review','search')}${active('clients','Clients','users')}${active('leads','Leads','inbox',newLeads().length)}${active('activity','Activity','history')}
+      ${active('console','Needs me','grid',pendingReviews().length)}${active('evidence','Evidence review','search')}${active('pilot-panel','Pilot question draft','layers')}${active('clients','Clients','users')}${active('leads','Leads','inbox',newLeads().length)}${active('activity','Activity','history')}
       <div class="nav-label">Clients</div>
       ${state.clients.slice(0,6).map(client => `<a class="nav-item sidebar-client ${page === 'clients' && id === client.id ? 'active' : ''}" href="#/clients/${attr(client.id)}"><span class="client-dot"></span><span>${e(client.name)}</span></a>`).join('') || '<div class="nav-item muted">No clients yet</div>'}
       </nav>
@@ -120,7 +139,7 @@ function sidebar(page, id) {
 
 function shell(content, crumb = '') {
   const {page,id} = route();
-  const names = {console:'Needs me',evidence:'Evidence review',clients:'Clients',reviews:'Review',leads:'Leads',activity:'Activity',panels:'Prompt panels'};
+  const names = {console:'Needs me',evidence:'Evidence review','pilot-panel':'Pilot question draft',clients:'Clients',reviews:'Review',leads:'Leads',activity:'Activity',panels:'Prompt panels'};
   return `<div class="app-layout">${sidebar(page,id)}<div class="workspace">
     <header class="topbar"><button class="icon-button menu-toggle" data-action="toggle-menu" aria-label="${state.menuOpen ? 'Close' : 'Open'} navigation" aria-expanded="${state.menuOpen}">${icon('menu')}</button>
     <div class="breadcrumb"><span class="breadcrumb-root">Workspace</span>${icon('chevron')}<span>${e(crumb || names[page] || 'Workspace')}</span></div>
@@ -237,6 +256,32 @@ function activityPage() {
 
 function versionLabel(value) { return /^v/i.test(String(value)) ? String(value) : `v${value}`; }
 
+function pilotPanelPage() {
+  const refresh = `<button class="button small" data-action="refresh-pilot" ${state.pilotDraftLoading ? 'disabled' : ''}>${icon('refresh')} ${state.pilotDraftError ? 'Retry draft' : 'Refresh draft'}</button>`;
+  const heading = pageHead('Question coverage · Review draft', 'Pilot question draft', 'Read the proposed questions, why each is included and what still needs to be decided.', refresh);
+  if (state.pilotDraftLoading || !state.pilotDraftLoaded) return heading + '<section class="panel"><p role="status">Loading the saved question draft…</p></section>';
+  if (state.pilotDraftError || !state.pilotDraft) return heading + `<section class="panel"><h2>Draft unavailable</h2><p role="alert">${e(state.pilotDraftError || 'The saved draft could not be loaded. Retry when it is available.')}</p><p class="field-help">Other workspace records remain available. No collection or panel changes occurred.</p></section>`;
+  const {draft, source} = state.pilotDraft;
+  const fields = entries => `<dl>${entries.map(([label, value]) => `<dt>${e(label)}</dt><dd>${e(value === null ? 'Unresolved' : value)}</dd>`).join('')}</dl>`;
+  const intentById = new Map(draft.intents.map(intent => [intent.id, intent]));
+  const sourceById = new Map(draft.sources.map(item => [item.id, item]));
+  const provenance = value => value === 'retained_observed_prompt' ? 'Question retained in a saved export' : 'AI-generated hypothesis';
+  const roles = {discovery_candidate:'Discovery candidate',exploratory_candidate:'Exploratory candidate',brand_diagnostic:'Brand diagnostic'};
+  const questions = draft.questions.map(question => `<details class="version-card evidence-source pilot-question"><summary><strong>${e(question.id)} · ${e(question.text)}</strong></summary><div class="version-body">
+    <div class="review-card-top">${pill(question.provenance === 'retained_observed_prompt' ? 'Retained prompt' : 'AI hypothesis')}${pill(roles[question.role])}</div>
+    ${fields([['Provenance', provenance(question.provenance)], ['Intent', intentById.get(question.intentId).title], ['Brand anchoring', question.anchoring === 'unanchored' ? 'Unanchored' : 'Brand anchored'], ['Proposed discovery eligibility', question.headlineEligibility === 'excluded' ? 'Excluded in this draft' : 'Eligibility unresolved'], ['Question version', question.version]])}
+    <h3>Why this question</h3><p>${e(question.rationale)}</p><h3>What is uncertain</h3><p>${e(question.uncertainty)}</p>
+    <h3>Source basis</h3><ul>${question.sourceIds.map(id => `<li><strong>${e(sourceById.get(id).title)}</strong> — ${e(sourceById.get(id).limitation)}</li>`).join('')}</ul></div></details>`).join('');
+  return heading + `<div class="evidence-banner">${pill('Draft','pending')}<span>Collection is blocked. These questions are candidates; no panel is frozen and no new answers have been collected.</span></div>
+    <section class="panel evidence-source"><span class="eyebrow">${e(draft.subject.brand)} · ${e(draft.subject.domain)}</span><h2>${e(draft.questions.length)} questions to review</h2><p>${e(draft.purpose)}</p><p class="field-help">The count describes this candidate set. It is not an approved sample-size requirement or evidence of adequate coverage.</p>
+    <details><summary>Panel version, ownership and collection context</summary>${fields([['Panel', `${draft.panelId} · v${draft.version}`], ['Prepared by', draft.preparedBy], ['Owner', draft.owner], ['Question language', draft.language], ['Market', draft.market], ['Collection locale', draft.locale], ['Qualified collection surface', draft.collectionSurface], ['Repetitions', draft.repetitions]])}</details></section>
+    <section class="section-gap"><div class="section-head"><h2>Proposed coverage</h2></div><ul class="pilot-coverage" aria-label="Proposed question coverage">${draft.intents.map(intent => { const count = draft.questions.filter(question => question.intentId === intent.id).length; return `<li><div><strong>${e(intent.title)}</strong>${pill(`${count} ${count === 1 ? 'question' : 'questions'}`)}</div><p>${e(intent.definition)}</p></li>`; }).join('')}</ul><p class="field-help">These are proposed intent assignments, not measured buyer demand.</p></section>
+    <section class="section-gap"><div class="section-head"><h2>The candidate questions</h2></div>${questions}</section>
+    <section class="panel section-gap"><h2>Measurement boundary</h2><p>${e(draft.measurementBoundary)}</p><h3>Still unresolved</h3><ul>${draft.gaps.map(gap => `<li>${e(gap)}</li>`).join('') || '<li>No additional gaps recorded; this does not establish readiness.</li>'}</ul></section>
+    <section class="panel section-gap"><h2>Alternatives kept for later</h2>${draft.alternatives.map(alternative => `<details class="evidence-source"><summary>${e(alternative.text)}</summary><p>${e(alternative.reason)}</p></details>`).join('') || '<p>No alternatives recorded.</p>'}</section>
+    <details class="panel section-gap evidence-source"><summary>Source references and draft fingerprint</summary><p class="field-help">References describe the saved basis for the draft. A file hash identifies bytes; it does not prove buyer relevance or accept the collection method.</p>${draft.sources.map(item => `<h3>${e(item.title)}</h3>${fields([['Source ID', item.id], ['Kind', humanize(item.kind)], ['Reference (text only)', item.reference], ['Recorded source hash', item.sha256 === null ? 'Not recorded' : item.sha256], ['Limitation', item.limitation]])}`).join('')}${fields([['Draft SHA-256', source.sha256], ['Draft bytes', source.bytes]])}</details>`;
+}
+
 function panelsPage(id) {
   const client = clientById(id);
   if (!client) return notFound('Client record');
@@ -301,6 +346,7 @@ function render() {
   if (page === 'preview') { $('#app').innerHTML = previewPage(id); document.title = `Report preview · MindLeverX`; return; }
   if (page === 'console') content = consolePage();
   else if (page === 'evidence') content = evidencePage();
+  else if (page === 'pilot-panel') content = pilotPanelPage();
   else if (page === 'clients' && id === 'new') { content = newClientPage(); crumb = 'Clients / New client'; }
   else if (page === 'clients' && id) { content = clientPage(id); crumb = `Clients / ${clientById(id)?.name || 'Record'}`; }
   else if (page === 'clients') content = clientsPage();
@@ -313,6 +359,7 @@ function render() {
   syncNavigation();
   const title = $('#main h1')?.textContent || 'Workspace';
   document.title = `${title} · MindLeverX`;
+  if (page === 'pilot-panel' && !state.pilotDraftLoaded && !state.pilotDraftLoading) void loadPilotDraft();
 }
 
 function syncNavigation() {
@@ -421,7 +468,10 @@ document.addEventListener('click', async event => {
     else $('.menu-toggle')?.focus();
   } else if (action === 'refresh') {
     control.disabled = true;
-    try { await loadWorkspace(); render(); toast('Workspace refreshed.'); } catch (reason) { toast(reason.message); control.disabled = false; }
+    try { await loadWorkspace(); render(); if (route().page === 'pilot-panel') await loadPilotDraft(); toast('Workspace refreshed.'); } catch (reason) { toast(reason.message); control.disabled = false; }
+  } else if (action === 'refresh-pilot') {
+    await loadPilotDraft();
+    $('[data-action="refresh-pilot"]')?.focus({preventScroll:true});
   } else if (action === 'filter-leads') {
     state.leadFilter = control.dataset.filter;
     render();
