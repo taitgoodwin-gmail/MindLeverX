@@ -3,7 +3,8 @@ import { open } from 'node:fs/promises';
 import { savedResults } from './saved-results.mjs';
 import { savedResultsPdf, SAVED_RESULTS_RENDERER_VERSION } from './saved-results-pdf.mjs';
 
-export const REPORT_SCOPE_BOUNDARY = 'The brand and domain are operator-configured source scope, not independently verified vendor provenance. This is an internal saved sample; local review does not qualify collection or authorize client release.';
+import { createReportExport, REPORT_SCOPE_BOUNDARY, LOCAL_REVIEW_LIMITATION } from './report-export.mjs';
+export { REPORT_SCOPE_BOUNDARY } from './report-export.mjs';
 const SOURCE_LIMIT = 2 * 1024 * 1024;
 const PDF_LIMIT = 8 * 1024 * 1024;
 const hash = bytes => createHash('sha256').update(bytes).digest('hex');
@@ -119,6 +120,18 @@ export function createReportRevisions({ db, evidenceInputPath, evidenceBrand, ev
     forReview: reviewId => metadata(db.prepare(`${selectMetadata} WHERE review_id=?`).get(reviewId)),
     verify: id => metadata(read(id)),
     get: id => { const row = read(id); return { revision: metadata(row), report: JSON.parse(Buffer.from(row.report_bytes).toString('utf8')) }; },
+    export: id => {
+      const row = read(id);
+      const review = db.prepare('SELECT id,client_id,status,note,created_at,decided_at FROM reviews WHERE id=?').get(row.review_id);
+      if (!review || review.client_id !== row.client_id) fail(503, 'The linked local review is unavailable.');
+      try {
+        return createReportExport({
+          snapshotBytes: Buffer.from(row.snapshot_json), sourceBytes: Buffer.from(row.source_bytes),
+          reportBytes: Buffer.from(row.report_bytes), pdfBytes: Buffer.from(row.pdf_bytes),
+          review: { id: review.id, clientId: review.client_id, revisionId: row.id, status: review.status, note: review.note, createdAt: review.created_at, decidedAt: review.decided_at, limitation: LOCAL_REVIEW_LIMITATION },
+        });
+      } catch { fail(503, 'The retained revision or local review cannot be exported with the supported format.'); }
+    },
     bytes: (id, kind) => {
       const row = read(id);
       const column = { pdf: 'pdf_bytes', source: 'source_bytes', report: 'report_bytes' }[kind];

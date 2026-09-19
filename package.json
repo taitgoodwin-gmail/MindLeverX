@@ -10,6 +10,7 @@
   "scripts": {
     "build": "node scripts/build.mjs",
     "report:build": "node scripts/build-report.mjs",
+    "report:verify": "node scripts/verify-report-export.mjs",
     "evidence:inspect": "node scripts/inspect-evidence.mjs",
     "build:public": "node scripts/build.mjs --public && node scripts/check-public.mjs",
     "dev": "npm run build && node server/start.mjs",

@@ -1,6 +1,8 @@
 # Visible chunk plans and requirement traceability
 
-Latest completed local chunk: [MIN-7 saved evidence to internal report review](report-review-slice.md), with full review-draft narratives, pillar rationale, four numbered steps and REVIEW-01–07 cases. All four steps passed their bounded verification; the actual saved-sample report is pending owner review. This connects retained evidence and an exact PDF to the actual review queue without qualifying collection or enabling client release. The [MIN-13 candidate question preview](pilot-panel-draft.md) is complete locally; final specification freeze remains blocked. Earlier completed chunks below remain evidence of their own scope.
+Latest completed local chunk: [MIN-7 portable retained-report export](report-export-slice.md), with full review-draft narratives, four completed steps and verified offline/API/browser cases. The PDF remains the human report; private source portability does not qualify collection or release.
+
+Preceding completed local chunk: [MIN-7 saved evidence to internal report review](report-review-slice.md), with full review-draft narratives, pillar rationale, four numbered steps and REVIEW-01–07 cases. All four steps passed their bounded verification; the actual saved-sample report is pending owner review. This connects retained evidence and an exact PDF to the actual review queue without qualifying collection or enabling client release. The [MIN-13 candidate question preview](pilot-panel-draft.md) is complete locally; final specification freeze remains blocked. Earlier completed chunks below remain evidence of their own scope.
 
 Owner direction recorded 19 September 2026. Before implementation, show a short numbered plan with outcome, estimate, current step and requirement links. During work, report Step N of M, what changed and what remains. At handoff, link verification evidence and say what the owner can try. Keep each chunk bounded and separate from the next.
 

@@ -178,9 +178,16 @@ export function createApp({ dbPath = resolve('data/mindleverx.sqlite'), seed = t
           try { return json(res, 200, await readPilotPanelDraft(pilotPanelPath)); }
           catch { fail(503, 'The pilot question draft is unavailable or needs a data check. Check the saved draft, then retry.'); }
         }
-        const revisionPath = path.match(/^\/api\/report-revisions\/([^/]+)(?:\/(draft\.pdf|source\.json|report\.json))?$/);
+        const revisionPath = path.match(/^\/api\/report-revisions\/([^/]+)(?:\/(draft\.pdf|source\.json|report\.json|export\.json))?$/);
         if (revisionPath && method === 'GET') {
           if (!revisionPath[2]) return json(res, 200, revisions.get(revisionPath[1]));
+          if (revisionPath[2] === 'export.json') {
+            const bytes = revisions.export(revisionPath[1]);
+            const safeId = revisionPath[1].replace(/[^A-Za-z0-9_-]/g, '_').slice(0,128);
+            res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store', 'Content-Disposition': `attachment; filename="mindleverx-${safeId}-private-export.json"` });
+            res.end(bytes);
+            return;
+          }
           const kind = { 'draft.pdf': 'pdf', 'source.json': 'source', 'report.json': 'report' }[revisionPath[2]];
           const bytes = revisions.bytes(revisionPath[1], kind);
           res.writeHead(200, { 'Content-Type': kind === 'pdf' ? 'application/pdf' : 'application/json; charset=utf-8', 'Cache-Control': 'no-store', 'Content-Disposition': `attachment; filename="mindleverx-${kind}.${kind === 'pdf' ? 'pdf' : 'json'}"` });
