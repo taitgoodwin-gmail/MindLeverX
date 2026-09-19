@@ -12,6 +12,24 @@ Owner also asks to learn about the skills, plugins and tools used while building
 
 ## Current example: PDF report download
 
+### 19 September follow-up — saved-export decoding regression
+
+Supporting work: [MIN-14 — Strengthen delivery handoff, verification and GitHub backup](https://linear.app/mindleverx-codex-build/issue/MIN-14/strengthen-delivery-handoff-verification-and-github-backup), linked to the existing MIN-9 local PDF outcome. Estimate: 5–10 minutes. A separate code reviewer reproduced an export that passes inspection but fails results preparation because a UTF-8 byte-order marker is decoded differently on the second parse.
+
+**Requirement basis (review draft, partial local coverage): MLX3-RES-004 — Evidence Drill-Down.** An authorized reader can trace each measurement or conclusion to the contributing permitted observations and receipts, with clear explanations for evidence unavailable under retention or access rules.
+
+**Related wording correction (accepted ChatGPT-first direction; review-draft INV-003):** Each accepted collection run uses the specifically qualified surface and labels its provider, method and available context; model-API benchmarks never stand in for consumer ChatGPT observations, and additional platforms require an explicit scope decision with separate reporting. Remove the unqualified API-as-proxy statement from the local operator preview; this does not add any collection capability.
+
+Pillars: consistent decoding improves repeatability and automated preparation; source identity supports trustworthy evidence review. Owner/client UX benefits are expected from avoiding a failed download, not user-tested. This fix adds no AI judgment or measured recurring-revenue/competitive benefit.
+
+1. Reproduce the mismatch with a synthetic two-answer export, then use the inspector's UTF-8 decoding behavior in saved results. Preserve the original bytes for provenance.
+2. Verify complete answers, independently specified 1/2 mention count, original byte length and SHA-256; invalid evidence must remain blocked. Check the preview wording against INV-003.
+3. Run the affected tests and public-build checks; save exact results on MIN-14. No live data collection or release is part of this regression fix.
+
+**BOM-01 executable check:** prerequisites are the two synthetic source rows in `tests/saved-results.test.mjs` in the product checkout, prefixed with the three UTF-8 BOM bytes. Run `node --test tests/saved-results.test.mjs`. Expect `complete`, exact original answer strings, numerator 1/denominator 2 and hash/length of the original BOM-containing bytes. FAIL on an exception, missing answer, changed count or normalized-byte fingerprint; BLOCKED if the required Node runtime is unavailable. This fixture is an encoding test, not a provider or statistical sample. Cleanup: in-memory data only. Initial reproduction before the fix: inspector `complete`, saved results `SyntaxError`. Final evidence belongs on MIN-14.
+
+**Actual result:** PASS. The agent's isolated copy failed the new regression before the fix and passed afterward. The coordinator reproduced the original mismatch separately, applied the reviewed patch, and ran all 75 application tests plus public-build checks successfully in the active product checkout. Seven requirements-validator regressions and the portable structure check also passed. These checks do not establish production deployment or customer acceptance.
+
 **Status:** COMPLETE for the local PDF chunk; owner review and full requirement acceptance remain open. **Estimate:** 30–60 minutes, subject to existing PDF tooling. **Outcome:** replace the customer-facing text download with a readable PDF of the same bounded saved-evidence results. This does not complete a live audit, approve the evidence, deploy a portal or release a customer report.
 
 **Accepted owner correction:** the customer-facing report should be a polished PDF, not a text file. Recorded as decision `PDF-FORMAT-2026-09-19` in this document; this is a local decision reference, not an ID added to the formal requirements register. V4 RES-006 separately requires a machine-readable export; PDF does not replace that requirement.

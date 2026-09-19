@@ -1,4 +1,16 @@
-# Implementation status · 12 September 2026
+# Implementation status
+
+## Current state — 19 September 2026
+
+Use [the current handoff](codex-handoff.md) for checkout, verification and next-work details. The dated September 12 inventory below is historical and does not define today's next task.
+
+The active product checkout is `/Users/tag/Documents/ChatGPT/MindLeverX evidence-inspection`. It contains the local saved-results frontend and eight-page PDF download in addition to evidence inspection. MIN-14 recorded 74 passing application tests and public-build checks for that checkpoint; those results are dated evidence, not a claim about every later revision. The requirements review draft and local product work have separate verified GitHub backup tags recorded on MIN-14. Neither tag represents deployment or customer acceptance.
+
+The service is not yet end-to-end: no live collector, payment integration, production customer identity or private report delivery is implemented, and no renewal has been observed. The saved-results source is process-wide and is not yet attached to a client/report revision in the review queue. Existing local review decisions therefore do not approve the newly generated saved-results PDF. MIN-13's question coverage draft is ready; final pilot freeze remains dependent on MIN-12 qualification. Full requirement approval and Google Sheet synchronization are still outstanding.
+
+The public marketing website has been deployed separately. The application remains local; the historical deployment row below refers to that application, not the marketing site. The full historical admin portal and sample scoring design are not automatically accepted MVP scope.
+
+## Historical checkpoints
 
 ## September 18 frontend update
 
