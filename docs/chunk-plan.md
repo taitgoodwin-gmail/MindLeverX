@@ -1,5 +1,7 @@
 # Visible chunk plans and requirement traceability
 
+Latest completed local chunk: [MIN-17 database recovery](database-recovery.md): three steps completed, full review-draft narratives and REC-01–05 verification. All eight focused recovery cases and 135 application tests passed. Local recovery only; off-device recovery and retention policy remain open.
+
 Latest public-site chunk: [MIN-15 homepage feedback](homepage-feedback-slice.md) implemented and deployed to [mindleverx.com](https://mindleverx.com/), with nine-item dispositions, full narratives, HOME-01–05 evidence and a reversible public-only release commit. Owner visual review remains open; fresh hosted visual interaction was blocked by the browser service, while all hosted bytes matched the locally browser-tested artifact.
 
 Latest completed local chunk: [MIN-7 portable retained-report export](report-export-slice.md), with full review-draft narratives, four completed steps and verified offline/API/browser cases. The PDF remains the human report; private source portability does not qualify collection or release.
