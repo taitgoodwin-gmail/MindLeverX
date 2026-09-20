@@ -21,6 +21,9 @@ const json = value => JSON.stringify(value).replaceAll('<', '\\u003c');
 // while making the published pages accurate before any JavaScript executes.
 function publicPage(html) {
   html = html.replace(/<aside class="preview-banner" id="local-preview"[^>]*>[\s\S]*?<\/aside>/g, '');
+  // An explicit marker keeps primary-action availability accurate when local copy changes.
+  html = html.replace(/(<p\b[^>]*data-public-copy="audit-note"[^>]*>)[\s\S]*?<\/p>/g,
+    '$1Audit requests are not open yet. Explore the examples and method.</p>');
   html = html.replace(/<form\b[^>]*data-kind="(audit|subscription)"[^>]*>[\s\S]*?<\/form>\s*<noscript>[\s\S]*?<\/noscript>\s*<div class="note" id="fnote"[^>]*>[\s\S]*?<\/div>/g,
     (_, kind) => `<p class="note" style="margin-top:24px">${kind === 'subscription' ? 'Newsletter subscriptions' : 'Audit requests'} are not open yet. Please check back for availability.</p>`);
   const copy = [

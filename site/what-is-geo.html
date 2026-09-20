@@ -296,14 +296,14 @@
 <aside class="preview-banner" id="local-preview" hidden><div class="wrap"><b>Local preview</b><span>Example measurements. Requests stay in this workspace.</span><a href="/app/">Open workspace →</a></div></aside>
 
 <div class="ticker" id="ticker">
-  <div class="tag"><span class="live"></span>AI VISIBILITY · SAMPLE FEED</div>
+  <div class="tag"><span class="live"></span>SAMPLE REPORT TOPICS</div>
   <div class="mask"><div class="track" id="tick">
-    <span title="Share of AI answers that cite your pages">Citations <b>34%</b><em>▲2</em></span>
-    <span title="Times your brand is named in an answer, with or without a link">Mentions <b>51%</b><em>▲1</em></span>
-    <span title="Your citation share versus the whole category">Share of voice <b>18%</b><em>▲1</em></span>
-    <span title="AI crawler visits to your site per day">AI crawls <b>214/day</b><em>▲12</em></span>
-    <span title="Visits arriving from AI answer links per week">Referrals <b>57/wk</b><em>▲4</em></span>
-    <span title="Your composite GEO Readiness Score (0–100)">Readiness <b>87/100</b><em>▲3</em></span>
+    <span>Brand mentions <b>Answer text</b></span>
+    <span>Citations <b>Source links</b></span>
+    <span>Comparisons <b>Matched conditions</b></span>
+    <span>Crawler access <b>Technical checks</b></span>
+    <span>Referrals <b>Visits from links</b></span>
+    <span>Readiness <b>Evidence gaps</b></span>
   </div></div>
   <button class="tkbtn" id="tkBtn" aria-label="Pause sample ticker" aria-pressed="false" title="Pause ticker">❚❚</button>
   <div class="smp">SAMPLE</div>
@@ -315,24 +315,24 @@
     <a href="index.html" class="logo">MindLever<b>X.</b></a>
     <nav class="navlinks" aria-label="Main navigation">
       <a href="index.html#services">Services</a>
-      <a href="method.html">Method</a>
-      <a href="index.html#score">Readiness</a>
+      <a href="method.html" class="nav-priority">Method</a>
+      <a href="index.html#score" class="nav-example">Example scorecard</a>
       <a href="what-is-geo.html" class="active">What is GEO?</a>
-      <a href="research-hub.html">Research</a>
-      <a href="index.html#cta" class="textlink">Request a free audit</a>
+      <a href="research-hub.html" class="nav-priority">Research</a>
+      <a href="index.html#cta" class="nav-cta textlink">Request a free audit</a>
       <button class="toggle" id="tg">☾ Dark</button>
     </nav>
-    <button class="menubtn" id="menubtn" aria-label="Open menu" aria-controls="mobnav" aria-expanded="false">☰</button>
+    <button class="menubtn" id="menubtn" aria-label="Open menu" aria-controls="mobnav" aria-expanded="false">Menu</button>
   </div>
-  <div class="mobnav wrap" id="mobnav" aria-label="Mobile navigation">
+  <nav class="mobnav wrap" id="mobnav" aria-label="More navigation" hidden>
     <a href="index.html#services">Services</a>
     <a href="method.html">Method</a>
-    <a href="index.html#score">Readiness</a>
+    <a href="index.html#score">Example scorecard</a>
     <a href="what-is-geo.html">What is GEO?</a>
     <a href="research-hub.html">Research</a>
     <a href="index.html#cta">Request a free audit</a>
     <button class="toggle" id="tg2">☾ Dark</button>
-  </div>
+  </nav>
 </header>
 
 <main id="top">
@@ -421,10 +421,10 @@
     <div class="wrap">
       <div class="secnum">03 · Evidence</div>
       <h2 class="sec-h">Why it matters now.</h2>
-      <p class="sub">The buying journey already runs through generative answers. The evidence that GEO moves visibility is early but consistent.</p>
+      <p class="sub">These studies address different questions. Their methods and scope matter when interpreting the findings.</p>
       <div class="stats">
-        <div class="stat key rv"><div class="n">~40%</div><div class="t">Visibility lift from GEO</div><div class="d">Statistics, citations and quotations can lift AI visibility up to ~40% — the method is measurable. <s>PRINCETON, KDD 2024</s></div></div>
-        <div class="stat rv d1"><div class="n">~8%</div><div class="t">Click-through after a summary</div><div class="d">Users rarely click through once the AI answers — citation, not clicks, is the KPI. <s>PEW, JUL 2025</s></div></div>
+        <div class="stat key rv"><div class="t">Controlled GEO research</div><div class="d">The GEO paper tested content changes on 1,000 queries using GPT-3.5 and five retrieved sources. Results varied by tactic and domain; they are not a customer-lift forecast. <a class="textlink" href="https://arxiv.org/abs/2311.09735v3">GEO paper · KDD 2024 · v3 →</a></div></div>
+        <div class="stat rv d1"><div class="n">8% vs. 15%</div><div class="t">Traditional-result clicks in Pew’s study</div><div class="d">Google visits with vs. without an AI summary; summary-source links received clicks on 1% of visits with a summary. 900 U.S. adults, 68,879 searches in March 2025; results reconstructed in April. Observational, not a universal or causal estimate. <a class="textlink" href="https://www.pewresearch.org/short-reads/2025/07/22/google-users-are-less-likely-to-click-on-links-when-an-ai-summary-appears-in-the-results/">Pew Research Center · 22 July 2025 →</a></div></div>
       </div>
     </div>
   </section>
@@ -433,14 +433,14 @@
   <section class="dark" id="signals">
     <div class="wrap">
       <div class="secnum">04 · Signals</div>
-      <h2 class="sec-h">What generative engines actually reward.</h2>
-      <p class="sub">Every answer engine differs, but the signals that get a page pulled into an answer rhyme. GEO engineers each one deliberately.</p>
+      <h2 class="sec-h">Areas for evidence-led review.</h2>
+      <p class="sub">These are proposed review areas, not a validated ranking of effects across answer engines.</p>
       <div class="signals">
         <div class="sig rv"><div class="num">1</div><div><h3>A quotable, self-contained answer</h3><p>A claim the model can lift whole — stated plainly, near the top, without needing the surrounding page for context.</p></div><div class="w">Content</div></div>
         <div class="sig rv d1"><div class="num">2</div><div><h3>Machine-readable structure</h3><p>Server-rendered HTML, clean headings, and schema so a crawler parses the meaning, not just the pixels.</p></div><div class="w">Technical</div></div>
-        <div class="sig rv d2"><div class="num">3</div><div><h3>Fresh, dated, sourced claims</h3><p>Explicit dates and cited evidence signal reliability — models favor statements they can attribute and trust.</p></div><div class="w">Trust</div></div>
-        <div class="sig rv d3"><div class="num">4</div><div><h3>Corroboration off your own site</h3><p>Being named on G2, Reddit, Wikipedia and industry roundups is the single biggest lever on whether you're cited.</p></div><div class="w">Authority</div></div>
-        <div class="sig rv d3"><div class="num">5</div><div><h3>Category-defining brand demand</h3><p>Brand-search demand is the strongest citation predictor — models echo the entities the wider web already treats as the answer.</p></div><div class="w">Demand</div></div>
+        <div class="sig rv d2"><div class="num">3</div><div><h3>Fresh, dated, sourced claims</h3><p>Check dates, sources and support for each material claim; do not assume that adding a citation guarantees selection.</p></div><div class="w">Trust</div></div>
+        <div class="sig rv d3"><div class="num">4</div><div><h3>Corroboration off your own site</h3><p>Review relevant third-party references and whether they support the claims made about the brand.</p></div><div class="w">Authority</div></div>
+        <div class="sig rv d3"><div class="num">5</div><div><h3>Questions buyers ask</h3><p>Use evidence about customer questions to propose a panel; treat untested ideas about demand and citations as hypotheses.</p></div><div class="w">Demand</div></div>
       </div>
     </div>
   </section>
@@ -484,18 +484,18 @@
       <div class="take">
         <div class="tl">Key takeaways</div>
         <ul>
-          <li><b>GEO gets you cited, not ranked.</b> The goal is to be the answer, not a link beneath it.</li>
-          <li><b>It extends SEO, doesn't replace it.</b> The same credible, structured content that ranks also gets quoted — when engineered for it.</li>
-          <li><b>Off-site citations are the biggest lever.</b> Being named across G2, Reddit, Wikipedia and roundups moves visibility most.</li>
+          <li><b>GEO examines visibility in AI answers.</b> The aim is to understand mentions and citations; inclusion is not guaranteed.</li>
+          <li><b>Keep the SEO foundations.</b> Google says its existing SEO practices apply to AI features in Search. Eligibility does not guarantee selection, and other engines need separate evidence.</li>
+          <li><b>Review off-site evidence.</b> Third-party references are one area to inspect; this is not a claim that they have the largest effect.</li>
           <li><b>Preserve evidence for citations, mentions and share of voice.</b> Compare readings only when the panel, methodology and provenance match. Missing dimensions remain unmeasured.</li>
         </ul>
       </div>
       <div class="sources">
         <div class="tl">Sources</div>
         <ol>
-          <li><b>Princeton et al.</b>, "GEO: Generative Engine Optimization," <span class="mono">KDD 2024</span> — statistics, citations and quotations lift AI visibility up to ~40%.</li>
-          <li><b>Pew Research Center</b>, Jul 2025 — click-through behavior after AI summaries.</li>
-          <li><b>No published figure.</b> Cross-platform compounding and brand-demand-as-predictor are stated here as <span class="mono">MECHANISM, NOT MEASUREMENT</span> — we have no citable study for either and do not present a number for them.</li>
+          <li><a class="textlink" href="https://arxiv.org/abs/2311.09735v3">GEO: Generative Engine Optimization · KDD 2024 · v3</a> — controlled research using GPT-3.5, five retrieved sources and a 1,000-query test; not a forecast for this service.</li>
+          <li><a class="textlink" href="https://www.pewresearch.org/short-reads/2025/07/22/google-users-are-less-likely-to-click-on-links-when-an-ai-summary-appears-in-the-results/">Pew Research Center · 22 July 2025</a> — observed Google search clicks among 900 U.S. adults; see study scope above.</li>
+          <li><b>Our proposed approach.</b> Keep engine results separate and test hypotheses before treating them as causal explanations.</li>
         </ol>
       </div>
     </div>
@@ -521,11 +521,11 @@
 <footer><div class="wrap">
   <div class="fcols">
     <div style="max-width:30ch"><div class="logo" style="font-size:19px">MindLever<b>X.</b></div><p style="margin-top:11px;font-weight:400">Generative engine optimization for mid-market B2B SaaS. Own the answer.</p></div>
-    <div><div class="fhead">Product</div><a href="index.html#services">Services</a><a href="method.html">Method</a><a href="index.html#score">Readiness</a></div>
+    <div><div class="fhead">Product</div><a href="index.html#services">Services</a><a href="method.html">Method</a><a href="index.html#score">Example scorecard</a></div>
     <div><div class="fhead">Learn</div><a href="what-is-geo.html">What is GEO?</a><a href="research-hub.html">Research</a><a href="case-study.html">Case studies</a></div>
     <div><div class="fhead">Company</div><a href="about.html">About</a><a href="about.html#contact">Contact</a></div>
   </div>
-  <div class="fnote2">PLANNED MEASUREMENTS USE ENGINE APIS AGAINST A FIXED PROMPT PANEL; API ANSWERS ARE A PROXY FOR THE LIVE CONSUMER PRODUCTS, WHICH DIFFER IN RETRIEVAL, PERSONALIZATION AND INTERFACE. · METHODOLOGY V1.0</div>
+  <div class="fnote2">AI-ANSWER FINDINGS DEPEND ON THE PRODUCT, QUESTIONS AND COLLECTION CONDITIONS. MODEL-API RESULTS ARE DISTINCT FROM OBSERVATIONS OF CONSUMER CHATGPT AND OTHER CONSUMER INTERFACES.</div>
   <div class="fbot"><span>© 2026 MindLeverX</span><span>OWN THE ANSWER.</span></div>
 </div></footer>
 

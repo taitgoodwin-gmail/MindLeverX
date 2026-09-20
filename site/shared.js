@@ -27,18 +27,31 @@
   const menuButton = $('menubtn'), menu = $('mobnav');
   function setMenu(open, focusButton = false) {
     if (!menu || !menuButton) return;
+    menu.hidden = !open;
     menu.style.display = open ? 'block' : 'none';
     menuButton.setAttribute('aria-expanded', String(open));
     menuButton.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
-    menuButton.textContent = open ? '✕' : '☰';
+    menuButton.textContent = open ? 'Close' : 'Menu';
     if (focusButton) menuButton.focus();
   }
   menuButton?.addEventListener('click', () => setMenu(menuButton.getAttribute('aria-expanded') !== 'true'));
-  menu?.addEventListener('click', event => { if (event.target.closest('a')) setMenu(false); });
+  menu?.addEventListener('click', event => {
+    const link = event.target.closest('a');
+    if (!link) return;
+    setMenu(false, true);
+    const target = new URL(link.href, window.location.href);
+    if (target.origin === window.location.origin && target.pathname === window.location.pathname && target.hash) {
+      let section;
+      try { section = $(decodeURIComponent(target.hash.slice(1))); } catch {}
+      if (section) {
+        if (!section.hasAttribute('tabindex')) section.setAttribute('tabindex', '-1');
+        section.focus({ preventScroll: true });
+      }
+    }
+  });
   document.addEventListener('keydown', event => {
     if (event.key === 'Escape' && menuButton?.getAttribute('aria-expanded') === 'true') setMenu(false, true);
   });
-  matchMedia('(min-width:1181px)').addEventListener('change', event => { if (event.matches) setMenu(false); });
 
   const track = $('tick');
   if (track) {
