@@ -86,3 +86,8 @@ Latest owner-requested source check, 19 September: a bounded read-only reviewer 
 ### Recovery follow-up — 20 September 2026
 
 [MIN-17 local recovery](database-recovery.md) closes the missing local DB restore drill for the shipped SQLite schema using synthetic evidence, with exact report preservation and safe failure cases. It does not recover external files/configuration or establish governed off-device recovery, retention policy, RPO/RTO or production resilience. The source backup and private-data backup remain distinct.
+
+
+### Preparation recovery follow-up — 20 September 2026
+
+[MIN-18](report-preparation-recovery.md) records failed/interrupted local draft preparation and explicit retry, coordinated through SQLite. It is intentionally part of the existing retained-report flow; provider job semantics, unknown charged outcomes, approved caps and client release remain separate. Saved terminal attempts, exact artifact preservation and a real process-kill test provide bounded recovery evidence. No background schedule or hard whole-agent watchdog was created.

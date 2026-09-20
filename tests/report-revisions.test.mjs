@@ -171,20 +171,27 @@ test('PDF failures and a transaction insertion failure leave no orphan snapshot,
   const f = await fixture(t, { reportPdfRenderer: async () => { throw new Error('/private/renderer-failure'); } });
   const client = await f.client();
   const before = (await f.request('/api/workspace')).data;
+  async function assertOnlyFailedAttempts(count) {
+    const after = (await f.request('/api/workspace')).data;
+    assert.equal(after.reportPreparations.length, count);
+    assert.ok(after.reportPreparations.every(row => row.status === 'failed'));
+    assert.ok(!JSON.stringify(after.reportPreparations).includes('/private/'));
+    assert.deepEqual({ ...after, reportPreparations: [] }, before);
+  }
   const failure = await f.prepare(client.id);
   assert.equal(failure.status, 503);
   assert.ok(!JSON.stringify(failure.data).includes('/private/renderer-failure'));
-  assert.deepEqual((await f.request('/api/workspace')).data, before);
+  await assertOnlyFailedAttempts(1);
   await f.restart({ reportPdfRenderer: savedResultsPdf, pdfPython: '/unavailable-private-mlx-python' });
   const unavailable = await f.prepare(client.id);
   assert.equal(unavailable.status, 503);
   assert.ok(!JSON.stringify(unavailable.data).includes('/unavailable-private-mlx-python'));
-  assert.deepEqual((await f.request('/api/workspace')).data, before);
+  await assertOnlyFailedAttempts(2);
   // Restore the real fixture seam after the deliberate renderer failure.
   await f.restart({ reportPdfRenderer: async () => syntheticPdf });
   f.app().db.exec("CREATE TRIGGER fixture_reject_activity BEFORE INSERT ON activity WHEN NEW.action='Local draft prepared' BEGIN SELECT RAISE(ABORT, 'fixture rollback'); END;");
   assert.equal((await f.prepare(client.id)).status, 500);
-  assert.deepEqual((await f.request('/api/workspace')).data, before);
+  await assertOnlyFailedAttempts(3);
   f.app().db.exec('DROP TRIGGER fixture_reject_activity');
   assert.equal((await f.prepare(client.id)).status, 201);
 });

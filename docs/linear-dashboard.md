@@ -1,5 +1,9 @@
 # MindLeverX visible MVP dashboard
 
+## 20 September — draft preparation recovery
+
+MIN-18 records [verified durable local draft preparation](report-preparation-recovery.md), including interrupted/failed attempts and explicit retry.143 application tests and the browser walkthrough passed. Existing MIN-5/6/7/10/12/13/15 gates remain unchanged. See the latest handoff for the product branch; no deployed-product status is implied.
+
 ## 20 September — independent recovery slice
 
 MIN-17 records the [verified local database recovery slice](database-recovery.md). MIN-12/13/10/15 remain In Review for their existing boundaries; MIN-5/7 remain In Progress, MIN-6 Backlog, and MIN-8/9/11/14/16 Done for bounded work. This checkpoint supersedes older counts below without changing those acceptance gates.

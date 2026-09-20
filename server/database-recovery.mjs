@@ -9,7 +9,7 @@ import { openDatabase } from './database.mjs';
 import { createReportRevisions } from './report-revisions.mjs';
 
 const FORMAT = 'mlx-local-database-backup-v1';
-const TABLES = ['metadata', 'clients', 'reviews', 'panels', 'leads', 'activity', 'report_revisions'];
+const TABLES = ['metadata', 'clients', 'reviews', 'panels', 'leads', 'activity', 'report_revisions', 'report_preparation_attempts'];
 const DATABASE_LIMIT = 1024 * 1024 * 1024; // Bounded local tool, not production storage policy.
 const MANIFEST_LIMIT = 64 * 1024;
 const sha = value => createHash('sha256').update(value).digest('hex');
@@ -28,10 +28,14 @@ function inspectDatabase(path) {
       try { expectedSchema = schema(reference); } finally { reference.close(); }
     }
     const actualSchema = schema(db);
-    if (!isDeepStrictEqual(actualSchema, expectedSchema)) fail('Unsupported database schema; use the matching application version.');
+    // c00da406 backups predate preparation attempts. Accept that exact schema too;
+    // preserve it during verification, then normal app open adds the empty table.
+    const legacySchema = expectedSchema.filter(row => row.tbl_name !== 'report_preparation_attempts');
+    if (!isDeepStrictEqual(actualSchema, expectedSchema) && !isDeepStrictEqual(actualSchema, legacySchema)) fail('Unsupported database schema; use the matching application version.');
     if (db.prepare('PRAGMA foreign_key_check').all().length) fail('Database foreign-key check failed.');
     if (db.prepare("SELECT value FROM metadata WHERE key='initialized'").get()?.value !== '1') fail('Database is not initialized.');
-    const counts = Object.fromEntries(TABLES.map(table => [table, db.prepare(`SELECT COUNT(*) AS n FROM ${table}`).get().n]));
+    const available = new Set(actualSchema.filter(row => row.type === 'table').map(row => row.name));
+    const counts = Object.fromEntries(TABLES.filter(table => available.has(table)).map(table => [table, db.prepare(`SELECT COUNT(*) AS n FROM ${table}`).get().n]));
     const revisions = createReportRevisions({ db });
     for (const { id } of db.prepare('SELECT id FROM report_revisions').iterate()) revisions.verify(id);
     return { counts, schemaSha256: sha(JSON.stringify(actualSchema)) };

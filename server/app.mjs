@@ -228,6 +228,7 @@ export function createApp({ dbPath = resolve('data/mindleverx.sqlite'), seed = t
             clients:db.prepare('SELECT * FROM clients ORDER BY sample DESC, created_at DESC, name').all().map(parseClient),
             reviews:db.prepare('SELECT * FROM reviews ORDER BY created_at DESC, id').all().map(reviewRecord),
             reportRevisions:revisions.list(),
+            reportPreparations:revisions.preparations(),
             reportPreparation:{scope:'internal_saved_sample',subjectDomain:sourceDomain,brand:evidenceBrand,sourceConfigured:Boolean(evidenceInputPath),scopeBoundary:REPORT_SCOPE_BOUNDARY,collectionQualification:'required',clientRelease:'unavailable'},
             panels:db.prepare('SELECT * FROM panels ORDER BY version DESC, created_at DESC').all().map(parsePanel),
             leads:db.prepare('SELECT id,email,domain,source,kind,status,created_at,sample FROM leads ORDER BY created_at DESC').all().map(row=>({...row,sample:Boolean(row.sample)})),

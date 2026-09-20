@@ -53,6 +53,27 @@ export function openDatabase(path, seed = true) {
       BEFORE UPDATE ON report_revisions BEGIN
         SELECT RAISE(ABORT, 'Stored report revisions are immutable; create a successor.');
       END;
+    CREATE TABLE IF NOT EXISTS report_preparation_attempts (
+      id TEXT PRIMARY KEY, client_id TEXT NOT NULL REFERENCES clients(id),
+      source_sha256 TEXT NOT NULL, processing_identity TEXT NOT NULL,
+      attempt INTEGER NOT NULL CHECK(attempt > 0),
+      status TEXT NOT NULL CHECK(status IN ('running','succeeded','failed','interrupted')),
+      actor TEXT NOT NULL, reason TEXT NOT NULL,
+      started_at INTEGER NOT NULL, deadline_at INTEGER NOT NULL, finished_at INTEGER,
+      outcome_code TEXT, message TEXT NOT NULL,
+      revision_id TEXT REFERENCES report_revisions(id),
+      CHECK(deadline_at > started_at),
+      CHECK((status='running' AND finished_at IS NULL AND outcome_code IS NULL AND revision_id IS NULL)
+        OR (status='succeeded' AND finished_at IS NOT NULL AND outcome_code IS NOT NULL AND revision_id IS NOT NULL)
+        OR (status IN ('failed','interrupted') AND finished_at IS NOT NULL AND outcome_code IS NOT NULL AND revision_id IS NULL)),
+      UNIQUE(client_id,source_sha256,processing_identity,attempt)
+    );
+    CREATE UNIQUE INDEX IF NOT EXISTS report_preparation_one_running
+      ON report_preparation_attempts(client_id,source_sha256,processing_identity) WHERE status='running';
+    CREATE TRIGGER IF NOT EXISTS report_preparation_terminal_no_update
+      BEFORE UPDATE ON report_preparation_attempts WHEN OLD.status != 'running' BEGIN
+        SELECT RAISE(ABORT, 'Completed preparation attempts are immutable; append a retry.');
+      END;
   `);
   if (!db.prepare("SELECT value FROM metadata WHERE key='initialized'").get()) {
     db.exec('BEGIN IMMEDIATE');

@@ -1,9 +1,11 @@
 import { createHash, randomUUID } from 'node:crypto';
 import { open } from 'node:fs/promises';
+import { constants } from 'node:fs';
 import { savedResults } from './saved-results.mjs';
 import { savedResultsPdf, SAVED_RESULTS_RENDERER_VERSION } from './saved-results-pdf.mjs';
 
 import { createReportExport, REPORT_SCOPE_BOUNDARY, LOCAL_REVIEW_LIMITATION } from './report-export.mjs';
+import { createReportPreparations, PREPARATION_TIMEOUT_MS } from './report-preparations.mjs';
 export { REPORT_SCOPE_BOUNDARY } from './report-export.mjs';
 const SOURCE_LIMIT = 2 * 1024 * 1024;
 const PDF_LIMIT = 8 * 1024 * 1024;
@@ -14,9 +16,11 @@ function fail(status, message) { throw Object.assign(new Error(message), { statu
 async function sourceBytes(path) {
   if (!path) fail(409, 'Connect saved evidence before preparing a local draft.');
   let file;
-  try { file = await open(path, 'r'); }
+  try { file = await open(path, constants.O_RDONLY | constants.O_NONBLOCK); }
   catch { fail(503, 'Saved evidence is unavailable. Restore the source and refresh.'); }
   try {
+    const info = await file.stat();
+    if (!info.isFile()) fail(503, 'Saved evidence must be a regular file. Check the local source and refresh.');
     const bytes = Buffer.alloc(SOURCE_LIMIT + 1);
     let size = 0;
     while (size < bytes.length) {
@@ -33,8 +37,8 @@ async function sourceBytes(path) {
 }
 
 /** Local snapshots only. Production identity, collection and client release are absent. */
-export function createReportRevisions({ db, evidenceInputPath, evidenceBrand, evidenceSubjectDomain, pdfPython, pdfRenderer = savedResultsPdf }) {
-  const pending = new Map();
+export function createReportRevisions({ db, evidenceInputPath, evidenceBrand, evidenceSubjectDomain, pdfPython, pdfRenderer = savedResultsPdf, preparationClock = Date.now }) {
+  const preparations = createReportPreparations(db, { clock: preparationClock });
   const metadata = row => row && { ...JSON.parse(row.snapshot_json), snapshotSha256: row.snapshot_sha256 };
   const selectMetadata = 'SELECT id,snapshot_json,snapshot_sha256 FROM report_revisions';
   const find = (clientId, sourceSha256, processingIdentity) => db.prepare(`${selectMetadata} WHERE client_id=? AND source_sha256=? AND processing_identity=?`).get(clientId, sourceSha256, processingIdentity);
@@ -73,21 +77,44 @@ export function createReportRevisions({ db, evidenceInputPath, evidenceBrand, ev
     const processingIdentity = hash(encoded(processing));
     const existing = find(clientId, sourceSha256, processingIdentity);
     if (existing) return { created: false, revision: metadata(read(existing.id)) };
-    const key = JSON.stringify([clientId, sourceSha256, processingIdentity]);
-    if (pending.has(key)) return { ...(await pending.get(key)), created: false };
-    const work = (async () => {
+    const claim = preparations.claim(clientId, sourceSha256, processingIdentity);
+    if (claim.revisionId) return { created: false, revision: metadata(read(claim.revisionId)) };
+    if (!claim.acquired) {
+      while (true) {
+        const attempt = preparations.get(claim.attempt.id);
+        if (attempt.status === 'succeeded') return { created: false, revision: metadata(read(attempt.revisionId)) };
+        if (attempt.status !== 'running') fail(attempt.status === 'failed' ? 503 : 409, attempt.message);
+        await new Promise(resolve => setTimeout(resolve, 40));
+      }
+    }
+    const attemptId = claim.attempt.id;
+    let failureCode = 'PDF_UNAVAILABLE';
+    let failureMessage = 'PDF generation is unavailable. Check the local PDF runtime and retry.';
+    try {
       let pdf;
-      try { pdf = Buffer.from(await pdfRenderer(report, { python: pdfPython })); }
+      let timer;
+      try {
+        pdf = Buffer.from(await Promise.race([
+          pdfRenderer(report, { python: pdfPython }),
+          new Promise((_, reject) => { timer = setTimeout(() => reject(new Error('Local preparation deadline')), PREPARATION_TIMEOUT_MS); }),
+        ]));
+      }
       catch { fail(503, 'PDF generation is unavailable. Check the local PDF runtime and try again.'); }
+      finally { clearTimeout(timer); }
+      failureCode = 'INVALID_PDF';
+      failureMessage = 'PDF generation did not produce a complete local draft. Check the renderer and retry.';
       if (pdf.length > PDF_LIMIT || !pdf.subarray(0, 5).equals(Buffer.from('%PDF-')) || !/%%EOF\s*$/.test(pdf.toString('latin1'))) fail(503, 'PDF generation did not produce a complete local draft. Try again.');
       const reportBytes = encoded(report);
+      failureCode = 'PERSISTENCE_FAILED';
+      failureMessage = 'The local draft could not be retained. Refresh the workspace and resolve the local storage problem before retrying.';
       // Rendering/IO finish before taking the write lock. Recheck for another writer.
       db.exec('BEGIN IMMEDIATE');
       try {
+        preparations.assertActive(attemptId);
         const currentClient = clientFor(clientId);
         if (currentClient.name !== client.name) fail(409, 'The client context changed. Refresh and prepare the draft again.');
         const duplicate = find(clientId, sourceSha256, processingIdentity);
-        if (duplicate) { const revision = metadata(read(duplicate.id)); db.exec('COMMIT'); return { created: false, revision }; }
+        if (duplicate) { const revision = metadata(read(duplicate.id)); preparations.succeed(attemptId, duplicate.id); db.exec('COMMIT'); return { created: false, revision }; }
         const { version } = db.prepare('SELECT COALESCE(MAX(version),0)+1 AS version FROM report_revisions WHERE client_id=?').get(clientId);
         const id = randomUUID(), reviewId = randomUUID(), preparedAt = new Date().toISOString();
         const snapshot = {
@@ -107,15 +134,18 @@ export function createReportRevisions({ db, evidenceInputPath, evidenceBrand, ev
           .run(id, clientId, version, reviewId, sourceSha256, processingIdentity, raw, reportBytes, pdf, snapshotJSON, snapshotSha256, preparedAt);
         db.prepare('INSERT INTO activity (id,action,entity_type,entity_id,actor,detail,created_at) VALUES (?,?,?,?,?,?,?)')
           .run(randomUUID(), 'Local draft prepared', 'review', reviewId, 'Local operator', `${report.brand} saved sample v${version} retained for review. No collection, qualification or client release occurred.`, preparedAt);
+        preparations.succeed(attemptId, id);
         db.exec('COMMIT');
         return { created: true, revision: { ...snapshot, snapshotSha256 } };
       } catch (error) { db.exec('ROLLBACK'); throw error; }
-    })();
-    pending.set(key, work);
-    try { return await work; } finally { pending.delete(key); }
+    } catch (error) {
+      preparations.fail(attemptId, failureCode, failureMessage);
+      throw error;
+    }
   }
   return {
     prepare,
+    preparations: () => preparations.list(),
     list: () => db.prepare(`${selectMetadata} ORDER BY created_at DESC,version DESC`).all().map(metadata),
     forReview: reviewId => metadata(db.prepare(`${selectMetadata} WHERE review_id=?`).get(reviewId)),
     verify: id => metadata(read(id)),

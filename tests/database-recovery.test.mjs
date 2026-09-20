@@ -13,7 +13,7 @@ import { backupDatabase, verifyDatabaseBackup, restoreDatabaseBackup } from '../
 
 const sha = bytes => createHash('sha256').update(bytes).digest('hex');
 const cli = resolve('scripts/database-recovery.mjs');
-const tables = ['metadata', 'clients', 'reviews', 'panels', 'leads', 'activity', 'report_revisions'];
+const tables = ['metadata', 'clients', 'reviews', 'panels', 'leads', 'activity', 'report_revisions', 'report_preparation_attempts'];
 const rows = db => Object.fromEntries(tables.map(table => [table, db.prepare(`SELECT * FROM ${table} ORDER BY ${table === 'metadata' ? 'key' : 'id'}`).all()]));
 const exists = async path => lstat(path).then(() => true, error => { if (error.code === 'ENOENT') return false; throw error; });
 

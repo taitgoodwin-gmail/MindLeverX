@@ -1,5 +1,7 @@
 # Visible chunk plans and requirement traceability
 
+Latest completed local chunk: [MIN-18 durable report preparation](report-preparation-recovery.md): all three steps complete; full draft narratives, PREP-01–06, eight new tests and browser evidence.143 application tests pass. Explicit local retry only; qualified delivery gates remain open.
+
 Latest completed local chunk: [MIN-17 database recovery](database-recovery.md): three steps completed, full review-draft narratives and REC-01–05 verification. All eight focused recovery cases and 135 application tests passed. Local recovery only; off-device recovery and retention policy remain open.
 
 Latest public-site chunk: [MIN-15 homepage feedback](homepage-feedback-slice.md) implemented and deployed to [mindleverx.com](https://mindleverx.com/), with nine-item dispositions, full narratives, HOME-01–05 evidence and a reversible public-only release commit. Owner visual review remains open; fresh hosted visual interaction was blocked by the browser service, while all hosted bytes matched the locally browser-tested artifact.

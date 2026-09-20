@@ -14,6 +14,7 @@ state.pilotDraftLoading = false;
 state.pilotDraftLoaded = false;
 state.reportRevisions = [];
 state.reportPreparation = null;
+state.reportPreparations = [];
 state.revisionDetails = new Map();
 state.revisionErrors = new Map();
 state.revisionLoading = new Set();
@@ -100,6 +101,7 @@ async function loadWorkspace() {
   for (const key of ['clients','reviews','leads','activity','panels']) state[key] = Array.isArray(result[key]) ? result[key] : [];
   state.reportRevisions = Array.isArray(result.reportRevisions) ? result.reportRevisions : [];
   state.reportPreparation = result.reportPreparation || null;
+  state.reportPreparations = Array.isArray(result.reportPreparations) ? result.reportPreparations : [];
   try { state.inspection = await api('/api/evidence-inspection'); state.inspectionError = ''; }
   catch (reason) { state.inspection = null; state.inspectionError = reason.message; }
   if (!state.inspection?.inspection?.rows.some(row => row.engine === state.evidenceFilter)) state.evidenceFilter = '';
@@ -353,6 +355,16 @@ const engineName = value => ({ chatgpt: 'ChatGPT', perplexity: 'Perplexity', goo
 function evidenceRows(rows) {
   return rows.map(row => `<tr><td class="mono">${e(row.row)}</td><td>${e(engineName(row.engine))}</td><td>${e(date(row.vendorTimestamp))}</td><td>${e(row.prompt || 'Question missing')}</td><td>${row.literalMention === null ? pill('Missing answer','pending') : row.literalMention ? pill('Mention found','active') : '<span class="muted">Not mentioned</span>'}</td></tr>`).join('') || '<tr><td colspan="5">No answers match this filter.</td></tr>';
 }
+function reportPreparationHistory(clientId) {
+  const attempts = state.reportPreparations.filter(row => !clientId || row.clientId === clientId).slice(0, 10);
+  if (!attempts.length) return '';
+  const labels = {running:'Preparing',succeeded:'Draft retained',failed:'Preparation failed',interrupted:'Interrupted or timed out'};
+  return `<div class="section-gap"><h3>Recent local draft attempts</h3><p class="field-help">Status is saved on this computer. Refresh to check progress. Failed or interrupted work retries only when you request preparation again; client release remains unavailable.</p><ul>${attempts.map(attempt => {
+    const revision = state.reportRevisions.find(row => row.id === attempt.revisionId);
+    const clientName = state.clients.find(row => row.id === attempt.clientId)?.name || 'Client unavailable';
+    return `<li><strong>${e(labels[attempt.status] || 'Unknown state')}</strong> · attempt ${e(attempt.attempt)} · ${e(date(attempt.startedAt,true))}<p>${e(attempt.message)} ${revision ? `<a href="#/reviews/${attr(revision.reviewId)}">Open retained review</a>` : ''}</p><details><summary>Attempt details</summary><p>${e(clientName)}. ${e(attempt.reason)} ${e(attempt.actor)}. Source SHA-256: <span class="mono preparation-hash">${e(attempt.sourceSha256)}</span></p></details></li>`;
+  }).join('')}</ul></div>`;
+}
 function reportPreparationPanel(data) {
   const setup = state.reportPreparation;
   let unavailable = '';
@@ -361,13 +373,13 @@ function reportPreparationPanel(data) {
   else if (!setup.subjectDomain) unavailable = 'The saved evidence subject domain is not configured. Set MLX_EVIDENCE_DOMAIN in the local server setup before preparing a snapshot.';
   const client = setup?.subjectDomain ? state.clients.find(row => !row.sample && row.domain === setup.subjectDomain) : null;
   if (!unavailable && !client) unavailable = `Create a local record for ${setup.subjectDomain}. Fictional sample clients cannot receive this saved snapshot.`;
-  return `<section class="panel section-gap"><h2>Prepare a local draft for review</h2><p>Retain this source, its results and the exact PDF together, then review that snapshot.</p><p class="field-help">The configured brand/domain is an operator-supplied mapping, not verified vendor provenance. Collection qualification and client release remain unavailable.</p>${unavailable ? `<p>${e(unavailable)}</p>${setup?.subjectDomain && !client ? button('Open clients', '#/clients', 'small', 'users') : ''}` : `<p><strong>${e(client.name)}</strong> · ${e(client.domain)} · ${e(setup.brand)}</p><form id="report-prepare" data-id="${attr(client.id)}" data-source-sha="${attr(data.source.sha256)}"><div class="form-error" role="alert"></div><button type="submit" class="button primary">Prepare local draft &amp; open review</button></form>`}</section>`;
+  return `<section class="panel section-gap"><h2>Prepare a local draft for review</h2><p>Retain this source, its results and the exact PDF together, then review that snapshot.</p><p class="field-help">The configured brand/domain is an operator-supplied mapping, not verified vendor provenance. Collection qualification and client release remain unavailable.</p>${unavailable ? `<p>${e(unavailable)}</p>${setup?.subjectDomain && !client ? button('Open clients', '#/clients', 'small', 'users') : ''}` : `<p><strong>${e(client.name)}</strong> · ${e(client.domain)} · ${e(setup.brand)}</p><form id="report-prepare" data-id="${attr(client.id)}" data-source-sha="${attr(data.source.sha256)}"><div class="form-error" role="alert"></div><button type="submit" class="button primary">Prepare local draft &amp; open review</button></form>`}${reportPreparationHistory(client?.id)}</section>`;
 }
 
 function evidencePage() {
   const head = pageHead('Saved evidence · Local review', 'What do the answers show?', 'Review the saved answers before they become a client report.', '<button class="button" data-action="refresh">'+icon('refresh')+'Refresh saved data</button>');
-  if (state.inspectionError) return head + `<div class="error-note" role="alert">${e(state.inspectionError)}</div><p class="muted">Your other workspace records are still available. Refresh to try again.</p>`;
-  if (!state.inspection?.available) return head + empty('No saved evidence connected', 'Connect a local export to inspect real results here. No measurement has been made.', '', 'file');
+  if (state.inspectionError) return head + `<div class="error-note" role="alert">${e(state.inspectionError)}</div><p class="muted">Your other workspace records are still available. Refresh to try again.</p>` + reportPreparationHistory();
+  if (!state.inspection?.available) return head + empty('No saved evidence connected', 'Connect a local export to inspect real results here. No measurement has been made.', '', 'file') + reportPreparationHistory();
   const data = state.inspection.inspection;
   const engines = [...new Set(data.rows.map(row => row.engine).filter(Boolean))];
   const questions = [...new Set(data.rows.map(row => row.prompt).filter(Boolean))];
@@ -443,7 +455,7 @@ window.matchMedia('(max-width: 760px)').addEventListener('change', syncNavigatio
 async function mutate(path, method, body, message, form, destination) {
   if (state.busy) return;
   state.busy = true;
-  const error = form ? $('.form-error', form) : null;
+  let error = form ? $('.form-error', form) : null;
   if (error) error.textContent = '';
   const controls = form ? [...form.querySelectorAll('button,input,select,textarea')] : [];
   controls.forEach(control => control.disabled = true);
@@ -457,6 +469,11 @@ async function mutate(path, method, body, message, form, destination) {
     } else render();
     toast(message);
   } catch (reason) {
+    if (form?.id === 'report-prepare') {
+      // Reconcile a failed or lost HTTP response with the persisted outcome.
+      // This reads status only; it never retries preparation automatically.
+      try { await loadWorkspace(); render(); error = $('#report-prepare .form-error'); } catch { /* Keep original actionable failure. */ }
+    }
     if (error) { error.textContent = reason.message; error.scrollIntoView({block:'nearest'}); }
     else toast(reason.message);
     controls.forEach(control => control.disabled = false);

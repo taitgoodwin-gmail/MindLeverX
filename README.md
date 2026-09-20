@@ -30,6 +30,7 @@ npm run dev
 - Create immutable prompt-panel versions with a required change note.
 - Inspect client report previews and distinguish sample observations from unmeasured clients.
 - Read the activity log and persist changes across server restarts using SQLite.
+- Inspect [durable local draft attempts and explicit retry history](docs/report-preparation-recovery.md); completed matching drafts reuse their retained artifacts.
 
 ## Data and scope
 
