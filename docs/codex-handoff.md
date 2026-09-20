@@ -1,5 +1,11 @@
 # MindLeverX — corrected Codex handoff
 
+## Latest checkpoint — 20 September 2026, private Otterly preservation
+
+This supersedes the earlier waiting classification in this turn. A concrete trial-expiry gap was addressed: the project previously retained only one prompt/16 records; all 15 existing visible MindLeverX prompt histories are now privately preserved (360 records, 344 additional, original 16 unchanged). Prompt CSV, visible configuration and source/time/hash manifest are retained in the root's ignored `artifacts/unattended-work/evidence/2026-09-20-otterly-preservation/`. [Verification and limitations](collection-qualification-2026-09-19.md) record the receipt. No account closure/cancellation, setting change, query execution, contact, purchase or deployment occurred; only the temporary tab was closed.
+
+Goal classification is **progress** for evidence preservation, with zero consecutive blocker audits. This does not change the blocked qualification gate, draft pilot/offer, pending owner report/usability review or unimplemented production identity/payment/private delivery. Product code remains at the MIN-18 implementation; subsequent commits only record evidence. Do not rerun unchanged exports, substitute these 15 vendor prompts for the six-question pilot candidate, or infer customer reporting rights. Resume on substantive qualification evidence or owner review, then choose the next dependency-ready slice.
+
 ## Waiting checkpoint — 20 September 2026, 18:54 UTC
 
 MIN-17/18 implementation remains complete at product commit `fa0c9243c2e2c4d28d424924d00e1ac89a487eb8` before this documentation-only checkpoint. Prior verification remains 143 application tests plus seven validator scenarios, structure and public build. No code changed or tests reran during the reply check.
