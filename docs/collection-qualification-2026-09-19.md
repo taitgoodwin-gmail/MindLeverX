@@ -2,6 +2,18 @@
 
 19 September 2026 · MIN-12 · Evidence review complete; full collection qualification BLOCKED
 
+
+## Support inquiry sent — 20 September 2026, 04:33 UTC
+
+The owner explicitly authorized sending the four prepared questions through Otterly live chat. Submission was verified in the signed-in account's visible chat history at 12:33 AM Eastern. All four questions below were sent together, with a request for human confirmation and links to controlling provisions. No attachments were sent.
+
+OtterBot replied that no team members were available and that the team would return to the inquiry when back at work. The widget then displayed “Your chat has ended.” This confirms message submission and an automated acknowledgement, not a human response, ticket number, response deadline or qualified collection route. Do not resubmit solely because the live chat ended. No follow-up automation was created.
+
+The account showed 15/50 prompt slots and a banner saying the trial ends in 2 days. Billing opened a country-selection setup dialog; no region or plan was selected. Other current usage allowances and account-specific agreement details were not verified. Recheck relevant allowances immediately before any collection. No new prompts, collections, purchases or keys were created.
+
+Current next dependency: substantive vendor evidence addressing the questions, followed by qualification and final pilot acceptance. Contact authorization is resolved for this inquiry; no longer ask permission to send it. QUAL-01 remains BLOCKED while the substantive evidence is missing.
+
+
 ## What we accomplished
 
 Read the current linked terms, reconciled provider documentation with the saved export, and reduced the open work to explicit questions. The existing saved-data frontend/PDF remains useful for local engineering review. This does not accept a new collection route or a customer audit.
@@ -22,7 +34,7 @@ Do not treat every unavailable metadata field as a universal collection blocker.
 
 Full attempt accounting remains required by MEA-008 for accepted planned collection and by any claim about attempt success/failure rates. Counts of mentions within the retained answers describe only those retained answers; they are not completion rates or a representative visibility baseline. Actual execution time, panel/version and eligible-sample rules must be assessed against the intended claim; vendor dates must not be relabeled as execution times. This clarification does not waive the unresolved collection qualification or freeze gate.
 
-Full-answer reproduction is the particular reporting use still awaiting rights clarification. The broader feasibility of a paid report containing supported findings, citations and permitted excerpts is a separate design question, not automatically prohibited or automatically qualified. Prepare that alternative if needed; do not silently change the report promise. The four vendor questions below remain prepared and unsent. No new legal conclusion, provider permission, policy acceptance or collection authorization follows from this wording correction.
+Full-answer reproduction is the particular reporting use still awaiting rights clarification. The broader feasibility of a paid report containing supported findings, citations and permitted excerpts is a separate design question, not automatically prohibited or automatically qualified. Prepare that alternative if needed; do not silently change the report promise. The four vendor questions below were prepared at this checkpoint and have since been sent; see the dated support receipt above. No new legal conclusion, provider permission, policy acceptance or collection authorization follows from this wording correction.
 
 ## Four-step chunk and traceability
 
@@ -93,7 +105,7 @@ Input: `artifacts/unattended-work/evidence/2026-09-17-otterly/raw-answers.json`.
 
 Actual audit: **PASS**, all asserted field expectations matched. Evidence: [field-audit.json](../artifacts/unattended-work/evidence/2026-09-19-qualification/field-audit.json). Cleanup: original input untouched; no provider calls, account changes or collection performed. No product tests needed for this documentation/evidence-check chunk.
 
-## Exact remaining questions — prepared, not sent
+## Exact questions — sent 20 September 2026
 
 For Otterly support, subject: **Clarify raw-response reuse and collection metadata for an internal pilot**
 
@@ -102,4 +114,4 @@ For Otterly support, subject: **Clarify raw-response reuse and collection metada
 3. Can an export/API provide actual execution time, exact surface/model when known, locale/session context, and every attempted execution including failures? Which fields are unavailable?
 4. How do trial expiry/cancellation affect download access, and what are the active-data and backup deletion timeframes?
 
-Sending this inquiry requires the owner's explicit instruction to contact the vendor. It has not been sent. Current account allowance must be read immediately before any proposed collection; the 17 September trial snapshot is historical, not today's balance. The current task incurs no additional provider collection usage.
+The owner explicitly authorized this inquiry and submission was verified on 20 September; the response is still pending. Current account allowance must be read immediately before any proposed collection; the 17 September trial snapshot is historical, not today's balance. The current task incurs no additional provider collection usage.
