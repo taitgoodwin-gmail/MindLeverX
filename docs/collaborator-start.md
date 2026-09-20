@@ -22,7 +22,7 @@ The remote `codex/evidence-report-builder` branch is older than the product chec
 For deeper work: [delivery governance](https://github.com/taitgoodwin-gmail/MindLeverX/blob/e976747564a5d039ac42129ab085246e77f8d1a9/docs/delivery-governance.md), [testing practice](https://github.com/taitgoodwin-gmail/MindLeverX/blob/e976747564a5d039ac42129ab085246e77f8d1a9/docs/testing-practice.md), [report/review implementation](https://github.com/taitgoodwin-gmail/MindLeverX/blob/e976747564a5d039ac42129ab085246e77f8d1a9/docs/report-review-slice.md), [portable export](https://github.com/taitgoodwin-gmail/MindLeverX/blob/e976747564a5d039ac42129ab085246e77f8d1a9/docs/report-export-slice.md). Read when needed, not as compulsory onboarding.
 
 ## Run the product without the owner's files
-Requires authorized GitHub access and Node.js 24+ with built-in SQLite. Tested here with Node 26.7.0. No npm install is needed. PDF rendering and the full test suite additionally require Python with ReportLab; basic navigation does not. Do not assume the machine's default `python3` includes ReportLab.
+The repository is public: reading and cloning need no collaborator invitation. Requires Node.js 24+ with built-in SQLite. Tested here with Node 26.7.0. No npm install is needed. PDF rendering and the full test suite additionally require Python with ReportLab; basic navigation does not. Do not assume the machine's default `python3` includes ReportLab.
 
 In a new directory:
 ```sh
@@ -63,7 +63,7 @@ After selecting a slice, create a uniquely named feature branch from the agreed 
 
 GitHub holds code, requirement wording and decisions; Linear holds work status; Figma holds proposed design. Link between them rather than duplicating a requirements register. Record deviations with the relevant requirement and owner decision. Do not equate an approved local draft, a passing automated test, a backup tag or a merged PR with customer acceptance.
 
-Access remains an onboarding prerequisite: GitHub account/role, Linear membership and Figma access have not been granted or verified for Ahmed. No passwords, tokens, raw client evidence or local databases belong in the brief.
+Access update, 20 September: the owner made the GitHub repository public, confirmed through GitHub's API. Anyone can read/clone it; GitHub write permission is separate. Ahmed's Linear membership and Figma access have not been granted or verified. No passwords, tokens, raw client evidence or local databases belong in the brief.
 
 ## Historical material
 The [12 September status](archive/implementation-status-2026-09-12.md) is preserved as history. The main-branch platform/build/verification notes describe their original implementation scope and carry orientation notices. They must not override newer product checkpoints. No requirements, code, evidence or backup tags were deleted.
