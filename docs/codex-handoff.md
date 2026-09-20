@@ -1,5 +1,14 @@
 # MindLeverX — corrected Codex handoff
 
+## Latest checkpoint — 20 September 2026, MIN-18 durable local preparation
+
+This supersedes the previous active branch. Product checkout remains `/private/tmp/mindleverx-recovery-20260920`, now branch `codex/draft-recovery-2026-09-20`, based on c00da406. Verify HEAD/status before writing. Its commit is also preserved as a local branch in the original evidence-inspection repository without switching that checkout. No remote push/merge or deployment.
+
+- [MIN-18 durable draft preparation](report-preparation-recovery.md) is complete locally: persisted attempts, one active preparation per client/source/processing identity, explicit retry, timeout fencing, atomic success and recent history in the existing evidence section. Eight new tests, **143 application tests**, requirements checks and public build passed; actual process-kill and desktop/390px browser paths verified with synthetic data. Original previews and owner review are preserved.
+- Backup tooling now supports the current eight-table schema and the exact seven-table MIN-17 baseline. Restored old DBs gain an empty attempt table only on normal app open. No attempt history is fabricated. [Compatibility and boundaries](database-recovery.md).
+- Collection qualification (MIN-12), final pilot freeze (MIN-13), qualified full report (MIN-6/7), owner usability/visual review (MIN-10/15), offer/payment/private delivery, paid pilot and renewal remain unresolved. This is local preparation reliability, not remote collection fulfillment or production readiness. Ahmed's email remains unsent for the owner.
+- Next work must address a real remaining MVP prerequisite. Do not create a speculative external worker or repeat finished local backup/report/export/history work. Recheck the existing qualification/owner-input channels for new evidence when available; assess any other local gap against the canonical narratives before extending scope.
+
 ## Latest checkpoint — 20 September 2026, MIN-17 local database recovery
 
 This section supersedes the older starting-point and release hashes below. Owner-requested continuation task is implementing private product work in `/private/tmp/mindleverx-recovery-20260920`, branch `codex/local-recovery-2026-09-20`, based on verified `e976747564a5d039ac42129ab085246e77f8d1a9`. The previous evidence-inspection checkout is preserved clean at that base; the default task worktree is older public code. Use this new branch for subsequent product work after verifying current state. Do not overwrite or restart existing previews on 4328/4329.
