@@ -1,5 +1,17 @@
 # MindLeverX — corrected Codex handoff
 
+## Latest checkpoint — 19 September 2026, MIN-15 public homepage release
+
+Owner first requested discussion of nine-item homepage feedback, then explicitly approved reversible implementation and GitHub/Vercel publication. That current instruction superseded the earlier coordinator publication hold for this static-site change; it did not authorize purchases, new collection or private-app deployment. No hosting-plan settings changed.
+
+- Live public website: `https://mindleverx.com/`; GitHub main `836eaa58091a91ea28c08bfb4b3719ee84ebfecd`; Vercel `dpl_F9synXrfyPua9VHr9JbtmpATMiZf`, READY and aliases verified. Before-public tag retains `0fc5498`; focused release is reversible independently of the private product branch.
+- Product code checkpoint `51ef362361e9affe312fb1e365d61bc85a21341f` retains the same website pass over existing report work. Product backup tag `codex/homepage-product-2026-09-19` remotely verified. A separate release checkout is `/private/tmp/mindleverx-homepage-release-20260919`, branch `codex/homepage-feedback-release-2026-09-19`; do not confuse it with the active product checkout.
+- [MIN-15 evidence and rollback](homepage-feedback-slice.md): all nine dispositions recorded;127 product tests,12 focused-release tests, public checks and local browser cases passed within stated limits. All11 live files match release hashes; private routes including `/results/` return404. Fresh hosted visual interaction was blocked when browser-control service became unavailable. Owner visual preference,200% text enlargement and full assistive-technology audit remain unverified.
+- Temporary4330/4331 servers were stopped and the verified disposable intake DB/journals removed. Preserve the separate4329 report preview and pending review. No owner/customer report approval occurred.
+- Continue the full MVP goal after owner review or the next dependency-ready unit. This public-site correction does not resolve MIN-12 qualification, MIN-13 freeze, accepted offer/release policy, production identity/payment/private delivery, paid pilot or renewal. Do not repeat the completed report export or this feedback pass.
+
+The MIN-7 section below remains the current description of the private report capability; its earlier product HEAD is superseded by the homepage checkpoint above. Shared documentation is synchronized at the final checkpoint.
+
 ## Start here — 19 September 2026, MIN-7 portable report export
 
 This section supersedes older status/count statements below. The persistent objective is the full MVP. [Delivery governance](delivery-governance.md) records the current official OpenAI/GitHub/Linear foundations and operating cycle. [Chunk plan](chunk-plan.md) links the current requirement narratives and numbered steps. Owner reports GPT-6 Astra selected; no model/global change was made.
