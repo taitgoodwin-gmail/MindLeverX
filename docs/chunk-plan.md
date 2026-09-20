@@ -1,5 +1,7 @@
 # Visible chunk plans and requirement traceability
 
+Latest public-site chunk: [MIN-15 homepage feedback](homepage-feedback-slice.md) implemented and deployed to [mindleverx.com](https://mindleverx.com/), with nine-item dispositions, full narratives, HOME-01–05 evidence and a reversible public-only release commit. Owner visual review remains open; fresh hosted visual interaction was blocked by the browser service, while all hosted bytes matched the locally browser-tested artifact.
+
 Latest completed local chunk: [MIN-7 portable retained-report export](report-export-slice.md), with full review-draft narratives, four completed steps and verified offline/API/browser cases. The PDF remains the human report; private source portability does not qualify collection or release.
 
 Preceding completed local chunk: [MIN-7 saved evidence to internal report review](report-review-slice.md), with full review-draft narratives, pillar rationale, four numbered steps and REVIEW-01–07 cases. All four steps passed their bounded verification; the actual saved-sample report is pending owner review. This connects retained evidence and an exact PDF to the actual review queue without qualifying collection or enabling client release. The [MIN-13 candidate question preview](pilot-panel-draft.md) is complete locally; final specification freeze remains blocked. Earlier completed chunks below remain evidence of their own scope.

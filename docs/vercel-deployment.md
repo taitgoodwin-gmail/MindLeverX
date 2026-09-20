@@ -1,5 +1,11 @@
 # Vercel website deployment
 
+## Current production — 19 September 2026, MIN-15
+
+Owner explicitly approved reversible homepage changes and requested push/Vercel publication. Focused public release `836eaa58091a91ea28c08bfb4b3719ee84ebfecd` is live on [mindleverx.com](https://mindleverx.com/), deployment `dpl_F9synXrfyPua9VHr9JbtmpATMiZf`, READY with matching SHA/aliases. The public build still serves only seven pages and four support files; all11 live hashes matched the tested release, and seven private/source probes returned404. No public forms, app, results, API, payment or collection were released. [Full evidence and rollback](homepage-feedback-slice.md).
+
+This latest explicit instruction superseded the earlier coordinator publication hold for this static-site correction. The owner’s existing plan preference and documented Hobby/commercial-use discrepancy remain recorded below; no purchase or billing change was made and successful deployment does not establish plan-policy suitability. Prior public commit `0fc5498` is preserved in remote tag `codex/homepage-before-2026-09-19`. Undo through a reviewed Git revert/redeploy, without relying on plan-specific instant rollback.
+
 September 13 plan and billing follow-up: see the [purchase and release record](build-guidance.md#purchases-and-release-record) for the owner's intended upgrade timing and Vercel's commercial-use requirement. The currently deployed marketing website and the future functional application are separate release states.
 
 The first Vercel deployment publishes the seven public website pages. Audit requests and newsletter subscriptions are not open yet, and the published pages show this directly without collecting email addresses or company domains.
