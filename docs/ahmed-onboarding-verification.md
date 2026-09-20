@@ -43,3 +43,12 @@ Publication adjustment: only the explicit tag is pushed. [Vercel Git integration
 
 ## Public-repository follow-up — 20 September
 Owner supplied the repository settings URL and reported making GitHub public for Ahmed. GitHub API confirmed visibility=public and private=false. Added the shareable repository URL (not its administration settings URL) to the Markdown/PDF brief and corrected setup/access wording. The revised PDF remains one page; its rendered output and eight link annotations were checked. Source-text whitespace checks passed; PDF xref whitespace is format data and excluded. No product tests rerun for this link-only edit. New checkpoint tag: `codex/ahmed-collaboration-brief-v2`; prior tag retained. Linear invitation instructions checked against https://linear.app/docs/invite-members on 20 September. No invitation sent.
+
+## Invitation and deployment reconciliation — 20 September
+Owner reports sending Ahmed the Linear invitation for MindLeverX_CODEX BUILD; acceptance is not yet verified. The email address is retained in the owner/shareable brief and private Linear note, not this public repository. The workspace user lookup returned no matching user; that does not independently establish invitation-delivery status. No invitation was resent.
+
+Current GitHub main remains `836eaa58091a91ea28c08bfb4b3719ee84ebfecd`. Vercel's production alias lookup for mindleverx.com returned deployment `dpl_F9synXrfyPua9VHr9JbtmpATMiZf`, READY, target production, and the identical GitHub main SHA; apex/www aliases are attached. Fresh HTTP requests returned 200 for the homepage and 404 for /app/. This confirms current deployment identity and these routes, not every browser flow or full MVP acceptance.
+
+The private product tag remains `e976747564a5d039ac42129ab085246e77f8d1a9`. Documentation v3 is published separately as `codex/ahmed-collaboration-brief-v3`, pending main integration. Neither the private product nor onboarding documents are deployed to Vercel. No deployment or merge was initiated by this status question.
+
+The earlier fresh-checkout result (127 application tests, 7 validator regressions and public-build checks) is retained; product tests were not rerun for invitation text. Both updated PDF variants remain one page and were rendered/inspected. Requirements acceptance/source reconciliation, Figma final visual verification, Ahmed's invitation acceptance/access and main integration remain open. Linear's project overview and MIN-16 hold the latest links and invitation status.

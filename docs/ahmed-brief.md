@@ -15,6 +15,6 @@
 
 **Design priorities.** Clear owner/client experience; low effort; reusable delivery; recurring value; automation; useful AI intelligence; evidence-informed behavioral design and competitive differentiation. These are product principles, not measured achievements. Start from the existing visual direction; use the Figma concept as discussion material.
 
-**Before work.** The repository is public for reading and cloning. GitHub write access is separate. Linear and Figma access still need verification; invitations have not been sent. Use a separate feature branch and a focused PR. The default branch is deployment-connected. Do not merge, release, spend, contact customers or change an accepted product direction as part of this orientation.
+**Before work.** The repository is public for reading and cloning. GitHub write access is separate. The owner sent Ahmed a Linear invitation for MindLeverX_CODEX BUILD. He needs to open the email and accept; acceptance is not yet verified. Figma access still needs verification. Use a separate feature branch and a focused PR. The default branch is deployment-connected. Do not merge, release, spend, contact customers or change an accepted product direction as part of this orientation.
 
 Read next: [setup and source map](collaborator-start.md) → [current Linear issues](https://linear.app/mindleverx-codex-build/project/mindleverx-next-release-bc7bec6a8dc4) → the requirement section relevant to the agreed slice.

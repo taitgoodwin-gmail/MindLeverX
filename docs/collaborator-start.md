@@ -6,7 +6,7 @@
 | --- | --- | --- |
 | Public website | [main checkpoint 836eaa5](https://github.com/taitgoodwin-gmail/MindLeverX/tree/836eaa58091a91ea28c08bfb4b3719ee84ebfecd) | Seven public pages; private app/results/API excluded from deployed build |
 | Latest remotely recorded product and shared docs at this review | [e976747](https://github.com/taitgoodwin-gmail/MindLeverX/tree/e976747564a5d039ac42129ab085246e77f8d1a9), tag `codex/otterly-inquiry-handoff-2026-09-20` | Local product; not merged to main or deployed |
-| This onboarding cleanup | tag `codex/ahmed-collaboration-brief`, based on public main | Documentation only; not merged into main; does not integrate the private product |
+| This onboarding cleanup | tag `codex/ahmed-collaboration-brief-v3`, based on public main | Documentation only; not merged into main; does not integrate the private product |
 | Requirements | [rendered register](https://github.com/taitgoodwin-gmail/MindLeverX/blob/e976747564a5d039ac42129ab085246e77f8d1a9/docs/requirements-rubric-review/revised-requirements.md), [machine source](https://github.com/taitgoodwin-gmail/MindLeverX/blob/e976747564a5d039ac42129ab085246e77f8d1a9/docs/requirements-rubric-review/requirements.json) | 97-row review draft; preserves original IDs and proposals; not fully accepted |
 | Current decisions and blockers | [decision list](https://github.com/taitgoodwin-gmail/MindLeverX/blob/e976747564a5d039ac42129ab085246e77f8d1a9/docs/requirements-rubric-review/decisions-needed.md), then live Linear issues | Draft decisions are not ratified by being documented |
 | Design proposal | [Figma concept](https://www.figma.com/design/UgtCQvjyZpBQVOxhZAK4sk?node-id=2-129) | Proposed desktop/mobile direction; not approved or deployed |
@@ -63,7 +63,7 @@ After selecting a slice, create a uniquely named feature branch from the agreed 
 
 GitHub holds code, requirement wording and decisions; Linear holds work status; Figma holds proposed design. Link between them rather than duplicating a requirements register. Record deviations with the relevant requirement and owner decision. Do not equate an approved local draft, a passing automated test, a backup tag or a merged PR with customer acceptance.
 
-Access update, 20 September: the owner made the GitHub repository public, confirmed through GitHub's API. Anyone can read/clone it; GitHub write permission is separate. Ahmed's Linear membership and Figma access have not been granted or verified. No passwords, tokens, raw client evidence or local databases belong in the brief.
+Access update, 20 September: the owner made the GitHub repository public, confirmed through GitHub's API. Anyone can read/clone it; GitHub write permission is separate. The owner reports sending Ahmed a Linear invitation for MindLeverX_CODEX BUILD. He must open the invitation email and accept; acceptance is not yet verified. Figma access remains unverified. No passwords, tokens, raw client evidence or local databases belong in the brief.
 
 ## Historical material
 The [12 September status](archive/implementation-status-2026-09-12.md) is preserved as history. The main-branch platform/build/verification notes describe their original implementation scope and carry orientation notices. They must not override newer product checkpoints. No requirements, code, evidence or backup tags were deleted.
