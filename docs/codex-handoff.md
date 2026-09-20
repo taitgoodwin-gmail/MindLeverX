@@ -1,5 +1,11 @@
 # MindLeverX — corrected Codex handoff
 
+## Latest checkpoint — 20 September 2026, MIN-19 observed error correction
+
+Product work continues in `/private/tmp/mindleverx-recovery-20260920`, now branch `codex/evidence-error-classification-2026-09-20` based on a34ef88; verify HEAD/status before writing. Method v2 blocks the exact observed nonempty service-error response rather than measuring it as negative brand evidence. New processing identities pin v2; old v1 reports/exports reproduce with their stored method. Original private sources, owner previews and pending approvals remain unchanged. [Full narratives, tests and limitations](evidence-error-classification.md).
+
+Verified 149 application tests, seven validator scenarios, structure/static/public checks, actual three-error-row reproduction, unchanged original 0/16 sample and historical private export PASS. Browser showed error block/disabled PDF, operator unavailable row and no stale finding after valid→error reload. Port63292 synthetic preview stopped and removed. No provider run, contact, purchase, push, merge or deployment. This is implementation progress, resetting consecutive blocker audits; the full MVP goal remains active with substantive qualification and owner/commercial/production prerequisites open. Do not repeat completed preservation or error-classification work.
+
 ## Latest checkpoint — 20 September 2026, private Otterly preservation
 
 This supersedes the earlier waiting classification in this turn. A concrete trial-expiry gap was addressed: the project previously retained only one prompt/16 records; all 15 existing visible MindLeverX prompt histories are now privately preserved (360 records, 344 additional, original 16 unchanged). Prompt CSV, visible configuration and source/time/hash manifest are retained in the root's ignored `artifacts/unattended-work/evidence/2026-09-20-otterly-preservation/`. [Verification and limitations](collection-qualification-2026-09-19.md) record the receipt. No account closure/cancellation, setting change, query execution, contact, purchase or deployment occurred; only the temporary tab was closed.

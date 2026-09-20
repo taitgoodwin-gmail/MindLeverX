@@ -1,5 +1,9 @@
 # Otterly qualification — decision card
 
+## Preserved-data correctness follow-up — MIN-19
+
+The three nonempty service-error rows exposed a local classification defect when isolated in memory: v1 reported complete 0/3. [MIN-19](evidence-error-classification.md) corrects this under method v2, with exact-marker blocking and preserved historical reproduction. Raw evidence is unchanged; the three rows now yield blocked/null aggregate. Complete source files remain blocked where they contain empty/error rows. This is a local calculation correction, not new vendor permission, a general error detector or a complete attempt ledger. The broader qualification finding remains BLOCKED.
+
 ## Existing workspace evidence preserved — 20 September 2026
 
 Follow-up to the one-day trial observation identified a concrete preservation gap. The prior retained sample covered only one question and 16 records. A focused signed-in inspection found 15 existing MindLeverX prompts and later vendor observations. All 15 visible prompt histories were exported through existing UI controls, alongside the prompt-list CSV and visible prompt configuration. No query, new collection, contact, purchase, account closure/cancellation or setting change was performed. The temporary browser tab was closed. Earlier commentary saying “closing the account” meant closing that tab; the account and subscription remain unchanged.
