@@ -1,5 +1,7 @@
 # Local operator workspace
 
+> Scope notice added 20 September 2026: this document describes the original public-main/local-workspace baseline. It is not the latest report-product status or verification receipt. Start with the [current baseline map](collaborator-start.md); use its pinned product documentation for newer capabilities. Historical observations below remain dated evidence.
+
 The platform turns the five reference screens into a connected local workflow. Open `/app/` while the application server is running.
 
 ## Available workflows

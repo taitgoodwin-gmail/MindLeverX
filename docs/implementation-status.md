@@ -1,40 +1,11 @@
-# Implementation status · 12 September 2026
+# Implementation status — orientation corrected 20 September 2026
 
-## Delivered locally
+Start with the [collaborator brief](ahmed-brief.md) and [baseline/setup map](collaborator-start.md). Work status belongs in [Linear](https://linear.app/mindleverx-codex-build/project/mindleverx-next-release-bc7bec6a8dc4).
 
-The archive contained six self-contained website source pages, a generated copy, design canvases, and historical planning documents. It did not contain an application backend, a reproducible build, or the master requirements register cited by those documents.
+The **public website is deployed**, while the newer report product remains **local and unintegrated**. The private product checkpoint includes saved-results inspection, PDF rendering, immutable report revisions, local review and portable export. It is not the code on this documentation branch's public-main baseline. Follow the exact product ref in the setup map.
 
-This repository now has a deterministic site build, a seventh method page, a dependency-free Node HTTP server, a persistent SQLite database, and a connected operator interface. Public intake saves a request before showing success. Client records, review decisions, panel versions, lead status changes, and their activity events persist across restarts. Panel versions cannot be edited through the API, and a review can be decided only once.
+Qualified collection, the final pilot specification, accepted offer/release policy, production identity/payment/private delivery, paid pilot and recurring validation remain unfinished. The requirements register exists as a **97-row review draft**; full source reconciliation and acceptance remain separate. The proposed Figma redesign is not an approved implementation.
 
-Sample data is hand-authored and visibly identified. New clients remain unmeasured. Historical observations in the supplied case study retain their original date and are not presented as a fresh site measurement.
+The obsolete “missing master requirements,” “loopback-only deployment,” “reports are preview only,” and prescribed technical-audit next-step statements are preserved in the [12 September historical snapshot](archive/implementation-status-2026-09-12.md). They describe that date, not current project readiness.
 
-## Remaining integrations
-
-| Capability | Current behavior | Required before real service delivery |
-| --- | --- | --- |
-| Public intake | Saves on this computer | Hosting, durable production storage, retention/deletion policy, operator access |
-| Client portal | Internal local report preview | Identity provider, tenant authorization, authenticated report access |
-| Technical audit | No crawler invoked | Implement bounded crawler, stored source evidence, check definitions, and repeatable verification |
-| Engine monitoring | Sample evidence only | Select engine, server-side secret configuration, real response storage/parser, budget/cadence limits |
-| Readiness score | Sample scores only | Agree and version the dimension checks, weights, missing-data rules, and sample thresholds |
-| Reports | Preview and local decision | Real measured evidence, report generation, approved distribution channel |
-| Email | No provider and no sends | Provider and domain configuration, explicit delivery workflow |
-| Payments | No billing | Agreed offer, pricing, billing and failure states |
-| Deployment | Loopback preview only | Hosting choice, production auth, backups, HTTPS, domain and redirect configuration |
-
-## Deliberate boundaries
-
-- The design's free-audit language is carried forward as existing draft offer copy; the conflicting paid-audit recommendation is not silently ratified.
-- The platform does not present fictional revenue, monitoring costs, or invented run activity as current business performance.
-- Approval is a persisted review decision. It grants no client-site credentials and creates no external publication or email.
-- Local intake tokens are bound to a server session, expire, and enforce a server-issued dwell window. Validation, honeypot rejection, and throttling run on the server as well as the client.
-- Host and Origin checks limit local rebinding/cross-origin access. This local session mechanism does not establish a named human identity.
-- The server serves only generated `dist/` files. Reference documents and the data directory are not web routes.
-
-## Missing source documents
-
-The archive references a master requirements register, Layer 0 product definition, user journeys, a later handoff, and an Ahmed briefing that are not included. The build uses the provided HTML and directly observed state; it does not fabricate their contents or treat historical “wait” instructions as the current request.
-
-## Next implementation dependency
-
-The next functional slice is one domain → a stored technical audit with source evidence → a reviewable result. Before paid engine monitoring, settle the scoring method and engine/cadence budget, then connect a server-side provider adapter. Production access must precede exposing any client records publicly.
+This replacement is an orientation correction; it changes no product behavior or accepted scope.

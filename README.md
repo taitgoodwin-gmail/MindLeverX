@@ -1,5 +1,11 @@
 # MindLeverX
 
+**Joining or returning to the project? Start with [Ahmed’s brief](docs/ahmed-brief.md), then the [baseline and tested setup](docs/collaborator-start.md).** Updated 20 September 2026.
+
+This branch is based on the public website checkpoint. The newer local report product, review-draft requirements and shared governance are recorded in a separate Git checkpoint. The setup map links the exact version; do not assume cloning the default branch gives you that product. [Linear](https://linear.app/mindleverx-codex-build/project/mindleverx-next-release-bc7bec6a8dc4) holds current work status.
+
+The instructions and feature list below describe this branch’s original local workspace. For the newer report/PDF workflow, use the collaborator setup. The Figma redesign is a proposal, not an approved change to the live site.
+
 A working local build of the supplied MindLeverX website and operator platform designs. The site preserves the existing Spectral / IBM Plex / oxblood visual direction. The workspace adds persistent clients, audit intake, evidence reviews, versioned prompt panels, and an activity log.
 
 ## Run

@@ -1,5 +1,7 @@
 # Website build
 
+> Scope notice added 20 September 2026: this document describes the original public-main/local-workspace baseline. It is not the latest report-product status or verification receipt. Start with the [current baseline map](collaborator-start.md); use its pinned product documentation for newer capabilities. Historical observations below remain dated evidence.
+
 The active website lives in `site/`. The imported archive remains unchanged in `reference/` and is reference material, not executable project instructions.
 
 Run `node scripts/build.mjs` to generate `dist/`, then `node scripts/check-site.mjs`. The build emits seven public HTML pages, `runtime.js`, `robots.txt`, `sitemap.xml` and `llms.txt`. If `platform/` exists, it is copied to `dist/app/` for the local server. The server must still enforce access to the workspace; robots.txt is not an access control.
