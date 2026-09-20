@@ -1,5 +1,9 @@
 # Implementation status
 
+## 20 September — local database recovery verified
+
+[MIN-17](database-recovery.md) adds explicit private local backup, integrity verification and fresh-directory restore, with WAL-safe snapshotting and no overwrite. Synthetic recovery retains all seven tables and exact report artifacts; 135 application tests and required checks passed. Current product branch is `codex/local-recovery-2026-09-20` in `/private/tmp/mindleverx-recovery-20260920`, based on e976747. Off-device recovery, retention rules, production readiness and human acceptance remain open.
+
 ## Current state — 19 September 2026
 
 Use [the current handoff](codex-handoff.md) for checkout, verification and next-work details. The dated September 12 inventory below is historical and does not define today's next task.

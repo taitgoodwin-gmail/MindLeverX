@@ -1,5 +1,14 @@
 # MindLeverX — corrected Codex handoff
 
+## Latest checkpoint — 20 September 2026, MIN-17 local database recovery
+
+This section supersedes the older starting-point and release hashes below. Owner-requested continuation task is implementing private product work in `/private/tmp/mindleverx-recovery-20260920`, branch `codex/local-recovery-2026-09-20`, based on verified `e976747564a5d039ac42129ab085246e77f8d1a9`. The previous evidence-inspection checkout is preserved clean at that base; the default task worktree is older public code. Use this new branch for subsequent product work after verifying current state. Do not overwrite or restart existing previews on 4328/4329.
+
+- **MIN-17 local recovery complete:** explicit backup, verify and fresh-directory restore; supported SQLite snapshot includes committed WAL data. Structural/foreign-key/schema/report-hash checks, private permissions and refusal to overwrite. Synthetic full-state recovery drill and failure cases passed. See [scope, full draft narratives, commands and evidence](database-recovery.md). 135 application tests, 7 validator scenarios, structure and public-build checks passed. This is not off-device backup, production recovery, retention-policy acceptance or measured RPO/RTO.
+- Prior task's release receipt (not re-deployed here): public main `4dfbeb6ff8c0ca2db62a6458eecae8c12249b940`, Vercel `dpl_93NxvYpVWyTnLdMDi7XZPQMGtMPd` READY; 11 public-file hashes matched, private routes 404. Full original continuation handoff remains `/Users/tag/Documents/ChatGPT/MindLeverX Build/artifacts/unattended-work/thread-handoff-2026-09-20.md`.
+- Ahmed onboarding **MIN-16 Done**; AugMind email is drafted and unsent. Owner will send it. Do not recreate/send it. MIN-12 qualification reply and MIN-13 final freeze remain pending; MIN-10 usability and MIN-15 visual review remain In Review. MIN-7 remains In Progress for the qualified full report.
+- No purchases, new contacts, deployment, push or merge. The source/requirements draft and Google Sheet remain distinct. Next independent engineering candidate is a durable local fulfillment-attempt contract, but assess current narratives and the boundary with unresolved provider/offer decisions before implementing. Do not repeat this recovery slice or finished export/report work.
+
 ## Latest checkpoint — 19 September 2026, MIN-15 public homepage release
 
 Owner first requested discussion of nine-item homepage feedback, then explicitly approved reversible implementation and GitHub/Vercel publication. That current instruction superseded the earlier coordinator publication hold for this static-site change; it did not authorize purchases, new collection or private-app deployment. No hosting-plan settings changed.

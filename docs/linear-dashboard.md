@@ -1,5 +1,9 @@
 # MindLeverX visible MVP dashboard
 
+## 20 September — independent recovery slice
+
+MIN-17 records the [verified local database recovery slice](database-recovery.md). MIN-12/13/10/15 remain In Review for their existing boundaries; MIN-5/7 remain In Progress, MIN-6 Backlog, and MIN-8/9/11/14/16 Done for bounded work. This checkpoint supersedes older counts below without changing those acceptance gates.
+
 Configured 19 September 2026 at the owner's request. This is an execution view, not a new product scope, schedule or release approval.
 
 Project: https://linear.app/mindleverx-codex-build/project/mindleverx-next-release-bc7bec6a8dc4/overview

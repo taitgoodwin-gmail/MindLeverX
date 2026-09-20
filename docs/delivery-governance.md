@@ -81,3 +81,8 @@ The original MIN-14 pass was reviewed by the coordinator; automated regression c
 Follow-up application: rechecked the five OpenAI/GitHub/Linear sources above on 19 September. Keep unknown optional model/session context separate from missing mandatory evidence for the intended claim; see the qualification card. A completed local demonstration does not resolve payment, qualified collection, production identity, private delivery or renewal. Correct stale current summaries at their source and keep historical observations explicitly dated. These are project implementation choices informed by the sources, not platform-mandated release gates.
 
 Latest owner-requested source check, 19 September: a bounded read-only reviewer opened all five cited official pages and found no material correction or additional process necessary. Linear documents that completing a blocking issue moves that relation under Related; retain an unresolved qualification gate before closing its tracking issue. MIN-12 therefore remains open for review and MIN-13 drafting can be reviewed without declaring final freeze complete. No workspace automation setting was changed. This checks source interpretation, not every requirement or an end-to-end delivery run.
+
+
+### Recovery follow-up — 20 September 2026
+
+[MIN-17 local recovery](database-recovery.md) closes the missing local DB restore drill for the shipped SQLite schema using synthetic evidence, with exact report preservation and safe failure cases. It does not recover external files/configuration or establish governed off-device recovery, retention policy, RPO/RTO or production resilience. The source backup and private-data backup remain distinct.

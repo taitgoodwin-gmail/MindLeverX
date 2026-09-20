@@ -3,6 +3,11 @@ dist/
 public-dist/
 .vercel/
 data/
+backups/
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm
+*.sqlite-journal
 .env
 .env.*
 !.env.example

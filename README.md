@@ -37,7 +37,7 @@ The server listens only on `127.0.0.1`. Its sessions and CSRF checks protect the
 
 The initial three clients and their scores/evidence are fictional sample records derived from the archive. New clients have no scores. Submitted requests are actual local records; they do not trigger a crawl, automated score, engine request, email, payment, or publication. A review approval records a decision locally and does not send or publish anything.
 
-Persistent data is stored at `data/mindleverx.sqlite` and is ignored by Git. Keep a backup of this directory while the server is stopped. Use `MLX_DB_PATH=/absolute/path/workspace.sqlite npm start` to choose another database. `MLX_SEED=false npm start` starts a **new** database without samples; it does not remove existing records.
+Persistent data is stored at `data/mindleverx.sqlite` and is ignored by Git. Use the [local backup, verification and fresh-destination restore procedure](docs/database-recovery.md); the supported snapshot command includes committed WAL data while the app is running. Use `MLX_DB_PATH=/absolute/path/workspace.sqlite npm start` to choose another database. `MLX_SEED=false npm start` starts a **new** database without samples; it does not remove existing records.
 
 The generated static `dist/` has an unconnected intake runtime by default. The local server provides `/runtime.js` with the local intake configuration. Uploading `dist/` alone does not provide a backend or authenticated platform.
 
