@@ -1,5 +1,15 @@
 # Otterly qualification — decision card
 
+## Reply check — 20 September 2026, 18:54 UTC
+
+Read-only verification found no substantive qualification response. The signed-in [Otterly workspace](https://app.otterly.ai/) support history still shows the original four questions, the automated staff-unavailable response and an ended conversation; the thread list reports zero unread threads. No message was sent. Focused Gmail searches in both linked accounts (`after:2026/09/19 otterly -in:drafts`) found only an automated trial reminder dated 20 September, 15:26 UTC. Its content concerns monitoring ending with the trial, not answers to the four questions. The newsletter's response-count claim was not independently verified or incorporated into project evidence.
+
+The account banner now says the trial ends in **1 day** and warns about continued workspace, prompt and report access. This supersedes the earlier two-day UI observation, not the underlying agreement. An exact expiry instant, cancellation state and post-expiry download behavior were not established. No plan, billing setting, prompt, collection or key changed. The temporary inspection tab was closed.
+
+QUAL-01 remains BLOCKED. MIN-13's six-question candidate and coverage draft are already complete; the historical instruction below to draft them is superseded. Next is substantive qualification evidence and owner acceptance of the final pilot specification. The existing saved-data report remains available for internal owner usability review under MIN-10. MIN-17/18 local recovery is complete, but does not resolve qualification, commercial scope, production identity/payment/private delivery or customer validation. No new dependency-ready implementation was identified in this checkpoint; do not substitute speculative infrastructure or another offer draft for these dependencies.
+
+The previous two goal turns made implementation progress. This checkpoint is **waiting**, with one consecutive blocker audit after that progress; it does not mark the full goal complete or blocked. Reassess new evidence or owner input on continuation. Linear MIN-12 was updated and returned In Review with this receipt at 18:55 UTC. Requirements remain review drafts and the Google Sheet remains unsynchronized.
+
 19 September 2026 · MIN-12 · Evidence review complete; full collection qualification BLOCKED
 
 

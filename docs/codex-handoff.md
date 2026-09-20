@@ -1,5 +1,13 @@
 # MindLeverX — corrected Codex handoff
 
+## Waiting checkpoint — 20 September 2026, 18:54 UTC
+
+MIN-17/18 implementation remains complete at product commit `fa0c9243c2e2c4d28d424924d00e1ac89a487eb8` before this documentation-only checkpoint. Prior verification remains 143 application tests plus seven validator scenarios, structure and public build. No code changed or tests reran during the reply check.
+
+The focused Otterly check found no human response; the account now shows **1 trial day** remaining. [Qualification record](collection-qualification-2026-09-19.md) contains source/time, limits and the verified Linear MIN-12 update. No new contact, provider execution, purchase, push, merge or deployment occurred. Pending prerequisites are substantive collection qualification, owner report/usability review and final pilot/offer decisions. The prepared report review remains at `http://127.0.0.1:4329/app/#/reviews/be043c4e-9707-4e4b-a2e2-708b9d74075a`; its pending approval and existing previews were preserved.
+
+Goal classification: waiting; first consecutive blocker audit after two progress turns. Do not count documentation maintenance as implementation progress, repeat completed drafts/tests, or mark the full MVP achieved. Resume with new dependency evidence; if the same blocker recurs across three consecutive goal turns and no meaningful safe work is available, apply the goal's blocked rule.
+
 ## Latest checkpoint — 20 September 2026, MIN-18 durable local preparation
 
 This supersedes the previous active branch. Product checkout remains `/private/tmp/mindleverx-recovery-20260920`, now branch `codex/draft-recovery-2026-09-20`, based on c00da406. Verify HEAD/status before writing. Its commit is also preserved as a local branch in the original evidence-inspection repository without switching that checkout. No remote push/merge or deployment.
