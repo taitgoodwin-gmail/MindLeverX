@@ -1,7 +1,11 @@
 # Ahmed onboarding cleanup — verification
 20 September 2026 · [MIN-16](https://linear.app/mindleverx-codex-build/issue/MIN-16/prepare-ahmeds-brief-and-reconcile-github-linear-entry-points)
 
-## Scope and implementation choice
+## Integration and delivery follow-up
+
+The owner directed us to keep going and get the package to Ahmed. This authorizes the next prepared step: integrate this documentation-only change into main, verify the resulting public-site deployment, reconcile Linear and send the brief. The earlier tag-only receipts below are historical checkpoints, not the final publication state. MIN-16 holds the actual merge/deployment/send receipts after execution. Private product integration and release remain outside this documentation change.
+
+## Historical preparation scope and implementation choice
 Owner requested a three-step execution including Linear cleanup and Ahmed's brief. This is a documentation/tracker change. The reading path points to the actual newer product checkpoint instead of copying its entire divergent code/doc tree into public main. This keeps one versioned requirement source and makes integration work explicit.
 
 - Local documentation branch and remote tag: `codex/ahmed-collaboration-brief`, based on main `836eaa58091a91ea28c08bfb4b3719ee84ebfecd`.

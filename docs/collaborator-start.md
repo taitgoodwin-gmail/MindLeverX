@@ -6,7 +6,7 @@
 | --- | --- | --- |
 | Public website | [main checkpoint 836eaa5](https://github.com/taitgoodwin-gmail/MindLeverX/tree/836eaa58091a91ea28c08bfb4b3719ee84ebfecd) | Seven public pages; private app/results/API excluded from deployed build |
 | Latest remotely recorded product and shared docs at this review | [e976747](https://github.com/taitgoodwin-gmail/MindLeverX/tree/e976747564a5d039ac42129ab085246e77f8d1a9), tag `codex/otterly-inquiry-handoff-2026-09-20` | Local product; not merged to main or deployed |
-| This onboarding cleanup | tag `codex/ahmed-collaboration-brief-v3`, based on public main | Documentation only; not merged into main; does not integrate the private product |
+| Onboarding documents | [GitHub default branch](https://github.com/taitgoodwin-gmail/MindLeverX) | Documentation integrated through a focused change; private product remains a separate checkpoint |
 | Requirements | [rendered register](https://github.com/taitgoodwin-gmail/MindLeverX/blob/e976747564a5d039ac42129ab085246e77f8d1a9/docs/requirements-rubric-review/revised-requirements.md), [machine source](https://github.com/taitgoodwin-gmail/MindLeverX/blob/e976747564a5d039ac42129ab085246e77f8d1a9/docs/requirements-rubric-review/requirements.json) | 97-row review draft; preserves original IDs and proposals; not fully accepted |
 | Current decisions and blockers | [decision list](https://github.com/taitgoodwin-gmail/MindLeverX/blob/e976747564a5d039ac42129ab085246e77f8d1a9/docs/requirements-rubric-review/decisions-needed.md), then live Linear issues | Draft decisions are not ratified by being documented |
 | Design proposal | [Figma concept](https://www.figma.com/design/UgtCQvjyZpBQVOxhZAK4sk?node-id=2-129) | Proposed desktop/mobile direction; not approved or deployed |
