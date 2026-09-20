@@ -213,14 +213,14 @@
 <aside class="preview-banner" id="local-preview" hidden><div class="wrap"><b>Local preview</b><span>Example measurements. Requests stay in this workspace.</span><a href="/app/">Open workspace →</a></div></aside>
 
 <div class="ticker" id="ticker">
-  <div class="tag"><span class="live"></span>AI VISIBILITY · SAMPLE FEED</div>
+  <div class="tag"><span class="live"></span>SAMPLE REPORT TOPICS</div>
   <div class="mask"><div class="track" id="tick">
-    <span title="Share of AI answers that cite your pages">Citations <b>34%</b><em>▲2</em></span>
-    <span title="Times your brand is named in an answer, with or without a link">Mentions <b>51%</b><em>▲1</em></span>
-    <span title="Your citation share versus the whole category">Share of voice <b>18%</b><em>▲1</em></span>
-    <span title="AI crawler visits to your site per day">AI crawls <b>214/day</b><em>▲12</em></span>
-    <span title="Visits arriving from AI answer links per week">Referrals <b>57/wk</b><em>▲4</em></span>
-    <span title="Your composite GEO Readiness Score (0–100)">Readiness <b>87/100</b><em>▲3</em></span>
+    <span>Brand mentions <b>Answer text</b></span>
+    <span>Citations <b>Source links</b></span>
+    <span>Comparisons <b>Matched conditions</b></span>
+    <span>Crawler access <b>Technical checks</b></span>
+    <span>Referrals <b>Visits from links</b></span>
+    <span>Readiness <b>Evidence gaps</b></span>
   </div></div>
   <button class="tkbtn" id="tkBtn" aria-label="Pause sample ticker" aria-pressed="false" title="Pause ticker">❚❚</button>
   <div class="smp">SAMPLE</div>
@@ -232,24 +232,24 @@
     <a href="index.html" class="logo">MindLever<b>X.</b></a>
     <nav class="navlinks" aria-label="Main navigation">
       <a href="index.html#services">Services</a>
-      <a href="method.html">Method</a>
-      <a href="index.html#score">Readiness</a>
+      <a href="method.html" class="nav-priority">Method</a>
+      <a href="index.html#score" class="nav-example">Example scorecard</a>
       <a href="what-is-geo.html">What is GEO?</a>
-      <a href="research-hub.html">Research</a>
-      <a href="index.html#cta" class="textlink">Request a free audit</a>
+      <a href="research-hub.html" class="nav-priority">Research</a>
+      <a href="index.html#cta" class="nav-cta textlink">Request a free audit</a>
       <button class="toggle" id="tg">☾ Dark</button>
     </nav>
-    <button class="menubtn" id="menubtn" aria-label="Open menu" aria-controls="mobnav" aria-expanded="false">☰</button>
+    <button class="menubtn" id="menubtn" aria-label="Open menu" aria-controls="mobnav" aria-expanded="false">Menu</button>
   </div>
-  <div class="mobnav wrap" id="mobnav" aria-label="Mobile navigation">
+  <nav class="mobnav wrap" id="mobnav" aria-label="More navigation" hidden>
     <a href="index.html#services">Services</a>
     <a href="method.html">Method</a>
-    <a href="index.html#score">Readiness</a>
+    <a href="index.html#score">Example scorecard</a>
     <a href="what-is-geo.html">What is GEO?</a>
     <a href="research-hub.html">Research</a>
     <a href="index.html#cta">Request a free audit</a>
     <button class="toggle" id="tg2">☾ Dark</button>
-  </div>
+  </nav>
 </header>
 
 <main id="top">
@@ -271,7 +271,7 @@
       <ol>
         <li><p><b>The site was not yet deployed when this reading was taken.</b> mindleverx.com returned no A record on 27 Jul 2026 — the domain is owned, nothing is served from it. Everything below is measured against the build artifact that would be served, not against a live origin.</p></li>
         <li><p><b>Two of the four dimensions can be measured today; two cannot.</b> Technical access and content quotability are readable from the artifact itself. Off-site authority and measured visibility require a live domain and a locked prompt panel — neither exists yet.</p></li>
-        <li><p><b>There is no composite score, on purpose.</b> Methodology V1.0's composite is the unweighted mean of four dimensions. Averaging two readings with two absences produces a number that looks like a score and is not one, so this page publishes none.</p></li>
+        <li><p><b>There is no composite score, on purpose.</b> A composite formula and its validation remain unresolved. Averaging two readings with two absences produces a number that looks like a score and is not one, so this page publishes none.</p></li>
       </ol>
       <div class="cap">FIG. 01 · MEASURED (TOOL) 27 JUL 2026 — DNS LOOKUP AND FILE INSPECTION. METHOD IN 04 BELOW.</div>
     </div>
@@ -299,7 +299,7 @@
 
       <div class="secnum">02 · The scorecard</div>
       <h2>Four dimensions. Two readings. No composite.</h2>
-      <p>Methodology V1.0 scores technical access, content quotability, off-site authority and measured visibility, then takes their unweighted mean. Two of those four are properties of the artifact and can be read right now. The other two are properties of the world — how the wider web treats the brand, and what the engines actually answer — and neither was measured in the original 27 July 2026 review.</p>
+      <p>The proposed Methodology V1.0 reviews technical access, content quotability, off-site authority and measured visibility separately; no composite is calculated. Two of those four are properties of the artifact and can be read right now. The other two are properties of the world — how the wider web treats the brand, and what the engines actually answer — and neither was measured in the original 27 July 2026 review.</p>
       <div class="exhibit">
         <div class="xh"><span>METHODOLOGY V1.0 · DIMENSION STATUS</span><span class="s">MEASURED (TOOL)</span></div>
         <table>
@@ -309,7 +309,7 @@
             <tr><td>Content quotability</td><td><b>MEASURED (tool)</b></td><td>Read from the build artifact, 27 Jul 2026 — checks below</td></tr>
             <tr><td>Off-site authority</td><td><b>NOT MEASURED</b></td><td>Unlocks when the site is live and off-site citations can be crawled</td></tr>
             <tr><td>Measured visibility</td><td><b>NOT MEASURED</b></td><td>Unlocks when the panel is locked and the first run completes</td></tr>
-            <tr><td>Composite</td><td><b>NOT MEASURED</b></td><td>Unlocks when all four dimensions carry readings of the same provenance</td></tr>
+            <tr><td>Composite</td><td><b>NOT MEASURED</b></td><td>Requires a defined, validated model and sufficient comparable evidence</td></tr>
           </tbody>
         </table>
       </div>
@@ -377,7 +377,7 @@
       <div class="secnum">04 · Method</div>
       <h2>How these numbers were taken.</h2>
       <p>Deployment status was checked by DNS lookup of mindleverx.com on 27 Jul 2026; the result was no A record, which is why every other reading on this page is scoped to the build artifact rather than a live origin. The rendering check loaded each page twice in headless Chromium — once with JavaScript enabled and once disabled — and compared the text of the main content region; a page passes only if disabling scripts removes nothing. The remaining checks are direct inspection of the 6 HTML files and of robots.txt, llms.txt and sitemap.xml.</p>
-      <p>Dimension scores are deliberately absent. Methodology V1.0 defines the four dimensions and the unweighted-mean composite, but the scorer that converts checks into a 0–100 dimension score is not built. Assigning one by hand would be an invented number wearing a methodology's name. <a href="what-is-geo.html" class="textlink" style="font-size:inherit">The methodology is defined here →</a></p>
+      <p>Dimension scores are deliberately absent. Methodology V1.0 identifies four review areas, but the scoring definitions, composite formula and validation remain unresolved. Assigning one by hand would be an invented number wearing a methodology's name. <a href="what-is-geo.html" class="textlink" style="font-size:inherit">The methodology is defined here →</a></p>
       <div class="prov-box">
         <div class="tl">Provenance</div>
         <p>6 pages · read 27 JUL 2026 · headless Chromium render plus file inspection · scored against Methodology V1.0. Every figure on this page is <strong>MEASURED (tool)</strong> against the build artifact, or <strong>NOT MEASURED</strong> with its unlock condition stated. <strong>No SAMPLE or illustrative value appears in any table on this page.</strong> Readings taken from the artifact are never compared with readings that would come from a live domain or a panel run — those are different provenance and are not interchangeable.</p>
@@ -386,7 +386,7 @@
       <div class="sources">
         <div class="tl">Sources</div>
         <ol>
-          <li><b>MindLeverX Methodology V1.0</b> — four dimensions, unweighted-mean composite, versioned. Defined in <a href="what-is-geo.html" class="textlink" style="font-size:inherit">What is GEO?</a></li>
+          <li><b>MindLeverX Methodology V1.0</b> — four proposed review areas; no implemented or validated composite. Defined in <a href="what-is-geo.html" class="textlink" style="font-size:inherit">What is GEO?</a></li>
           <li><b>DNS lookup of mindleverx.com</b>, 27 Jul 2026 — no A record. <span class="mono">MEASURED (TOOL)</span></li>
           <li><b>Build artifact inspection</b>, 27 Jul 2026 — 6 HTML pages plus robots.txt, llms.txt and sitemap.xml. <span class="mono">MEASURED (TOOL)</span></li>
         </ol>
@@ -408,11 +408,11 @@
 <footer><div class="wrap">
   <div class="fcols">
     <div style="max-width:30ch"><div class="logo" style="font-size:19px">MindLever<b>X.</b></div><p style="margin-top:11px;font-weight:400">Generative engine optimization for mid-market B2B SaaS. Own the answer.</p></div>
-    <div><div class="fhead">Product</div><a href="index.html#services">Services</a><a href="method.html">Method</a><a href="index.html#score">Readiness</a></div>
+    <div><div class="fhead">Product</div><a href="index.html#services">Services</a><a href="method.html">Method</a><a href="index.html#score">Example scorecard</a></div>
     <div><div class="fhead">Learn</div><a href="what-is-geo.html">What is GEO?</a><a href="research-hub.html">Research</a><a href="case-study.html">Case studies</a></div>
     <div><div class="fhead">Company</div><a href="about.html">About</a><a href="about.html#contact">Contact</a></div>
   </div>
-  <div class="fnote2">PLANNED MEASUREMENTS USE ENGINE APIS AGAINST A FIXED PROMPT PANEL; API ANSWERS ARE A PROXY FOR THE LIVE CONSUMER PRODUCTS, WHICH DIFFER IN RETRIEVAL, PERSONALIZATION AND INTERFACE. · METHODOLOGY V1.0</div>
+  <div class="fnote2">AI-ANSWER FINDINGS DEPEND ON THE PRODUCT, QUESTIONS AND COLLECTION CONDITIONS. MODEL-API RESULTS ARE DISTINCT FROM OBSERVATIONS OF CONSUMER CHATGPT AND OTHER CONSUMER INTERFACES.</div>
   <div class="fbot"><span>© 2026 MindLeverX</span><span>OWN THE ANSWER.</span></div>
 </div></footer>
 
