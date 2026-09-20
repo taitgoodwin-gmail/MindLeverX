@@ -1,6 +1,7 @@
 import { createHash } from 'node:crypto';
 import { isDeepStrictEqual } from 'node:util';
 import { savedResults } from './saved-results.mjs';
+import { SUPPORTED_EVIDENCE_METHODS } from './evidence-inspection.mjs';
 
 export const REPORT_SCOPE_BOUNDARY = 'The brand and domain are operator-configured source scope, not independently verified vendor provenance. This is an internal saved sample; local review does not qualify collection or authorize client release.';
 export const LOCAL_REVIEW_LIMITATION = 'Local operator record only; human identity and decision authenticity are not verified. This record does not authorize collection or client release.';
@@ -49,7 +50,7 @@ function validateSnapshot(snapshot, entries) {
   keys(snapshot, ['id','clientId','version','reviewId','preparedAt','scope','subject','schemaVersion','reportSchemaVersion','method','rendererVersion','brand','clientName','domain','processingIdentity','scopeBoundary','collectionQualification','clientRelease','source','report','pdf']);
   supported(snapshot.schemaVersion, ['mlx-report-revision-v1'], 'unsupported_snapshot_schema');
   supported(snapshot.reportSchemaVersion, ['mlx-saved-results-v1'], 'unsupported_report_schema');
-  supported(snapshot.method, ['answer-text-literal-substring-lowercase-v1'], 'unsupported_method');
+  supported(snapshot.method, SUPPORTED_EVIDENCE_METHODS, 'unsupported_method');
   supported(snapshot.rendererVersion, ['mlx-saved-results-pdf-v1', 'mlx-saved-results-pdf-v2'], 'unsupported_renderer');
   requireValue(id(snapshot.id) && id(snapshot.clientId) && id(snapshot.reviewId) && Number.isSafeInteger(snapshot.version) && snapshot.version > 0 && instant(snapshot.preparedAt));
   keys(snapshot.subject, ['clientName','domain','brand']);
@@ -89,9 +90,9 @@ export function verifyReportExport(bytes, { expectedSnapshotSha256 } = {}) {
     validateReview(review, snapshot);
     requireValue(report !== null && typeof report === 'object' && !Array.isArray(report));
     supported(report.schemaVersion, ['mlx-saved-results-v1'], 'unsupported_report_schema');
-    supported(report.method, ['answer-text-literal-substring-lowercase-v1'], 'unsupported_method');
+    supported(report.method, SUPPORTED_EVIDENCE_METHODS, 'unsupported_method');
     requireValue(report.schemaVersion === snapshot.reportSchemaVersion && report.method === snapshot.method && report.brand === snapshot.brand, 'report_link_mismatch');
-    const recomputed = savedResults(decoded.source, snapshot.brand);
+    const recomputed = savedResults(decoded.source, snapshot.brand, { method: snapshot.method });
     requireValue(recomputed.state === 'complete' && isDeepStrictEqual(report, recomputed), 'report_reproduction_mismatch');
     requireValue(decoded.pdf.subarray(0, 5).equals(Buffer.from('%PDF-')) && /%%EOF\s*$/.test(decoded.pdf.toString('latin1')), 'invalid_pdf_framing');
     return {

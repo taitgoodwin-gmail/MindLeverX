@@ -1,5 +1,9 @@
 # Implementation status
 
+## 20 September — MIN-19 local measurement correction
+
+[Observed service-error classification](evidence-error-classification.md) is complete locally. Exact observed nonempty service error now blocks the full aggregate and new PDF/report preparation under method v2. Operator counts are explicitly records, including unavailable outcomes; error rows are not negative answers. Pinned v1 exports remain reproducible. 149 tests plus current validator/static/public checks pass; rendered blocking and valid→error recovery were verified. This does not complete collection qualification, owner acceptance or production delivery.
+
 ## 20 September — durable local preparation verified
 
 [MIN-18](report-preparation-recovery.md) persists local draft attempts, coordinates identical work across SQLite connections, records failure/interruption, fences late completion and appends explicit retries. The evidence section shows recent saved status and reasons.143 application tests, requirements/public-build checks and desktop/narrow browser verification passed. The new product branch is `codex/draft-recovery-2026-09-20`; original preview processes/DBs are unchanged. This is not a production collection worker or automatic retry service.

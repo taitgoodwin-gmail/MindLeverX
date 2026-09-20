@@ -1,9 +1,16 @@
 import { createHash } from 'node:crypto';
 
 const text = value => typeof value === 'string' && value.trim().length > 0;
+export const LEGACY_EVIDENCE_METHOD = 'answer-text-literal-substring-lowercase-v1';
+export const EVIDENCE_METHOD = 'answer-text-literal-substring-lowercase-v2';
+export const SUPPORTED_EVIDENCE_METHODS = Object.freeze([LEGACY_EVIDENCE_METHOD, EVIDENCE_METHOD]);
+// Exact marker observed in retained vendor exports, not a documented error taxonomy.
+// Do not extend to fuzzy matching: normal answers can discuss failures or quote errors.
+const observedServiceError = "I'm sorry, I'm having trouble responding to requests right now. Let's try this again in a bit.";
 
 // This inspects supplied export records, not the provider's collection method.
-export function inspectEvidence(bytes, { brand, expectedSha256 } = {}) {
+export function inspectEvidence(bytes, { brand, expectedSha256, method = EVIDENCE_METHOD } = {}) {
+  if (!SUPPORTED_EVIDENCE_METHODS.includes(method)) throw new TypeError('Unsupported evidence method.');
   if (!Buffer.isBuffer(bytes)) throw new TypeError('Input must be the original file bytes.');
   if (!text(brand)) throw new TypeError('A nonempty literal brand is required.');
   if (expectedSha256 !== undefined && !/^[a-f0-9]{64}$/i.test(expectedSha256)) {
@@ -11,7 +18,7 @@ export function inspectEvidence(bytes, { brand, expectedSha256 } = {}) {
   }
   const result = {
     schemaVersion: 'mlx-evidence-inspection-v1',
-    method: 'answer-text-literal-substring-lowercase-v1',
+    method,
     source: { bytes: bytes.length, sha256: createHash('sha256').update(bytes).digest('hex') },
     brand: brand.trim(),
     status: 'blocked',
@@ -29,6 +36,8 @@ export function inspectEvidence(bytes, { brand, expectedSha256 } = {}) {
       'Hash verifies byte identity only. Retention/reporting rights and collection qualification still require review.',
     ],
   };
+  // v1 output must stay byte-reproducible for retained historical exports.
+  if (method === EVIDENCE_METHOD) result.limitations.push('An exact observed service-error response blocks this sample; this is not a general failure detector. Other unavailable outcomes require evidence review.');
   const issue = (severity, code, row = null, field = null) => result.issues.push({ severity, code, row, field });
   if (expectedSha256 !== undefined && result.source.sha256 !== expectedSha256.toLowerCase()) {
     issue('error', 'source_hash_mismatch');
@@ -62,14 +71,17 @@ export function inspectEvidence(bytes, { brand, expectedSha256 } = {}) {
     for (const field of ['response_id', 'timestamp']) {
       if (!text(record[field])) issue('warning', 'metadata_missing_or_invalid', row, field);
     }
+    const unavailable = method === EVIDENCE_METHOD && record.response_text === observedServiceError;
+    if (unavailable) issue('error', 'observed_service_error_response', row, 'response_text');
+    const answerPresent = text(record.response_text) && !unavailable;
     const observation = {
       row,
       prompt: text(record.prompt) ? record.prompt : null,
       engine: text(record.engine) ? record.engine : null,
       vendorTimestamp: text(record.timestamp) ? record.timestamp : null,
       vendorResponseId: text(record.response_id) ? record.response_id : null,
-      answerPresent: text(record.response_text),
-      literalMention: text(record.response_text) ? record.response_text.toLowerCase().includes(needle) : null,
+      answerPresent,
+      literalMention: answerPresent ? record.response_text.toLowerCase().includes(needle) : null,
     };
     result.rows.push(observation);
     if (observation.vendorResponseId !== null) {

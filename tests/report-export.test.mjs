@@ -27,12 +27,12 @@ const pdfBytes = Buffer.from('%PDF-1.4\nsynthetic export fixture\n%%EOF\n');
 function processingIdentity(snapshot) {
   return sha(encode({schemaVersion:snapshot.schemaVersion,reportSchemaVersion:snapshot.reportSchemaVersion,method:snapshot.method,rendererVersion:snapshot.rendererVersion,brand:snapshot.brand,clientName:snapshot.clientName,domain:snapshot.domain}));
 }
-function fixture() {
-  const reportBytes = encode(savedResults(sourceBytes,'MindLeverX'));
+function fixture(method = 'answer-text-literal-substring-lowercase-v1') {
+  const reportBytes = encode(savedResults(sourceBytes,'MindLeverX',{method}));
   const snapshot = {
     id:'revision-A',clientId:'client-A',version:1,reviewId:'review-A',preparedAt:'2026-09-19T12:30:00.000Z',scope:'internal_saved_sample',
     subject:{clientName:'Synthetic client',domain:'example.test',brand:'MindLeverX'},
-    schemaVersion:'mlx-report-revision-v1',reportSchemaVersion:'mlx-saved-results-v1',method:'answer-text-literal-substring-lowercase-v1',rendererVersion:'mlx-saved-results-pdf-v2',
+    schemaVersion:'mlx-report-revision-v1',reportSchemaVersion:'mlx-saved-results-v1',method,rendererVersion:'mlx-saved-results-pdf-v2',
     brand:'MindLeverX',clientName:'Synthetic client',domain:'example.test',processingIdentity:'',scopeBoundary:REPORT_SCOPE_BOUNDARY,collectionQualification:'required',clientRelease:'unavailable',
     source:{sha256:sha(sourceBytes),bytes:sourceBytes.length},report:{sha256:sha(reportBytes),bytes:reportBytes.length},pdf:{sha256:sha(pdfBytes),bytes:pdfBytes.length},
   };
@@ -50,6 +50,18 @@ function replaceArtifact(envelope, kind, bytes) {
   changeSnapshot(envelope,snapshot=>{snapshot[kind]={sha256:sha(bytes),bytes:bytes.length};});
 }
 function verify(envelope, options) { return verifyReportExport(encode(envelope),options); }
+
+test('both pinned methods reproduce while new method gets a different processing identity', () => {
+  const legacy=fixture(), current=fixture('answer-text-literal-substring-lowercase-v2');
+  assert.equal(verifyReportExport(legacy.bytes).status,'PASS');
+  assert.equal(verifyReportExport(current.bytes).status,'PASS');
+  assert.deepEqual(parsed(legacy.envelope.entries.report).aggregate,parsed(current.envelope.entries.report).aggregate);
+  assert.notEqual(legacy.snapshot.processingIdentity,current.snapshot.processingIdentity);
+  assert.notEqual(legacy.snapshot.report.sha256,current.snapshot.report.sha256);
+  const mismatched=structuredClone(current.envelope);
+  replaceArtifact(mismatched,'report',legacy.reportBytes);
+  assert.equal(verify(mismatched).code,'report_link_mismatch');
+});
 
 test('portable export retains exact BOM source, formatted manifest, result and PDF with a fixed 1/2 oracle', () => {
   const f=fixture();

@@ -75,7 +75,9 @@ async function load() {
     if (!data.available) {
       $('status').textContent = 'No saved evidence is connected yet. No findings have been calculated.';
     } else if (data.report?.state !== 'complete') {
-      $('status').textContent = 'These saved records need a data check before results can be shown. No mention count has been calculated. Correct the source, then reload saved results.';
+      $('status').textContent = data.report?.issues?.some(issue => issue.code === 'observed_service_error_response')
+        ? 'The saved records include a service-error response, not an answer. No mention count has been calculated and PDF preparation is blocked. Review the source evidence before preparing results.'
+        : 'These saved records need a data check before results can be shown. No mention count has been calculated. Correct the source, then reload saved results.';
     } else render(data.report);
   } catch (error) {
     $('report').hidden = true;

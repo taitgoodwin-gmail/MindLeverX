@@ -106,6 +106,30 @@ test('real PDF snapshot retains exact BOM source, report, PDF, counts and immuta
   assert.ok(!JSON.stringify(workspace).includes(f.directory));
 });
 
+test('observed service-error evidence blocks live results, text/PDF and revision preparation before rendering', async t => {
+  let renders=0;
+  const f=await fixture(t,{reportPdfRenderer:async()=>{renders++;return syntheticPdf;}});
+  const client=await f.client();
+  const raw=Buffer.from(JSON.stringify([{...answersA[1],response_text:"I'm sorry, I'm having trouble responding to requests right now. Let's try this again in a bit."}]));
+  await writeFile(f.sourcePath,raw);
+  // Query strings cannot request legacy semantics from a live endpoint.
+  const response=await f.request('/api/saved-results?method=answer-text-literal-substring-lowercase-v1');
+  assert.equal(response.data.report.state,'blocked');
+  assert.equal(response.data.report.aggregate,null);
+  assert.equal(response.data.report.method,'answer-text-literal-substring-lowercase-v2');
+  assert.deepEqual(response.data.report.answers,[]);
+  const inspection=(await f.request('/api/evidence-inspection')).data.inspection;
+  assert.equal(inspection.rows[0].literalMention,null);
+  assert.equal(inspection.issues[0].code,'observed_service_error_response');
+  for (const extension of ['txt','pdf']) assert.equal((await f.request(`/api/saved-results/draft.${extension}`)).status,409);
+  assert.equal((await f.prepare(client.id,raw)).status,409);
+  const workspace=(await f.request('/api/workspace')).data;
+  assert.equal(workspace.reportRevisions.length,0);
+  assert.equal(workspace.reviews.length,0);
+  assert.equal(renders,0);
+  assert.deepEqual(await readFile(f.sourcePath),raw);
+});
+
 test('concurrent repeats deduplicate, changed source appends and old revision cannot be updated', async t => {
   let renders = 0;
   const f = await fixture(t, { reportPdfRenderer: async () => { renders++; await new Promise(resolve => setTimeout(resolve, 20)); return syntheticPdf; } });

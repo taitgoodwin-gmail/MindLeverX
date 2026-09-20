@@ -2,8 +2,9 @@ import { inspectEvidence } from './evidence-inspection.mjs';
 
 // Local draft presentation of the same bytes checked by the inspection method.
 // This projection deliberately excludes unrelated export fields and local paths.
-export function savedResults(bytes, brand) {
-  const inspection = inspectEvidence(bytes, { brand });
+export function savedResults(bytes, brand, { method } = {}) {
+  // Only historical verification supplies a pinned method; live routes use latest.
+  const inspection = inspectEvidence(bytes, { brand, method });
   const base = {
     schemaVersion: 'mlx-saved-results-v1', state: inspection.status,
     brand: inspection.brand, source: inspection.source, method: inspection.method,
