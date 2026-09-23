@@ -1,5 +1,7 @@
 # Implementation status — integrated source checkpoint 23 September 2026
 
+The 23 September integrated source branch combines the previously separate website, local product and review documents for release verification. Vercel's production artifact remains website-only. Earlier branch/path references below are dated implementation history, not current setup instructions. See the [collaborator setup](collaborator-start.md) and [handoff](codex-handoff.md) for current orientation.
+
 ## 20 September — MIN-19 local measurement correction
 
 [Observed service-error classification](evidence-error-classification.md) is complete locally. Exact observed nonempty service error now blocks the full aggregate and new PDF/report preparation under method v2. Operator counts are explicitly records, including unavailable outcomes; error rows are not negative answers. Pinned v1 exports remain reproducible. 149 tests plus current validator/static/public checks pass; rendered blocking and valid→error recovery were verified. This does not complete collection qualification, owner acceptance or production delivery.

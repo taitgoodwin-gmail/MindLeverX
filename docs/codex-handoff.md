@@ -1,5 +1,9 @@
 # MindLeverX — corrected Codex handoff
 
+## Integrated source release — 23 September 2026
+
+The owner explicitly requested a GitHub push and Vercel publication. The public-main baseline, local product checkpoint and latest review/planning branch were merged on `codex/mvp-release-20260923`. The combined source is being verified for a website-only production build. Until the production receipt below is updated, check GitHub and Vercel for the actual current release hash. The operator app, local database, retained evidence and report PDF remain outside the public build. This source integration does not complete the paid-audit MVP, qualify collection, approve the owner draft, or launch payment/private delivery. Earlier checkout and no-push notes below describe their dated checkpoints.
+
 ## MVP execution checkpoint — 23 September 2026
 
 The owner asked to finish the paid-audit MVP and run the existing dependency-based roadmap as an active goal. The first action under MIN-12 was a focused follow-up to Otterly support on the existing, owner-authorized inquiry thread. It asked only for the remaining consumer-ChatGPT source-access assurance, API failed-attempt/retry semantics, backup deletion, and post-trial read-only access/charges. Gmail returned a SENT message on 23 September; no new monitoring, purchase, credential use, account change, customer contact, push or deployment occurred. [Qualification card](collection-qualification-2026-09-19.md) records the exact status. Await the answer without repeating the inquiry.
