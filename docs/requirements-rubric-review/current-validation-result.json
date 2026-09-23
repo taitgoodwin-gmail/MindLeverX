@@ -1,0 +1,25 @@
+{
+  "boundary": "document structure and independent synthetic-fixture arithmetic; no product tests",
+  "source_ids": 86,
+  "live_original_rows": 78,
+  "live_review_rows": 86,
+  "existing_proposal_ids": 6,
+  "revised_rows": 97,
+  "proposals": 11,
+  "case_families": 39,
+  "decision_records": 10,
+  "dispositions": {
+    "unresolved": 9,
+    "clarify": 77,
+    "proposed addition": 11
+  },
+  "mode": "full",
+  "errors": [],
+  "blockers": [
+    "Source changed since review: CURRENT",
+    "Source changed since review: GUIDANCE"
+  ],
+  "structure_result": "PASS",
+  "source_verification": "BLOCKED",
+  "result": "BLOCKED"
+}

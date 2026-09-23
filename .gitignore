@@ -3,6 +3,11 @@ dist/
 public-dist/
 .vercel/
 data/
+backups/
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm
+*.sqlite-journal
 .env
 .env.*
 !.env.example
@@ -10,3 +15,6 @@ data/
 artifacts/
 *.log
 reference/
+output/
+tmp/
+__pycache__/

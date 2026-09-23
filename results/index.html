@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Saved results — MindLeverX</title>
+  <link rel="stylesheet" href="styles.css">
+  <script type="module" src="app.js"></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to results</a>
+  <div class="preview"><div class="wrap">Local draft · Saved observations · Not a completed audit</div></div>
+  <header class="wrap"><a class="wordmark" href="/">MindLever<span>X.</span></a><a href="/">Back to website</a></header>
+  <main id="main" class="wrap">
+    <div class="intro"><p class="eyebrow">YOUR EVIDENCE, EXPLAINED</p><h1 id="title">Saved answer results</h1><p class="lead">See what the saved answers say, then explore the evidence behind the finding.</p></div>
+    <div class="toolbar"><a id="explore" href="#answers-section" hidden>Explore the answers ↓</a><button id="download" disabled>Download PDF</button><button id="reload" class="secondary">Reload saved results</button></div>
+    <p id="status" role="status" aria-live="polite">Loading saved observations…</p>
+    <noscript>This results page needs JavaScript to load the locally saved evidence.</noscript>
+    <div id="report" hidden>
+      <section class="finding" aria-labelledby="finding-title"><p class="eyebrow">WHAT WE FOUND</p><h2 id="finding-title"></h2><p id="finding-context"></p><p class="caveat">This is a check of saved answer text, not an overall visibility score. It does not measure citations, sentiment or changes over time.</p></section>
+      <dl class="metrics" aria-label="Full saved sample"><div><dt>Answers with a literal mention</dt><dd id="mentions"></dd></div><div><dt>Vendor platform labels</dt><dd id="platform-count"></dd></div><div><dt>Questions in this sample</dt><dd id="question-count"></dd></div></dl>
+      <section class="section" aria-labelledby="platform-title"><p class="eyebrow">THE BREAKDOWN</p><h2 id="platform-title">Mentions by platform</h2><p>Each count shows answers containing the literal brand name at least once. Labels come from the vendor export.</p><div id="platforms" class="platforms"></div></section>
+      <section class="next-step" aria-labelledby="next-title"><p class="eyebrow">WHAT TO DO NEXT</p><h2 id="next-title">Validate the sample before choosing a fix.</h2><p>Confirm how the answers were collected and whether the questions reflect real buyer decisions. This sample alone does not justify a content change or show why a brand appeared or was absent.</p><p>Website readiness, traffic, lead impact and broader visibility have not been measured here.</p></section>
+      <section class="section" id="answers-section" aria-labelledby="answers-title"><p class="eyebrow">LOOK AT THE EVIDENCE</p><h2 id="answers-title">Read the saved answers</h2><p>Open an answer to inspect the original text. Vendor content is shown as plain text; claims within it have not been endorsed or fact-checked.</p><div class="filters"><label for="engine">Platform</label><select id="engine"><option value="">All platforms</option></select><span id="answer-count" role="status" aria-live="polite"></span></div><div id="answers"></div></section>
+      <section class="section" aria-labelledby="limits-title"><h2 id="limits-title">Scope &amp; limitations</h2><ul id="limitations"></ul><details><summary>Source details and data checks</summary><dl class="source"><dt>Source fingerprint (SHA-256)</dt><dd id="source-hash"></dd><dt>Source size</dt><dd id="source-size"></dd><dt>Counting method</dt><dd id="method"></dd></dl><p id="warnings"></p><p>No records are silently removed. The fingerprint identifies the saved file; it does not verify the vendor’s collection process.</p></details></section>
+    </div>
+  </main>
+  <footer class="wrap">MindLeverX · Local results preview. No new collection, client approval or delivery has occurred.</footer>
+</body>
+</html>

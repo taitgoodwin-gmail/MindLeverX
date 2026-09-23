@@ -1,0 +1,110 @@
+{
+  "trialId": "MIN-7-review-trial-v1",
+  "status": "Single review/correction trial and local implementation verification complete; ongoing adoption undecided",
+  "fictional": true,
+  "criteria": {
+    "path": "docs/report-builder-slice.md",
+    "version": "T1–T5 v1",
+    "sha256": "7d11604f1509b6460d1b97e24031b6ea62b3838f22b02ab7511f10a47fabf14a"
+  },
+  "design": {
+    "reviewPasses": 1,
+    "semanticCorrectionPasses": 1,
+    "baselineErrorFindingsDeliberatelySeeded": 4,
+    "correctControlFindings": 1,
+    "independentHumanCalibration": false,
+    "productionSample": false
+  },
+  "comparison": [
+    {
+      "id": "F1",
+      "resolved": true,
+      "basis": "Corrected text distinguishes the one-link description from the empty parser result; no zero-citation conclusion."
+    },
+    {
+      "id": "F2",
+      "resolved": true,
+      "basis": "Corrected text labels design numbers, missing formula and inseparable causes; no measured/causal improvement."
+    },
+    {
+      "id": "F3",
+      "resolved": true,
+      "basis": "Corrected text separates API illustration from failed consumer capture; consumer outcome remains unknown."
+    },
+    {
+      "id": "F4",
+      "resolved": true,
+      "basis": "Corrected text restores the founding date and customer count to unknown."
+    },
+    {
+      "id": "F5",
+      "preserved": true,
+      "basis": "Exact finding object unchanged, including hypothesis and no website-change authority."
+    }
+  ],
+  "metrics": {
+    "materialErrorFindingsCorrected": 4,
+    "remainingMaterialErrorFindingsObserved": 0,
+    "newMaterialErrorFindingsObserved": 0,
+    "reviewerFalseAlarmsAdjudicatedByCoordinator": 0,
+    "independentlyHumanAdjudicatedFalseAlarms": null,
+    "qualification": "Counts concern deliberately seeded findings in this fixture. F4 includes two false facts but counts as one finding. Coordinator comparison is an AI judgment, not an independent measured error rate.",
+    "ownerReviewPerformed": false,
+    "ownerReviewSeconds": null,
+    "proposedOwnerReviewTargetSeconds": 300,
+    "targetIsStandardOrGuarantee": false,
+    "additionalPurchases": 0,
+    "measurementProviderCalls": 0,
+    "measurementProviderIncrementalCostUSD": 0,
+    "assistantTokens": null,
+    "assistantCostUSD": null,
+    "totalActiveEffortSeconds": null,
+    "unknownReasons": "Assistant token/billing attribution and total active effort are not exposed in this task. Owner has not reviewed the output. Do not equate wall time or included assistant use with free labor."
+  },
+  "timing": {
+    "baselinePreservedAtObservedUTC": "2026-09-14T01:17:38Z",
+    "reviewAssessmentStartedAtObservedUTC": "2026-09-14T01:18:02Z",
+    "reviewAssessmentEndedAtObservedUTC": "2026-09-14T01:18:27Z",
+    "reviewAssessmentElapsedSeconds": 25,
+    "correctionCompletedAtObservedUTC": "2026-09-14T01:21:09Z",
+    "packageComparisonObservedUTC": "2026-09-14T01:24:38Z",
+    "baselineToPackageComparisonElapsedSeconds": 420,
+    "qualification": "Observed wall-clock intervals; other work overlaps. The review interval excludes writing its review artifact. Total labor and full-turn time were not measured.",
+    "trackedImplementationIntervalStartUTC": "2026-09-14T01:16:15Z",
+    "trackedImplementationIntervalEndUTC": "2026-09-14 01:28:58 UTC"
+  },
+  "preservation": {
+    "exactBaselineAndCriteriaHashesChecked": true,
+    "evidenceRecordsUnchanged": 6,
+    "validFindingUnchanged": true,
+    "generatedFileHashesVerified": 18,
+    "inputBytesPreserved": true,
+    "packageState": "draft",
+    "approvalOrReleasePerformed": false,
+    "monthlyOwnerApprovalPreserved": true
+  },
+  "recommendation": {
+    "decision": "adjust",
+    "ongoingAdoption": "undecided",
+    "reason": "The one review corrected four seeded errors without an observed new material error, but obvious fictional cases, no independent human calibration and unavailable owner-effort/cost evidence do not establish sustainable value. Preserve the bounded approach for owner review, simplify the technical report presentation before client use, and decide whether a representative unseeded trial earns further effort. No additional trial or standing process is automatically authorized.",
+    "nextDecision": "Owner reviews this result and chooses adopt, adjust or stop. Do not add standing instructions or schedules before that decision."
+  },
+  "sourcesCheckedDate": "2026-09-13",
+  "sources": [
+    "https://developers.openai.com/api/docs/guides/evaluation-best-practices",
+    "https://www.anthropic.com/engineering/building-effective-agents",
+    "https://www.iso.org/standard/42001"
+  ],
+  "implementationChoices": "The fixture, criteria, schema, one-pass limit and effort target are project choices; they are not official standards or certification.",
+  "implementationVerification": {
+    "command": "npm run check",
+    "passed": 55,
+    "failed": 0,
+    "newReportPackageTests": 46,
+    "websiteAndPlatformChecks": "passed",
+    "nodeVersion": "26.7.0",
+    "node24RuntimeVerified": false,
+    "completedAtObservedUTC": "2026-09-14 01:28:58 UTC",
+    "meaning": "Local structural/integration verification only; not production reliability or semantic truth."
+  }
+}

@@ -1,12 +1,12 @@
 # MindLeverX
 
-**Joining or returning to the project? Start with [Ahmed’s brief](docs/ahmed-brief.md), then the [baseline and tested setup](docs/collaborator-start.md).** Updated 20 September 2026.
-
-This branch is based on the public website checkpoint. The newer local report product, review-draft requirements and shared governance are recorded in a separate Git checkpoint. The setup map links the exact version; do not assume cloning the default branch gives you that product. [Linear](https://linear.app/mindleverx-codex-build/project/mindleverx-next-release-bc7bec6a8dc4) holds current work status.
-
-The instructions and feature list below describe this branch’s original local workspace. For the newer report/PDF workflow, use the collaborator setup. The Figma redesign is a proposal, not an approved change to the live site.
+**Joining or returning? Start with [Ahmed’s brief](docs/ahmed-brief.md), then the [collaborator setup](docs/collaborator-start.md).** For current work, read the [handoff](docs/codex-handoff.md) and [delivery governance](docs/delivery-governance.md). [Linear](https://linear.app/mindleverx-codex-build/project/mindleverx-next-release-bc7bec6a8dc4) holds work status. The public website and local report product share this source branch; Vercel publishes only the website-only public build. The Figma redesign remains a proposal. Run `npm run check:requirements` for portable document checks; it does not certify product acceptance.
 
 A working local build of the supplied MindLeverX website and operator platform designs. The site preserves the existing Spectral / IBM Plex / oxblood visual direction. The workspace adds persistent clients, audit intake, evidence reviews, versioned prompt panels, and an activity log.
+
+Current planning direction, official-source practice, and purchase/launch decisions are recorded in [build guidance](docs/build-guidance.md), with links to the existing MVP plan.
+
+The [product and business tenets](docs/product-tenets.md) define recurring revenue, repeatability, automation, AI intelligence, competitive leadership, premier owner/client UI/UX and evidence-informed behavioral design. The [MVP roadmap assessment](docs/mvp-tenet-assessment.md) maps the six delivery stages to those principles and separates proposed value from verified readiness.
 
 ## Run
 
@@ -30,6 +30,7 @@ npm run dev
 - Create immutable prompt-panel versions with a required change note.
 - Inspect client report previews and distinguish sample observations from unmeasured clients.
 - Read the activity log and persist changes across server restarts using SQLite.
+- Inspect [durable local draft attempts and explicit retry history](docs/report-preparation-recovery.md); completed matching drafts reuse their retained artifacts.
 
 ## Data and scope
 
@@ -37,7 +38,7 @@ The server listens only on `127.0.0.1`. Its sessions and CSRF checks protect the
 
 The initial three clients and their scores/evidence are fictional sample records derived from the archive. New clients have no scores. Submitted requests are actual local records; they do not trigger a crawl, automated score, engine request, email, payment, or publication. A review approval records a decision locally and does not send or publish anything.
 
-Persistent data is stored at `data/mindleverx.sqlite` and is ignored by Git. Keep a backup of this directory while the server is stopped. Use `MLX_DB_PATH=/absolute/path/workspace.sqlite npm start` to choose another database. `MLX_SEED=false npm start` starts a **new** database without samples; it does not remove existing records.
+Persistent data is stored at `data/mindleverx.sqlite` and is ignored by Git. Use the [local backup, verification and fresh-destination restore procedure](docs/database-recovery.md); the supported snapshot command includes committed WAL data while the app is running. Use `MLX_DB_PATH=/absolute/path/workspace.sqlite npm start` to choose another database. `MLX_SEED=false npm start` starts a **new** database without samples; it does not remove existing records.
 
 The generated static `dist/` has an unconnected intake runtime by default. The local server provides `/runtime.js` with the local intake configuration. Uploading `dist/` alone does not provide a backend or authenticated platform.
 
@@ -61,6 +62,19 @@ The generated static `dist/` has an unconnected intake runtime by default. The l
 The archive's embedded instructions, old handoffs, and proposed commercial rulings are historical reference material. This build does not adopt them as new user instructions or settle unresolved pricing, customer segment, scoring, or monitoring decisions.
 
 ## Verify
+
+### Prepare an evidence-linked draft locally
+
+```sh
+mkdir -p artifacts/report-trial
+node scripts/build-report.mjs --input examples/report-trial/corrected.input.json --output artifacts/report-trial/corrected
+```
+
+Use a **new output directory** for each package. This command retains the input and evidence, produces Markdown and JSON drafts, and records byte hashes. It makes no provider request and does not approve or release a report. The supplied example is fictional evaluation material, not a measurement of MindLeverX or a customer.
+
+The input contract and bounded scope are in [the report-builder slice](docs/report-builder-slice.md). Structural checks do not determine whether prose claims follow from evidence; the example's baseline, one AI review and one correction are preserved in `examples/report-trial/`. Hashes identify local bytes, not authentic collection or production immutable storage.
+
+### Check the local build
 
 ```sh
 npm run check

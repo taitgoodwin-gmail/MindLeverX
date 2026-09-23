@@ -5,6 +5,19 @@ const escapeHtml = value => String(value ?? '').replace(/[&<>"']/g, char => ({'&
 const attr = escapeHtml;
 const e = escapeHtml;
 const state = { csrf: '', clients: [], reviews: [], leads: [], activity: [], panels: [], loaded: false, menuOpen: false, leadFilter: 'new', search: '', busy: false };
+state.inspection = null;
+state.inspectionError = '';
+state.evidenceFilter = '';
+state.pilotDraft = null;
+state.pilotDraftError = '';
+state.pilotDraftLoading = false;
+state.pilotDraftLoaded = false;
+state.reportRevisions = [];
+state.reportPreparation = null;
+state.reportPreparations = [];
+state.revisionDetails = new Map();
+state.revisionErrors = new Map();
+state.revisionLoading = new Set();
 const stageNames = ['Intake', 'Agreement', 'Baseline', 'Findings', 'Scope', 'Fixes', 'Monitoring'];
 const stageDescriptions = ['Record the request and agree the next step.', 'Agree the pages, competitors and buyer questions.', 'Version the prompt panel and establish a baseline.', 'Review evidence and identify the gaps.', 'Record which fixes are selected for this cycle.', 'Review drafts and record deployment and verification.', 'Review readings and prepare the next cycle.'];
 const iconPaths = {
@@ -86,7 +99,39 @@ async function api(path, options = {}) {
 async function loadWorkspace() {
   const result = await api('/api/workspace');
   for (const key of ['clients','reviews','leads','activity','panels']) state[key] = Array.isArray(result[key]) ? result[key] : [];
+  state.reportRevisions = Array.isArray(result.reportRevisions) ? result.reportRevisions : [];
+  state.reportPreparation = result.reportPreparation || null;
+  state.reportPreparations = Array.isArray(result.reportPreparations) ? result.reportPreparations : [];
+  try { state.inspection = await api('/api/evidence-inspection'); state.inspectionError = ''; }
+  catch (reason) { state.inspection = null; state.inspectionError = reason.message; }
+  if (!state.inspection?.inspection?.rows.some(row => row.engine === state.evidenceFilter)) state.evidenceFilter = '';
   state.loaded = true;
+}
+
+async function loadRevision(id) {
+  if (state.revisionLoading.has(id)) return;
+  state.revisionLoading.add(id);
+  state.revisionErrors.delete(id);
+  state.revisionDetails.delete(id);
+  render();
+  try { state.revisionDetails.set(id, await api(`/api/report-revisions/${encodeURIComponent(id)}`)); }
+  catch (reason) { state.revisionErrors.set(id, reason.message); }
+  finally { state.revisionLoading.delete(id); render(); }
+}
+
+async function loadPilotDraft() {
+  if (state.pilotDraftLoading) return;
+  state.pilotDraftLoading = true;
+  state.pilotDraftError = '';
+  state.pilotDraft = null;
+  if (route().page === 'pilot-panel') render();
+  try { state.pilotDraft = await api('/api/pilot-panel-draft'); }
+  catch (reason) { state.pilotDraftError = reason.message; }
+  finally {
+    state.pilotDraftLoading = false;
+    state.pilotDraftLoaded = true;
+    if (route().page === 'pilot-panel') render();
+  }
 }
 
 let toastTimer;
@@ -104,7 +149,7 @@ function sidebar(page, id) {
     <aside class="sidebar ${state.menuOpen ? 'open' : ''}" aria-label="Workspace navigation">
       <a class="sidebar-brand" href="#/console"><span class="wordmark">MindLever<span>X.</span></span><div class="sidebar-kicker">OPERATOR WORKSPACE</div></a>
       <nav aria-label="Main navigation"><div class="nav-label">Your workspace</div>
-      ${active('console','Needs me','grid',pendingReviews().length)}${active('clients','Clients','users')}${active('leads','Leads','inbox',newLeads().length)}${active('activity','Activity','history')}
+      ${active('console','Needs me','grid',pendingReviews().length)}${active('evidence','Evidence review','search')}${active('pilot-panel','Pilot question draft','layers')}${active('clients','Clients','users')}${active('leads','Leads','inbox',newLeads().length)}${active('activity','Activity','history')}
       <div class="nav-label">Clients</div>
       ${state.clients.slice(0,6).map(client => `<a class="nav-item sidebar-client ${page === 'clients' && id === client.id ? 'active' : ''}" href="#/clients/${attr(client.id)}"><span class="client-dot"></span><span>${e(client.name)}</span></a>`).join('') || '<div class="nav-item muted">No clients yet</div>'}
       </nav>
@@ -114,7 +159,7 @@ function sidebar(page, id) {
 
 function shell(content, crumb = '') {
   const {page,id} = route();
-  const names = {console:'Needs me',clients:'Clients',reviews:'Review',leads:'Leads',activity:'Activity',panels:'Prompt panels'};
+  const names = {console:'Needs me',evidence:'Evidence review','pilot-panel':'Pilot question draft',clients:'Clients',reviews:'Review',leads:'Leads',activity:'Activity',panels:'Prompt panels'};
   return `<div class="app-layout">${sidebar(page,id)}<div class="workspace">
     <header class="topbar"><button class="icon-button menu-toggle" data-action="toggle-menu" aria-label="${state.menuOpen ? 'Close' : 'Open'} navigation" aria-expanded="${state.menuOpen}">${icon('menu')}</button>
     <div class="breadcrumb"><span class="breadcrumb-root">Workspace</span>${icon('chevron')}<span>${e(crumb || names[page] || 'Workspace')}</span></div>
@@ -190,7 +235,7 @@ function clientPage(id) {
   const clientActivity = newest(state.activity.filter(event => event.entity_id === id || reviews.some(review => review.id === event.entity_id) || panels.some(panel => panel.id === event.entity_id)));
   return `<a class="back-link" href="#/clients">${icon('back')} All clients</a><div class="page-head"><div><span class="eyebrow">Client record</span><div class="entity-heading"><h1>${e(client.name)}</h1>${pill(statusName(client.status),client.status)}${client.sample ? sample() : ''}</div><div class="entity-meta"><span>${e(client.domain)}</span><span>·</span><span>Created ${e(date(client.created_at))}</span></div></div><div class="page-head-actions">${latestReport ? button('Report preview',`#/preview/${latestReport.id}`,'','eye') : button('Prompt panels',`#/panels/${client.id}`,'','layers')}</div></div>
     ${client.sample ? sampleNotice() : ''}<div class="detail-layout"><div class="detail-main"><section class="panel"><div class="section-head"><h2>Where the engagement is</h2><span class="mono muted">STAGE ${e(client.stage || 1)} / 7</span></div>${stageStrip(client)}</section>
-    <section><div class="section-head"><h2>Review work<span class="count">${reviews.length}</span></h2></div>${reviews.length ? `<div class="queue-list">${reviews.map(review => review.status === 'pending' ? reviewCard(review) : `<article class="review-card"><div class="review-card-top">${pill(kindName(review.kind))}${pill(statusName(review.status),review.status)}${review.sample ? sample() : ''}</div><h3><a href="#/reviews/${attr(review.id)}">${e(review.title)}</a></h3><p>${e(review.summary)}</p><a class="text-link" href="#/reviews/${attr(review.id)}">View decision ${icon('arrow')}</a></article>`).join('')}</div>` : empty('No reviews yet','Evidence and draft reviews will appear here when they are recorded. You can define a prompt panel now.',button('Create prompt panel',`#/panels/${id}`,'small','layers'),'file')}</section>
+    <section><div class="section-head"><h2>Review work<span class="count">${reviews.length}</span></h2></div>${reviews.length ? `<div class="queue-list">${reviews.map(review => review.status === 'pending' ? reviewCard(review) : `<article class="review-card"><div class="review-card-top">${pill(kindName(review.kind))}${pill(review.revision && review.status === 'approved' ? 'Local draft accepted' : statusName(review.status),review.status)}${review.sample ? sample() : ''}</div><h3><a href="#/reviews/${attr(review.id)}">${e(review.title)}</a></h3><p>${e(review.summary)}</p><a class="text-link" href="#/reviews/${attr(review.id)}">View decision ${icon('arrow')}</a></article>`).join('')}</div>` : empty('No reviews yet','Evidence and draft reviews will appear here when they are recorded. You can define a prompt panel now.',button('Create prompt panel',`#/panels/${id}`,'small','layers'),'file')}</section>
     <section class="panel"><div class="section-head"><h2>Prompt panel</h2><a class="text-link" href="#/panels/${attr(id)}">${panels.length ? 'View versions' : 'Create panel'} ${icon('arrow')}</a></div><p class="panel-intro">A versioned set of buyer questions, kept intact so changes remain visible.</p>${panels.length ? `<div class="datum-row"><span>Latest version</span><strong>${e(versionLabel(panels[0].version))} ${panels[0].sample ? sample() : ''}</strong></div><div class="datum-row"><span>Questions</span><span>${Array.isArray(panels[0].prompts) ? panels[0].prompts.length : 0} ${panels[0].sample ? sample() : ''}</span></div><div class="datum-row"><span>Recorded</span><span>${e(date(panels[0].created_at))}</span></div>` : '<p class="muted">No prompt panel has been recorded.</p>'}</section>
     <section class="panel"><h2>Record history</h2>${historyList(clientActivity.slice(0,12))}</section></div>
     <aside class="detail-aside"><section class="panel">${scoreCard(client)}</section><section class="panel"><h2>Manage engagement</h2><form id="client-update" data-id="${attr(id)}"><div class="form-error" role="alert"></div><div class="field"><label for="engagement-status">Status</label><select id="engagement-status" name="status"><option value="active" ${client.status === 'active' ? 'selected' : ''}>Active</option><option value="paused" ${client.status === 'paused' ? 'selected' : ''}>Paused</option></select></div><div class="field"><label for="engagement-stage">Current stage</label><select id="engagement-stage" name="stage">${stageNames.map((name,index) => `<option value="${index+1}" ${Number(client.stage) === index+1 ? 'selected' : ''}>${String(index+1).padStart(2,'0')} · ${e(name)}</option>`).join('')}</select><span class="field-help">Records your operational status; it does not trigger automation.</span></div><div class="field"><label for="engagement-notes">Notes</label><textarea id="engagement-notes" name="notes" rows="5" maxlength="5000">${e(client.notes || '')}</textarea></div><button type="submit" class="button primary">Save changes</button></form></section></aside></div>`;
@@ -204,12 +249,37 @@ function evidenceList(review) {
 function reviewPage(id) {
   const review = reviewById(id);
   if (!review) return notFound('Review');
+  if (review.revision) return reportRevisionReviewPage(review);
   const client = clientById(review.client_id);
   const history = newest(state.activity.filter(event => event.entity_id === id));
   return `<a class="back-link" href="#/clients/${attr(review.client_id)}">${icon('back')} ${e(client?.name || 'Client record')}</a>` + pageHead(kindName(review.kind),review.title,review.summary,review.kind === 'report' ? button('Report preview',`#/preview/${id}`,'','eye') : '') +
-    `<div class="review-meta">${pill(statusName(review.status),review.status)}${review.sample ? sample() : ''}<span class="mono muted">${e(client?.name || 'Client')} · ${e(date(review.created_at,true))}</span></div>${review.sample ? sampleNotice('The content and evidence below are fictional sample records. Your review decision and note are saved locally.') : ''}
+    `<div class="review-meta">${pill(review.revision && review.status === 'approved' ? 'Local draft accepted' : statusName(review.status),review.status)}${review.sample ? sample() : ''}<span class="mono muted">${e(client?.name || 'Client')} · ${e(date(review.created_at,true))}</span></div>${review.sample ? sampleNotice('The content and evidence below are fictional sample records. Your review decision and note are saved locally.') : ''}
     <div class="detail-layout"><div class="detail-main"><section class="panel"><span class="eyebrow">${review.kind === 'anomaly' ? 'What needs attention' : 'Review content'}</span><div class="body-copy">${e(review.body || review.summary)}</div></section><section class="panel"><h2>Evidence, alongside the work.</h2><p class="panel-intro">Use these source records to assess the review. Sample evidence describes an illustrative scenario.</p>${evidenceList(review)}</section><section class="panel"><h2>Decision history</h2>${historyList(history)}</section></div>
     <aside class="detail-aside"><section class="panel"><span class="eyebrow">Your judgment</span><h2>${review.status === 'pending' ? 'Record a decision.' : `${e(statusName(review.status))}.`}</h2>${review.status === 'pending' ? `<p class="panel-intro">${review.kind === 'anomaly' ? 'Approve the review when the evidence is sufficient, or return it with the issue that needs attention. This does not retry a run.' : 'Leave the reasoning that makes this decision useful to the next person. Approval records your review; it does not send a report.'}</p><form id="review-decision" data-id="${attr(id)}"><div class="form-error" role="alert"></div><div class="field"><label for="decision-note">Decision note <span class="muted">(required)</span></label><textarea id="decision-note" name="note" rows="6" required minlength="3" maxlength="3000" placeholder="What did you verify, or what needs to change?"></textarea></div><div class="form-actions"><button class="button primary" type="submit" name="decision" value="approved">${icon('check')} Approve</button><button class="button" type="submit" name="decision" value="returned">${icon('return')} Return</button></div></form>` : `<p class="panel-intro">Recorded ${e(date(review.decided_at,true))}.</p><div class="decision-note">${e(review.note || 'No note recorded.')}</div><p class="field-help" style="margin-top:15px">This decision is retained with the review record.</p>`}</section><section class="quiet-card"><span class="eyebrow">Review boundary</span><h3>Evidence leads. People decide.</h3><p>A recorded approval is a local workflow decision. Report delivery, site publishing and live engine runs are not connected here.</p></section></aside></div>`;
+}
+
+function loadCurrentRevision(reviewId) {
+  const revision = reviewById(reviewId)?.revision;
+  if (revision && !state.revisionDetails.has(revision.id) && !state.revisionErrors.has(revision.id) && !state.revisionLoading.has(revision.id)) void loadRevision(revision.id);
+}
+
+function reportRevisionReviewPage(review) {
+  const stored = state.revisionDetails.get(review.revision.id);
+  const error = state.revisionErrors.get(review.revision.id);
+  const top = `<a class="back-link" href="#/clients/${attr(review.client_id)}">${icon('back')} Client record</a>` + pageHead('Internal saved sample · Local review', review.title, 'Review the retained snapshot. Accepting this local draft does not authorize collection or client release.');
+  if (!stored) return top + `<section class="panel"><p role="${error ? 'alert' : 'status'}">${e(error || 'Loading the retained report snapshot…')}</p>${error ? `<button class="button" data-action="retry-revision" data-id="${attr(review.revision.id)}">Retry snapshot</button>` : ''}</section>`;
+  const {revision, report} = stored;
+  const fields = entries => `<dl>${entries.map(([label,value]) => `<dt>${e(label)}</dt><dd>${e(value)}</dd>`).join('')}</dl>`;
+  const stateLabel = review.status === 'approved' ? 'Local draft accepted' : review.status === 'returned' ? 'Returned for revision' : 'Needs local review';
+  const root = `/api/report-revisions/${encodeURIComponent(revision.id)}`;
+  const identity = fields([['Revision', `${revision.id} · v${revision.version}`], ['Snapshot SHA-256', revision.snapshotSha256], ['Client at preparation', revision.subject.clientName], ['Configured domain', revision.subject.domain], ['Configured brand', revision.subject.brand], ['Prepared', date(revision.preparedAt,true)], ['Source SHA-256', revision.source.sha256], ['Report JSON SHA-256', revision.report.sha256], ['PDF SHA-256', revision.pdf.sha256], ['Processing method', revision.method], ['Report schema', revision.reportSchemaVersion], ['Renderer version', revision.rendererVersion]]);
+  return top + `<div class="evidence-banner">${pill(stateLabel, review.status)}<span>Collection qualification is still required. Client release is unavailable.</span></div>
+    <div class="detail-layout"><div class="detail-main"><section class="panel"><span class="eyebrow">Retained finding</span><h2>${e(report.aggregate.numerator)} of ${e(report.aggregate.denominator)} saved answers name ${e(report.brand)}.</h2><p>Literal answer-text check only. This is not an overall visibility score, representative baseline or accepted collection design.</p><div class="form-actions">${button('Download retained PDF',`${root}/draft.pdf`,'primary','file')}${button('Report JSON',`${root}/report.json`,'','file')}${button('Private evidence export',`${root}/export.json`,'','file')}</div><p class="field-help">Downloads use the stored bytes of this revision. They do not regenerate a report from the current source.</p><p class="field-help">The private evidence export includes unsanitized raw source and local review notes. Keep it private; it is not prepared for client sharing. Offline verification checks bytes and supported results, not review authenticity or release permission.</p></section>
+    <section class="panel"><h2>Scope and limitations</h2><p>${e(revision.scopeBoundary)}</p><ul>${report.limitations.map(value => `<li>${e(value)}</li>`).join('')}</ul></section>
+    <section class="panel"><h2>Retained answers</h2>${report.answers.map(answer => `<details class="evidence-source report-answer"><summary>Answer ${e(answer.row)} · ${e(engineName(answer.engine))} · ${answer.literalMention ? 'Literal mention' : 'No literal mention'}</summary><p><strong>Question:</strong> ${e(answer.prompt)}</p><p class="field-help">Vendor date: ${e(answer.vendorTimestamp || 'Not supplied')} · Response ID: ${e(answer.vendorResponseId || 'Not supplied')}</p><pre>${e(answer.answer)}</pre></details>`).join('')}</section>
+    <details class="panel evidence-source"><summary>Immutable snapshot identity and fingerprints</summary>${identity}${button('Original source JSON',`${root}/source.json`,'small','file')}<p class="field-help">Fingerprints identify retained bytes and are checked when retrieved. They are not proof of vendor authenticity or tamper-proof storage.</p></details>
+    <section class="panel"><h2>Decision history</h2>${historyList(newest(state.activity.filter(event => event.entity_id === review.id)))}</section></div>
+    <aside class="detail-aside"><section class="panel"><h2>${review.status === 'pending' ? 'Review this local draft' : e(stateLabel)}</h2>${review.status === 'pending' ? `<p>Record what you checked against this exact snapshot. A changed source needs a successor revision and a new review.</p><form id="review-decision" data-id="${attr(review.id)}" data-revision-id="${attr(revision.id)}" data-snapshot-hash="${attr(revision.snapshotSha256)}"><div class="form-error" role="alert"></div><div class="field"><label for="decision-note">Decision note (required)</label><textarea id="decision-note" name="note" required minlength="3" maxlength="3000" rows="5"></textarea></div><div class="form-actions"><button class="button primary" type="submit" name="decision" value="approved">Accept local draft</button><button class="button" type="submit" name="decision" value="returned">Return</button></div></form>` : `<p>${e(date(review.decided_at,true))}</p><div class="decision-note">${e(review.note)}</div>`}</section><section class="quiet-card"><h3>Internal review only</h3><p>This decision does not qualify the source, release a monthly report, contact a client or change the one-time audit release policy.</p></section></aside></div>`;
 }
 
 function leadsPage() {
@@ -231,6 +301,32 @@ function activityPage() {
 
 function versionLabel(value) { return /^v/i.test(String(value)) ? String(value) : `v${value}`; }
 
+function pilotPanelPage() {
+  const refresh = `<button class="button small" data-action="refresh-pilot" ${state.pilotDraftLoading ? 'disabled' : ''}>${icon('refresh')} ${state.pilotDraftError ? 'Retry draft' : 'Refresh draft'}</button>`;
+  const heading = pageHead('Question coverage · Review draft', 'Pilot question draft', 'Read the proposed questions, why each is included and what still needs to be decided.', refresh);
+  if (state.pilotDraftLoading || !state.pilotDraftLoaded) return heading + '<section class="panel"><p role="status">Loading the saved question draft…</p></section>';
+  if (state.pilotDraftError || !state.pilotDraft) return heading + `<section class="panel"><h2>Draft unavailable</h2><p role="alert">${e(state.pilotDraftError || 'The saved draft could not be loaded. Retry when it is available.')}</p><p class="field-help">Other workspace records remain available. No collection or panel changes occurred.</p></section>`;
+  const {draft, source} = state.pilotDraft;
+  const fields = entries => `<dl>${entries.map(([label, value]) => `<dt>${e(label)}</dt><dd>${e(value === null ? 'Unresolved' : value)}</dd>`).join('')}</dl>`;
+  const intentById = new Map(draft.intents.map(intent => [intent.id, intent]));
+  const sourceById = new Map(draft.sources.map(item => [item.id, item]));
+  const provenance = value => value === 'retained_observed_prompt' ? 'Question retained in a saved export' : 'AI-generated hypothesis';
+  const roles = {discovery_candidate:'Discovery candidate',exploratory_candidate:'Exploratory candidate',brand_diagnostic:'Brand diagnostic'};
+  const questions = draft.questions.map(question => `<details class="version-card evidence-source pilot-question"><summary><strong>${e(question.id)} · ${e(question.text)}</strong></summary><div class="version-body">
+    <div class="review-card-top">${pill(question.provenance === 'retained_observed_prompt' ? 'Retained prompt' : 'AI hypothesis')}${pill(roles[question.role])}</div>
+    ${fields([['Provenance', provenance(question.provenance)], ['Intent', intentById.get(question.intentId).title], ['Brand anchoring', question.anchoring === 'unanchored' ? 'Unanchored' : 'Brand anchored'], ['Proposed discovery eligibility', question.headlineEligibility === 'excluded' ? 'Excluded in this draft' : 'Eligibility unresolved'], ['Question version', question.version]])}
+    <h3>Why this question</h3><p>${e(question.rationale)}</p><h3>What is uncertain</h3><p>${e(question.uncertainty)}</p>
+    <h3>Source basis</h3><ul>${question.sourceIds.map(id => `<li><strong>${e(sourceById.get(id).title)}</strong> — ${e(sourceById.get(id).limitation)}</li>`).join('')}</ul></div></details>`).join('');
+  return heading + `<div class="evidence-banner">${pill('Draft','pending')}<span>Collection is blocked. These questions are candidates; no panel is frozen and no new answers have been collected.</span></div>
+    <section class="panel evidence-source"><span class="eyebrow">${e(draft.subject.brand)} · ${e(draft.subject.domain)}</span><h2>${e(draft.questions.length)} questions to review</h2><p>${e(draft.purpose)}</p><p class="field-help">The count describes this candidate set. It is not an approved sample-size requirement or evidence of adequate coverage.</p>
+    <details><summary>Panel version, ownership and collection context</summary>${fields([['Panel', `${draft.panelId} · v${draft.version}`], ['Prepared by', draft.preparedBy], ['Owner', draft.owner], ['Question language', draft.language], ['Market', draft.market], ['Collection locale', draft.locale], ['Qualified collection surface', draft.collectionSurface], ['Repetitions', draft.repetitions]])}</details></section>
+    <section class="section-gap"><div class="section-head"><h2>Proposed coverage</h2></div><ul class="pilot-coverage" aria-label="Proposed question coverage">${draft.intents.map(intent => { const count = draft.questions.filter(question => question.intentId === intent.id).length; return `<li><div><strong>${e(intent.title)}</strong>${pill(`${count} ${count === 1 ? 'question' : 'questions'}`)}</div><p>${e(intent.definition)}</p></li>`; }).join('')}</ul><p class="field-help">These are proposed intent assignments, not measured buyer demand.</p></section>
+    <section class="section-gap"><div class="section-head"><h2>The candidate questions</h2></div>${questions}</section>
+    <section class="panel section-gap"><h2>Measurement boundary</h2><p>${e(draft.measurementBoundary)}</p><h3>Still unresolved</h3><ul>${draft.gaps.map(gap => `<li>${e(gap)}</li>`).join('') || '<li>No additional gaps recorded; this does not establish readiness.</li>'}</ul></section>
+    <section class="panel section-gap"><h2>Alternatives kept for later</h2>${draft.alternatives.map(alternative => `<details class="evidence-source"><summary>${e(alternative.text)}</summary><p>${e(alternative.reason)}</p></details>`).join('') || '<p>No alternatives recorded.</p>'}</section>
+    <details class="panel section-gap evidence-source"><summary>Source references and draft fingerprint</summary><p class="field-help">References describe the saved basis for the draft. A file hash identifies bytes; it does not prove buyer relevance or accept the collection method.</p>${draft.sources.map(item => `<h3>${e(item.title)}</h3>${fields([['Source ID', item.id], ['Kind', humanize(item.kind)], ['Reference (text only)', item.reference], ['Recorded source hash', item.sha256 === null ? 'Not recorded' : item.sha256], ['Limitation', item.limitation]])}`).join('')}${fields([['Draft SHA-256', source.sha256], ['Draft bytes', source.bytes]])}</details>`;
+}
+
 function panelsPage(id) {
   const client = clientById(id);
   if (!client) return notFound('Client record');
@@ -244,23 +340,81 @@ function previewPage(id) {
   const review = reviewById(id);
   const client = clientById(review?.client_id);
   if (!review || !client || review.kind !== 'report') return shell(notFound('Report preview'));
-  return `<div class="preview-page"><header class="preview-topbar"><a class="wordmark" href="#/console">MindLever<span>X.</span></a><div class="preview-toolbar">${button('Back to review',`#/reviews/${id}`,'small','back')}<button class="button small" data-action="print">${icon('print')} Print / save PDF</button></div></header><main id="main" class="preview-content" tabindex="-1"><div class="preview-status"><strong>Internal report preview</strong> · ${pill(statusName(review.status),review.status)} · This preview has not been delivered to a client.</div>${review.sample ? sampleNotice('This report contains fictional sample measurements and evidence. It demonstrates the report format; it is not a measured client report.') : ''}
+  if (review.revision) return shell(reportRevisionReviewPage(review));
+  return `<div class="preview-page"><header class="preview-topbar"><a class="wordmark" href="#/console">MindLever<span>X.</span></a><div class="preview-toolbar">${button('Back to review',`#/reviews/${id}`,'small','back')}<button class="button small" data-action="print">${icon('print')} Print / save PDF</button></div></header><main id="main" class="preview-content" tabindex="-1"><div class="preview-status"><strong>Internal report preview</strong> · ${pill(review.revision && review.status === 'approved' ? 'Local draft accepted' : statusName(review.status),review.status)} · This preview has not been delivered to a client.</div>${review.sample ? sampleNotice('This report contains fictional sample measurements and evidence. It demonstrates the report format; it is not a measured client report.') : ''}
     <div class="preview-head"><div><span class="eyebrow">${e(client.name)} · Engagement report</span><h1>${e(review.title)}</h1><p class="muted">${e(review.summary)}</p><span class="preview-date">${e(date(review.created_at))} · ${e(client.domain)}</span></div><div class="preview-score">${scoreCard(client)}</div></div>
     <section class="panel"><h2>Where the engagement is</h2>${stageStrip(client)}</section><section class="preview-body"><span class="eyebrow">The reading</span><div class="body-copy">${e(review.body || review.summary)}</div></section><section><h2>The evidence behind the report</h2>${evidenceList(review)}</section>${review.status !== 'pending' ? `<section class="preview-body"><h2>Review decision</h2><p class="preview-date">${e(statusName(review.status))} · ${e(date(review.decided_at,true))}</p><div class="decision-note">${e(review.note)}</div></section>` : ''}
-    <p class="preview-disclaimer">${review.sample ? 'All displayed scores and evidence are SAMPLE, not measured. The scoring model and engine collection are not implemented in this local workspace. ' : ''}Engine API answers, when measured, are a proxy for consumer products, which can differ in retrieval, personalization and interface. This report preview is available to the local operator and is not an authenticated client portal.</p><footer class="page-footer"><span>MindLeverX · Evidence before assertion.</span><span>${review.sample ? 'Sample report' : 'Internal preview'}</span></footer></main></div>`;
+    <p class="preview-disclaimer">${review.sample ? 'All displayed scores and evidence are SAMPLE, not measured. The scoring model and engine collection are not implemented in this local workspace. ' : ''}Engine API observations do not establish what users see in consumer products; retrieval, personalization and interface can differ. This report preview is available to the local operator and is not an authenticated client portal.</p><footer class="page-footer"><span>MindLeverX · Evidence before assertion.</span><span>${review.sample ? 'Sample report' : 'Internal preview'}</span></footer></main></div>`;
 }
 
 function notFound(label = 'Page') {
   return empty(`${label} not found.`, 'This link does not match a record in the local workspace.',button('Return to workspace','#/console','primary','back'),'search');
 }
 
+const engineName = value => ({ chatgpt: 'ChatGPT', perplexity: 'Perplexity', google: 'Google', copilot: 'Copilot' }[value] || value || 'Unknown platform');
+function evidenceRows(rows) {
+  return rows.map(row => `<tr><td class="mono">${e(row.row)}</td><td>${e(engineName(row.engine))}</td><td>${e(date(row.vendorTimestamp))}</td><td>${e(row.prompt || 'Question missing')}</td><td>${row.literalMention === null ? pill('Answer unavailable','pending') : row.literalMention ? pill('Mention found','active') : '<span class="muted">Not mentioned</span>'}</td></tr>`).join('') || '<tr><td colspan="5">No records match this filter.</td></tr>';
+}
+function reportPreparationHistory(clientId) {
+  const attempts = state.reportPreparations.filter(row => !clientId || row.clientId === clientId).slice(0, 10);
+  if (!attempts.length) return '';
+  const labels = {running:'Preparing',succeeded:'Draft retained',failed:'Preparation failed',interrupted:'Interrupted or timed out'};
+  return `<div class="section-gap"><h3>Recent local draft attempts</h3><p class="field-help">Status is saved on this computer. Refresh to check progress. Failed or interrupted work retries only when you request preparation again; client release remains unavailable.</p><ul>${attempts.map(attempt => {
+    const revision = state.reportRevisions.find(row => row.id === attempt.revisionId);
+    const clientName = state.clients.find(row => row.id === attempt.clientId)?.name || 'Client unavailable';
+    return `<li><strong>${e(labels[attempt.status] || 'Unknown state')}</strong> · attempt ${e(attempt.attempt)} · ${e(date(attempt.startedAt,true))}<p>${e(attempt.message)} ${revision ? `<a href="#/reviews/${attr(revision.reviewId)}">Open retained review</a>` : ''}</p><details><summary>Attempt details</summary><p>${e(clientName)}. ${e(attempt.reason)} ${e(attempt.actor)}. Source SHA-256: <span class="mono preparation-hash">${e(attempt.sourceSha256)}</span></p></details></li>`;
+  }).join('')}</ul></div>`;
+}
+function reportPreparationPanel(data) {
+  const setup = state.reportPreparation;
+  let unavailable = '';
+  if (data.status !== 'complete') unavailable = 'Resolve incomplete or ambiguous evidence before preparing a local draft.';
+  else if (!setup?.sourceConfigured) unavailable = 'Connect a saved source in the local server setup first.';
+  else if (!setup.subjectDomain) unavailable = 'The saved evidence subject domain is not configured. Set MLX_EVIDENCE_DOMAIN in the local server setup before preparing a snapshot.';
+  const client = setup?.subjectDomain ? state.clients.find(row => !row.sample && row.domain === setup.subjectDomain) : null;
+  if (!unavailable && !client) unavailable = `Create a local record for ${setup.subjectDomain}. Fictional sample clients cannot receive this saved snapshot.`;
+  return `<section class="panel section-gap"><h2>Prepare a local draft for review</h2><p>Retain this source, its results and the exact PDF together, then review that snapshot.</p><p class="field-help">The configured brand/domain is an operator-supplied mapping, not verified vendor provenance. Collection qualification and client release remain unavailable.</p>${unavailable ? `<p>${e(unavailable)}</p>${setup?.subjectDomain && !client ? button('Open clients', '#/clients', 'small', 'users') : ''}` : `<p><strong>${e(client.name)}</strong> · ${e(client.domain)} · ${e(setup.brand)}</p><form id="report-prepare" data-id="${attr(client.id)}" data-source-sha="${attr(data.source.sha256)}"><div class="form-error" role="alert"></div><button type="submit" class="button primary">Prepare local draft &amp; open review</button></form>`}${reportPreparationHistory(client?.id)}</section>`;
+}
+
+function evidencePage() {
+  const head = pageHead('Saved evidence · Local review', 'What do the answers show?', 'Review the saved answers before they become a client report.', '<button class="button" data-action="refresh">'+icon('refresh')+'Refresh saved data</button>');
+  if (state.inspectionError) return head + `<div class="error-note" role="alert">${e(state.inspectionError)}</div><p class="muted">Your other workspace records are still available. Refresh to try again.</p>` + reportPreparationHistory();
+  if (!state.inspection?.available) return head + empty('No saved evidence connected', 'Connect a local export to inspect real results here. No measurement has been made.', '', 'file') + reportPreparationHistory();
+  const data = state.inspection.inspection;
+  const engines = [...new Set(data.rows.map(row => row.engine).filter(Boolean))];
+  const questions = [...new Set(data.rows.map(row => row.prompt).filter(Boolean))];
+  const repeated = data.issues.filter(item => item.code === 'repeated_vendor_response_id').length;
+  const blocked = data.status === 'blocked';
+  const filtered = data.rows.filter(row => !state.evidenceFilter || row.engine === state.evidenceFilter);
+  const summary = (label, value, help) => `<div class="stat"><div class="stat-label">${e(label)}</div><div class="stat-value">${e(value)}</div><div class="stat-bottom">${e(help)}</div></div>`;
+  return head + `<div class="evidence-banner">${pill('Saved sample','sample')}<span>Retained vendor records. This limited sample is <strong>not a completed client audit</strong>.</span></div>
+    <div class="summary-grid">${summary('Records retained',data.recordCount ?? 'Unknown','Records in this export')}${summary('Literal brand mentions',data.aggregate ? data.aggregate.numerator+' / '+data.aggregate.denominator : 'Unavailable','Answer text only; case-insensitive')}${summary('Platforms',engines.length || 'Unknown','As labeled by the provider')}${summary('Questions',questions.length || 'Unknown','Coverage of this saved sample')}</div>
+    <div class="evidence-columns"><section class="panel evidence-finding"><span class="eyebrow">The finding</span><h2>${blocked ? 'Resolve the evidence gaps first.' : data.aggregate.numerator === 0 ? 'No literal mentions in these answers.' : e(data.brand)+' appears in '+data.aggregate.numerator+' saved answers.'}</h2><p>${blocked ? 'Some records are incomplete or ambiguous. A total is withheld so missing evidence cannot appear as zero visibility.' : 'We checked for the exact text “'+e(data.brand)+'” in each saved answer, ignoring capitalization. Name variations and citations are not included.'}</p><p class="muted">This does not establish overall AI visibility or explain why a business was included or omitted.</p><div class="evidence-next"><strong>Next step</strong><p>Confirm the collection method and question coverage before using these findings in a client report.</p></div></section>
+    <section class="panel"><h2>Coverage by platform</h2><p class="panel-intro">Retained records, including unavailable outcomes; not a successful-answer count.</p><div class="coverage-bars">${engines.map(engine => { const rows = data.rows.filter(row => row.engine === engine); return `<div class="coverage-row"><div><span>${e(engineName(engine))}</span><strong>${rows.length} records</strong></div><div class="coverage-track" aria-hidden="true"><span style="width:${100*rows.length/Math.max(1,data.recordCount)}%"></span></div></div>`; }).join('')}</div></section></div>
+    <section class="panel section-gap"><div class="section-head"><h2>What needs attention</h2>${pill(blocked ? 'Count blocked' : 'Review required','pending')}</div><p>${repeated ? e(repeated)+' records reuse a provider response ID. All rows are retained; platform and date help distinguish them.' : 'Provider method, collection context and permitted reporting use still need review.'}</p><p class="muted">A completed data check is not approval to release a report.</p>${data.issues.some(item=>item.severity==='error') ? '<ul>'+data.issues.filter(item=>item.severity==='error').map(item=>'<li>'+e(humanize(item.code))+(item.row ? ' · row '+e(item.row) : '')+(item.field ? ' · '+e(humanize(item.field)) : '')+'</li>').join('')+'</ul>' : ''}</section>
+    ${reportPreparationPanel(data)}
+    <section class="section-gap" aria-labelledby="answers-heading"><div class="section-head"><h2 id="answers-heading">Inspect the answer records</h2><span id="evidence-count" class="mono" role="status">${filtered.length} of ${data.rows.length} records</span></div><div class="evidence-filter field"><label for="evidence-platform">Filter by platform</label><select id="evidence-platform"><option value="">All platforms</option>${engines.map(engine=>'<option value="'+attr(engine)+'" '+(state.evidenceFilter===engine?'selected':'')+'>'+e(engineName(engine))+'</option>').join('')}</select></div><div class="table-wrap"><table><caption class="evidence-caption">Saved vendor dates; exact collection timing is unverified.</caption><thead><tr><th scope="col">Record</th><th scope="col">Platform</th><th scope="col">Vendor date</th><th scope="col">Question</th><th scope="col">Literal brand check</th></tr></thead><tbody id="evidence-rows">${evidenceRows(filtered)}</tbody></table></div></section>
+    <details class="panel section-gap evidence-source"><summary>Source details &amp; limitations</summary><dl><dt>Source fingerprint (SHA-256)</dt><dd class="mono">${e(data.source.sha256)}</dd><dt>Original size</dt><dd>${e(data.source.bytes.toLocaleString())} bytes</dd><dt>Matching rule</dt><dd>Literal substring in answer text. Each matching answer counts once.</dd></dl><ul>${data.limitations.map(item=>'<li>'+e(item)+'</li>').join('')}</ul></details>`;
+}
+
+document.addEventListener('change', event => {
+  if (event.target.id !== 'evidence-platform') return;
+  state.evidenceFilter = event.target.value;
+  const rows = state.inspection.inspection.rows;
+  const filtered = rows.filter(row => !state.evidenceFilter || row.engine === state.evidenceFilter);
+  $('#evidence-rows').innerHTML = evidenceRows(filtered);
+  $('#evidence-count').textContent = `${filtered.length} of ${rows.length} records`;
+});
+
 function render() {
   if (!state.loaded) return;
   const {page,id} = route();
   let content;
   let crumb;
-  if (page === 'preview') { $('#app').innerHTML = previewPage(id); document.title = `Report preview · MindLeverX`; return; }
+  if (page === 'preview') { $('#app').innerHTML = previewPage(id); document.title = `Report preview · MindLeverX`; syncNavigation(); loadCurrentRevision(id); return; }
   if (page === 'console') content = consolePage();
+  else if (page === 'evidence') content = evidencePage();
+  else if (page === 'pilot-panel') content = pilotPanelPage();
   else if (page === 'clients' && id === 'new') { content = newClientPage(); crumb = 'Clients / New client'; }
   else if (page === 'clients' && id) { content = clientPage(id); crumb = `Clients / ${clientById(id)?.name || 'Record'}`; }
   else if (page === 'clients') content = clientsPage();
@@ -273,6 +427,8 @@ function render() {
   syncNavigation();
   const title = $('#main h1')?.textContent || 'Workspace';
   document.title = `${title} · MindLeverX`;
+  if (page === 'pilot-panel' && !state.pilotDraftLoaded && !state.pilotDraftLoading) void loadPilotDraft();
+  if (page === 'reviews') loadCurrentRevision(id);
 }
 
 function syncNavigation() {
@@ -299,7 +455,7 @@ window.matchMedia('(max-width: 760px)').addEventListener('change', syncNavigatio
 async function mutate(path, method, body, message, form, destination) {
   if (state.busy) return;
   state.busy = true;
-  const error = form ? $('.form-error', form) : null;
+  let error = form ? $('.form-error', form) : null;
   if (error) error.textContent = '';
   const controls = form ? [...form.querySelectorAll('button,input,select,textarea')] : [];
   controls.forEach(control => control.disabled = true);
@@ -313,6 +469,11 @@ async function mutate(path, method, body, message, form, destination) {
     } else render();
     toast(message);
   } catch (reason) {
+    if (form?.id === 'report-prepare') {
+      // Reconcile a failed or lost HTTP response with the persisted outcome.
+      // This reads status only; it never retries preparation automatically.
+      try { await loadWorkspace(); render(); error = $('#report-prepare .form-error'); } catch { /* Keep original actionable failure. */ }
+    }
     if (error) { error.textContent = reason.message; error.scrollIntoView({block:'nearest'}); }
     else toast(reason.message);
     controls.forEach(control => control.disabled = false);
@@ -340,7 +501,10 @@ document.addEventListener('submit', event => {
     const decision = event.submitter?.value;
     if (note.length < 3) { $('.form-error',form).textContent = 'Add a decision note with at least 3 characters.'; return; }
     if (!['approved','returned'].includes(decision)) return;
-    mutate(`/api/reviews/${encodeURIComponent(id)}/decision`,'POST',{decision,note},decision === 'approved' ? 'Approval and note saved locally.' : 'Review returned with your note.',form);
+    const confirmation = form.dataset.revisionId ? {revisionId:form.dataset.revisionId,snapshotSha256:form.dataset.snapshotHash} : {};
+    mutate(`/api/reviews/${encodeURIComponent(id)}/decision`,'POST',{decision,note,...confirmation},decision === 'approved' ? (form.dataset.revisionId ? 'Local draft accepted. Client release remains unavailable.' : 'Approval and note saved locally.') : 'Review returned with your note.',form);
+  } else if (form.id === 'report-prepare') {
+    mutate(`/api/clients/${encodeURIComponent(id)}/report-revisions`,'POST',{sourceSha256:form.dataset.sourceSha},'Retained draft opened for local review.',form,result => `#/reviews/${result.revision.reviewId}`);
   } else if (form.id === 'panel-create') {
     const prompts = String(fields.get('prompts') || '').split(/\r?\n/).map(prompt => prompt.trim()).filter(Boolean);
     const note = String(fields.get('note') || '').trim();
@@ -381,7 +545,12 @@ document.addEventListener('click', async event => {
     else $('.menu-toggle')?.focus();
   } else if (action === 'refresh') {
     control.disabled = true;
-    try { await loadWorkspace(); render(); toast('Workspace refreshed.'); } catch (reason) { toast(reason.message); control.disabled = false; }
+    try { await loadWorkspace(); render(); if (route().page === 'pilot-panel') await loadPilotDraft(); toast('Workspace refreshed.'); } catch (reason) { toast(reason.message); control.disabled = false; }
+  } else if (action === 'retry-revision') {
+    await loadRevision(control.dataset.id);
+  } else if (action === 'refresh-pilot') {
+    await loadPilotDraft();
+    $('[data-action="refresh-pilot"]')?.focus({preventScroll:true});
   } else if (action === 'filter-leads') {
     state.leadFilter = control.dataset.filter;
     render();

@@ -4,6 +4,11 @@ import { readFile, stat } from 'node:fs/promises';
 import { resolve, extname, sep } from 'node:path';
 import { domainToASCII } from 'node:url';
 import { openDatabase } from './database.mjs';
+import { inspectEvidence } from './evidence-inspection.mjs';
+import { savedResults, savedResultsText } from './saved-results.mjs';
+import { savedResultsPdf } from './saved-results-pdf.mjs';
+import { defaultPilotPanelPath, readPilotPanelDraft } from './pilot-panel-draft.mjs';
+import { createReportRevisions, REPORT_SCOPE_BOUNDARY } from './report-revisions.mjs';
 
 class HttpError extends Error {
   constructor(status, message) { super(message); this.status = status; }
@@ -55,8 +60,16 @@ function equal(a, b) {
 }
 
 /** Local-only HTTP application. No external engine, email, payment, or publishing calls. */
-export function createApp({ dbPath = resolve('data/mindleverx.sqlite'), seed = true, distDir = resolve('dist') } = {}) {
+export function createApp({ dbPath = resolve('data/mindleverx.sqlite'), seed = true, distDir = resolve('dist'), evidenceInputPath = null, evidenceBrand = 'MindLeverX', evidenceSubjectDomain = null, pdfPython = process.env.MLX_PDF_PYTHON || 'python3', pilotPanelPath = defaultPilotPanelPath, reportPdfRenderer = savedResultsPdf } = {}) {
+  const sourceDomain = evidenceSubjectDomain ? domainValue(evidenceSubjectDomain) : null;
+  evidenceBrand = textValue(evidenceBrand, 'Evidence brand', 200);
   const db = openDatabase(dbPath, seed);
+  const revisions = createReportRevisions({ db, evidenceInputPath, evidenceBrand, evidenceSubjectDomain: sourceDomain, pdfPython, pdfRenderer: reportPdfRenderer });
+  function reviewRecord(row) {
+    const review = parseReview(row);
+    if (review) { const revision = revisions.forReview(review.id); if (revision) review.revision = revision; }
+    return review;
+  }
   const publicDir = resolve(distDir);
   const sessions = new Map();
   const signingKey = randomBytes(32);
@@ -161,10 +174,62 @@ export function createApp({ dbPath = resolve('data/mindleverx.sqlite'), seed = t
         const s = session(req,res);
         if (!s) fail(401, 'Open the local workspace to start a session.');
         if (!['GET','HEAD'].includes(method)) csrf(req,s);
+        if (path === '/api/pilot-panel-draft' && method === 'GET') {
+          try { return json(res, 200, await readPilotPanelDraft(pilotPanelPath)); }
+          catch { fail(503, 'The pilot question draft is unavailable or needs a data check. Check the saved draft, then retry.'); }
+        }
+        const revisionPath = path.match(/^\/api\/report-revisions\/([^/]+)(?:\/(draft\.pdf|source\.json|report\.json|export\.json))?$/);
+        if (revisionPath && method === 'GET') {
+          if (!revisionPath[2]) return json(res, 200, revisions.get(revisionPath[1]));
+          if (revisionPath[2] === 'export.json') {
+            const bytes = revisions.export(revisionPath[1]);
+            const safeId = revisionPath[1].replace(/[^A-Za-z0-9_-]/g, '_').slice(0,128);
+            res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store', 'Content-Disposition': `attachment; filename="mindleverx-${safeId}-private-export.json"` });
+            res.end(bytes);
+            return;
+          }
+          const kind = { 'draft.pdf': 'pdf', 'source.json': 'source', 'report.json': 'report' }[revisionPath[2]];
+          const bytes = revisions.bytes(revisionPath[1], kind);
+          res.writeHead(200, { 'Content-Type': kind === 'pdf' ? 'application/pdf' : 'application/json; charset=utf-8', 'Cache-Control': 'no-store', 'Content-Disposition': `attachment; filename="mindleverx-${kind}.${kind === 'pdf' ? 'pdf' : 'json'}"` });
+          res.end(bytes);
+          return;
+        }
+        const preparePath = path.match(/^\/api\/clients\/([^/]+)\/report-revisions$/);
+        if (preparePath && method === 'POST') {
+          const result = await revisions.prepare(preparePath[1], await bodyJSON(req));
+          return json(res, result.created ? 201 : 200, { ok: true, ...result, review: reviewRecord(db.prepare('SELECT * FROM reviews WHERE id=?').get(result.revision.reviewId)) });
+        }
+        if (['/api/evidence-inspection', '/api/saved-results', '/api/saved-results/draft.txt', '/api/saved-results/draft.pdf'].includes(path) && method === 'GET') {
+          if (!evidenceInputPath) {
+            if (/\/draft\.(txt|pdf)$/.test(path)) fail(404, 'No saved evidence is connected.');
+            return json(res, 200, { available: false });
+          }
+          let bytes;
+          try { bytes = await readFile(evidenceInputPath); }
+          catch { fail(503, 'Saved evidence is unavailable. Check the local source and refresh.'); }
+          if (/\/draft\.(txt|pdf)$/.test(path)) {
+            const report = savedResults(bytes, evidenceBrand);
+            if (report.state !== 'complete') fail(409, 'Correct the saved evidence before downloading a draft.');
+            if (url.searchParams.has('sha256') && url.searchParams.get('sha256') !== report.source.sha256) fail(409, 'The saved source changed. Reload results before downloading.');
+            const pdf = path.endsWith('.pdf');
+            let output;
+            try { output = pdf ? await savedResultsPdf(report, { python: pdfPython }) : savedResultsText(report); }
+            catch { fail(503, 'PDF generation is unavailable. Check the local PDF runtime and try again.'); }
+            res.writeHead(200, { 'Content-Type': pdf ? 'application/pdf' : types['.txt'], 'Cache-Control': 'no-store', 'Content-Disposition': `attachment; filename="mindleverx-saved-results-draft.${pdf ? 'pdf' : 'txt'}"` });
+            res.end(output);
+            return;
+          }
+          return json(res, 200, path === '/api/saved-results'
+            ? { available: true, report: savedResults(bytes, evidenceBrand) }
+            : { available: true, inspection: inspectEvidence(bytes, { brand: evidenceBrand }) });
+        }
         if (path === '/api/workspace' && method === 'GET') {
           return json(res,200,{
             clients:db.prepare('SELECT * FROM clients ORDER BY sample DESC, created_at DESC, name').all().map(parseClient),
-            reviews:db.prepare('SELECT * FROM reviews ORDER BY created_at DESC, id').all().map(parseReview),
+            reviews:db.prepare('SELECT * FROM reviews ORDER BY created_at DESC, id').all().map(reviewRecord),
+            reportRevisions:revisions.list(),
+            reportPreparations:revisions.preparations(),
+            reportPreparation:{scope:'internal_saved_sample',subjectDomain:sourceDomain,brand:evidenceBrand,sourceConfigured:Boolean(evidenceInputPath),scopeBoundary:REPORT_SCOPE_BOUNDARY,collectionQualification:'required',clientRelease:'unavailable'},
             panels:db.prepare('SELECT * FROM panels ORDER BY version DESC, created_at DESC').all().map(parsePanel),
             leads:db.prepare('SELECT id,email,domain,source,kind,status,created_at,sample FROM leads ORDER BY created_at DESC').all().map(row=>({...row,sample:Boolean(row.sample)})),
             activity:db.prepare('SELECT * FROM activity ORDER BY created_at DESC, rowid DESC LIMIT 500').all(),
@@ -210,11 +275,17 @@ export function createApp({ dbPath = resolve('data/mindleverx.sqlite'), seed = t
           transaction(() => {
             const review = db.prepare('SELECT * FROM reviews WHERE id=?').get(id);
             if (!review) fail(404,'Review not found.');
+            const revision = revisions.forReview(id);
+            if (revision) {
+              if (Object.keys(body).length !== 4 || Object.keys(body).some(key => !['decision','note','revisionId','snapshotSha256'].includes(key))) fail(400,'Confirm the revision ID and snapshot hash with the local review decision.');
+              revisions.verify(revision.id);
+              if (body.revisionId !== revision.id || body.snapshotSha256 !== revision.snapshotSha256) fail(409,'This decision does not match the displayed report revision. Reload the review.');
+            }
             if (review.status !== 'pending') fail(409,'A decision has already been recorded for this review.');
             db.prepare('UPDATE reviews SET status=?,note=?,decided_at=? WHERE id=?').run(body.decision,note,now(),id);
             audit(`Review ${body.decision}`,'review',id,`${review.title} ${note} Local decision only; nothing was sent or published.`);
           });
-          return json(res,200,{ok:true,review:parseReview(db.prepare('SELECT * FROM reviews WHERE id=?').get(id))});
+          return json(res,200,{ok:true,review:reviewRecord(db.prepare('SELECT * FROM reviews WHERE id=?').get(id))});
         }
         match = path.match(/^\/api\/leads\/([^/]+)$/);
         if (match && method === 'PATCH') {
@@ -247,8 +318,8 @@ export function createApp({ dbPath = resolve('data/mindleverx.sqlite'), seed = t
         fail(404,'API route not found.');
       }
       if (!['GET','HEAD'].includes(method)) fail(405,'Method not allowed.');
-      if (path === '/app') {
-        res.writeHead(302,{Location:'/app/'}); res.end(); return;
+      if (path === '/app' || path === '/results') {
+        res.writeHead(302,{Location:`${path}/`}); res.end(); return;
       }
       const relative = path.endsWith('/') ? `${path}index.html` : path;
       let file = resolve(publicDir,`.${relative}`);

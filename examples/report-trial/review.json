@@ -1,0 +1,200 @@
+{
+  "criteria_version": "Frozen review trial criteria v1 — T1–T5",
+  "reviewer": {
+    "perspective": "AI requirements/quality reviewer",
+    "review_count": 1,
+    "human_review": false,
+    "scope": "Single semantic review of the frozen fictional baseline and its exact retained input. No production observations, implementation verification or external research."
+  },
+  "timing": {
+    "started_at_observed_utc": "2026-09-14T01:18:02Z",
+    "ended_at_observed_utc": "2026-09-14T01:18:27Z",
+    "elapsed_seconds": 25,
+    "qualification": "Clock observations bracket reading and semantic assessment, excluding artifact writing. Wall time is not human labor; active model effort and monetary usage were not observable."
+  },
+  "reviewed_files": [
+    {
+      "path": "docs/report-builder-slice.md",
+      "sha256": "7d11604f1509b6460d1b97e24031b6ea62b3838f22b02ab7511f10a47fabf14a",
+      "bytes": 7268
+    },
+    {
+      "path": "examples/report-trial/baseline.md",
+      "sha256": "351a9dd2f644c59263d8998ee65d82586b9cb09c73d92a960e1c416296ddd356",
+      "bytes": 1278
+    },
+    {
+      "path": "examples/report-trial/baseline.input.json",
+      "sha256": "fbfdae2440a7a5c3435401f7385a87c407d3231db60e589128537f6aae558c70",
+      "bytes": 5987
+    }
+  ],
+  "severity_definition": "High means a substantive factual or measurement error that must be corrected before this draft could pass semantic review. None means no correction recommended. This is not a production incident rating.",
+  "findings": [
+    {
+      "id": "F1",
+      "assessment": "Material error",
+      "severity": "High",
+      "material_error_category": "False zero caused by treating parser output as observed evidence",
+      "criteria": [
+        "T1",
+        "T2"
+      ],
+      "evidence": [
+        {
+          "evidenceId": "api-answer",
+          "short_basis": "The fictional retained-answer description says one source link was present, while the illustrative parser returned an empty array."
+        }
+      ],
+      "recommended_correction": "Describe the expected-one/parsed-zero discrepancy as a fictional parser failure. Do not claim that the answer had zero citations or infer market visibility.",
+      "false_alarm_uncertainty": "Low: the cited evidence explicitly contradicts the zero-citation conclusion. Its described source link is fictional, not an independently inspected real answer."
+    },
+    {
+      "id": "F2",
+      "assessment": "Material error",
+      "severity": "High",
+      "material_error_category": "Unsupported measured comparison and causal attribution",
+      "criteria": [
+        "T1",
+        "T3"
+      ],
+      "evidence": [
+        {
+          "evidenceId": "illustrative-scores",
+          "short_basis": "The values 68 and 74 are hand-authored without a scoring formula; a rewrite and index update coincide and cannot be separated."
+        }
+      ],
+      "recommended_correction": "Label both numbers as illustrative design values and remove the measured-readiness and rewrite-caused-improvement claims. A numerical difference alone does not establish improvement or causation.",
+      "false_alarm_uncertainty": "Low: the six-point arithmetic is valid, but the measurement and causal interpretations are expressly unsupported. Do not flag the arithmetic itself as erroneous."
+    },
+    {
+      "id": "F3",
+      "assessment": "Material error",
+      "severity": "High",
+      "material_error_category": "API-to-consumer equivalence and unsupported customer-observation claim",
+      "criteria": [
+        "T1",
+        "T2"
+      ],
+      "evidence": [
+        {
+          "evidenceId": "surface-boundary",
+          "short_basis": "The fictional API examples explicitly are not consumer ChatGPT observations."
+        },
+        {
+          "evidenceId": "consumer-failed",
+          "short_basis": "The consumer capture failed before retaining any answer; consumer visibility is unknown, not zero."
+        }
+      ],
+      "recommended_correction": "Keep the API example separate and state that the failed fictional consumer capture establishes neither a recommendation nor what potential customers see in ChatGPT.",
+      "false_alarm_uncertainty": "Low: both cited records explicitly reject the conclusion. No inference about actual ChatGPT behavior is available."
+    },
+    {
+      "id": "F4",
+      "assessment": "Material error",
+      "severity": "High",
+      "material_error_category": "Invented company facts replacing explicit unknowns",
+      "criteria": [
+        "T1",
+        "T2"
+      ],
+      "evidence": [
+        {
+          "evidenceId": "company-facts",
+          "short_basis": "Both founding date and customer count are marked NEEDS VERIFICATION; neither 2018 nor 500 is supported."
+        }
+      ],
+      "recommended_correction": "Replace both asserted facts with explicit unknown/needs-verification statements; do not substitute guessed dates or counts.",
+      "false_alarm_uncertainty": "Low: two unsupported facts are present in one finding. This review counts the finding once, not as two corrected findings."
+    },
+    {
+      "id": "F5",
+      "assessment": "Acceptable as a qualified hypothesis",
+      "severity": "None",
+      "material_error_category": null,
+      "criteria": [
+        "T1",
+        "T3",
+        "T4",
+        "T5"
+      ],
+      "evidence": [
+        {
+          "evidenceId": "company-facts",
+          "short_basis": "The fictional page description begins with a slogan and lacks a self-contained category definition."
+        }
+      ],
+      "recommended_correction": "None. Preserve the recommendation, its explicit lack of established AI visibility benefit, and the statement that it is not permission to change the website.",
+      "false_alarm_uncertainty": "No error flagged. Improved comprehension remains a plausible content hypothesis, not a demonstrated result; the existing qualified wording preserves that distinction."
+    }
+  ],
+  "boundary_review": [
+    {
+      "topic": "Draft, fictional and measurement labels",
+      "assessment": "Acceptable",
+      "criteria": [
+        "T1",
+        "T4"
+      ],
+      "basis": "The title block clearly says DRAFT, FICTIONAL EVALUATION ONLY and NOT MEASURED; the scope repeats that capture timestamps describe fiction.",
+      "correction": "Preserve these labels. They do not cure contradictory substantive claims in F1–F4."
+    },
+    {
+      "topic": "Unknown context and collection states",
+      "assessment": "Preserve; material issues already assigned to F1, F3 and F4",
+      "criteria": [
+        "T2"
+      ],
+      "evidenceIds": [
+        "api-answer",
+        "surface-boundary",
+        "company-facts",
+        "search-unmeasured",
+        "consumer-failed"
+      ],
+      "basis": "The exact input retains null locale/model and other unavailable fields; the report explicitly says search is not measured and consumer capture failed. No real model, locale or collection context can be inferred.",
+      "correction": "Keep null metadata explicit as unknown wherever context is rendered. Preserve not-measured and failed states without turning either into zero."
+    },
+    {
+      "topic": "Comparisons and methods",
+      "assessment": "Material issue assigned to F2",
+      "criteria": [
+        "T3"
+      ],
+      "evidenceIds": [
+        "illustrative-scores"
+      ],
+      "basis": "The scope correctly identifies fixture-only-report-review v1 and no defined score formula. F2 contradicts that limitation.",
+      "correction": "Preserve the method limitation and remove the unsupported interpretation; do not add a new score formula or causal claim."
+    },
+    {
+      "topic": "Owner release boundary",
+      "assessment": "Acceptable",
+      "criteria": [
+        "T4"
+      ],
+      "basis": "The baseline explicitly denies client release/approval and requires monthly owner approval under DEC-006. F5 also denies website-change approval.",
+      "correction": "Preserve the monthly scope. This review neither approves release nor establishes a different offer's release policy."
+    },
+    {
+      "topic": "Evidence preservation and new errors",
+      "assessment": "Baseline recorded; post-correction outcome not yet assessable",
+      "criteria": [
+        "T5"
+      ],
+      "basis": "Reviewed byte hashes identify the frozen source documents. No baseline, evidence or criteria were changed during this review.",
+      "correction": "The coordinator should retain the exact evidence and F5, then compare the single corrected version against the baseline. Do not record T5 as passed before that comparison."
+    }
+  ],
+  "summary": {
+    "findings_reviewed": 5,
+    "material_error_findings": 4,
+    "acceptable_findings": 1,
+    "baseline_semantic_acceptance": "Does not pass T1–T3",
+    "release_approval": false,
+    "corrections_performed": 0,
+    "new_errors_after_correction": "Not assessable; correction has not occurred",
+    "reviewer_false_alarms": "Not independently adjudicated; confidence notes are not a measured false-alarm rate",
+    "next_step": "Coordinator may perform the authorized single correction pass and record its comparison. No iterative reviewer loop or ongoing adoption is authorized."
+  }
+}
