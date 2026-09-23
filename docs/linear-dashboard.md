@@ -12,6 +12,12 @@ Configured 19 September 2026 at the owner's request. This is an execution view, 
 
 Project: https://linear.app/mindleverx-codex-build/project/mindleverx-next-release-bc7bec6a8dc4/overview
 
+## Current checkpoint — 20 September 2026
+
+The live project overview and MIN-5 were refreshed and API readback verified during the morning heartbeat. MIN-12 and MIN-13 are **In Review**, superseding the Todo/start-next wording in the historical configuration receipts below. Investigation/field audit and six-question candidate are complete; substantive Otterly qualification evidence and final pilot acceptance remain blocked. The authorized inquiry was submitted at04:33UTC; only bot acknowledgement is recorded. Do not repeat signup, inquiry, or completed drafts. MIN-6 remains Backlog; MIN-7 remains In Progress for qualified full-report acceptance despite completed local immutable review/export capabilities.
+
+Public homepage release is recorded in the handoff; private report routes remain excluded. Fresh workbook export confirms its overview still contains15September status. Live-sheet edits are pending because the required Google Drive/Sheets editing route is unavailable. The overview now distinguishes local verification, deployed website and unfinished paid customer workflow. Daily delivery and run receipts are in artifacts/unattended-work/daily/2026-09-20.md and the corresponding run record. No development, collection, deployment or new approval was performed by this dashboard correction.
+
 ## Reading path
 
 Added in the owner's follow-up on 19 September: a separate **Roadmap** project tab, grouped by Milestone with empty groups visible, all completed issues and sub-issues included, no duplicated nesting, and priority ordering within stages. URL: https://linear.app/mindleverx-codex-build/project/mindleverx-next-release-bc7bec6a8dc4/view/roadmap-7665eba64c2b . Creation success and all six ordered headings verified in the browser. First two groups collapsed for an at-a-glance handoff; expand their arrows to see actual cards. It reads the same issues as the status view, so no second task inventory is maintained. Zero issue counts on stages 3–6 mean not yet decomposed; they do not mean completion. The Issues status view is preserved. Project overview now links directly to Roadmap.

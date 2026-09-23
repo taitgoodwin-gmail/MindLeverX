@@ -11,6 +11,7 @@
     "db:backup": "node scripts/database-recovery.mjs backup",
     "db:verify": "node scripts/database-recovery.mjs verify",
     "db:restore": "node scripts/database-recovery.mjs restore",
+    "check:requirements": "python3 docs/requirements-rubric-review/validate_review.py --structure-only && python3 docs/requirements-rubric-review/test_validate_review.py",
     "build": "node scripts/build.mjs",
     "report:build": "node scripts/build-report.mjs",
     "report:verify": "node scripts/verify-report-export.mjs",

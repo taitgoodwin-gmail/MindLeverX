@@ -1,5 +1,26 @@
 # MIN-15 — Homepage accuracy and interaction pass
 
+## 20 September 2026 — Figma reimagining concept
+
+Owner requested: “I want you to reimagine the MindLeverX website with Figma.” This authorizes a new design exploration; it does not accept the new appearance for production or authorize a release.
+
+Deliverable: [MindLeverX — Website Reimagined](https://www.figma.com/design/UgtCQvjyZpBQVOxhZAK4sk?node-id=2-129). Desktop wrapper `2:129` (1440px); mobile wrapper `2:130`, captured content `4:8` (390px); desktop closing section captured as `5:8` and submitted with the desktop wrapper as parent. Tool receipts confirm both captures were added. Desktop content through Field notes was created as native editable auto-layout frames with Simple Design System button instances; mobile and desktop closing content were captured as editable ordinary frames. Final hierarchy/placement read-back was blocked by the Figma Starter MCP limit.
+
+Direction: warm paper surfaces, original Spectral / IBM Plex Sans / IBM Plex Mono typography and #932c21 accent; large editorial headings; buyer-question hero; clearly labeled report-structure illustration; plain-language GEO explanation; three-step observation/review/action process; report contents; learning paths; explicit closed availability and footer. New copy is a proposed design, not owner-accepted wording. No fictional performance figures, testimonials, price, new collection surface, or outcome guarantee is introduced.
+
+Requirement basis remains the review-draft INV-005, RES-002 and NFR-007 narratives below, with partial design coverage only. Seven-tenet assessment: direct proposed client UX / informed-choice support; owner UX and repeatability supported by editable layouts and reusable desktop buttons; recurring value explained by comparable repeat observations, without evidence of revenue impact; no new product automation or AI capability; competitive differentiation is a design hypothesis. The simpler alternative is retaining the current homepage with small copy changes. This exploration trades denser metric displays for an easier explanation of the proposed deliverable. Owner/client comprehension testing could change that recommendation. No measured conversion or workload improvement is claimed.
+
+Checks and actual evidence:
+
+1. **FIG-01 / desktop sections:** inspected screenshots after native navigation, hero, illustration, explanation, approach, evidence and learning construction. Fixed the observed Figma text-height/container-sizing bug and explanation-band widths. Screenshots then showed readable, separated content. Final combined canvas screenshot unavailable after plan limit.
+2. **FIG-02 / mobile source:** local capture document `artifacts/figma-concept-2026-09-20/index.html`, `#mobile`, 390px wide and 4463.875px high. Browser DOM bounds check found zero descendants exceeding mobile horizontal bounds. Inspected hero/illustration, evidence, learning, availability and footer screenshots. Computed families are Spectral, IBM Plex Sans and IBM Plex Mono. Browser error log returned none. This is source-render verification, not a final Figma screenshot or complete accessibility audit.
+3. **FIG-03 / contrast:** computed from the chosen colors: ink/paper 14.15:1; muted/paper 5.80:1; accent/paper 7.22:1; accent/blush 5.93:1; muted/blush 4.77:1; light/dark 10.37:1; white/accent 8.01:1. These sampled text pairs meet the normal-text 4.5:1 threshold. Keyboard, assistive technology, final captured focus states and interactive Figma prototype links were not verified; no WCAG conformance claim.
+4. **FIG-04 / saved artifacts:** new Figma file creation and both capture completion receipts verified. Figma `use_figma` and `get_screenshot` reached Starter tool limit; `generate_figma_design` remained available. Browser Figma canvas required sign-in, so final canvas inspection could not be completed. No upgrade or settings change. The local capture source is retained for reproducibility; it is excluded from public build/source-control artifacts by existing rules.
+
+Review actions: open the desktop frame and mobile frame, read each from hero through footer, compare the clarity of the buyer question and next step, and assess the visual direction. Treat any clipped text, misplaced captured section or unintended implication of live service as a failed review needing correction. No live site or product source was changed, and no deployment occurred.
+
+Primary references checked 20 September 2026: [W3C contrast minimum](https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html) for sampled text contrast, [Google people-first content](https://developers.google.com/search/docs/fundamentals/creating-helpful-content) for clear useful explanations rather than unsupported search claims. Figma plugin instructions and live tool contracts informed auto-layout, component reuse and capture handling. A search-rendered homepage response showed older wording inconsistent with the 19 September source record; the accepted corrections in this document governed the concept. No live-site regression is inferred from that cached response.
+
 19 September 2026. Owner first requested discussion before changes, then explicitly authorized reversible implementation and GitHub push/Vercel publication. Preserve the existing visual direction. This authorization covers the public website; it does not release the private application, purchase a plan, start collection or accept a scoring model.
 
 Work: [MIN-15 — Homepage — clarify evidence, sample metrics and navigation](https://linear.app/mindleverx-codex-build/issue/MIN-15/homepage-clarify-evidence-sample-metrics-and-navigation).
@@ -114,4 +135,15 @@ An invalid local reference named `refs/heads/codex/evidence-inspection-2026-09-1
 
 ## Live browser follow-up — 19 September Eastern / 20 September UTC
 
+
 The initial blocked check is superseded for the following bounded checks only. A fresh in-app browser tab successfully loaded https://mindleverx.com/ after the prior tab had crashed. The desktop screenshot showed the updated navigation, hero availability note, scoped Pew statistic and fully rendered fictional brand-mention board. Menu click expanded More navigation; Escape collapsed it and returned focus to the menu button. Example scorecard navigated to https://mindleverx.com/#score. The tab was retained for owner review. Screenshot and accessibility results were inspected in the task, not saved as image files. No new live mobile, text-enlargement or assistive-technology check was performed; the preceding local checks and limitations remain. Owner visual acceptance remains open.
+
+## Z2-inspired Figma exploration — 23 September 2026
+
+Owner requested adapting https://www.z2llc.co/ for MindLeverX in Figma and confirming the connection. Authenticated connection verified: T Goodwin's team, Pro plan, Full seat/admin. Created a separate editable concept: https://www.figma.com/design/OTfzO4cl4mosafK3Y74ayI?node-id=2-26 (desktop); mobile node 2:27; review notes/components node 2:28. This is an additional exploration alongside the 20 September concept, not an accepted replacement.
+
+Scope: navy/blue palette and Manrope/DM Sans hierarchy adapted from the reference, homepage hero, What is GEO, three audit areas, schematic report preview, process, FAQ rows, closing action. Proposed copy has no invented customer proof, numeric results, guaranteed inclusion or established platform coverage. FAQ answers and working interactions are not implemented. Current white production design and service scope remain unchanged.
+
+Verification: actual Figma renders inspected at desktop 1440px and mobile 390px. Fixed horizontal-row sizing that initially caused overlaps and reusable text sizing that overflowed mobile cards. Final structural readback: zero child-boundary overflow, zero font-family mismatches. Shared foundation has 15 color/spacing variables, eight text styles and three reusable components with instances. This is visual/structural verification, not accessibility conformance, usability acceptance or conversion validation.
+
+Tenet application: visual hierarchy supports proposed low-friction owner/client review; components support repeatability. Recurring delivery is presented as a possible comparable follow-up, not an approved subscription promise. No new automation or AI capability is claimed. Competitive/behavioral benefits remain hypotheses. Next: owner visual feedback on this specific concept before implementation. No website code, purchase, contact, push or deployment.
