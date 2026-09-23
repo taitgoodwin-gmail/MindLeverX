@@ -1,5 +1,13 @@
 # Vercel website deployment
 
+## Integrated source release — 23 September 2026
+
+The owner requested immediate GitHub and Vercel publication. The public baseline, local MVP product and latest review documents were merged into `codex/mvp-release-20260923`, then fast-forwarded to `main` at `f0dda2062c48a0fa5423645f8d4d7f60e01bf97c`. The product code is now available in the public GitHub repository; the Vercel artifact remains the website-only `public-dist/` build. No raw evidence, generated owner PDF, database or detected credential pattern was included in the release diff.
+
+Pre-release checks on the integrated commit: `npm run check` passed site/platform and 149/149 application tests; `npm run check:requirements` passed structural validation and seven regression scenarios (original-source reconciliation not run); `npm run build:public` passed seven-page/four-support-file allowlist, metadata, link and no-data-capture checks. Vercel preview `dpl_DB9gxTEx8LjbM5nRufxpwuDZhzQK` was READY at the same commit. Production `dpl_9FwDsiyuQUi89zvUGmJFqA6qrkiW` became READY with aliases `mindleverx.com`, `www.mindleverx.com` and `mindleverx.vercel.app` at the same Git hash. Fresh requests to `https://mindleverx.com/` and the other ten published paths returned HTTP 200 with byte-for-byte SHA-256 matches to the local public artifact. `/app/`, `/results/`, `/api/health`, `/.env`, `/server/app.mjs`, `/package.json` and `/artifacts/` returned HTTP 404. No audit intake, payment, private delivery or production operator app was released. This release is source integration and static website continuity, not paid-audit MVP acceptance.
+
+Platform behavior checked 23 September 2026 against [Vercel Git integration](https://vercel.com/docs/git) and [deployment documentation](https://vercel.com/docs/deployments); Git `main` is this project's production branch. The earlier Hobby/commercial-use decision below remains a separate plan decision; this release made no purchase or account change.
+
 ## Current production — 19 September 2026, MIN-15
 
 Owner explicitly approved reversible homepage changes and requested push/Vercel publication. Focused public release `836eaa58091a91ea28c08bfb4b3719ee84ebfecd` is live on [mindleverx.com](https://mindleverx.com/), deployment `dpl_F9synXrfyPua9VHr9JbtmpATMiZf`, READY with matching SHA/aliases. The public build still serves only seven pages and four support files; all11 live hashes matched the tested release, and seven private/source probes returned404. No public forms, app, results, API, payment or collection were released. [Full evidence and rollback](homepage-feedback-slice.md).

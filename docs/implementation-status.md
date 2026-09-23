@@ -1,6 +1,6 @@
 # Implementation status — integrated source checkpoint 23 September 2026
 
-The 23 September integrated source branch combines the previously separate website, local product and review documents for release verification. Vercel's production artifact remains website-only. Earlier branch/path references below are dated implementation history, not current setup instructions. See the [collaborator setup](collaborator-start.md) and [handoff](codex-handoff.md) for current orientation.
+The 23 September integrated source release combines the previously separate website, local product and review documents on GitHub `main` at `f0dda2062c48a0fa5423645f8d4d7f60e01bf97c`. Vercel production `dpl_9FwDsiyuQUi89zvUGmJFqA6qrkiW` is READY; its public artifact remains website-only. Earlier branch/path references below are dated implementation history, not current setup instructions. See the [collaborator setup](collaborator-start.md) and [handoff](codex-handoff.md) for current orientation.
 
 ## 20 September — MIN-19 local measurement correction
 
