@@ -1,5 +1,57 @@
 # Otterly qualification — decision card
 
+## Focused follow-up sent — 23 September 2026
+
+The owner asked to execute the MindLeverX MVP goal, continuing the previously authorized Otterly inquiry. A reply to Jovana's existing support thread was sent from `taitgoodwin@gmail.com` on 23 September (Gmail SENT message `1a0d005ffd5cd5d6`). It acknowledged the answered export/private-PDF question and asked the remaining four narrow points: source-access/paid-report assurance for consumer ChatGPT; whether the AI-responses endpoint includes failures/refusals/timeouts/retries and the state/runId/runDate semantics; backup deletion and the 30-day clock; and whether expired-trial access to existing UI/API data is available without charge. The message explicitly requested no new monitoring run. No account setting, credential, purchase, provider query, new evidence collection or customer contact changed.
+
+The saved workspace URL redirected to sign-in during a read-only check. A 23 September vendor newsletter says the trial ended a few days ago. Those observations do not establish current API entitlement or billing terms; the support question remains open. QUAL-01 stays PARTIALLY RESOLVED/BLOCKED, MIN-12 remains In Review, and MIN-13/6/full MIN-7 remain gated. Do not resend the same questions while awaiting a substantive reply.
+
+### Consumer ChatGPT manual-route check — 23 September 2026
+
+Considered a bounded manual consumer ChatGPT observation as the simpler alternate route if Otterly cannot be qualified. Current [official OpenAI Computer Use guidance](https://learn.chatgpt.com/docs/computer-use), checked 23 September, says this assistant capability cannot automate ChatGPT itself. A focused official-documentation search did not establish downstream paid-report reuse terms for consumer ChatGPT output or a supported automated collection method. This is a documentation gap, not a prohibition or permission conclusion. An owner-operated manual run would require a separate fixed protocol for account/session, prompt, locale, exact time, answer capture, attempts and failures, and permitted report excerpts; it would add substantial owner work and has not been run. It could measure the desired consumer surface directly, but would raise owner effort, weaken automation and repeatability, and leave buyer usefulness, revenue, AI interpretation and competitive value unmeasured. Client effort would remain low only if those manual costs stay internal. Therefore it does not currently replace the Otterly qualification path or authorize accepted collection. Reconsider if the vendor route fails and the owner accepts the manual effort and method after source-rights review. This check made no ChatGPT query, account change or provider purchase.
+
+## Human reply reconciled — 22 September 2026
+
+**Supersedes the earlier no-human-response blocker.** Otterly support replied on 21 September at 16:18:10 UTC; the full message was read on 22 September. The original four questions appear in its quoted transcript, so the numbered answers can be mapped directly. A separate vendor email at 15:39:28 UTC on 21 September states that the trial ended. This is a vendor notice, not a fresh billing/entitlement check. No upgrade, paid API request, collection, contact or client release occurred.
+
+| Question | New verified evidence | Revised disposition |
+| --- | --- | --- |
+| Exported-answer retention after subscription and private paid PDF reproduction | Support answered the exact combined question affirmatively: “Yes, there are no restrictions.” | Affirmative written vendor assurance received; no longer label this unanswered. No controlling provision was supplied. This is support evidence, not an independent determination of upstream rights or a new client-release approval. |
+| Source-access/contractual basis for consumer ChatGPT collection and downstream use | Support described daily automatic queries as a neutral, non-personalized user and said the question was unclear. | The original contractual/source-access question remains unanswered. Clarify its meaning once; do not repeat the already answered retention/reporting question or describe collection mechanics as a contractual answer. |
+| Run context and every attempted outcome | Support lists runId, runDate, engine, state, content and citations, and links API documentation. Public OpenAPI v1.0.0 independently confirms these fields. | Documented API offers more context than the saved UI export. Live availability, full attempt inclusion and state meanings remain unverified. Model/session absence is a disclosed limitation, not itself a universal blocker. |
+| Inactive export and deletion | Support says tracking stops without an active plan, exports are available during 30 days of inactivity and account deletion is irreversible after that. | Active-account/export lifecycle clarified at support-evidence level. Exact backup-deletion timing and inactivity anchor remain unspecified. The 360 preserved records reduce reliance on later access; do not silently buy or cancel. |
+
+### Bounded API documentation check
+
+Checked 22 September: [vendor-linked API reference](https://docs.otterly.ai/api-reference/) redirects to the engines documentation and links [public OpenAPI JSON](https://data.otterly.ai/v1/openapi.json). The web reader could not open the reference; one public HTTP fallback succeeded. Only documentation was fetched, without credentials. No authenticated data endpoint, account-info call or provider query was executed.
+
+The response-list contract is `GET /v1/reports/brand/{reportId}/prompts/{promptId}/ai-responses`, with required dates/country, optional engine/cursor and items/paging output. Date filters use inclusive UTC calendar-day bounds. Response items require runId/runDate/engine/state/content/overviewAvailable/brandMentions/citations. **State and runDate are unconstrained strings** in this snapshot; the completed example does not document a complete state taxonomy, all failed attempts, execution-time precision or retry identity. Pagination alone does not prove attempt completeness. The account-info schema includes plan/end date and API used/max fields; its examples are not our allowance. All seven engine options are vendor API options, not approved MindLeverX coverage.
+
+Retained evidence: ignored/private `artifacts/unattended-work/evidence/2026-09-22-qualification/`. OpenAPI 173,826 bytes, SHA256 `136e4bb073ef8d39771145b77943128d2e6f6329856b4515e434fa4d7050c3a5`; answer extract 1,480 bytes, SHA256 `5df205645599b85379595cb8a42891fcb8bac26550ddbae403578bb68ad253bb`. Extract excludes transport headers, recipient addresses and quoted inquiry; it is not a full MIME archive. `verification.json` records actual schema assertions PASS. Live API/product tests NOT RUN. Same coordinator reviewed this update; no independent review claimed.
+
+### Recommendation and next validation
+
+Keep Otterly as the existing evaluated route; do not restart vendor selection or buy merely because the trial ended. Resolve the narrowly remaining source-access and failed-attempt semantics, then verify current entitlement before any authenticated retrieval. A supported read-only API retrieval of **existing** observations is the smallest next technical validation once authority and included allowance are established. This proposes a validation, not a selected paid plan or permission to consume usage.
+
+Full QUAL-01 stays **BLOCKED/PARTIALLY RESOLVED**, with MIN-12 In Review. The evidence-review unit is complete. MIN-13 final pilot freeze, MIN-6 accepted collection and full MIN-7 report acceptance are not unlocked. A simpler alternative remains an explicitly scoped saved-observation demonstration with honest limitations; it is already available locally and does not replace a recurring service. Evidence that would change this recommendation: clear source-access assurance, defined returned outcome scope and a verified usable allowance, followed by an accepted bounded pilot.
+
+Executable proposed API check (NOT RUN):
+1. Read current account entitlement and included-request boundary through the existing account UI without changing billing/settings. BLOCKED if unavailable or a new charge/permission is needed.
+2. Pin the report/prompt IDs from the preserved manifest, country `us`, engine `chatgpt`, and vendor date window 14–19 September 2026. Pin the saved OpenAPI hash above; do not substitute synthetic example IDs.
+3. Under verified authorization/allowance, retrieve the existing response list and every documented page until hasMore is false; retain request parameters, retrieval time, response status/body/hash and pagination. Stop before an allowance would be exceeded. Do not create prompts or execute monitoring.
+4. Reconcile run IDs/dates/states/content and duplicate identity against the matching preserved observations. Expected: source bytes preserved and each returned row traceable; missing/failed states remain distinct from zero. Full planned-attempt acceptance remains BLOCKED unless the returned scope and all outcomes can be accounted for, including any omitted jobs.
+5. Record PASS/FAIL/BLOCKED separately for retrieval and collection qualification. FAIL on silent record loss, unsupported state interpretation or changed source; BLOCKED on unresolved prerequisites. Cleanup: close only temporary views; retain private source/receipts and leave account, prompts and owner review unchanged.
+
+### Historical prepared clarification — superseded by the sent 23 September follow-up
+
+Thank you; your confirmation about exported-answer retention and private client PDFs answers our first question. Could you clarify the remaining points?
+
+1. By source-access basis, we mean the permission or contractual assurance covering Otterly's automated access to consumer ChatGPT and customers' downstream use—not how queries are scheduled. What provision or assurance addresses that?
+2. Does the AI-responses endpoint return every attempted job, including failures, refusals, timeouts and retries? What are the state values, any omitted outcomes, runId uniqueness/retry semantics, and the meaning/precision of runDate? A redacted failed-job example would help.
+3. Does the 30-day inactive-account deletion rule also cover backups, and what event starts that period?
+
+This was the prepared wording on 22 September. The focused follow-up described at the top of this card was sent on 23 September with an added post-trial access/allowance question; this historical draft is retained for provenance. The contact did not change the qualification gate. Relevant tenets: reuse and low owner effort, repeatable state handling and safe automation; AI-assisted interpretation is distinct from deterministic schema assertions. Recurring revenue, competitive benefit and buyer comprehension remain unmeasured. No new scope, numerical standard or policy is adopted.
+
 ## Preserved-data correctness follow-up — MIN-19
 
 The three nonempty service-error rows exposed a local classification defect when isolated in memory: v1 reported complete 0/3. [MIN-19](evidence-error-classification.md) corrects this under method v2, with exact-marker blocking and preserved historical reproduction. Raw evidence is unchanged; the three rows now yield blocked/null aggregate. Complete source files remain blocked where they contain empty/error rows. This is a local calculation correction, not new vendor permission, a general error detector or a complete attempt ledger. The broader qualification finding remains BLOCKED.

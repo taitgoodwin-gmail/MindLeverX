@@ -11,3 +11,4 @@ artifacts/
 *.log
 reference/
 __pycache__/
+output/pdf/MindLeverX-preserved-owner-review.pdf

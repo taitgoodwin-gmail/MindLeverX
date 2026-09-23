@@ -2,6 +2,12 @@
 
 19 September 2026. Local engineering slice under the continuing MVP goal. The saved vendor sample remains unqualified for a customer audit. This slice connects evidence, a retained PDF and an owner review; it does not complete MIN-7's qualified real-report acceptance, production identity, client delivery or payment.
 
+## Recovered owner-draft QA — 23 September 2026
+
+The original loopback preview/database could not be reverified at its former path. Its portable export in ignored local evidence passed the current `scripts/verify-report-export.mjs` verifier: revision `125783a7-4235-43d1-b433-95426afbf184`, pinned legacy method `answer-text-literal-substring-lowercase-v1`, original source SHA-256 `dfb34e1b540066b1990b32d0b599cb0968993a3a2d810fac907c883d08be5b58`, limited result 0/16, and a **pending** local review. This is exact stored-data reproduction, not source provenance or review authentication. The PDF was recovered byte-for-byte as [MindLeverX-preserved-owner-review.pdf](../output/pdf/MindLeverX-preserved-owner-review.pdf), 76,484 bytes, SHA-256 `365bddecc4b4291a1b88ece2a608d2ed89b87301c11415a628e84d3ea28ccda7`.
+
+An independent 23 September read of the recovered PDF with `pypdf` found eight pages and 16 page-one internal evidence-link annotations. Page one states the narrow finding and the saved-data limitation; page two discloses the unverified consumer/API surface, one-question scope, unknown attempts/failures, repeated response-ID warnings, and a validation-first next action with dependencies and reversibility. Pages three through eight show numbered source rows and excerpts. This is a useful internal owner review under the draft RES-001/002/004/007 narratives. It does not satisfy qualified collection, a representative panel, owner/client comprehension, client release or the full requirements. The owner has not accepted its content or appearance; styling feedback remains open. No PDF bytes, review decision or provider data were changed during this QA.
+
 ## Outcome, authority and choice
 
 The operator can prepare one report revision from the currently inspected saved evidence, find it in the review queue, read its retained answers and exact PDF, and record an internal decision against that revision. Later source-file changes cannot change the report that was reviewed. The current internal subject is MindLeverX / mindleverx.com. The operator-configured source-to-domain association is recorded as configuration, not vendor-proven provenance.
