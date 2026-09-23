@@ -1,8 +1,22 @@
 # MindLeverX visible MVP dashboard
 
+## 20 September — draft preparation recovery
+
+MIN-18 records [verified durable local draft preparation](report-preparation-recovery.md), including interrupted/failed attempts and explicit retry.143 application tests and the browser walkthrough passed. Existing MIN-5/6/7/10/12/13/15 gates remain unchanged. See the latest handoff for the product branch; no deployed-product status is implied.
+
+## 20 September — independent recovery slice
+
+MIN-17 records the [verified local database recovery slice](database-recovery.md). MIN-12/13/10/15 remain In Review for their existing boundaries; MIN-5/7 remain In Progress, MIN-6 Backlog, and MIN-8/9/11/14/16 Done for bounded work. This checkpoint supersedes older counts below without changing those acceptance gates.
+
 Configured 19 September 2026 at the owner's request. This is an execution view, not a new product scope, schedule or release approval.
 
 Project: https://linear.app/mindleverx-codex-build/project/mindleverx-next-release-bc7bec6a8dc4/overview
+
+## Current checkpoint — 20 September 2026
+
+The live project overview and MIN-5 were refreshed and API readback verified during the morning heartbeat. MIN-12 and MIN-13 are **In Review**, superseding the Todo/start-next wording in the historical configuration receipts below. Investigation/field audit and six-question candidate are complete; substantive Otterly qualification evidence and final pilot acceptance remain blocked. The authorized inquiry was submitted at04:33UTC; only bot acknowledgement is recorded. Do not repeat signup, inquiry, or completed drafts. MIN-6 remains Backlog; MIN-7 remains In Progress for qualified full-report acceptance despite completed local immutable review/export capabilities.
+
+Public homepage release is recorded in the handoff; private report routes remain excluded. Fresh workbook export confirms its overview still contains15September status. Live-sheet edits are pending because the required Google Drive/Sheets editing route is unavailable. The overview now distinguishes local verification, deployed website and unfinished paid customer workflow. Daily delivery and run receipts are in artifacts/unattended-work/daily/2026-09-20.md and the corresponding run record. No development, collection, deployment or new approval was performed by this dashboard correction.
 
 ## Reading path
 
