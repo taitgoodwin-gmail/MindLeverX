@@ -1,5 +1,18 @@
 # Implementation status — integrated source checkpoint 23 September 2026
 
+## Private owner dashboard — 26 September 2026
+
+Owner approved a private, read-only dashboard with Operations and Build Status views, based on the existing design, with a 30-second overview and expandable detail. Added `platform/dashboard/` and an Owner dashboard link in the local operator navigation. The original public build remains website-only.
+
+Build Status uses the September 23 saved checkpoint and labels source dates; it does not imply a live Codex, Linear, email or deployment connection. Operations defaults to unavailable actual records, with a separate opt-in walkthrough using the existing three fictional seed clients. No data collection, approval, customer change, payment or report delivery is performed. The owner requested brief updates and no long report-review assignment tonight; pending approvals are retained, not marked complete.
+
+A standalone private preview is packaged separately from the app and its database. The implementation remains available as an integration patch in the private preview source repository; this session did not push to the public GitHub repository or alter the public Vercel site.
+
+Validation: JavaScript syntax, existing platform checks, and public-build exclusion checks passed. Browser QA was blocked by unavailable local Chromium and failed browser download. Responsive layouts are implemented but rendered phone/desktop verification is not claimed.
+
+Scope tradeoff: reuse the existing oxblood/serif design and plain JavaScript; no new product dependency, speculative AI feature or fake live KPI. This supports TEN-UX and TEN-REP. No revenue, automation or intelligence outcome is claimed.
+
+
 The 23 September integrated source release combines the previously separate website, local product and review documents on GitHub `main` at `f0dda2062c48a0fa5423645f8d4d7f60e01bf97c`. Vercel production `dpl_9FwDsiyuQUi89zvUGmJFqA6qrkiW` is READY; its public artifact remains website-only. Earlier branch/path references below are dated implementation history, not current setup instructions. See the [collaborator setup](collaborator-start.md) and [handoff](codex-handoff.md) for current orientation.
 
 ## 20 September — MIN-19 local measurement correction

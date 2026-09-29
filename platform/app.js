@@ -149,6 +149,7 @@ function sidebar(page, id) {
     <aside class="sidebar ${state.menuOpen ? 'open' : ''}" aria-label="Workspace navigation">
       <a class="sidebar-brand" href="#/console"><span class="wordmark">MindLever<span>X.</span></span><div class="sidebar-kicker">OPERATOR WORKSPACE</div></a>
       <nav aria-label="Main navigation"><div class="nav-label">Your workspace</div>
+      <a class="nav-item" href="/app/dashboard/index.html">${icon('grid')}<span>Owner dashboard</span></a>
       ${active('console','Needs me','grid',pendingReviews().length)}${active('evidence','Evidence review','search')}${active('pilot-panel','Pilot question draft','layers')}${active('clients','Clients','users')}${active('leads','Leads','inbox',newLeads().length)}${active('activity','Activity','history')}
       <div class="nav-label">Clients</div>
       ${state.clients.slice(0,6).map(client => `<a class="nav-item sidebar-client ${page === 'clients' && id === client.id ? 'active' : ''}" href="#/clients/${attr(client.id)}"><span class="client-dot"></span><span>${e(client.name)}</span></a>`).join('') || '<div class="nav-item muted">No clients yet</div>'}
