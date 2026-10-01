@@ -1,0 +1,84 @@
+{
+  "contrast": 15.834682332737248,
+  "results": [
+    {
+      "width": 320,
+      "panels": [
+        {
+          "bg": "rgb(243, 240, 232)",
+          "color": "rgb(21, 23, 20)",
+          "opacity": "1"
+        },
+        {
+          "bg": "rgb(243, 240, 232)",
+          "color": "rgb(21, 23, 20)",
+          "opacity": "1"
+        },
+        {
+          "bg": "rgb(243, 240, 232)",
+          "color": "rgb(21, 23, 20)",
+          "opacity": "1"
+        }
+      ],
+      "metrics": {
+        "size": 17,
+        "line": 26,
+        "weight": "500"
+      },
+      "shortViewportBottomAccess": "PASS"
+    },
+    {
+      "width": 390,
+      "panels": [
+        {
+          "bg": "rgb(243, 240, 232)",
+          "color": "rgb(21, 23, 20)",
+          "opacity": "1"
+        },
+        {
+          "bg": "rgb(243, 240, 232)",
+          "color": "rgb(21, 23, 20)",
+          "opacity": "1"
+        },
+        {
+          "bg": "rgb(243, 240, 232)",
+          "color": "rgb(21, 23, 20)",
+          "opacity": "1"
+        }
+      ],
+      "metrics": {
+        "size": 17,
+        "line": 26,
+        "weight": "500"
+      },
+      "shortViewportBottomAccess": "PASS"
+    },
+    {
+      "width": 1440,
+      "panels": [
+        {
+          "bg": "rgb(243, 240, 232)",
+          "color": "rgb(21, 23, 20)",
+          "opacity": "1"
+        },
+        {
+          "bg": "rgb(243, 240, 232)",
+          "color": "rgb(21, 23, 20)",
+          "opacity": "1"
+        },
+        {
+          "bg": "rgb(243, 240, 232)",
+          "color": "rgb(21, 23, 20)",
+          "opacity": "1"
+        }
+      ],
+      "metrics": {
+        "size": 20,
+        "line": 30,
+        "weight": "500"
+      },
+      "shortViewportBottomAccess": "PASS"
+    }
+  ],
+  "limits": "Short viewport Chromium checks; actual iPhone Safari chrome not available here."
+}
