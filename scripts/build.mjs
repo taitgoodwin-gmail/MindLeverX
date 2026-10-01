@@ -43,6 +43,8 @@ function publicPage(html) {
     ['request intake available locally; audit delivery not connected.', 'planned; requests are not open yet.'],
     ['No credit card. The audit form is on the homepage.', 'Audit requests are not open yet. Please check back for availability.'],
     ['The local workspace supports recording requests, organizing evidence and reviewing work.', 'This website presents the planned method and sample reporting. Public intake is not open yet.'],
+    ['<strong>Email delivery is not connected in this build.</strong> No public contact address is configured here.', '<strong>Start a conversation by email.</strong> <a href="mailto:connect@mindleverx.com">connect@mindleverx.com</a>. Opens your email app; nothing is sent by this website.'],
+    ['<b>Direct mailbox</b> — not provisioned yet. This entry becomes an address when it is.', '<b>Direct mailbox</b> — <a href="mailto:connect@mindleverx.com">connect@mindleverx.com</a>. Scope, price and timing are agreed before work begins.'],
     ['Request a free audit', 'Audit availability'],
     ['Request an audit', 'Audit availability'],
     ['Start with the audit →', 'Audit availability →'],
@@ -67,7 +69,9 @@ if (publicBuild) {
 }
 const sharedStyle = await fs.readFile(path.join(source, 'shared.css'), 'utf8');
 for (const page of pages) {
-  let html = await fs.readFile(path.join(source, page), 'utf8');
+  // The public homepage is isolated from the local operator/intake entry point.
+  const pageSource = publicBuild && page === 'index.html' ? path.join(source, 'public-ui', 'homepage.html') : path.join(source, page);
+  let html = await fs.readFile(pageSource, 'utf8');
   html = html.replace(/<!--\s*INTERNAL:START\s*-->[\s\S]*?<!--\s*INTERNAL:END\s*-->/g, '');
   html = html.replace(/<!--[\s\S]*?-->/g, '');
   if (publicBuild) html = publicPage(html);
@@ -92,14 +96,22 @@ for (const page of pages) {
   html = html.replace('</head>', `${metadata}\n</head>`).replace(/\n{3,}/g, '\n\n');
   await fs.writeFile(path.join(output, page), html);
 }
+// Explicit public UI assets only; never copy the source directory wholesale.
+if (publicBuild) {
+  const publicAssets = ['audit-first.css', 'audit-first.js', 'arrow-light.svg', 'arrow-ink.svg'];
+  await fs.mkdir(path.join(output, 'public-ui'), { recursive: true });
+  for (const asset of publicAssets) await fs.copyFile(path.join(source, 'public-ui', asset), path.join(output, 'public-ui', asset));
+}
 await fs.writeFile(path.join(output, 'runtime.js'), 'window.MLX_AUDIT_ENDPOINT = null;\nwindow.MLX_LOCAL_PREVIEW = false;\nwindow.MLX_INTAKE_TOKEN = null;\n');
 await fs.writeFile(path.join(output, 'robots.txt'), `User-agent: *\nAllow: /\nDisallow: /app/\nDisallow: /api/\n\nSitemap: ${origin}/sitemap.xml\n`);
 await fs.writeFile(path.join(output, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${pages.map(page => `  <url><loc>${origin}/${page === 'index.html' ? '' : page}</loc></url>`).join('\n')}\n</urlset>\n`);
 let llms = await fs.readFile(path.join(source, 'llms.txt'), 'utf8');
 llms = llms.replaceAll('https://mindleverx.com', origin);
 if (publicBuild) {
-  llms = llms.replace('This is a local preview with request intake and a workspace for organizing evidence, drafts and review decisions.', 'This is a public website introducing the intended method and sample reporting. Audit requests and newsletter subscriptions are not open yet.')
-    .replace('project preview and local audit intake.', 'project overview and audit availability.');
+  llms = llms.replace('A generative engine optimization practice in development for mid-market B2B SaaS.', 'An operator-reviewed AI visibility audit for owner-led service businesses.').replace('Own the answer.', 'Your AI visibility, made clear.')
+    .replace('This is a local preview with request intake and a workspace for organizing evidence, drafts and review decisions.', 'This is a public website introducing the intended method and sample reporting. The website does not collect audit requests or newsletter subscriptions. To discuss scope, email connect@mindleverx.com; no audit begins until scope, price and timing are agreed.')
+    .replace('Automated audits, engine collection, email delivery and subscriptions are not connected.', 'Automated audits, engine collection, automated report delivery and subscriptions are not connected.')
+    .replace('project preview and local audit intake.', 'project overview and direct email enquiries.');
 } else {
   llms += `\n## Local build status\n\nThe local build records intake and supports an evidence review workspace. Automated audits, engine monitoring and email delivery are not connected. Public numerical exhibits are sample illustrations except the explicitly dated historical case-study observations.\n\n- [Method](${origin}/method.html): the intended seven-stage workflow and implementation status.\n`;
 }
@@ -109,4 +121,4 @@ if (!publicBuild) {
   try { await fs.access(path.join(root, 'platform')); await fs.cp(path.join(root, 'platform'), path.join(output, 'app'), { recursive: true }); }
   catch (error) { if (error.code !== 'ENOENT') throw error; }
 }
-console.log(`Built ${pages.length} self-contained pages in ${path.basename(output)}/ with conservative metadata and a disconnected static intake runtime.`);
+console.log(`Built ${pages.length} pages in ${path.basename(output)}/ with conservative metadata and a disconnected static intake runtime.`);
