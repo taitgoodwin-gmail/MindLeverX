@@ -1,5 +1,5 @@
 {
-  "url": "http://127.0.0.1:4350",
+  "url": "http://127.0.0.1:4351",
   "results": [
     {
       "width": 320,
@@ -9,7 +9,7 @@
         2
       ],
       "result": "PASS",
-      "checks": "both tables: overflow cue matches container, keyboard scrolling, 200% CSS zoom, retained evidence/labels; scoped final enquiry; no document overflow",
+      "checks": "both tables: overflow cue matches container, keyboard scrolling, recorded CSS zoom levels, retained evidence/labels; scoped final enquiry; no document overflow",
       "axe": "PASS"
     },
     {
@@ -20,7 +20,7 @@
         2
       ],
       "result": "PASS",
-      "checks": "both tables: overflow cue matches container, keyboard scrolling, 200% CSS zoom, retained evidence/labels; scoped final enquiry; no document overflow",
+      "checks": "both tables: overflow cue matches container, keyboard scrolling, recorded CSS zoom levels, retained evidence/labels; scoped final enquiry; no document overflow",
       "axe": "PASS"
     },
     {
@@ -31,27 +31,29 @@
         2
       ],
       "result": "PASS",
-      "checks": "both tables: overflow cue matches container, keyboard scrolling, 200% CSS zoom, retained evidence/labels; scoped final enquiry; no document overflow",
+      "checks": "both tables: overflow cue matches container, keyboard scrolling, recorded CSS zoom levels, retained evidence/labels; scoped final enquiry; no document overflow",
       "axe": "PASS"
     },
     {
       "width": 320,
       "javaScriptEnabled": false,
       "zoomLevels": [
-        1
+        1,
+        2
       ],
       "result": "PASS",
-      "checks": "both tables: overflow cue matches container, keyboard scrolling, 200% CSS zoom, retained evidence/labels; scoped final enquiry; no document overflow",
+      "checks": "both tables: overflow cue matches container, keyboard scrolling, recorded CSS zoom levels, retained evidence/labels; scoped final enquiry; no document overflow",
       "axe": "UNRUN"
     },
     {
       "width": 390,
       "javaScriptEnabled": false,
       "zoomLevels": [
-        1
+        1,
+        2
       ],
       "result": "PASS",
-      "checks": "both tables: overflow cue matches container, keyboard scrolling, 200% CSS zoom, retained evidence/labels; scoped final enquiry; no document overflow",
+      "checks": "both tables: overflow cue matches container, keyboard scrolling, recorded CSS zoom levels, retained evidence/labels; scoped final enquiry; no document overflow",
       "axe": "UNRUN"
     },
     {
@@ -62,7 +64,7 @@
         2
       ],
       "result": "PASS",
-      "checks": "both tables: overflow cue matches container, keyboard scrolling, 200% CSS zoom, retained evidence/labels; scoped final enquiry; no document overflow",
+      "checks": "both tables: overflow cue matches container, keyboard scrolling, recorded CSS zoom levels, retained evidence/labels; scoped final enquiry; no document overflow",
       "axe": "UNRUN"
     }
   ]

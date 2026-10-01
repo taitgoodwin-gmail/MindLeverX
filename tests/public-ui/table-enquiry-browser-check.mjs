@@ -14,7 +14,7 @@ try{
   const page=await browser.newPage({javaScriptEnabled,viewport:{width,height:844},reducedMotion:'reduce'});
   const errors=[];page.on('pageerror',e=>errors.push(e.message));await page.goto(url);await page.evaluate(()=>document.fonts.ready);
   if(javaScriptEnabled){await page.locator('#services [data-sample-open]').click();await page.locator('[data-report-page="1"]').waitFor({state:'visible'});}
-  for(const zoom of(javaScriptEnabled||width===1440?[1,2]:[1])){
+  for(const zoom of[1,2]){
    await page.evaluate(z=>document.body.style.zoom=String(z),zoom);
    for(const n of[2,3]){
     await page.locator('[data-report-link]').nth(n-1).click();const table=page.locator(`[data-report-page="${n}"] .mlx-table-scroll`);const hint=page.locator(`[data-report-page="${n}"] .mlx-table-hint`);
@@ -29,7 +29,7 @@ try{
   await page.evaluate(()=>document.body.style.zoom='1');await page.locator('[data-report-link]').nth(4).click();const enquiry=page.locator('.mlx-report-enquiry');await enquiry.scrollIntoViewIfNeeded();const mail=enquiry.locator('a');assert.equal(await mail.innerText(),'connect@mindleverx.com');assert.match(await mail.getAttribute('href'),/^mailto:connect@mindleverx\.com\?subject=/);await mail.focus();assert.equal(await mail.evaluate(e=>document.activeElement===e),true);
   assert.match(await enquiry.innerText(),/Scope, price and timing are agreed before work begins/);
   if(javaScriptEnabled){await page.screenshot({path:path.join(output,`report-enquiry-${width}.png`)});if(process.env.MLX_AXE_PATH){await page.addScriptTag({path:process.env.MLX_AXE_PATH});assert.deepEqual(await page.evaluate(async()=>(await axe.run(document,{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa']}})).violations.map(v=>v.id)),[]);}await page.keyboard.press('Escape');await page.locator('#home-view').waitFor({state:'visible'});assert.equal(await page.locator('#services [data-sample-open]').evaluate(e=>document.activeElement===e),true);}
-  assert.deepEqual(errors,[]);results.push({width,javaScriptEnabled,zoomLevels:javaScriptEnabled||width===1440?[1,2]:[1],result:'PASS',checks:'both tables: overflow cue matches container, keyboard scrolling, recorded CSS zoom levels, retained evidence/labels; scoped final enquiry; no document overflow',axe:javaScriptEnabled&&process.env.MLX_AXE_PATH?'PASS':'UNRUN'});await page.close();
+  assert.deepEqual(errors,[]);results.push({width,javaScriptEnabled,zoomLevels:[1,2],result:'PASS',checks:'both tables: overflow cue matches container, keyboard scrolling, recorded CSS zoom levels, retained evidence/labels; scoped final enquiry; no document overflow',axe:javaScriptEnabled&&process.env.MLX_AXE_PATH?'PASS':'UNRUN'});await page.close();
  }
  await writeFile(path.join(output,'results.json'),JSON.stringify({url,results},null,2));console.log(JSON.stringify(results,null,2));
 }finally{await browser.close()}

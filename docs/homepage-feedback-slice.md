@@ -177,3 +177,8 @@ Draft NFR-007 keyboard/fallback usability and INV-005 honest enquiry coverage. C
 ### Focused review corrections — 1 October 2026
 
 Verified mobile table-discovery and report-end enquiry gaps are corrected without redesign: visible contextual scroll instructions for both report tables and an approved mailbox/scoped next step on page five. [Before/after and bounded verification](public-review/2026-10-01-journeys/README.md#verified-review-fixes-table-discovery-and-final-enquiry). Draft NFR-007/RES-004 coverage; no new customer result or capability claims. The combined no-JS plus200% zoom at320px stress case still overflows outside the report in existing homepage/explorer content; recorded for separate review rather than expanding this slice.
+
+
+### Enlarged no-JavaScript reflow — resolved
+
+The owner authorized correcting the combined no-JS/200%-zoom/320px overflow noted above. The document now measures320px rather than460px: extremely narrow container rules allow wrapping and flexible tracks while retaining full content and text sizes. [Before/after and regression evidence](public-review/2026-10-01-journeys/README.md#narrow-no-javascript-enlargement--resolved). Expanded no-JS reflow and table/enquiry matrices pass; the prior stress-case exception is resolved. Normal-width styling and logos remain unchanged. CSS zoom/Chromium was executed; physical-device/native zoom and hosted authentication limitations remain.

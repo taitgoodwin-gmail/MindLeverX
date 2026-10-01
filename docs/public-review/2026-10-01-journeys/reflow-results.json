@@ -1,0 +1,44 @@
+[
+  {
+    "width": 320,
+    "zoom": 1,
+    "javaScriptEnabled": false,
+    "result": "PASS",
+    "checks": "no document/text overflow; unchanged content and narrow-layout font sizes; existing desktop/mobile typography breakpoints; all evidence/report pages visible; no overflow hiding"
+  },
+  {
+    "width": 320,
+    "zoom": 2,
+    "javaScriptEnabled": false,
+    "result": "PASS",
+    "checks": "no document/text overflow; unchanged content and narrow-layout font sizes; existing desktop/mobile typography breakpoints; all evidence/report pages visible; no overflow hiding"
+  },
+  {
+    "width": 390,
+    "zoom": 1,
+    "javaScriptEnabled": false,
+    "result": "PASS",
+    "checks": "no document/text overflow; unchanged content and narrow-layout font sizes; existing desktop/mobile typography breakpoints; all evidence/report pages visible; no overflow hiding"
+  },
+  {
+    "width": 390,
+    "zoom": 2,
+    "javaScriptEnabled": false,
+    "result": "PASS",
+    "checks": "no document/text overflow; unchanged content and narrow-layout font sizes; existing desktop/mobile typography breakpoints; all evidence/report pages visible; no overflow hiding"
+  },
+  {
+    "width": 1440,
+    "zoom": 1,
+    "javaScriptEnabled": false,
+    "result": "PASS",
+    "checks": "no document/text overflow; unchanged content and narrow-layout font sizes; existing desktop/mobile typography breakpoints; all evidence/report pages visible; no overflow hiding"
+  },
+  {
+    "width": 1440,
+    "zoom": 2,
+    "javaScriptEnabled": false,
+    "result": "PASS",
+    "checks": "no document/text overflow; unchanged content and narrow-layout font sizes; existing desktop/mobile typography breakpoints; all evidence/report pages visible; no overflow hiding"
+  }
+]
