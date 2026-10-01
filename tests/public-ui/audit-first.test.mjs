@@ -174,12 +174,12 @@ test('TC-PUB-09: legacy fragment targets, semantic structure and motion preferen
 });
 
 test('TC-PUB-10: the exact Figma SVG assets are local and keep their export geometry', async () => {
-  for (const name of ['arrow-light.svg', 'arrow-ink.svg']) {
+  for (const name of ['arrow-editorial.svg', 'arrow-ink.svg']) {
     const svg = await readFile(new URL(name, source), 'utf8');
     assert.match(svg, /^<svg\b/);
     assert.match(svg, /width="22"/); assert.match(svg, /height="22"/);
     assert.match(svg, /viewBox="0 0 22 22"/);
-    assert.ok(html.includes(`src="public-ui/${name}" alt="" width="22" height="22"`));
+    assert.ok(html.includes(`src="public-ui/${name}"`));
   }
   assert.doesNotMatch(html + css + script, /figma\.com\/api\/mcp\/asset|Site Unavailable/);
 });

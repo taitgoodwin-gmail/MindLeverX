@@ -42,6 +42,9 @@ const DARK = {
   '#8a8d92': 'ticker sample', '#fff': 'white', '#ffffff ': 'white',
 };
 const ALLOWED = { ...LIGHT, ...DARK };
+// Approved Figma direction, 1 October 2026. Scoped to the isolated public UI;
+// legacy pages retain their existing palette and proxy provenance requirement.
+const EDITORIAL = Object.fromEntries(['#f3f0e8', '#20221f', '#60625b', '#c5c6ba', '#e8462c', '#f2b7a7', '#ddf675', '#151714'].map(hex => [hex, true]));
 
 // Brass is a LIVE SIGNAL. These are the only grounded uses in the system.
 const BRASS_OK = [
@@ -60,6 +63,8 @@ let errors = 0, warnings = 0;
 
 for (const file of process.argv.slice(2)) {
   const src = fs.readFileSync(file, 'utf8');
+  const editorial = /(?:^|\/)public-ui\/(?:homepage\.html|editorial\.css)$/.test(file);
+  const palette = editorial ? EDITORIAL : ALLOWED;
   const lines = src.split('\n');
   const say = (lvl, ln, msg) => {
     console.log(`${lvl === 'ERROR' ? '✕' : '!'} ${file}:${ln}  ${msg}`);
@@ -74,7 +79,7 @@ for (const file of process.argv.slice(2)) {
       const norm = hex.length === 4
         ? '#' + hex[1] + hex[1] + hex[2] + hex[2] + hex[3] + hex[3]
         : hex;
-      if (!ALLOWED[norm] && !ALLOWED[hex]) {
+      if (!palette[norm] && !palette[hex]) {
         say('ERROR', i + 1, `off-palette hex ${m[0]} — S-09: no new hexes without derivation and sign-off`);
       }
     }
@@ -113,7 +118,8 @@ for (const file of process.argv.slice(2)) {
   }
 
   // ── 6 · provenance must accompany sample numbers ──
-  if (/SAMPLE/.test(src) && !/PROXY FOR THE LIVE CONSUMER PRODUCTS/i.test(src)) {
+  const fictionalProvenance = editorial && /data-sample-provenance="fictional"/.test(src) && /SAMPLE REPORT · FICTIONAL BUSINESS · ILLUSTRATIVE DATA/.test(src) && /not measured client results/.test(src) && /ILLUSTRATIVE, NOT A MODEL RESPONSE/.test(src);
+  if (/SAMPLE/.test(src) && !fictionalProvenance && !/PROXY FOR THE LIVE CONSUMER PRODUCTS/i.test(src)) {
     say('ERROR', 1, 'page carries SAMPLE data but not the canonical proxy-caveat sentence (DEF-4, NFR-4)');
   }
 

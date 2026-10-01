@@ -17,7 +17,7 @@ test('TC-PUB-11: public build isolates the redesigned homepage from local intake
 
 test('TC-PUB-12: emitted public assets match the exact non-private allowlist', async () => {
   const files = await readdir(new URL('public-dist/public-ui/', root));
-  assert.deepEqual(files.sort(), ['arrow-ink.svg', 'arrow-light.svg', 'audit-first.css', 'audit-first.js']);
+  assert.deepEqual(files.sort(), ['audit-first.css', 'audit-first.js', 'arrow-light.svg', 'arrow-ink.svg', 'editorial.css', 'explorer.js', 'arrow-editorial.svg', 'barlow-condensed-bold.woff2', 'manrope.woff2', 'ibm-plex-mono-medium.ttf', 'sora.woff2', 'barlow-condensed-bold-OFL.txt', 'manrope-OFL.txt', 'ibm-plex-mono-medium-OFL.txt', 'sora-OFL.txt'].sort());
   const topLevel = await readdir(new URL('public-dist/', root));
   for (const privateName of ['app', 'api', 'results', 'server', 'data', 'tests', 'homepage.html']) assert.ok(!topLevel.includes(privateName));
   for (const file of files) assert.equal(await text(`public-dist/public-ui/${file}`), await text(`site/public-ui/${file}`));

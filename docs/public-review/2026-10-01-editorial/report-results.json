@@ -1,0 +1,35 @@
+{
+  "url": "http://127.0.0.1:4328/",
+  "testedAt": "2026-10-01T04:30:27.256Z",
+  "results": [
+    {
+      "width": 320,
+      "result": "PASS",
+      "checks": "homepage, mobile navigation, labels >=14px, no overflow, exact visible asset geometry, email links, five pages, contents/current-page, evidence links, focus, Back/Forward, Escape, reopen, close, invalid/direct links, reduced motion, no runtime errors"
+    },
+    {
+      "width": 390,
+      "result": "PASS",
+      "checks": "homepage, mobile navigation, labels >=14px, no overflow, exact visible asset geometry, email links, five pages, contents/current-page, evidence links, focus, Back/Forward, Escape, reopen, close, invalid/direct links, reduced motion, no runtime errors"
+    },
+    {
+      "width": 768,
+      "result": "PASS",
+      "checks": "homepage, mobile navigation, labels >=14px, no overflow, exact visible asset geometry, email links, five pages, contents/current-page, evidence links, focus, Back/Forward, Escape, reopen, close, invalid/direct links, reduced motion, no runtime errors"
+    },
+    {
+      "width": 1024,
+      "result": "PASS",
+      "checks": "homepage, mobile navigation, labels >=14px, no overflow, exact visible asset geometry, email links, five pages, contents/current-page, evidence links, focus, Back/Forward, Escape, reopen, close, invalid/direct links, reduced motion, no runtime errors"
+    },
+    {
+      "width": 1440,
+      "result": "PASS",
+      "checks": "homepage, mobile navigation, labels >=14px, no overflow, exact visible asset geometry, email links, five pages, contents/current-page, evidence links, focus, Back/Forward, Escape, reopen, close, invalid/direct links, reduced motion, no runtime errors"
+    },
+    {
+      "result": "PASS",
+      "checks": "no-JavaScript readable homepage, five sample pages and direct email links"
+    }
+  ]
+}

@@ -23,19 +23,21 @@
   function render({ focus = true } = {}) {
     const match = /^#sample-report(?:-page-([1-5]))?$/.exec(window.location.hash);
     const inReport = !!match;
+    const inAnswer = !!document.getElementById('answer') && /^#answer(?:-(local|support|leading))?$/.test(window.location.hash);
     const pageNumber = match ? Number(match[1] || 1) : 0;
-    const invalidReport = !inReport && /^#sample-report/.test(window.location.hash);
+    const invalidReport = (!inReport && /^#sample-report/.test(window.location.hash)) || (!inAnswer && /^#answer/.test(window.location.hash));
     if (error) {
       error.hidden = !invalidReport;
       error.textContent = invalidReport ? 'That sample page does not exist. Choose Sample report to start at the overview.' : '';
     }
-    home.hidden = inReport;
+    home.hidden = inReport || inAnswer;
     viewer.hidden = !inReport;
     navigation.hidden = !inReport;
     skip.href = inReport ? `#sample-report-page-${pageNumber}` : '#main';
     document.title = inReport ? `Sample report · Page ${pageNumber} of 5 · MindLeverX` : defaultTitle;
     pages.forEach((page, index) => { page.hidden = inReport && index !== pageNumber - 1; });
     contents.forEach((link, index) => { link.setAttribute('aria-current', inReport && index === pageNumber - 1 ? 'page' : 'false'); });
+    if (inAnswer) { wasInReport = false; return; }
     if (inReport) {
       previous.href = pageNumber === 1 ? '#top' : `#sample-report-page-${pageNumber - 1}`;
       previous.firstChild.textContent = pageNumber === 1 ? 'Back to homepage' : 'Previous page';
@@ -47,7 +49,7 @@
         window.scrollTo({ top: 0, behavior: 'instant' });
       }
     } else if ((wasInReport || invalidReport) && focus) {
-      const target = invalidReport && error ? error : opener?.isConnected ? opener : document.getElementById('hero-title');
+      const target = invalidReport && error ? error : opener?.isConnected && !opener.closest?.('[hidden]') ? opener : document.getElementById('hero-title');
       if (target) {
         if (!target.hasAttribute('tabindex')) target.setAttribute('tabindex', '-1');
         target.focus({ preventScroll: true });

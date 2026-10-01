@@ -142,3 +142,7 @@ Preserve daily dashboard/status and continuous improvement at meaningful checkpo
 Retain considerations without implementing them: homepage “What is GEO?”, the owner's submitted explanatory marketing copy, and further report visuals. The supplied OpenAI prompting/best-practice links remain reference candidates: https://learn.chatgpt.com/docs/prompting and https://learn.chatgpt.com/guides/best-practices . This handoff preserves the links; it does not claim an external Drive filing was verified.
 
 Start with a brief current-state check, choose the smallest ready task that advances a real deliverable, and execute within current authority. Finish with what changed, evidence, what the owner can test, the next priority and only genuinely unresolved decisions.
+
+## Public editorial review continuation — 1 October 2026
+
+Use `codex/public-functionality-20261001` for the public opening/explorer checkpoint after `f1f6096`. Read [the checkpoint](public-review/2026-10-01-editorial/README.md) and its test receipts/screenshots. The original public checkpoint was preserved before edits. Main and private integration areas remain untouched; the newer Mac integration is still unpushed and must be reconciled before merging. Preview-branch push is authorized; production changes are not. Hosted browser checks require the existing normal Vercel authentication and must not be marked passed from a READY deployment alone.

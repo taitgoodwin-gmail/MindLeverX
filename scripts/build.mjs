@@ -54,6 +54,20 @@ function publicPage(html) {
     ['Process guarantees only — the method is fixed, the numbers are what they are.', 'The intended process preserves evidence and methodology versions.'],
     ['Content artifacts are delivered as drafts for your approval.', 'The intended workflow prepares content artifacts as drafts for your approval.'],
   ];
+  copy.push(
+    ['mid-market B2B SaaS', 'owner-led service businesses'],
+    ['MID-MARKET B2B SAAS', 'SERVICE BUSINESSES'],
+    ['Free GEO Readiness Audit', 'Scoped AI visibility audit'],
+    ['One category — owner-led service businesses.', 'A focus on owner-led service businesses.'],
+    ['Generative engine optimization for owner-led service businesses. Own the answer.', 'AI visibility reviews for owner-led service businesses. Evidence before advice.'],
+    ['Audit availability', 'Discuss an audit'],
+    ['OWN THE ANSWER.', 'EVIDENCE BEFORE ADVICE.'],
+    ['<strong>Audit requests are not open yet.</strong> Please check back for availability.', '<strong>Start with an email conversation.</strong> Scope, price and timing are agreed before work begins.'],
+    ['planned; requests are not open yet.', 'scope, price and timing agreed before work begins.'],
+    ['Audit requests are not open yet. Please check back for availability.', 'To discuss a review, email connect@mindleverx.com. Scope, price and timing are agreed before work begins.'],
+    ['Explore the intended GEO audit and the evidence it would need.', 'Discuss an AI visibility review and the questions and evidence it would need.'],
+    ['The planned GEO audit would apply this methodology to your site, distinguishing measured evidence from unmeasured dimensions.', 'A scoped AI visibility review distinguishes measured evidence from unmeasured dimensions. Scope, price and timing are agreed before work begins.']
+  );
   for (const [before, after] of copy) html = html.replaceAll(before, after);
   return html;
 }
@@ -98,7 +112,7 @@ for (const page of pages) {
 }
 // Explicit public UI assets only; never copy the source directory wholesale.
 if (publicBuild) {
-  const publicAssets = ['audit-first.css', 'audit-first.js', 'arrow-light.svg', 'arrow-ink.svg'];
+  const publicAssets = ['audit-first.css', 'audit-first.js', 'arrow-light.svg', 'arrow-ink.svg', 'editorial.css', 'explorer.js', 'arrow-editorial.svg', 'barlow-condensed-bold.woff2', 'manrope.woff2', 'ibm-plex-mono-medium.ttf', 'sora.woff2', 'barlow-condensed-bold-OFL.txt', 'manrope-OFL.txt', 'ibm-plex-mono-medium-OFL.txt', 'sora-OFL.txt'];
   await fs.mkdir(path.join(output, 'public-ui'), { recursive: true });
   for (const asset of publicAssets) await fs.copyFile(path.join(source, 'public-ui', asset), path.join(output, 'public-ui', asset));
 }

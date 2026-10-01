@@ -114,3 +114,15 @@ Cleanup: deterministic tests create no external state; existing product tests us
 - New `site/public-ui/` and `tests/public-ui/` only
 
 Missing desktop design/integration source still needs the root's reconciliation. Nothing in this patch replaces the later private request-to-client, retained results, question summaries or version-pinned PDF work. Old secondary public pages still use the prior visual skin and portions of older audience/offer copy; that out-of-scope consistency work must be reviewed with the new design rather than presented as complete.
+
+## Editorial explorer checkpoint — 1 October 2026
+
+`explorer-browser-check.mjs` implements TC-EXP-01..08. Build and serve only `public-dist`, then set `MLX_PUBLIC_URL`, `PLAYWRIGHT_MODULE`, and (if needed) `MLX_BROWSER_EXECUTABLE`. Set `MLX_AXE_PATH` to a local axe-core script to include WCAG 2/2.1 A/AA automated checks; without it, output explicitly records axe as UNRUN. The script writes screenshots and `explorer-results.json` to `MLX_QA_OUTPUT` (default `/tmp/mlx-editorial-qa`).
+
+1. At 320, 390, 768, 1024 and 1440px, load home, check fonts and keyboard skip focus, open the answer and verify Support is selected.
+2. Select each claim. Exactly its source, limitation and action must be visible, with matching selected/tabbable control. No document overflow, failed assets or runtime errors.
+3. Use Home, End, arrows, Tab and Shift+Tab. Focus and selection must be visible and coherent. Back/Forward restore the selected readout; Escape restores the opener. Direct/invalid links and transition into the five-page report must recover visibly.
+4. Reduced motion must have no animation. With ordinary motion, the original path sequence plays once, settles, and does not restart after returning. Claim dissolve is 320ms. At 200% CSS zoom the CTA remains reachable and unobscured.
+5. With JavaScript disabled, all three linked readouts and all five sample-report pages must remain readable.
+
+Any failed assertion is FAIL; unavailable browser/dependency/authentication is BLOCKED or UNRUN, never a pass. Tests close their contexts and do not send mail or mutate external services. `editorial-integrity.test.mjs` adds TC-EXP-09..11 for public offer consistency, exact vector path preservation/local licensed font provenance, and positive/negative fictional-provenance lint fixtures. Run it with the other `tests/public-ui/*.test.mjs` after local and public builds.

@@ -1,0 +1,333 @@
+{
+  "url": "http://127.0.0.1:4328",
+  "testedAt": "2026-10-01T04:30:33.018Z",
+  "results": [
+    {
+      "width": 320,
+      "result": "PASS",
+      "checks": "fonts, all claim states, keyboard/Tab/Shift+Tab/Home/End/arrows, focus, history, Escape, report handoff, invalid route, reduced motion, no overflow/runtime/asset errors",
+      "axe": "PASS"
+    },
+    {
+      "width": 390,
+      "result": "PASS",
+      "checks": "fonts, all claim states, keyboard/Tab/Shift+Tab/Home/End/arrows, focus, history, Escape, report handoff, invalid route, reduced motion, no overflow/runtime/asset errors",
+      "axe": "PASS"
+    },
+    {
+      "width": 768,
+      "result": "PASS",
+      "checks": "fonts, all claim states, keyboard/Tab/Shift+Tab/Home/End/arrows, focus, history, Escape, report handoff, invalid route, reduced motion, no overflow/runtime/asset errors",
+      "axe": "PASS"
+    },
+    {
+      "width": 1024,
+      "result": "PASS",
+      "checks": "fonts, all claim states, keyboard/Tab/Shift+Tab/Home/End/arrows, focus, history, Escape, report handoff, invalid route, reduced motion, no overflow/runtime/asset errors",
+      "axe": "PASS"
+    },
+    {
+      "width": 1440,
+      "result": "PASS",
+      "checks": "fonts, all claim states, keyboard/Tab/Shift+Tab/Home/End/arrows, focus, history, Escape, report handoff, invalid route, reduced motion, no overflow/runtime/asset errors",
+      "axe": "PASS"
+    },
+    {
+      "test": "No JavaScript",
+      "result": "PASS",
+      "checks": "three readable linked evidence panels and five report pages"
+    },
+    {
+      "test": "Motion and zoom",
+      "result": "PASS",
+      "checks": "single-play 650–875ms original SVG draws, 2s coordinated timeline, settled return, 320ms claim dissolve, 200% CSS zoom/no occluded CTA",
+      "timelines": [
+        {
+          "name": "draw-evidence",
+          "duration": 650,
+          "iterations": 1
+        },
+        {
+          "name": "draw-evidence",
+          "duration": 695,
+          "iterations": 1
+        },
+        {
+          "name": "draw-evidence",
+          "duration": 740,
+          "iterations": 1
+        },
+        {
+          "name": "draw-evidence",
+          "duration": 785,
+          "iterations": 1
+        },
+        {
+          "name": "draw-evidence",
+          "duration": 830,
+          "iterations": 1
+        },
+        {
+          "name": "draw-evidence",
+          "duration": 875,
+          "iterations": 1
+        },
+        {
+          "name": "draw-evidence",
+          "duration": 650,
+          "iterations": 1
+        },
+        {
+          "name": "draw-evidence",
+          "duration": 695,
+          "iterations": 1
+        },
+        {
+          "name": "draw-evidence",
+          "duration": 740,
+          "iterations": 1
+        },
+        {
+          "name": "draw-evidence",
+          "duration": 785,
+          "iterations": 1
+        },
+        {
+          "name": "draw-evidence",
+          "duration": 830,
+          "iterations": 1
+        },
+        {
+          "name": "draw-evidence",
+          "duration": 875,
+          "iterations": 1
+        },
+        {
+          "name": "draw-evidence",
+          "duration": 650,
+          "iterations": 1
+        },
+        {
+          "name": "draw-evidence",
+          "duration": 695,
+          "iterations": 1
+        },
+        {
+          "name": "draw-evidence",
+          "duration": 740,
+          "iterations": 1
+        },
+        {
+          "name": "draw-evidence",
+          "duration": 785,
+          "iterations": 1
+        },
+        {
+          "name": "draw-evidence",
+          "duration": 830,
+          "iterations": 1
+        },
+        {
+          "name": "draw-evidence",
+          "duration": 875,
+          "iterations": 1
+        },
+        {
+          "name": "draw-evidence",
+          "duration": 650,
+          "iterations": 1
+        },
+        {
+          "name": "draw-evidence",
+          "duration": 695,
+          "iterations": 1
+        },
+        {
+          "name": "draw-evidence",
+          "duration": 740,
+          "iterations": 1
+        },
+        {
+          "name": "draw-evidence",
+          "duration": 785,
+          "iterations": 1
+        },
+        {
+          "name": "draw-evidence",
+          "duration": 830,
+          "iterations": 1
+        },
+        {
+          "name": "draw-evidence",
+          "duration": 875,
+          "iterations": 1
+        },
+        {
+          "name": "draw-evidence",
+          "duration": 650,
+          "iterations": 1
+        },
+        {
+          "name": "draw-evidence",
+          "duration": 695,
+          "iterations": 1
+        },
+        {
+          "name": "draw-evidence",
+          "duration": 740,
+          "iterations": 1
+        },
+        {
+          "name": "draw-evidence",
+          "duration": 785,
+          "iterations": 1
+        },
+        {
+          "name": "draw-evidence",
+          "duration": 830,
+          "iterations": 1
+        },
+        {
+          "name": "draw-evidence",
+          "duration": 875,
+          "iterations": 1
+        },
+        {
+          "name": "draw-evidence",
+          "duration": 650,
+          "iterations": 1
+        },
+        {
+          "name": "draw-evidence",
+          "duration": 695,
+          "iterations": 1
+        },
+        {
+          "name": "draw-evidence",
+          "duration": 740,
+          "iterations": 1
+        },
+        {
+          "name": "draw-evidence",
+          "duration": 785,
+          "iterations": 1
+        },
+        {
+          "name": "draw-evidence",
+          "duration": 830,
+          "iterations": 1
+        },
+        {
+          "name": "draw-evidence",
+          "duration": 875,
+          "iterations": 1
+        },
+        {
+          "name": "draw-evidence",
+          "duration": 650,
+          "iterations": 1
+        },
+        {
+          "name": "draw-evidence",
+          "duration": 695,
+          "iterations": 1
+        },
+        {
+          "name": "draw-evidence",
+          "duration": 740,
+          "iterations": 1
+        },
+        {
+          "name": "draw-evidence",
+          "duration": 785,
+          "iterations": 1
+        },
+        {
+          "name": "draw-evidence",
+          "duration": 830,
+          "iterations": 1
+        },
+        {
+          "name": "draw-evidence",
+          "duration": 875,
+          "iterations": 1
+        },
+        {
+          "name": "draw-evidence",
+          "duration": 650,
+          "iterations": 1
+        },
+        {
+          "name": "draw-evidence",
+          "duration": 695,
+          "iterations": 1
+        },
+        {
+          "name": "draw-evidence",
+          "duration": 740,
+          "iterations": 1
+        },
+        {
+          "name": "draw-evidence",
+          "duration": 785,
+          "iterations": 1
+        },
+        {
+          "name": "draw-evidence",
+          "duration": 830,
+          "iterations": 1
+        },
+        {
+          "name": "draw-evidence",
+          "duration": 875,
+          "iterations": 1
+        },
+        {
+          "name": "draw-evidence",
+          "duration": 650,
+          "iterations": 1
+        },
+        {
+          "name": "draw-evidence",
+          "duration": 695,
+          "iterations": 1
+        },
+        {
+          "name": "draw-evidence",
+          "duration": 740,
+          "iterations": 1
+        },
+        {
+          "name": "draw-evidence",
+          "duration": 785,
+          "iterations": 1
+        },
+        {
+          "name": "draw-evidence",
+          "duration": 830,
+          "iterations": 1
+        },
+        {
+          "name": "draw-evidence",
+          "duration": 875,
+          "iterations": 1
+        },
+        {
+          "name": "claim-opacity",
+          "duration": 2000,
+          "iterations": 1
+        },
+        {
+          "name": "claim-translate",
+          "duration": 2000,
+          "iterations": 1
+        },
+        {
+          "name": "marker-opacity",
+          "duration": 2000,
+          "iterations": 1
+        }
+      ]
+    }
+  ]
+}

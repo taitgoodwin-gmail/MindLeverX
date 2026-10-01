@@ -7,7 +7,7 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const directory = path.join(root, 'public-dist');
 const expectedPages = ['index.html', 'what-is-geo.html', 'research-hub.html', 'answer-engine-index-q3-2026.html', 'case-study.html', 'about.html', 'method.html'];
 const expectedFiles = [...expectedPages, 'runtime.js', 'robots.txt', 'sitemap.xml', 'llms.txt', 'public-ui'].sort();
-const expectedAssets = ['audit-first.css', 'audit-first.js', 'arrow-light.svg', 'arrow-ink.svg'].sort();
+const expectedAssets = ['audit-first.css', 'audit-first.js', 'arrow-light.svg', 'arrow-ink.svg', 'editorial.css', 'explorer.js', 'arrow-editorial.svg', 'barlow-condensed-bold.woff2', 'manrope.woff2', 'ibm-plex-mono-medium.ttf', 'sora.woff2', 'barlow-condensed-bold-OFL.txt', 'manrope-OFL.txt', 'ibm-plex-mono-medium-OFL.txt', 'sora-OFL.txt'].sort();
 const errors = [];
 const check = (condition, message) => { if (!condition) errors.push(message); };
 const entries = await fs.readdir(directory, { withFileTypes: true });
@@ -15,7 +15,7 @@ check(entries.every(entry => entry.name === 'public-ui' ? entry.isDirectory() : 
   'Public output must contain only the seven public pages, explicit public-ui assets, runtime.js, robots.txt, sitemap.xml and llms.txt.');
 
 const assets = await fs.readdir(path.join(directory, 'public-ui'), { withFileTypes: true });
-check(assets.every(asset => asset.isFile()) && JSON.stringify(assets.map(asset => asset.name).sort()) === JSON.stringify(expectedAssets), 'Public UI asset output must match the explicit four-file allowlist.');
+check(assets.every(asset => asset.isFile()) && JSON.stringify(assets.map(asset => asset.name).sort()) === JSON.stringify(expectedAssets), 'Public UI asset output must match the explicit public-asset allowlist.');
 for (const asset of expectedAssets) {
   const content = await fs.readFile(path.join(directory, 'public-ui', asset), 'utf8');
   check(content.length > 0 && !/fetch\(|MLX_INTAKE_TOKEN|auditform|https:\/\/www\.figma\.com\/api/.test(content), `${asset}: public asset must be nonempty, local and free of intake code.`);

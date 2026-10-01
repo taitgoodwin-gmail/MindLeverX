@@ -3,111 +3,199 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>MindLeverX — Your AI visibility, made clear.</title>
+<title>MindLeverX — What does AI make of you?</title>
 <meta name="description" content="An operator-reviewed AI visibility audit for owner-led service businesses. Explore a fictional sample report, the review method and practical next actions.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<link rel="preload" href="public-ui/barlow-condensed-bold.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="public-ui/audit-first.css">
+<link rel="stylesheet" href="public-ui/editorial.css">
 <script src="/runtime.js" defer></script>
 <script src="public-ui/audit-first.js" defer></script>
+<script src="public-ui/explorer.js" defer></script>
 </head>
-<body class="mlx-audit-first">
+<body class="mlx-audit-first mlx-editorial" data-sample-provenance="fictional">
 <a class="skip-link" href="#main">Skip to content</a>
 <div id="home-view">
-<header class="mlx-header" id="top">
-  <a class="mlx-brand" href="#top" aria-label="MindLeverX home">MindLeverX</a>
-  <nav class="mlx-navigation" aria-label="Main navigation">
-    <a href="#services">The audit</a>
-    <a href="#sample-report" data-sample-open>Sample report</a>
-    <a href="#method">Our method</a>
-  </nav>
-  <a class="mlx-button mlx-button--primary" href="mailto:connect@mindleverx.com?subject=Discuss%20a%20MindLeverX%20audit" aria-label="Let’s talk, opens your email app">Let’s talk<img class="mlx-arrow" src="public-ui/arrow-light.svg" alt="" width="22" height="22"></a>
+<header class="editorial-header" id="top">
+<a class="mlx-brand" href="#top" aria-label="MindLeverX home">MindLeverX</a>
+<p class="mono header-purpose">AI visibility. Human judgement.</p>
+<a class="header-contact" href="mailto:connect@mindleverx.com?subject=Discuss%20a%20MindLeverX%20audit" aria-label="Let’s talk, opens your email app">Let’s talk ↗</a>
 </header>
 <main id="main" tabindex="-1">
 <p id="sample-error" class="mlx-route-error" role="status" hidden></p>
-<section class="mlx-section mlx-hero" aria-labelledby="hero-title">
-  <p class="mlx-eyebrow mlx-hero-eyebrow">AI VISIBILITY AUDIT <span>/ &nbsp; FOR OWNER-LED SERVICE BUSINESSES</span></p>
-  <div class="mlx-hero-grid">
-    <div class="mlx-offer">
-      <h1 id="hero-title" tabindex="-1"><span class="mlx-desktop-title">Your AI visibility,<br>made clear.</span><span class="mlx-mobile-title">AI visibility.<br>Clear next steps.</span></h1>
-      <p class="mlx-hero-description">An operator-reviewed audit for service businesses. See how you appear in AI answers, where the evidence falls short, and what to improve first.</p>
-      <div class="mlx-actions"><a class="mlx-button mlx-button--primary" href="mailto:connect@mindleverx.com?subject=Discuss%20a%20MindLeverX%20audit" aria-label="Discuss my audit, opens your email app">Discuss my audit<img class="mlx-arrow" src="public-ui/arrow-light.svg" alt="" width="22" height="22"></a><a class="mlx-button mlx-button--secondary" href="#sample-report" data-sample-open>See a sample report<img class="mlx-arrow" src="public-ui/arrow-ink.svg" alt="" width="22" height="22"></a></div>
-      <p class="mlx-small">A scoped review. A private report. Clear next actions.</p>
-    </div>
-    <aside class="mlx-preview" id="score" aria-labelledby="preview-title">
-      <p class="mlx-eyebrow">SAMPLE REPORT / FICTIONAL DATA</p>
-      <h2 id="preview-title">Example IT Co.</h2>
-      <p class="mlx-small">AI visibility baseline &amp; action brief</p>
-      <div class="mlx-rule"></div>
-      <dl class="mlx-counts">
-        <div><dt>answers mentioned<br>the business</dt><dd>6 / 20</dd></div>
-        <div><dt>answers cited<br>its website</dt><dd>2 / 20</dd></div>
-      </dl>
-      <p class="mlx-caption">10 questions, each asked twice. One AI answer surface.</p>
-      <div class="mlx-first-action">
-        <p class="mlx-eyebrow">01 / FIRST ACTION</p>
-        <h3>Say who you serve.</h3>
-        <p>The service page does not name the business size it supports. Make the audience and coverage explicit.</p>
-      </div>
-      <p class="mlx-caption">Illustrative example, not client results. A baseline is not a trend.</p>
-    </aside>
-  </div>
-</section>
-<div class="mlx-positioning" aria-label="What the audit provides">
-  <p><span>01</span>Agreed questions</p><p><span>02</span>Evidence you can inspect</p><p><span>03</span>Prioritized next actions</p>
+<section class="editorial-opening" aria-labelledby="hero-title">
+<div class="opening-copy">
+<p class="mono opening-label">AI VISIBILITY AUDITS / FOR SERVICE BUSINESSES</p>
+<h1 id="hero-title" tabindex="-1"><span class="headline-first">WHAT DOES AI</span> <span class="headline-second">MAKE OF <em>YOU?</em></span></h1>
+<p class="opening-description">Find out how AI describes your business,<br class="desktop-break"> what backs it up, and what to change next.</p>
 </div>
-<section class="mlx-section mlx-deliverable" id="services" aria-labelledby="deliverable-title">
-  <p class="mlx-eyebrow">THE DELIVERABLE</p>
-  <h2 id="deliverable-title">A report you can act on.</h2>
-  <p class="mlx-intro" id="offer">Move from isolated searches to an evidence-backed baseline and a practical order of work.</p>
-  <div class="mlx-outcomes">
-    <article class="mlx-outcome"><p class="mlx-eyebrow">01</p><h3>Your visibility baseline</h3><p>What appeared in the sampled answers, with the questions, dates and counts behind it.</p></article>
-    <article class="mlx-outcome"><p class="mlx-eyebrow">02</p><h3>The gaps worth fixing</h3><p>Where your pages, claims or published business information leave a buyer’s question unanswered.</p></article>
-    <article class="mlx-outcome"><p class="mlx-eyebrow">03</p><h3>Your next three actions</h3><p>Prioritized improvements, with the evidence and limitations made clear.</p></article>
-  </div>
+<a class="editorial-button open-answer" href="#answer" data-answer-open>Look inside an answer<img src="public-ui/arrow-editorial.svg" width="22" height="22" alt=""></a>
+<div class="opening-art" aria-label="An illustrative claim, 24/7 support, isolated for examination. Fictional, not a model response.">
+<svg class="evidence-paths desktop-paths" aria-hidden="true" focusable="false" width="542" height="622" viewBox="0 0 542 622" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_119_574)">
+<path opacity="0.95" d="M-120 -50C210 80 450 155 260.16 304.78C130 454.06 150 528.7 622 712" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.95" d="M652 -80C322 90 85 150 265.58 317.22C432 466.5 392 547.36 -80 692" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.65" d="M-110 -50C212 80 444 155 260.16 304.78C135 454.06 159 528.7 622 712" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.65" d="M642 -80C320 90 91 150 265.58 317.22C427 466.5 383 547.36 -80 692" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.65" d="M-100 -50C214 80 438 155 260.16 304.78C140 454.06 168 528.7 622 712" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.65" d="M632 -80C318 90 97 150 265.58 317.22C422 466.5 374 547.36 -80 692" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.65" d="M-90 -50C216 80 432 155 260.16 304.78C145 454.06 177 528.7 622 712" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.65" d="M622 -80C316 90 103 150 265.58 317.22C417 466.5 365 547.36 -80 692" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.95" d="M-80 -50C218 80 426 155 260.16 304.78C150 454.06 186 528.7 622 712" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.95" d="M612 -80C314 90 109 150 265.58 317.22C412 466.5 356 547.36 -80 692" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.65" d="M-70 -50C220 80 420 155 260.16 304.78C155 454.06 195 528.7 622 712" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.65" d="M602 -80C312 90 115 150 265.58 317.22C407 466.5 347 547.36 -80 692" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.65" d="M-60 -50C222 80 414 155 260.16 304.78C160 454.06 204 528.7 622 712" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.65" d="M592 -80C310 90 121 150 265.58 317.22C402 466.5 338 547.36 -80 692" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.65" d="M-50 -50C224 80 408 155 260.16 304.78C165 454.06 213 528.7 622 712" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.65" d="M582 -80C308 90 127 150 265.58 317.22C397 466.5 329 547.36 -80 692" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.95" d="M-40 -50C226 80 402 155 260.16 304.78C170 454.06 222 528.7 622 712" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.95" d="M572 -80C306 90 133 150 265.58 317.22C392 466.5 320 547.36 -80 692" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.65" d="M-30 -50C228 80 396 155 260.16 304.78C175 454.06 231 528.7 622 712" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.65" d="M562 -80C304 90 139 150 265.58 317.22C387 466.5 311 547.36 -80 692" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.65" d="M-20 -50C230 80 390 155 260.16 304.78C180 454.06 240 528.7 622 712" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.65" d="M552 -80C302 90 145 150 265.58 317.22C382 466.5 302 547.36 -80 692" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.65" d="M-10 -50C232 80 384 155 260.16 304.78C185 454.06 249 528.7 622 712" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.65" d="M542 -80C300 90 151 150 265.58 317.22C377 466.5 293 547.36 -80 692" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.95" d="M0 -50C234 80 378 155 260.16 304.78C190 454.06 258 528.7 622 712" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.95" d="M532 -80C298 90 157 150 265.58 317.22C372 466.5 284 547.36 -80 692" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.65" d="M10 -50C236 80 372 155 260.16 304.78C195 454.06 267 528.7 622 712" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.65" d="M522 -80C296 90 163 150 265.58 317.22C367 466.5 275 547.36 -80 692" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.65" d="M20 -50C238 80 366 155 260.16 304.78C200 454.06 276 528.7 622 712" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.65" d="M512 -80C294 90 169 150 265.58 317.22C362 466.5 266 547.36 -80 692" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.65" d="M30 -50C240 80 360 155 260.16 304.78C205 454.06 285 528.7 622 712" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.65" d="M502 -80C292 90 175 150 265.58 317.22C357 466.5 257 547.36 -80 692" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.95" d="M40 -50C242 80 354 155 260.16 304.78C210 454.06 294 528.7 622 712" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.95" d="M492 -80C290 90 181 150 265.58 317.22C352 466.5 248 547.36 -80 692" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.65" d="M50 -50C244 80 348 155 260.16 304.78C215 454.06 303 528.7 622 712" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.65" d="M482 -80C288 90 187 150 265.58 317.22C347 466.5 239 547.36 -80 692" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.65" d="M60 -50C246 80 342 155 260.16 304.78C220 454.06 312 528.7 622 712" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.65" d="M472 -80C286 90 193 150 265.58 317.22C342 466.5 230 547.36 -80 692" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.65" d="M70 -50C248 80 336 155 260.16 304.78C225 454.06 321 528.7 622 712" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.65" d="M462 -80C284 90 199 150 265.58 317.22C337 466.5 221 547.36 -80 692" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.95" d="M80 -50C250 80 330 155 260.16 304.78C230 454.06 330 528.7 622 712" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.95" d="M452 -80C282 90 205 150 265.58 317.22C332 466.5 212 547.36 -80 692" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.65" d="M90 -50C252 80 324 155 260.16 304.78C235 454.06 339 528.7 622 712" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.65" d="M442 -80C280 90 211 150 265.58 317.22C327 466.5 203 547.36 -80 692" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.65" d="M100 -50C254 80 318 155 260.16 304.78C240 454.06 348 528.7 622 712" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.65" d="M432 -80C278 90 217 150 265.58 317.22C322 466.5 194 547.36 -80 692" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.65" d="M110 -50C256 80 312 155 260.16 304.78C245 454.06 357 528.7 622 712" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.65" d="M422 -80C276 90 223 150 265.58 317.22C317 466.5 185 547.36 -80 692" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.95" d="M120 -50C258 80 306 155 260.16 304.78C250 454.06 366 528.7 622 712" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.95" d="M412 -80C274 90 229 150 265.58 317.22C312 466.5 176 547.36 -80 692" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.65" d="M130 -50C260 80 300 155 260.16 304.78C255 454.06 375 528.7 622 712" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.65" d="M402 -80C272 90 235 150 265.58 317.22C307 466.5 167 547.36 -80 692" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.65" d="M140 -50C262 80 294 155 260.16 304.78C260 454.06 384 528.7 622 712" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.65" d="M392 -80C270 90 241 150 265.58 317.22C302 466.5 158 547.36 -80 692" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+</g>
+<defs>
+<clipPath id="clip0_119_574">
+<rect width="542" height="622" fill="white"/>
+</clipPath>
+</defs>
+</svg>
+
+<svg class="evidence-paths mobile-paths" aria-hidden="true" focusable="false" width="350" height="335" viewBox="0 0 350 335" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_119_654)">
+<path opacity="0.95" d="M-120 -50C210 80 450 155 168 164.15C130 244.55 150 284.75 430 425" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.95" d="M460 -80C130 90 85 150 171.5 170.85C240 251.25 200 294.8 -80 405" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.65" d="M-110 -50C212 80 444 155 168 164.15C135 244.55 159 284.75 430 425" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.65" d="M450 -80C128 90 91 150 171.5 170.85C235 251.25 191 294.8 -80 405" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.65" d="M-100 -50C214 80 438 155 168 164.15C140 244.55 168 284.75 430 425" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.65" d="M440 -80C126 90 97 150 171.5 170.85C230 251.25 182 294.8 -80 405" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.65" d="M-90 -50C216 80 432 155 168 164.15C145 244.55 177 284.75 430 425" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.65" d="M430 -80C124 90 103 150 171.5 170.85C225 251.25 173 294.8 -80 405" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.95" d="M-80 -50C218 80 426 155 168 164.15C150 244.55 186 284.75 430 425" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.95" d="M420 -80C122 90 109 150 171.5 170.85C220 251.25 164 294.8 -80 405" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.65" d="M-70 -50C220 80 420 155 168 164.15C155 244.55 195 284.75 430 425" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.65" d="M410 -80C120 90 115 150 171.5 170.85C215 251.25 155 294.8 -80 405" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.65" d="M-60 -50C222 80 414 155 168 164.15C160 244.55 204 284.75 430 425" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.65" d="M400 -80C118 90 121 150 171.5 170.85C210 251.25 146 294.8 -80 405" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.65" d="M-50 -50C224 80 408 155 168 164.15C165 244.55 213 284.75 430 425" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.65" d="M390 -80C116 90 127 150 171.5 170.85C205 251.25 137 294.8 -80 405" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.95" d="M-40 -50C226 80 402 155 168 164.15C170 244.55 222 284.75 430 425" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.95" d="M380 -80C114 90 133 150 171.5 170.85C200 251.25 128 294.8 -80 405" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.65" d="M-30 -50C228 80 396 155 168 164.15C175 244.55 231 284.75 430 425" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.65" d="M370 -80C112 90 139 150 171.5 170.85C195 251.25 119 294.8 -80 405" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.65" d="M-20 -50C230 80 390 155 168 164.15C180 244.55 240 284.75 430 425" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.65" d="M360 -80C110 90 145 150 171.5 170.85C190 251.25 110 294.8 -80 405" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.65" d="M-10 -50C232 80 384 155 168 164.15C185 244.55 249 284.75 430 425" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.65" d="M350 -80C108 90 151 150 171.5 170.85C185 251.25 101 294.8 -80 405" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.95" d="M0 -50C234 80 378 155 168 164.15C190 244.55 258 284.75 430 425" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.95" d="M340 -80C106 90 157 150 171.5 170.85C180 251.25 92 294.8 -80 405" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.65" d="M10 -50C236 80 372 155 168 164.15C195 244.55 267 284.75 430 425" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.65" d="M330 -80C104 90 163 150 171.5 170.85C175 251.25 83 294.8 -80 405" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.65" d="M20 -50C238 80 366 155 168 164.15C200 244.55 276 284.75 430 425" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.65" d="M320 -80C102 90 169 150 171.5 170.85C170 251.25 74 294.8 -80 405" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.65" d="M30 -50C240 80 360 155 168 164.15C205 244.55 285 284.75 430 425" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.65" d="M310 -80C100 90 175 150 171.5 170.85C165 251.25 65 294.8 -80 405" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.95" d="M40 -50C242 80 354 155 168 164.15C210 244.55 294 284.75 430 425" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.95" d="M300 -80C98 90 181 150 171.5 170.85C160 251.25 56 294.8 -80 405" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.65" d="M50 -50C244 80 348 155 168 164.15C215 244.55 303 284.75 430 425" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.65" d="M290 -80C96 90 187 150 171.5 170.85C155 251.25 47 294.8 -80 405" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.65" d="M60 -50C246 80 342 155 168 164.15C220 244.55 312 284.75 430 425" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.65" d="M280 -80C94 90 193 150 171.5 170.85C150 251.25 38 294.8 -80 405" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.65" d="M70 -50C248 80 336 155 168 164.15C225 244.55 321 284.75 430 425" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.65" d="M270 -80C92 90 199 150 171.5 170.85C145 251.25 29 294.8 -80 405" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.95" d="M80 -50C250 80 330 155 168 164.15C230 244.55 330 284.75 430 425" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.95" d="M260 -80C90 90 205 150 171.5 170.85C140 251.25 20 294.8 -80 405" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.65" d="M90 -50C252 80 324 155 168 164.15C235 244.55 339 284.75 430 425" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.65" d="M250 -80C88 90 211 150 171.5 170.85C135 251.25 11 294.8 -80 405" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.65" d="M100 -50C254 80 318 155 168 164.15C240 244.55 348 284.75 430 425" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.65" d="M240 -80C86 90 217 150 171.5 170.85C130 251.25 2 294.8 -80 405" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.65" d="M110 -50C256 80 312 155 168 164.15C245 244.55 357 284.75 430 425" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.65" d="M230 -80C84 90 223 150 171.5 170.85C125 251.25 -7 294.8 -80 405" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.95" d="M120 -50C258 80 306 155 168 164.15C250 244.55 366 284.75 430 425" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.95" d="M220 -80C82 90 229 150 171.5 170.85C120 251.25 -16 294.8 -80 405" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.65" d="M130 -50C260 80 300 155 168 164.15C255 244.55 375 284.75 430 425" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.65" d="M210 -80C80 90 235 150 171.5 170.85C115 251.25 -25 294.8 -80 405" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.65" d="M140 -50C262 80 294 155 168 164.15C260 244.55 384 284.75 430 425" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+<path opacity="0.65" d="M200 -80C78 90 241 150 171.5 170.85C110 251.25 -34 294.8 -80 405" pathLength="1" stroke="#20221F" stroke-width="1.15" stroke-dasharray="1 1"/>
+</g>
+<defs>
+<clipPath id="clip0_119_654">
+<rect width="350" height="335" fill="white"/>
+</clipPath>
+</defs>
+</svg>
+
+<p class="mono art-top">THE ANSWER, OPENED</p>
+<div class="art-claim"><div><p class="mono">A FICTIONAL AI ANSWER</p><p class="claim-quote">“24/7 support.”</p></div></div>
+<span class="art-question" aria-hidden="true">?</span>
+<p class="mono art-bottom">MENTIONED ≠ RECOMMENDED</p>
+</div>
+<p class="mono opening-sequence">01 / OBSERVE &nbsp; 02 / EXAMINE &nbsp; 03 / ACT</p>
 </section>
-<section class="mlx-section mlx-method" id="method" aria-labelledby="method-title">
-  <p class="mlx-eyebrow">HOW WE WORK</p>
-  <div class="mlx-method-grid">
-    <div class="mlx-method-intro"><h2 id="method-title">Start with your<br>buyer’s questions.</h2><p class="mlx-intro">We agree a useful scope, collect the evidence and review the findings before you receive your report.</p></div>
-    <ol class="mlx-steps">
-      <li><h3 class="mlx-eyebrow">01 / FRAME THE REVIEW</h3><p>Agree the audience, key pages, buyer questions and answer surface.</p></li>
-      <li><h3 class="mlx-eyebrow">02 / COLLECT AND EXAMINE</h3><p>Review sampled AI answers alongside your content and its supporting evidence.</p></li>
-      <li><h3 class="mlx-eyebrow">03 / PRIORITIZE THE RESPONSE</h3><p>Separate observations from inferences and identify the next actions.</p></li>
-    </ol>
-  </div>
+<section class="closing-band" id="method" aria-labelledby="position-title">
+<h2 id="position-title">Being in the answer<br>is only half the story.</h2>
+<div><p>We examine sampled AI answers against public evidence, then turn the gaps into a practical order of work.</p><p class="mono">A SCOPED REVIEW. A PRIVATE REPORT. NO RANKING PROMISES.</p></div>
 </section>
-<section class="mlx-section mlx-trust" aria-labelledby="trust-title">
-  <p class="mlx-eyebrow">OUR COMMITMENT</p>
-  <h2 id="trust-title">Clear evidence.<br>Honest limits.</h2>
-  <p class="mlx-commitment">We state what we measure and what we can prove, without the hype or the guarantees.</p>
-  <p class="mlx-limits">AI answers change. A sample is not the whole market. No guaranteed rankings, citations or leads.</p>
+<section class="review-next" id="services" aria-labelledby="review-title">
+<div><p class="mono" id="offer"><span id="score"></span>THE REVIEW, IN PRACTICE</p><h2 id="review-title">From an answer<br>to a useful next move.</h2></div>
+<div><p>Agree the buyer questions, pages, answer surface and collection window. Review the answers alongside their supporting evidence. Prioritize what to clarify, correct or substantiate.</p><p>Explore a separate fictional five-page report to see the baseline, observations, actions and limits together.</p><div class="mlx-actions"><a class="editorial-text-link" href="#sample-report" data-sample-open>Read the sample report ↗</a><a class="editorial-text-link" href="method.html">Read the method ↗</a></div></div>
 </section>
-<section class="mlx-section mlx-faq" aria-labelledby="faq-title">
-  <p class="mlx-eyebrow">BEFORE YOU BEGIN</p>
-  <h2 id="faq-title">A few useful answers.</h2>
-  <dl class="mlx-faq-list">
-    <div><dt>Is this a self-service dashboard?</dt><dd>No. This is a scoped review with human-reviewed findings and a private report. It is designed for businesses that want help interpreting the evidence and choosing what to do next.</dd></div>
-    <div><dt>What will my audit cover?</dt><dd>We agree the questions, pages and answer surface around your business. Scope, price and timing are confirmed before work begins.</dd></div>
-    <div><dt>Why do AI answers vary?</dt><dd>Answers can change with the session, date and wording. We report the questions, collection window and counts so the findings can be interpreted in context.</dd></div>
-  </dl>
-</section>
-<section class="mlx-section mlx-contact" id="cta" aria-labelledby="contact-title">
-  <p class="mlx-eyebrow">YOUR NEXT MOVE</p>
-  <h2 id="contact-title">Let’s see where<br>you stand.</h2>
-  <p class="mlx-intro">Email us about your service business and what you want to understand. Start a conversation about fit and scope.</p>
-  <a class="mlx-button mlx-button--secondary" href="mailto:connect@mindleverx.com?subject=Discuss%20a%20MindLeverX%20audit" aria-label="Start a conversation, opens your email app">Start a conversation<img class="mlx-arrow" src="public-ui/arrow-ink.svg" alt="" width="22" height="22"></a>
-  <p class="mlx-small mlx-email-note">Opens your email app. Nothing is sent by this website.<br>Prefer to copy the address? <a href="mailto:connect@mindleverx.com">connect@mindleverx.com</a></p>
-  <p class="mlx-small">No audit begins until scope, price and timing are agreed.</p>
-</section>
+<section class="review-contact" id="cta" aria-labelledby="contact-title"><div><p class="mono">START WITH A CONVERSATION</p><h2 id="contact-title">What do you want<br>to understand?</h2></div><div><p>Email us about your service business and the questions your buyers ask.</p><a class="editorial-text-link" href="mailto:connect@mindleverx.com?subject=Discuss%20a%20MindLeverX%20audit">Discuss my audit ↗</a><p class="mlx-small">Opens your email app. Nothing is sent by this website.</p><p class="mlx-small">No audit begins until scope, price and timing are agreed.</p><p class="mlx-small">No guaranteed rankings, citations or leads.</p><a href="mailto:connect@mindleverx.com">connect@mindleverx.com</a></div></section>
 </main>
-<footer class="mlx-footer">
-  <a class="mlx-brand" href="#top">MindLeverX</a>
-  <p>MindLeverX helps service businesses see how they appear in AI-generated answers, and what to improve next.</p>
-  <p class="mlx-caption">Levarum, a MindLeverX Company</p>
-</footer>
+<footer class="editorial-footer"><a class="mlx-brand" href="#top">MindLeverX</a><nav class="mlx-navigation" aria-label="Main navigation"><a href="#services">The audit</a><a href="#sample-report" data-sample-open>Sample report</a><a href="#method">Our method</a></nav><p class="mono">AI VISIBILITY. HUMAN JUDGEMENT.</p></footer>
 </div>
+<section id="answer" class="answer-view" aria-labelledby="answer-title">
+<div class="answer-inner">
+<nav class="answer-nav" aria-label="Answer explorer navigation"><a href="#top" data-answer-close>← Back</a><a class="mlx-brand" href="#top">MindLeverX</a></nav>
+<div class="answer-heading"><h2 id="answer-title" tabindex="-1">THE ANSWER, <em>OPENED.</em></h2><p class="mono">FICTIONAL BUSINESS + ANSWER<br>ILLUSTRATIVE, NOT A MODEL RESPONSE</p></div>
+<div class="answer-grid"><div class="answer-copy"><p class="mono">QUESTION / Who could help a small local business with IT?</p><h3>Northline IT</h3>
+<p class="mono claim-help" id="claim-help">SELECT A CLAIM TO FOLLOW THE EVIDENCE</p>
+<div class="claim-list" aria-label="Claims in the fictional answer" aria-describedby="claim-help">
+<a id="claim-local" data-claim="local" href="#evidence-local"><span class="mono">01</span><span>works with local teams</span><span aria-hidden="true" class="claim-arrow">→</span></a>
+<a id="claim-support" data-claim="support" href="#evidence-support"><span class="mono">02</span><span>offers 24/7 support</span><span aria-hidden="true" class="claim-arrow">→</span></a>
+<a id="claim-leading" data-claim="leading" href="#evidence-leading"><span class="mono">03</span><span>is a leading cloud partner</span><span aria-hidden="true" class="claim-arrow">→</span></a>
+</div>
+<div class="answer-explanation"><h3>A mention is not a recommendation.</h3><p>This sample demonstrates the review method. A real audit has agreed questions, a named answer surface and a collection window.</p></div></div>
+<div class="evidence-stack"><article id="evidence-local" class="evidence-card evidence-local" data-evidence="local" tabindex="0" aria-labelledby="verdict-local"><header><p class="mono">CLAIM 01 / EVIDENCE READOUT</p><p class="readout-claim">“works with local teams”</p><h3 id="verdict-local">Supported, within limits</h3></header><div class="evidence-details"><div><h4 class="mono">01 SOURCE EXCERPT / FICTIONAL</h4><blockquote>“Managed IT for businesses across the North Coast.”</blockquote><p class="mono evidence-source">northline.example / Services / Who we help</p></div><div><h4 class="mono">02 WHAT WE CANNOT CONCLUDE</h4><p>The service area is explicit. This alone tells us nothing about service quality.</p></div><div><h4 class="mono">03 YOUR NEXT MOVE</h4><p class="evidence-action">Make the location and buyer fit prominent on the services page.</p></div></div></article>
+<article id="evidence-support" class="evidence-card evidence-support" data-evidence="support" tabindex="0" aria-labelledby="verdict-support"><header><p class="mono">CLAIM 02 / EVIDENCE READOUT</p><p class="readout-claim">“offers 24/7 support”</p><h3 id="verdict-support">The wording overreaches</h3></header><div class="evidence-details"><div><h4 class="mono">01 SOURCE EXCERPT / FICTIONAL</h4><blockquote>“Monitoring runs 24/7. Our service desk is open Mon–Fri, 08:00–18:00.”</blockquote><p class="mono evidence-source">northline.example / Services / Support hours</p></div><div><h4 class="mono">02 WHAT WE CANNOT CONCLUDE</h4><p>Monitoring hours are not staffed support hours. The answer has blurred the distinction.</p></div><div><h4 class="mono">03 YOUR NEXT MOVE</h4><p class="evidence-action">Separate monitoring coverage from staffed support hours.</p></div></div></article>
+<article id="evidence-leading" class="evidence-card evidence-leading" data-evidence="leading" tabindex="0" aria-labelledby="verdict-leading"><header><p class="mono">CLAIM 03 / EVIDENCE READOUT</p><p class="readout-claim">“is a leading cloud partner”</p><h3 id="verdict-leading">Not supported by this source</h3></header><div class="evidence-details"><div><h4 class="mono">01 SOURCE EXCERPT / FICTIONAL</h4><blockquote>“We help small businesses move to the cloud.”</blockquote><p class="mono evidence-source">northline.example / Services / Cloud migration</p></div><div><h4 class="mono">02 WHAT WE CANNOT CONCLUDE</h4><p>No comparison, award or accreditation here supports the word ‘leading’.</p></div><div><h4 class="mono">03 YOUR NEXT MOVE</h4><p class="evidence-action">Replace superlatives with a specific, verifiable case study.</p></div></div></article></div>
+<p class="mono answer-limit">One answer cannot stand in for the whole market.</p></div>
+<p id="claim-announcement" class="mlx-sr-only" role="status" aria-live="polite"></p>
+<div class="answer-enquiry"><div><h3>What might your answers be missing?</h3><p>Discuss the questions and evidence a review of your business would need.</p></div><a class="editorial-button" href="mailto:connect@mindleverx.com?subject=Discuss%20an%20AI%20visibility%20review">Discuss my audit ↗</a><p class="mono">Opens your email app. Scope, price and timing are agreed before work begins.</p></div><footer class="answer-footer"><p class="mono">AI VISIBILITY AUDIT / EVIDENCE BEFORE ADVICE</p><a href="#sample-report" data-sample-open>Read the full fictional sample report ↗</a></footer>
+</div></section>
 <section class="mlx-report-view" id="sample-report" aria-label="Fictional five-page sample report">
   <div class="mlx-viewer-top"><a href="#top" data-sample-close>Back to homepage</a><p id="sample-status" role="status" aria-live="polite">Fictional sample · 5 pages</p></div>
   <nav class="mlx-report-contents" aria-label="Sample report contents">
