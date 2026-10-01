@@ -169,3 +169,37 @@
     document.querySelectorAll('.rv').forEach(element => observer.observe(element));
   }
 })();
+
+// Public enquiry client. Credentials and destination remain on the server.
+document.querySelectorAll('[data-enquiry-form]').forEach(form => {
+  let sending = false;
+  form.addEventListener('submit', async event => {
+    event.preventDefault();
+    if (!form.getAttribute('action') || sending || !form.reportValidity()) return;
+    const button = form.querySelector('button[type="submit"]');
+    const status = form.querySelector('[data-enquiry-status]');
+    const label = button.textContent;
+    sending = true; button.disabled = true; button.textContent = 'Sending…';
+    form.setAttribute('aria-busy', 'true'); status.textContent = 'Sending your enquiry…';
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 25000);
+    try {
+      const response = await fetch('/api/enquiry', {
+        method:'POST', credentials:'same-origin', signal:controller.signal,
+        headers:{'Content-Type':'application/json', Accept:'application/json'},
+        body:JSON.stringify(Object.fromEntries(new FormData(form)))
+      });
+      const result = await response.json();
+      if (response.status === 202 && result?.ok === true) {
+        form.reset(); status.textContent = 'Your enquiry has been accepted for email delivery. We will review it and reply using the address you provided.';
+      } else if (response.status === 400) status.textContent = 'Check your name, email, company website and message, then try again.';
+      else if (response.status === 429) status.textContent = 'Please wait a minute before sending another enquiry.';
+      else if (response.status === 503) status.textContent = 'The enquiry form is temporarily unavailable. Your details are still here; please try again later.';
+      else status.textContent = 'We could not confirm that your enquiry was sent. Your details are still here; please wait a minute before trying again.';
+    } catch {
+      status.textContent = 'We could not confirm that your enquiry was sent. Your details are still here; please wait a minute before trying again.';
+    } finally {
+      clearTimeout(timer); sending = false; button.disabled = false; button.textContent = label; form.removeAttribute('aria-busy');
+    }
+  });
+});

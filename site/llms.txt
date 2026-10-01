@@ -1,23 +1,24 @@
 # MindLeverX
 
-> A generative engine optimization practice in development for mid-market B2B SaaS.
+> An evidence-led generative engine optimization practice for B2B SaaS.
 
 Own the answer.
 
-## Current build
+## Audit and availability
 
-This is a local preview with request intake and a workspace for organizing evidence, drafts and review decisions. Automated audits, engine collection, email delivery and subscriptions are not connected. Numerical exhibits are SAMPLE — NOT MEASURED, except explicitly dated historical file-inspection observations in the case study.
+A paid audit starts with agreed questions, collection conditions, exclusions and a fixed quote before payment. {{AVAILABILITY}} {{ENQUIRY_STATUS}}
 
-## Intended method
+## Method
 
-Agree scope, preserve a fixed prompt panel and baseline, review findings, record approval, prepare draft fixes and collect a comparable reading when collection is available. Technical access, content quotability, off-site authority and measured visibility are separate dimensions. Missing dimensions remain unmeasured; a composite requires compatible evidence for all four. API answers are a proxy for the live consumer products.
+Preserve sources, collection dates and limitations. Review technical access, content quotability, off-site evidence and AI-answer visibility separately. Missing evidence is not zero. Model-API results are distinct from observations of consumer products. The owner approves the report revision before private delivery. Implementation and repeat monitoring are separate decisions.
 
 ## Pages
 
-- [Homepage](https://mindleverx.com/): project preview and local audit intake.
-- [Method](https://mindleverx.com/method.html): intended seven-stage workflow.
-- [What is GEO?](https://mindleverx.com/what-is-geo.html): the GEO explainer.
-- [Research](https://mindleverx.com/research-hub.html): reference pages and sample report format.
-- [Sample Answer Engine Index](https://mindleverx.com/answer-engine-index-q3-2026.html): illustrative figures; no panel was run.
-- [Historical case study](https://mindleverx.com/case-study.html): observations of the original build, dated 27 July 2026.
-- [About](https://mindleverx.com/about.html): scope and current status.
+- [Homepage](https://mindleverx.com/): audit scope and explanation of GEO.
+- [Method](https://mindleverx.com/method.html): scope, evidence and review.
+- [What is GEO?](https://mindleverx.com/what-is-geo.html): definition, comparison and FAQ.
+- [GEO glossary](https://mindleverx.com/glossary.html): twelve working definitions.
+- [Research](https://mindleverx.com/research-hub.html): historical case study and educational resources.
+- [Audit report outline](https://mindleverx.com/answer-engine-index-q3-2026.html): scope, evidence, limitations, recommendations and review; no fictional results.
+- [Historical case study](https://mindleverx.com/case-study.html): original-build observations dated 27 July 2026.
+- [About](https://mindleverx.com/about.html): practice and contact.

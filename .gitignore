@@ -18,3 +18,6 @@ reference/
 output/
 tmp/
 __pycache__/
+
+# Private implementation journal; retained in the local integration backup.
+docs/mona-critique-implementation.md

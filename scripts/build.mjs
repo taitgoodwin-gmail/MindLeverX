@@ -1,12 +1,14 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { availability, enquiryStatus, renderContent, validateProfile, glossary, geoDefinition } from '../site/content.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const source = path.join(root, 'site');
 const publicBuild = process.argv.includes('--public');
 const output = path.join(root, publicBuild ? 'public-dist' : 'dist');
-const pages = ['index.html', 'what-is-geo.html', 'research-hub.html', 'answer-engine-index-q3-2026.html', 'case-study.html', 'about.html', 'method.html'];
+const pages = ['index.html', 'what-is-geo.html', 'research-hub.html', 'answer-engine-index-q3-2026.html', 'case-study.html', 'about.html', 'method.html', 'glossary.html'];
+const profile = validateProfile(JSON.parse(await fs.readFile(path.join(source, 'public-profile.json'), 'utf8')));
 const originInput = process.env.MLX_SITE_URL || (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : 'https://mindleverx.com');
 const siteURL = new URL(originInput);
 if (siteURL.protocol !== 'https:' || siteURL.username || siteURL.password || siteURL.pathname !== '/' || siteURL.search || siteURL.hash) {
@@ -17,7 +19,7 @@ const escape = value => value.replaceAll('&', '&amp;').replaceAll('"', '&quot;')
 const decode = value => value.replaceAll('&amp;', '&').replaceAll('&quot;', '"').replaceAll('&#39;', "'").replaceAll('&lt;', '<').replaceAll('&gt;', '>');
 const json = value => JSON.stringify(value).replaceAll('<', '\\u003c');
 
-// Public hosting has no intake or operator backend. Keep the local product intact
+// Public hosting excludes the private intake and operator backend. Keep that product intact
 // while making the published pages accurate before any JavaScript executes.
 function publicPage(html) {
   html = html.replace(/<aside class="preview-banner" id="local-preview"[^>]*>[\s\S]*?<\/aside>/g, '');
@@ -71,11 +73,25 @@ for (const page of pages) {
   html = html.replace(/<!--\s*INTERNAL:START\s*-->[\s\S]*?<!--\s*INTERNAL:END\s*-->/g, '');
   html = html.replace(/<!--[\s\S]*?-->/g, '');
   if (publicBuild) html = publicPage(html);
+  html = renderContent(html, page, profile);
   html = html.replace('<script src="shared.js" data-inline></script>', () => `<script>${sharedScript}</script>`);
   html = html.replace('<link rel="stylesheet" href="shared.css" data-inline>', () => `<style>${sharedStyle}</style>`);
   const title = decode(html.match(/<title>([^<]+)<\/title>/)?.[1] || 'MindLeverX');
   const description = decode(html.match(/<meta name="description" content="([^"]*)"/)?.[1] || '');
   const url = `${origin}/${page === 'index.html' ? '' : page}`;
+  const graph = [
+    { '@type': 'Organization', '@id': `${origin}/#organization`, name: 'MindLeverX', url: origin },
+    { '@type': 'WebSite', '@id': `${origin}/#website`, name: 'MindLeverX', url: origin, publisher: { '@id': `${origin}/#organization` } },
+    { '@type': ['research-hub.html','glossary.html'].includes(page) ? 'CollectionPage' : 'WebPage', '@id': `${url}#page`, name: title, description, url, isPartOf: { '@id': `${origin}/#website` } }
+  ];
+  const plain = value => decode(value.replace(/<[^>]+>/g, '')).replace(/\s+/g, ' ').trim();
+  if (['what-is-geo.html','case-study.html'].includes(page)) graph.push({ '@type': 'Article', '@id': `${url}#article`, headline: plain(html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/)?.[1] || title), description, url, mainEntityOfPage: { '@id': `${url}#page` }, author: { '@id': `${origin}/#organization` } });
+  if (page === 'what-is-geo.html') {
+    graph.push({ '@type': 'DefinedTerm', '@id': `${url}#geo-term`, name: 'Generative Engine Optimization (GEO)', description: geoDefinition, url: `${url}#define` });
+    const questions = [...html.matchAll(/<span class="qt">([\s\S]*?)<\/span>[\s\S]*?<div class="ans">([\s\S]*?)<\/div>/g)].map(([,question,answer]) => ({ '@type': 'Question', name: plain(question), acceptedAnswer: { '@type': 'Answer', text: plain(answer) } }));
+    graph.push({ '@type': 'FAQPage', '@id': `${url}#faq`, url: `${url}#faq`, mainEntity: questions });
+  }
+  if (page === 'glossary.html') graph.push({ '@type': 'DefinedTermSet', '@id': `${url}#terms`, name: 'MindLeverX GEO glossary', url, hasDefinedTerm: glossary.map(([id,name,definition]) => ({ '@type': 'DefinedTerm', '@id': `${url}#${id}`, name, description: definition, inDefinedTermSet: { '@id': `${url}#terms` } })) });
   const metadata = [
     `<link rel="canonical" href="${url}">`,
     '<meta property="og:type" content="website">',
@@ -83,11 +99,7 @@ for (const page of pages) {
     `<meta property="og:title" content="${escape(title)}">`,
     `<meta property="og:description" content="${escape(description)}">`,
     `<meta property="og:url" content="${url}">`,
-    `<script type="application/ld+json">${json({ '@context': 'https://schema.org', '@graph': [
-      { '@type': 'Organization', '@id': `${origin}/#organization`, name: 'MindLeverX', url: origin },
-      { '@type': page === 'research-hub.html' ? 'CollectionPage' : 'WebPage', '@id': `${url}#page`, name: title, description, url,
-        isPartOf: { '@type': 'WebSite', name: 'MindLeverX', url: origin }, about: { '@type': 'Thing', name: 'Generative Engine Optimization' } }
-    ] })}</script>`
+    `<script type="application/ld+json">${json({ '@context': 'https://schema.org', '@graph': graph })}</script>`
   ].join('\n');
   html = html.replace('</head>', `${metadata}\n</head>`).replace(/\n{3,}/g, '\n\n');
   await fs.writeFile(path.join(output, page), html);
@@ -96,7 +108,7 @@ await fs.writeFile(path.join(output, 'runtime.js'), 'window.MLX_AUDIT_ENDPOINT =
 await fs.writeFile(path.join(output, 'robots.txt'), `User-agent: *\nAllow: /\nDisallow: /app/\nDisallow: /api/\n\nSitemap: ${origin}/sitemap.xml\n`);
 await fs.writeFile(path.join(output, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${pages.map(page => `  <url><loc>${origin}/${page === 'index.html' ? '' : page}</loc></url>`).join('\n')}\n</urlset>\n`);
 let llms = await fs.readFile(path.join(source, 'llms.txt'), 'utf8');
-llms = llms.replaceAll('https://mindleverx.com', origin);
+llms = llms.replaceAll('https://mindleverx.com', origin).replaceAll('{{AVAILABILITY}}', availability).replaceAll('{{ENQUIRY_STATUS}}', enquiryStatus(profile));
 if (publicBuild) {
   llms = llms.replace('This is a local preview with request intake and a workspace for organizing evidence, drafts and review decisions.', 'This is a public website introducing the intended method and sample reporting. Audit requests and newsletter subscriptions are not open yet.')
     .replace('project preview and local audit intake.', 'project overview and audit availability.');

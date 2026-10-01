@@ -295,45 +295,7 @@
 <a class="skip-link" href="#top">Skip to main content</a>
 <aside class="preview-banner" id="local-preview" hidden><div class="wrap"><b>Local preview</b><span>Example measurements. Requests stay in this workspace.</span><a href="/app/">Open workspace →</a></div></aside>
 
-<div class="ticker" id="ticker">
-  <div class="tag"><span class="live"></span>SAMPLE REPORT TOPICS</div>
-  <div class="mask"><div class="track" id="tick">
-    <span>Brand mentions <b>Answer text</b></span>
-    <span>Citations <b>Source links</b></span>
-    <span>Comparisons <b>Matched conditions</b></span>
-    <span>Crawler access <b>Technical checks</b></span>
-    <span>Referrals <b>Visits from links</b></span>
-    <span>Readiness <b>Evidence gaps</b></span>
-  </div></div>
-  <button class="tkbtn" id="tkBtn" aria-label="Pause sample ticker" aria-pressed="false" title="Pause ticker">❚❚</button>
-  <div class="smp">SAMPLE</div>
-</div>
-
-
-<header>
-  <div class="wrap nav">
-    <a href="index.html" class="logo">MindLever<b>X.</b></a>
-    <nav class="navlinks" aria-label="Main navigation">
-      <a href="index.html#services">Services</a>
-      <a href="method.html" class="nav-priority">Method</a>
-      <a href="index.html#score" class="nav-example">Example scorecard</a>
-      <a href="what-is-geo.html" class="active">What is GEO?</a>
-      <a href="research-hub.html" class="nav-priority">Research</a>
-      <a href="index.html#cta" class="nav-cta textlink">Request a free audit</a>
-      <button class="toggle" id="tg">☾ Dark</button>
-    </nav>
-    <button class="menubtn" id="menubtn" aria-label="Open menu" aria-controls="mobnav" aria-expanded="false">Menu</button>
-  </div>
-  <nav class="mobnav wrap" id="mobnav" aria-label="More navigation" hidden>
-    <a href="index.html#services">Services</a>
-    <a href="method.html">Method</a>
-    <a href="index.html#score">Example scorecard</a>
-    <a href="what-is-geo.html">What is GEO?</a>
-    <a href="research-hub.html">Research</a>
-    <a href="index.html#cta">Request a free audit</a>
-    <button class="toggle" id="tg2">☾ Dark</button>
-  </nav>
-</header>
+{{HEADER}}
 
 <main id="top">
 
@@ -342,8 +304,8 @@
     <div class="dochero">
       <div class="kicker"><span class="dot"></span>Definitional pillar</div>
       <h1>What is Generative Engine Optimization?</h1>
-      <p class="lead">The playbook for getting your brand cited, quoted and recommended by the AI answer engines your buyers now ask first — ChatGPT, Perplexity, Gemini and Claude.</p>
-      <div class="metarow"><span>Reading time · <b>7 MIN</b></span><span>Updated · <b>JUL 2026</b></span><span>Methodology · <b>V1.0</b></span></div>
+      <p class="lead">GEO examines how a brand appears in AI answers and how its content and technical foundations support discovery. Start with the definition, then compare the evidence and measurement methods.</p>
+      <div class="metarow"><span>Reading time · <b>7 MIN</b></span><span>Updated · <b>SEP 2026</b></span><span>Methodology · <b>V1.0</b></span></div>
       <nav class="onpage" aria-label="On this page"><span class="opl">ON THIS PAGE</span><a href="#define">Definition</a><a href="#vs">GEO vs SEO</a><a href="#why">Why now</a><a href="#signals">Signals</a><a href="#faq">FAQ</a><a href="#takeaways">Takeaways</a></nav>
     </div>
   </div>
@@ -353,18 +315,10 @@
     <div class="define">
       <button class="copy" id="copyDef">COPY</button>
       <div class="dl"><span class="dd"></span>The definition, in one paragraph</div>
-      <p class="def"><b>Generative Engine Optimization (GEO)</b> is the practice of engineering a brand's content, technical setup and off-site presence so that generative answer engines — like ChatGPT, Perplexity, Gemini and Claude — cite, quote and recommend it inside their answers. Where SEO competes for a ranked link, GEO competes to <b>be the answer itself</b>.</p>
+      <p class="def">{{GEO_DEFINITION}}</p>
       <div class="src">SOURCE: MINDLEVERX METHODOLOGY V1.0 · JUL 2026</div>
     </div>
-    <div class="measured">
-      <div class="mh"><span class="l"><span class="ld"></span>FIG. 01 · THIS DEFINITION, MEASURED</span><span class="s">SAMPLE</span></div>
-      <div class="mcells">
-        <div class="mc"><div class="ml">CITED IN AI ANSWERS</div><div class="mv"><b>63</b><i>▲9 THIS MONTH</i></div></div>
-        <div class="mc"><div class="ml">ENGINES QUOTING IT VERBATIM</div><div class="mv"><b>3/4</b><i class="n">CHATGPT · PERPLEXITY · CLAUDE</i></div></div>
-        <div class="mc"><div class="ml">SHARE OF “WHAT IS GEO” ANSWERS</div><div class="mv"><b>41%</b><i>▲3 VS JUN</i></div></div>
-      </div>
-    </div>
-    <div class="tabcap">FIG. 01 · SAMPLE — NOT MEASURED. ILLUSTRATIVE VALUES PENDING MONITORING API.</div>
+
   </div>
 
 
@@ -398,9 +352,9 @@
       <div class="secnum">02 · Comparison</div>
       <h2 class="sec-h">GEO vs. SEO — same foundations, different finish line.</h2>
       <p class="sub">GEO doesn't replace SEO; it extends it. The technical hygiene and quality signals overlap, but what you're optimizing <em>for</em> — and how you measure it — changes.</p>
-      <div class="cmp">
+      <div class="cmp" id="geo-vs-seo">
         <table>
-          <thead><tr><th></th><th>Classic SEO</th><th class="geo">Generative Engine Optimization</th></tr></thead>
+          <caption>GEO and SEO: goals, content and measurement</caption><thead><tr><th scope="col">Dimension</th><th>Classic SEO</th><th class="geo">Generative Engine Optimization</th></tr></thead>
           <tbody>
             <tr><td>Goal</td><td>Rank a link on the results page</td><td class="geo">Be cited and quoted inside the answer</td></tr>
             <tr><td>Unit of success</td><td>Position &amp; organic clicks</td><td class="geo">Citations, mentions &amp; share of voice</td></tr>
@@ -408,11 +362,11 @@
             <tr><td>Content shape</td><td>Keyword-targeted, depth-rewarded</td><td class="geo">Answer-first, self-contained, dated, quotable</td></tr>
             <tr><td>Off-site lever</td><td>Backlinks &amp; domain authority</td><td class="geo">Third-party citations — G2, Reddit, Wikipedia, roundups</td></tr>
             <tr><td>Measurement</td><td>Rank trackers &amp; analytics sessions</td><td class="geo">Answer-engine monitoring across platforms</td></tr>
-            <tr><td>Feedback loop</td><td>Weeks to months</td><td class="geo">Days — answers refresh continuously</td></tr>
+            <tr><td>Feedback loop</td><td>Weeks to months</td><td class="geo">Depends on the engine, collection conditions and observation window</td></tr>
           </tbody>
         </table>
       </div>
-      <div class="tabcap">TABLE 01 · GEO VS SEO — MINDLEVERX METHODOLOGY V1.0</div>
+      <div class="tabcap">Table 01 · GEO vs SEO — mindleverx methodology v1.0</div>
     </div>
   </section>
 
@@ -423,7 +377,7 @@
       <h2 class="sec-h">Why it matters now.</h2>
       <p class="sub">These studies address different questions. Their methods and scope matter when interpreting the findings.</p>
       <div class="stats">
-        <div class="stat key rv"><div class="t">Controlled GEO research</div><div class="d">The GEO paper tested content changes on 1,000 queries using GPT-3.5 and five retrieved sources. Results varied by tactic and domain; they are not a customer-lift forecast. <a class="textlink" href="https://arxiv.org/abs/2311.09735v3">GEO paper · KDD 2024 · v3 →</a></div></div>
+        <div class="stat key rv"><div class="t">Controlled GEO research</div><div class="d">{{GEO_RESEARCH}}</div></div>
         <div class="stat rv d1"><div class="n">8% vs. 15%</div><div class="t">Traditional-result clicks in Pew’s study</div><div class="d">Google visits with vs. without an AI summary; summary-source links received clicks on 1% of visits with a summary. 900 U.S. adults, 68,879 searches in March 2025; results reconstructed in April. Observational, not a universal or causal estimate. <a class="textlink" href="https://www.pewresearch.org/short-reads/2025/07/22/google-users-are-less-likely-to-click-on-links-when-an-ai-summary-appears-in-the-results/">Pew Research Center · 22 July 2025 →</a></div></div>
       </div>
     </div>
@@ -457,19 +411,19 @@
         </details>
         <details>
           <summary><span class="qm">Q2</span><span class="qt">Which engines does GEO target?</span><span class="ic"></span></summary>
-          <div class="ans">The generative answer engines your buyers use — ChatGPT, Perplexity, Google's Gemini / AI Overviews, and Claude — plus the AI features now embedded in classic search. Because each synthesizes answers differently, GEO monitors visibility across all of them rather than optimizing for one.</div>
+          <div class="ans">The generative answer engines your buyers use — ChatGPT, Perplexity, Google's Gemini / AI Overviews, and Claude — plus the AI features now embedded in classic search. Each surface needs its own collection method; an audit includes only the coverage agreed in its scope.</div>
         </details>
         <details>
           <summary><span class="qm">Q3</span><span class="qt">How do you measure GEO if there are no rankings?</span><span class="ic"></span></summary>
-          <div class="ans">With answer-engine monitoring: citation rate (how often your pages are cited), mention rate (how often your brand is named), and share of voice (your citation share versus the category). The <a href="index.html#score">sample readiness scorecard</a> illustrates a possible reporting format. Daily engine collection and a validated scoring rubric are not connected in this build.</div>
+          <div class="ans">With answer-engine monitoring: citation rate (how often your pages are cited), mention rate (how often your brand is named), and share of voice (your citation share versus the category). The <a href="case-study.html">case study</a> shows how to label evidence and missing dimensions without inventing a composite score.</div>
         </details>
         <details>
           <summary><span class="qm">Q4</span><span class="qt">How long until GEO shows results?</span><span class="ic"></span></summary>
-          <div class="ans">There is no delivery or outcome guarantee in this preview. A meaningful comparison requires actual collection dates, a fixed prompt panel and enough evidence to separate a change from ordinary engine variation.</div>
+          <div class="ans">There is no universal time to an outcome. A meaningful comparison requires actual collection dates, a fixed prompt panel and enough evidence to separate a change from ordinary engine variation.</div>
         </details>
         <details>
           <summary><span class="qm">Q5</span><span class="qt">What does a GEO engagement actually involve?</span><span class="ic"></span></summary>
-          <div class="ans">The intended workflow agrees scope, preserves a baseline, reviews findings, records approval and prepares changes before measuring again. The <a href="method.html">seven-stage method</a> separates those steps and identifies what is not connected yet.</div>
+          <div class="ans">The workflow agrees scope and a fixed quote before payment, preserves evidence, and reviews the report before private delivery. Recommended changes are scoped separately. The <a href="method.html">seven-stage method</a> separates those steps and explains the evidence and review steps.</div>
         </details>
       </div>
     </div>
@@ -502,32 +456,10 @@
   </section>
 
 
-  <div class="final wrap" id="cta">
-    <h2>See if the answer engines cite you.</h2>
-    <p class="lead" style="max-width:52ch;margin:0 auto">Save a request for a free GEO audit. This local preview stores your request for review; it does not collect engine answers or deliver a scorecard.</p>
-    <form class="form" id="auditform" data-kind="audit" data-source="what-is-geo.html#cta" novalidate>
-      <div class="emailrow"><label for="auditemail">Work email</label><input type="email" id="auditemail" name="email" autocomplete="email" required placeholder="you@company.com" aria-describedby="fnote"></div>
-      <div class="domrow"><label for="auditdomain">Company domain</label><input type="text" id="auditdomain" name="domain" autocomplete="url" required placeholder="yourcompany.com" aria-describedby="domain-hint"><span id="domain-hint">The company website you want to assess.</span></div>
-      <label class="consent"><input type="checkbox" name="consent" id="intake-consent" required><span>I agree to store this request and company domain with my email in this local workspace. No email is sent.</span></label>
-      <div class="hp" aria-hidden="true"><input type="text" id="website" name="website" tabindex="-1" autocomplete="off" placeholder="Leave this field empty"></div>
-      <input type="hidden" name="ts" id="auditts" value="0">
-      <button class="btn" type="submit" id="auditbtn">Request my free audit</button>
-    </form>
-    <noscript><p class="note">JavaScript and the local server are required to save a request.</p></noscript>
-    <div class="note" id="fnote" role="status" aria-live="polite">Intake is not connected in this static preview.</div>
-  </div>
+  <div class="final wrap" id="cta"><div class="fk2">The audit</div><h2>Start with a clear scope.</h2><p class="lead" style="max-width:52ch;margin:0 auto">Agree the questions, collection conditions and fixed quote before payment.</p><p style="margin-top:24px"><a class="btn" href="index.html#cta">{{SCOPE_CTA}}</a></p></div>
 </main>
 
-<footer><div class="wrap">
-  <div class="fcols">
-    <div style="max-width:30ch"><div class="logo" style="font-size:19px">MindLever<b>X.</b></div><p style="margin-top:11px;font-weight:400">Generative engine optimization for mid-market B2B SaaS. Own the answer.</p></div>
-    <div><div class="fhead">Product</div><a href="index.html#services">Services</a><a href="method.html">Method</a><a href="index.html#score">Example scorecard</a></div>
-    <div><div class="fhead">Learn</div><a href="what-is-geo.html">What is GEO?</a><a href="research-hub.html">Research</a><a href="case-study.html">Case studies</a></div>
-    <div><div class="fhead">Company</div><a href="about.html">About</a><a href="about.html#contact">Contact</a></div>
-  </div>
-  <div class="fnote2">AI-ANSWER FINDINGS DEPEND ON THE PRODUCT, QUESTIONS AND COLLECTION CONDITIONS. MODEL-API RESULTS ARE DISTINCT FROM OBSERVATIONS OF CONSUMER CHATGPT AND OTHER CONSUMER INTERFACES.</div>
-  <div class="fbot"><span>© 2026 MindLeverX</span><span>OWN THE ANSWER.</span></div>
-</div></footer>
+{{FOOTER}}
 
 <script src="shared.js" data-inline></script>
 </body>
