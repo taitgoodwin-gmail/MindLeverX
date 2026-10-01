@@ -1,0 +1,69 @@
+{
+  "url": "http://127.0.0.1:4350",
+  "results": [
+    {
+      "width": 320,
+      "javaScriptEnabled": true,
+      "zoomLevels": [
+        1,
+        2
+      ],
+      "result": "PASS",
+      "checks": "both tables: overflow cue matches container, keyboard scrolling, 200% CSS zoom, retained evidence/labels; scoped final enquiry; no document overflow",
+      "axe": "PASS"
+    },
+    {
+      "width": 390,
+      "javaScriptEnabled": true,
+      "zoomLevels": [
+        1,
+        2
+      ],
+      "result": "PASS",
+      "checks": "both tables: overflow cue matches container, keyboard scrolling, 200% CSS zoom, retained evidence/labels; scoped final enquiry; no document overflow",
+      "axe": "PASS"
+    },
+    {
+      "width": 1440,
+      "javaScriptEnabled": true,
+      "zoomLevels": [
+        1,
+        2
+      ],
+      "result": "PASS",
+      "checks": "both tables: overflow cue matches container, keyboard scrolling, 200% CSS zoom, retained evidence/labels; scoped final enquiry; no document overflow",
+      "axe": "PASS"
+    },
+    {
+      "width": 320,
+      "javaScriptEnabled": false,
+      "zoomLevels": [
+        1
+      ],
+      "result": "PASS",
+      "checks": "both tables: overflow cue matches container, keyboard scrolling, 200% CSS zoom, retained evidence/labels; scoped final enquiry; no document overflow",
+      "axe": "UNRUN"
+    },
+    {
+      "width": 390,
+      "javaScriptEnabled": false,
+      "zoomLevels": [
+        1
+      ],
+      "result": "PASS",
+      "checks": "both tables: overflow cue matches container, keyboard scrolling, 200% CSS zoom, retained evidence/labels; scoped final enquiry; no document overflow",
+      "axe": "UNRUN"
+    },
+    {
+      "width": 1440,
+      "javaScriptEnabled": false,
+      "zoomLevels": [
+        1,
+        2
+      ],
+      "result": "PASS",
+      "checks": "both tables: overflow cue matches container, keyboard scrolling, 200% CSS zoom, retained evidence/labels; scoped final enquiry; no document overflow",
+      "axe": "UNRUN"
+    }
+  ]
+}

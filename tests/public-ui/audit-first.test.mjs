@@ -142,7 +142,7 @@ test('TC-PUB-06: detached opener and direct-link exit have a visible fallback fo
 
 test('TC-PUB-07: enquiry route uses the corrected approved inbox and describes actual behavior', () => {
   const links = [...html.matchAll(/href="(mailto:[^"]+)"/g)].map(match => match[1]);
-  assert.equal(links.length, 5);
+  assert.equal(links.length, 6);
   assert.ok(links.every(link => link.startsWith('mailto:connect@mindleverx.com')));
   assert.doesNotMatch(html, /contact@mindleverx\.com|tait@|<form\b|<input\b|<textarea\b/);
   assert.match(html, /Opens your email app\. Nothing is sent by this website\./);
