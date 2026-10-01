@@ -27,6 +27,12 @@ try {
     page.on('pageerror', e=>errors.push(e.message));page.on('response', r=>{if(r.url().startsWith(url)&&r.status()>=400)badAssets.push(`${r.status()} ${r.url()}`)});
     await page.goto(url,{waitUntil:'networkidle'});await page.evaluate(()=>document.fonts.ready);
     assert.deepEqual(await page.evaluate(()=>[...document.fonts].map(f=>f.status)),['loaded','loaded','loaded','loaded']);
+    const specimen = page.locator('.opening-art');
+    assert.match(await specimen.innerText(), /FICTIONAL ANSWER \/ UNDER REVIEW[\s\S]*24\/7 support[\s\S]*WHAT THE SOURCE ACTUALLY SAYS[\s\S]*WHAT WE CAN CONCLUDE[\s\S]*The wording overreaches/);
+    const vector = page.locator(width <= 900 ? '.mobile-paths' : '.desktop-paths');
+    assert.deepEqual(await vector.evaluate(e=>({width:e.getBoundingClientRect().width,height:e.getBoundingClientRect().height})), width <= 900 ? {width:350,height:335} : {width:542,height:622});
+    if(width <= 900) assert.ok(await page.locator('[data-answer-open]').evaluate(e=>e.getBoundingClientRect().bottom <= document.querySelector('.opening-art').getBoundingClientRect().top));
+    assert.equal(await page.getByText('Open report in Figma',{exact:true}).count(),0);
     await page.keyboard.press('Tab');assert.equal(await page.locator('.skip-link').evaluate(e=>e===document.activeElement),true);await page.keyboard.press('Enter');
     assert.equal(await page.locator('#main').evaluate(e=>e===document.activeElement),true);
     await accessible(page,`home-${width}`);
@@ -42,6 +48,7 @@ try {
       assert.equal(await page.locator('[data-evidence]:visible').count(),1);
       assert.equal(await page.locator('[role=tab][aria-selected=true]').getAttribute('id'),`claim-${key}`);
       assert.equal(await page.locator('[role=tab][tabindex="0"]').count(),1);
+      assert.equal(await page.locator(`#evidence-${key} .mlx-verdict-action h3 + h4`).innerText(),'03 YOUR NEXT MOVE');
       assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),`${width} ${key}: horizontal overflow`);
       assert.equal(await page.locator(`#evidence-${key}`).evaluate(e=>getComputedStyle(e).animationName),'none');
       await accessible(page,`${key}-${width}`);
@@ -70,7 +77,7 @@ try {
   const timelines=await page.locator('.opening-art').evaluate(e=>e.getAnimations({subtree:true}).map(a=>({name:a.animationName,duration:a.effect.getTiming().duration,iterations:a.effect.getTiming().iterations})));
   assert.ok(timelines.some(t=>t.name==='draw-evidence'));assert.ok(timelines.every(t=>t.iterations===1));
   await page.waitForFunction(()=>document.querySelector('.opening-art').classList.contains('art-settled'));
-  assert.equal(await page.locator('.art-question').evaluate(e=>getComputedStyle(e).opacity),'1');
+  assert.equal(await page.locator('.mlx-specimen-finding').isVisible(),true);
   await page.locator('[data-answer-open]').click();await page.locator('#answer').waitFor({state:'visible'});
   await page.locator('#claim-local').click();await page.locator('#evidence-local').waitFor({state:'visible'});
   assert.equal(await page.locator('#evidence-local').evaluate(e=>getComputedStyle(e).animationDuration),'0.32s');
@@ -79,6 +86,6 @@ try {
   await page.evaluate(()=>document.body.style.zoom='200%');assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
   const hit=await page.locator('[data-answer-open]').evaluate(e=>{e.scrollIntoView();const r=e.getBoundingClientRect();return e.contains(document.elementFromPoint(r.x+r.width/2,r.y+r.height/2))});assert.equal(hit,true);
   await page.waitForFunction(()=>!document.getAnimations().some(a=>a.playState==='running'));
-  await page.screenshot({path:path.join(output,'zoom-200.png'),fullPage:true});await motion.close();results.push({test:'Motion and zoom',result:'PASS',checks:'single-play 650–875ms original SVG draws, 2s coordinated timeline, settled return, 320ms claim dissolve, 200% CSS zoom/no occluded CTA',timelines});
+  await page.screenshot({path:path.join(output,'zoom-200.png'),fullPage:true});await motion.close();results.push({test:'Motion and zoom',result:'PASS',checks:'single-play 650–875ms original SVG draws, static claim/source/finding, bounded path animation, settled return, 320ms claim dissolve, 200% CSS zoom/no occluded CTA',timelines});
   await writeFile(path.join(output,'explorer-results.json'),JSON.stringify({url,testedAt:new Date().toISOString(),results},null,2));console.log(JSON.stringify(results.map(({timelines,...r})=>r),null,2));
 } finally {await browser.close();}

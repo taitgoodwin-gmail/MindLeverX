@@ -12,7 +12,7 @@
   if (keys.some(key => !links.some(link => link.dataset.claim === key) || !panels.some(panel => panel.dataset.evidence === key))) return;
   const art = document.querySelector('.opening-art');
   art?.addEventListener('animationend', event => {
-    if (event.animationName === 'marker-opacity') art.classList.add('art-settled');
+    if (event.animationName === 'draw-evidence' && !art.getAnimations({ subtree: true }).some(animation => animation.playState === 'running')) art.classList.add('art-settled');
   });
   let entered = false;
   let active = null;
