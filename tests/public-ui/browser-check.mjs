@@ -27,7 +27,7 @@ try {
     assert.equal(await page.locator('#home-view').isVisible(), true);
     assert.equal(await page.locator('#sample-report').isVisible(), false);
     assert.equal(await page.locator('form,input,textarea').count(), 0);
-    assert.equal(await page.locator('a[href^="mailto:connect@mindleverx.com"]').count(), 4);
+    assert.equal(await page.locator('a[href^="mailto:connect@mindleverx.com"]').count(), 5);
     assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth), `Homepage overflow at ${width}`);
     for (const image of await page.locator('img.mlx-arrow:visible').all()) {
       const geometry = await image.evaluate(element => ({ loaded: element.complete && element.naturalWidth > 0, width: element.getBoundingClientRect().width, height: element.getBoundingClientRect().height }));
@@ -89,7 +89,7 @@ try {
   const page = await noJS.newPage(); await page.goto(url.href);
   assert.equal(await page.locator('[data-report-page]:visible').count(), 5);
   assert.equal(await page.locator('#home-view').isVisible(), true);
-  assert.equal(await page.locator('a[href^="mailto:connect@mindleverx.com"]').count(), 4);
+  assert.equal(await page.locator('a[href^="mailto:connect@mindleverx.com"]').count(), 5);
   results.push({ result: 'PASS', checks: 'no-JavaScript readable homepage, five sample pages and direct email links' });
   await noJS.close();
   await writeFile(path.join(output, 'results.json'), JSON.stringify({ url: url.href, testedAt: new Date().toISOString(), results }, null, 2));

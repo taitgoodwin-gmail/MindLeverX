@@ -43,7 +43,7 @@
     view.hidden = !match;
     if (!match) {
       view.classList.remove('view-enter');
-      if (entered && window.location.hash === '#top') {
+      if (entered && ['', '#top'].includes(window.location.hash)) {
         document.getElementById('home-view').classList.add('view-enter');
         const target = opener?.isConnected ? opener : document.getElementById('hero-title');
         target?.focus({ preventScroll: true });
@@ -86,4 +86,7 @@
   });
   window.addEventListener('hashchange', render);
   render();
+  window.addEventListener('pageshow', () => requestAnimationFrame(() => {
+    if (entered && document.activeElement === document.body) heading.focus({ preventScroll: true });
+  }));
 })();

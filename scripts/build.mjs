@@ -55,6 +55,8 @@ function publicPage(html) {
     ['Content artifacts are delivered as drafts for your approval.', 'The intended workflow prepares content artifacts as drafts for your approval.'],
   ];
   copy.push(
+    ['href="index.html#score"', 'href="index.html#sample-report"'],
+    ['Example scorecard', 'Sample report'],
     ['mid-market B2B SaaS', 'owner-led service businesses'],
     ['MID-MARKET B2B SAAS', 'SERVICE BUSINESSES'],
     ['Free GEO Readiness Audit', 'Scoped AI visibility audit'],

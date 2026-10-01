@@ -126,3 +126,15 @@ Missing desktop design/integration source still needs the root's reconciliation.
 5. With JavaScript disabled, all three linked readouts and all five sample-report pages must remain readable.
 
 Any failed assertion is FAIL; unavailable browser/dependency/authentication is BLOCKED or UNRUN, never a pass. Tests close their contexts and do not send mail or mutate external services. `editorial-integrity.test.mjs` adds TC-EXP-09..11 for public offer consistency, exact vector path preservation/local licensed font provenance, and positive/negative fictional-provenance lint fixtures. Run it with the other `tests/public-ui/*.test.mjs` after local and public builds.
+
+## Public journey hardening — 1 October 2026
+
+Run `journeys-browser-check.mjs` with the same public URL / Playwright / Chromium / optional axe environment as the explorer checker. It records `journey-results.json` and enquiry screenshots under `MLX_QA_OUTPUT`.
+
+1. At 320/390/1440px, open direct answer and report URLs. After document loading, focus must be on the displayed heading.
+2. Open the answer from the homepage, then use browser Back and Forward. Back must restore the opener; Forward must focus the answer heading.
+3. Read and keyboard-focus the visible `connect@mindleverx.com` fallback in the explorer. No email is sent. Check overflow and automated accessibility.
+4. From About, Method, What is GEO and Research Hub, follow the existing report entry. It must open page one and focus its heading, including repeated document/history transitions. Privacy and Terms receive reflow checks only; they have no report entry.
+5. Disable JavaScript and follow the Method report link. All five report pages and the copyable mailbox must remain readable.
+
+Prerequisite: the exact public artifact is built and served, with no private server/database. Assertions or runtime errors fail the run. Missing browser/dependency means blocked, not pass. Browser contexts close automatically; stop the temporary static server after testing. Actual email-client handling, screen-reader use and Safari/Firefox remain separate manual checks.

@@ -69,4 +69,9 @@
     }
   });
   render({ focus: /^#sample-report/.test(window.location.hash) });
+  // Native cross-document fragment navigation can reset focus after deferred scripts.
+  // Restore the report heading once loading settles, without stealing an active control.
+  window.addEventListener('pageshow', () => requestAnimationFrame(() => {
+    if (wasInReport && document.activeElement === document.body) render();
+  }));
 })();

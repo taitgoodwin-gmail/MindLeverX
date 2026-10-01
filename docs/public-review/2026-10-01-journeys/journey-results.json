@@ -1,0 +1,28 @@
+{
+  "url": "http://127.0.0.1:4348",
+  "results": [
+    {
+      "width": 320,
+      "result": "PASS",
+      "checks": "Back/Forward focus, copyable email, four public-page report entry journeys and two legal-page reflow checks, reflow, no runtime errors",
+      "axe": "PASS"
+    },
+    {
+      "width": 390,
+      "result": "PASS",
+      "checks": "Back/Forward focus, copyable email, four public-page report entry journeys and two legal-page reflow checks, reflow, no runtime errors",
+      "axe": "PASS"
+    },
+    {
+      "width": 1440,
+      "result": "PASS",
+      "checks": "Back/Forward focus, copyable email, four public-page report entry journeys and two legal-page reflow checks, reflow, no runtime errors",
+      "axe": "PASS"
+    },
+    {
+      "test": "No JavaScript",
+      "result": "PASS",
+      "checks": "cross-page report anchor reaches five readable pages; copyable inspector mailbox"
+    }
+  ]
+}
