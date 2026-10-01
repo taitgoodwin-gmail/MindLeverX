@@ -14,6 +14,9 @@ test('TC-EXP-09: public routes reconcile the agreed audience and scoped enquiry 
  }
  const about=await read('public-dist/about.html');
  assert.match(about,/Scoped AI visibility audit/);assert.match(about,/scope, price and timing agreed before work begins/);
+ assert.doesNotMatch(about,/Audit requests and engine collection are not available yet/);
+ assert.match(about,/Website intake and automated engine collection are not connected/);
+ assert.match(about,/To discuss a scoped, operator-assisted audit, email <a href="mailto:connect@mindleverx\.com">/);
  const local=await read('dist/about.html');assert.match(local,/mid-market B2B SaaS/,'Local/private integration inputs remain unchanged');
 });
 test('TC-EXP-10: original vector geometry is preserved and no temporary asset or external font URLs ship',async()=>{
