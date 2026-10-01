@@ -29,35 +29,60 @@ try {
     assert.equal(await page.locator('form,input,textarea').count(), 0);
     assert.equal(await page.locator('a[href^="mailto:connect@mindleverx.com"]').count(), 4);
     assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth), `Homepage overflow at ${width}`);
-    for (const image of await page.locator('img.mlx-arrow').all()) {
+    for (const image of await page.locator('img.mlx-arrow:visible').all()) {
       const geometry = await image.evaluate(element => ({ loaded: element.complete && element.naturalWidth > 0, width: element.getBoundingClientRect().width, height: element.getBoundingClientRect().height }));
       assert.deepEqual(geometry, { loaded: true, width: 22, height: 22 });
     }
     await page.screenshot({ path: path.join(output, `homepage-${width}.png`), fullPage: true });
+    for (const link of await page.locator('.mlx-navigation a').all()) {
+      assert.equal(await link.isVisible(), true, `Main navigation hidden at ${width}`);
+    }
+    const smallText = await page.locator('.mlx-eyebrow:visible, .mlx-caption:visible').evaluateAll(elements => elements.map(element => parseFloat(getComputedStyle(element).fontSize)));
+    assert.ok(smallText.every(size => size >= 14), `Small labels at ${width}`);
     const opener = page.locator('.mlx-actions [data-sample-open]');
     await opener.focus(); await page.keyboard.press('Enter');
     await page.waitForURL('**/#sample-report');
+    await page.locator('#home-view').waitFor({ state: 'hidden' });
     assert.equal(await page.locator('#home-view').isVisible(), false);
     for (let number = 1; number <= 5; number++) {
+      await page.locator(`[data-report-page="${number}"]`).waitFor({ state: 'visible' });
       assert.equal(await page.locator(`[data-report-page="${number}"]`).isVisible(), true);
       assert.equal(await page.locator('[data-report-page]:visible').count(), 1);
+      assert.equal(await page.locator(`[data-report-page="${number}"] h2`).evaluate(element => document.activeElement === element), true);
+      assert.equal(await page.locator('.mlx-report-contents [aria-current="page"]').innerText(), ['1. Overview', '2. Answers', '3. Readiness', '4. Actions', '5. Method & limits'][number - 1]);
       assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth), `Viewer page ${number} overflow at ${width}`);
       assert.equal(await page.locator('#sample-status').innerText(), `Fictional sample · Page ${number} of 5`);
+      for (const image of await page.locator('img.mlx-arrow:visible').all()) {
+        assert.deepEqual(await image.evaluate(element => ({ loaded: element.complete && element.naturalWidth > 0, width: element.getBoundingClientRect().width, height: element.getBoundingClientRect().height })), { loaded: true, width: 22, height: 22 });
+      }
       await page.screenshot({ path: path.join(output, `sample-${number}-${width}.png`), fullPage: true });
       if (number < 5) { await page.locator('#sample-next').focus(); await page.keyboard.press('Enter'); await page.waitForURL(`**/#sample-report-page-${number + 1}`); }
     }
     assert.equal(await page.locator('#sample-next').isVisible(), false);
-    await page.goBack(); assert.equal(await page.locator('[data-report-page="4"]').isVisible(), true);
-    await page.goForward(); assert.equal(await page.locator('[data-report-page="5"]').isVisible(), true);
-    await page.keyboard.press('Escape'); await page.waitForURL('**/#top');
+    await page.goBack(); await page.locator('[data-report-page="4"]').waitFor({ state: 'visible' }); assert.equal(await page.locator('[data-report-page="4"]').isVisible(), true);
+    await page.goForward(); await page.locator('[data-report-page="5"]').waitFor({ state: 'visible' }); assert.equal(await page.locator('[data-report-page="5"]').isVisible(), true);
+    await page.keyboard.press('Escape'); await page.waitForURL('**/#top'); await page.locator('#home-view').waitFor({ state: 'visible' });
     assert.equal(await opener.evaluate(element => document.activeElement === element), true);
     await opener.press('Enter'); await page.waitForURL('**/#sample-report');
-    await page.locator('[data-sample-close]').click(); await page.waitForURL('**/#top');
+    await page.locator('[data-sample-close]').click(); await page.waitForURL('**/#top'); await page.locator('#home-view').waitFor({ state: 'visible' });
     assert.equal(await opener.evaluate(element => document.activeElement === element), true);
     await page.goto(new URL('#sample-report-page-3', url).href);
+    await page.locator('[data-report-page="3"]').waitFor({ state: 'visible' });
     assert.equal(await page.locator('[data-report-page="3"]').isVisible(), true);
+    await page.locator('.mlx-report-contents a').nth(3).press('Enter');
+    await page.waitForURL('**/#sample-report-page-4');
+    await page.locator('[data-report-page="4"]').waitFor({ state: 'visible' });
+    await page.locator('[data-report-page="4"] a').first().press('Enter');
+    await page.waitForURL('**/#sample-report-page-3');
+    await page.locator('[data-report-page="3"]').waitFor({ state: 'visible' });
+    assert.equal(await page.locator('[data-report-page="3"] h2').evaluate(element => document.activeElement === element), true);
+    await page.goto(new URL('#sample-report-page-99', url).href);
+    await page.locator('#sample-error').waitFor({ state: 'visible' });
+    assert.equal(await page.locator('#sample-error').isVisible(), true);
+    assert.equal(await page.locator('#sample-error').evaluate(element => document.activeElement === element), true);
+    assert.equal(await page.locator('.mlx-button').first().evaluate(element => getComputedStyle(element).transitionDuration), '0s');
     assert.deepEqual(errors, []);
-    results.push({ width, result: 'PASS', checks: 'homepage, no overflow, exact asset geometry, email link, all five pages, keyboard, Back/Forward, Escape, reopen, close, direct link, no runtime errors' });
+    results.push({ width, result: 'PASS', checks: 'homepage, mobile navigation, labels >=14px, no overflow, exact visible asset geometry, email links, five pages, contents/current-page, evidence links, focus, Back/Forward, Escape, reopen, close, invalid/direct links, reduced motion, no runtime errors' });
     await context.close();
   }
   const noJS = await browser.newContext({ javaScriptEnabled: false, viewport: { width: 390, height: 844 } });

@@ -9,7 +9,13 @@
   const next = document.getElementById('sample-next');
   const status = document.getElementById('sample-status');
   const skip = document.querySelector('.skip-link');
+  const error = document.getElementById('sample-error');
+  const contents = [...document.querySelectorAll('[data-report-link]')];
   if (!home || !viewer || pages.length !== 5 || !navigation || !previous || !next || !status || !skip) return;
+  // If the document is incomplete, retain readable static content rather than
+  // hiding it and then failing midway through enhancement.
+  const headings = pages.map(page => page.querySelector('h2'));
+  if (headings.some(heading => !heading)) return;
   let opener = null;
   let wasInReport = false;
   const defaultTitle = document.title;
@@ -18,12 +24,18 @@
     const match = /^#sample-report(?:-page-([1-5]))?$/.exec(window.location.hash);
     const inReport = !!match;
     const pageNumber = match ? Number(match[1] || 1) : 0;
+    const invalidReport = !inReport && /^#sample-report/.test(window.location.hash);
+    if (error) {
+      error.hidden = !invalidReport;
+      error.textContent = invalidReport ? 'That sample page does not exist. Choose Sample report to start at the overview.' : '';
+    }
     home.hidden = inReport;
     viewer.hidden = !inReport;
     navigation.hidden = !inReport;
     skip.href = inReport ? `#sample-report-page-${pageNumber}` : '#main';
     document.title = inReport ? `Sample report · Page ${pageNumber} of 5 · MindLeverX` : defaultTitle;
     pages.forEach((page, index) => { page.hidden = inReport && index !== pageNumber - 1; });
+    contents.forEach((link, index) => { link.setAttribute('aria-current', inReport && index === pageNumber - 1 ? 'page' : 'false'); });
     if (inReport) {
       previous.href = pageNumber === 1 ? '#top' : `#sample-report-page-${pageNumber - 1}`;
       previous.firstChild.textContent = pageNumber === 1 ? 'Back to homepage' : 'Previous page';
@@ -31,14 +43,16 @@
       next.href = `#sample-report-page-${Math.min(pageNumber + 1, 5)}`;
       status.textContent = `Fictional sample · Page ${pageNumber} of 5`;
       if (focus) {
-        pages[pageNumber - 1].querySelector('h2').focus({ preventScroll: true });
+        headings[pageNumber - 1].focus({ preventScroll: true });
         window.scrollTo({ top: 0, behavior: 'instant' });
       }
-    } else if (wasInReport && focus) {
-      const target = opener?.isConnected ? opener : document.getElementById('hero-title');
-      if (!target.hasAttribute('tabindex')) target.setAttribute('tabindex', '-1');
-      target.focus({ preventScroll: true });
-      target.scrollIntoView({ block: 'center', behavior: 'instant' });
+    } else if ((wasInReport || invalidReport) && focus) {
+      const target = invalidReport && error ? error : opener?.isConnected ? opener : document.getElementById('hero-title');
+      if (target) {
+        if (!target.hasAttribute('tabindex')) target.setAttribute('tabindex', '-1');
+        target.focus({ preventScroll: true });
+        target.scrollIntoView({ block: 'center', behavior: 'instant' });
+      }
     }
     wasInReport = inReport;
   }

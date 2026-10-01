@@ -8,7 +8,7 @@ const script = await readFile(new URL('audit-first.js', source), 'utf8');
 const html = await readFile(new URL('homepage.html', source), 'utf8');
 const css = await readFile(new URL('audit-first.css', source), 'utf8');
 
-function setup(hash = '') {
+function setup(hash = '', { missingHeading = false } = {}) {
   let focused = null;
   const scrolls = [];
   class Element {
@@ -21,20 +21,22 @@ function setup(hash = '') {
     scrollIntoView(options) { scrolls.push(options); }
     querySelector() { return this.heading; }
   }
-  const ids = Object.fromEntries(['home-view', 'sample-report', 'sample-prev', 'sample-next', 'sample-status', 'hero-title'].map(id => [id, new Element()]));
+  const ids = Object.fromEntries(['home-view', 'sample-report', 'sample-prev', 'sample-next', 'sample-status', 'sample-error', 'hero-title'].map(id => [id, new Element()]));
   const pages = Array.from({ length: 5 }, () => { const page = new Element(); page.heading = new Element(); return page; });
+  if (missingHeading) pages[2].heading = null;
+  const contents = Array.from({ length: 5 }, () => new Element());
   const navigation = new Element(), skip = new Element();
   const openers = [new Element(), new Element()];
   const document = new Element();
   document.title = 'MindLeverX — Your AI visibility, made clear.';
   document.getElementById = id => ids[id] || null;
   document.querySelector = selector => selector === '.mlx-report-navigation' ? navigation : skip;
-  document.querySelectorAll = selector => selector === '[data-report-page]' ? pages : openers;
+  document.querySelectorAll = selector => selector === '[data-report-page]' ? pages : selector === '[data-report-link]' ? contents : openers;
   const window = new Element();
   window.location = { hash };
   window.scrollTo = options => scrolls.push(options);
   vm.runInNewContext(script, { document, window });
-  return { ids, pages, navigation, skip, openers, document, window, focused: () => focused, scrolls,
+  return { ids, pages, contents, navigation, skip, openers, document, window, focused: () => focused, scrolls,
     navigate(hash) { window.location.hash = hash; window.fire('hashchange'); } };
 }
 
@@ -49,6 +51,26 @@ test('TC-PUB-01: homepage is the default, with the report hidden only after enha
   assert.match(html, /<section class="mlx-report-view" id="sample-report" aria-label=/);
   assert.equal((html.match(/data-report-page="[1-5]"/g) || []).length, 5);
   assert.doesNotMatch(html, /class="mlx-report-page"[^>]*\bhidden\b/);
+});
+
+test('TC-PUB-14: invalid direct links announce recovery and clear on a valid page', () => {
+  const p = setup('#sample-report-page-99');
+  assert.equal(p.ids['sample-error'].hidden, false);
+  assert.match(p.ids['sample-error'].textContent, /does not exist/);
+  assert.equal(p.focused(), p.ids['sample-error']);
+  assert.equal(p.ids['home-view'].hidden, false);
+  p.navigate('#sample-report-page-3');
+  assert.equal(p.ids['sample-error'].hidden, true);
+  assert.equal(p.ids['sample-error'].textContent, '');
+  assert.deepEqual(p.contents.map(link => link.attrs.get('aria-current')), ['false', 'false', 'page', 'false', 'false']);
+});
+
+test('TC-PUB-15: incomplete report markup keeps the static document readable', () => {
+  const p = setup('#sample-report-page-3', { missingHeading: true });
+  assert.equal(p.ids['home-view'].hidden, false);
+  assert.equal(p.ids['sample-report'].hidden, false);
+  assert.ok(p.pages.every(page => !page.hidden));
+  assert.equal(p.focused(), null);
 });
 
 test('TC-PUB-02: opening the sample selects page one and moves focus to its heading', () => {
