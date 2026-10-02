@@ -12,7 +12,7 @@ A connector-side parity check against the branch content passed the structure ru
 - the preserved golden synthetic eligibility/arithmetic fixture; and
 - internal Markdown/file/anchor links.
 
-The eight new technical/NFR product cases T40–T47 remain **NOT RUN**. The canonical Python validator/regression suite has not yet been executed in GitHub Actions for this branch; CI safety rails are being added separately before this proposal branch is promoted. Do not treat this document-level pass as product acceptance or production readiness.
+The eight new technical/NFR product cases T40–T47 remain **NOT RUN**. GitHub CI run `37065261613` on PR #3 passed the repository application checks, canonical requirements structure validator plus validator regression suite, and public-build verification. That CI validates the requirements machinery and existing product regressions; it does **not** execute T40–T47 or establish product acceptance/production readiness.
 
 # Requirements rewrite verification
 
