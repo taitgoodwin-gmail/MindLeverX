@@ -1,3 +1,19 @@
+## 2 October 2026 — technical/NFR gap-pass verification
+
+The review branch `codex/technical-nfr-gap-pass-2026-10-02` extends the structured register from 97 to **105 rows**, with **19 proposals** and **47 acceptance-case families**.
+
+A connector-side parity check against the branch content passed the structure rules for:
+- unique requirement IDs;
+- exact 86-source/live-review coverage and six existing provisional IDs;
+- profile/friction completeness;
+- valid acceptance-case and decision references;
+- valid requirement dependencies with no dependency cycles;
+- proposal labeling/source boundaries;
+- the preserved golden synthetic eligibility/arithmetic fixture; and
+- internal Markdown/file/anchor links.
+
+The eight new technical/NFR product cases T40–T47 remain **NOT RUN**. The canonical Python validator/regression suite has not yet been executed in GitHub Actions for this branch; CI safety rails are being added separately before this proposal branch is promoted. Do not treat this document-level pass as product acceptance or production readiness.
+
 # Requirements rewrite verification
 
 ## Current validation behavior — 19 September 2026
