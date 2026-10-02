@@ -131,3 +131,17 @@ Source rows and exact original wording are retained in requirements.json. All 86
 The current Google Sheet was read through a browser XLSX export after native connector discovery found no Drive/Sheets reader. Requirements has 78 original rows; Evidence and MVP Review has 86 reviewed IDs; Proposed additions has six provisional IDs. All are retained. Prior proposed wording, acceptance, decisions and review notes are preserved per ID in requirements.json and in live-sheet-snapshot.json. Relevant strengths from the earlier review were retained: JavaScript dependence is not inherently failure, backup retention remains in scope, cancellation and entitlement are explicit, anchoring differs from question intent, and unknown comparability is not an approved comparison. The prior suggested OPS merges remain proposals; this draft keeps both trace IDs with linked operator implementations.
 
 The Owner decisions sheet still asks whether monthly release should be automatic and names Perplexity Sonar as the initial channel; later local accepted decisions supersede those stale questions. The live overview/old review's 55-test and unresolved-access statements predate the verified Otterly export and 68-test local frontend checkpoint. No Sheet or Linear values were changed; synchronization is pending. Fresh source checking is required immediately before any eventual write.
+
+
+## 2 October 2026 technical/NFR proposals
+
+These proposals have no historical source ID and do not modify the preserved 86-source-ID crosswalk. They were added after the production-engineering gap review and remain unapproved product scope:
+
+- PROP-REL-001 — Release and configuration integrity
+- PROP-DATA-002 — Schema migration and recovery integrity
+- PROP-API-001 — Versioned interface compatibility
+- PROP-PERF-001 — Bounded performance and timeout budgets
+- PROP-OBS-001 — Production observability and alerting
+- PROP-SUP-001 — Dependency and artifact integrity
+- PROP-ABUSE-001 — Distributed abuse and resource protection
+- PROP-DR-001 — Off-device disaster recovery
