@@ -2,7 +2,7 @@
 
 Prepared 18 September 2026 Eastern. **Review draft, not a release declaration or blanket scope approval.**
 
-This package reconciles 78 V4 IDs, 8 recurring-service IDs from the V5 proposal, all 6 existing provisional IDs from the live Google Sheet, and 5 new rubric-coverage proposals: **97 rows total**. Every original ID remains traceable. The live Sheet was read through a fresh browser export on 18 September Eastern and its 86-row prior review was compared with this rewrite. The Sheet and original files are unchanged. The captured snapshot establishes what was read, not that future Sheet edits are synchronized.
+This package reconciles 78 V4 IDs, 8 recurring-service IDs from the V5 proposal, all 6 existing provisional IDs from the live Google Sheet, and 13 new proposals, including the 2 October production-engineering gap pass: **105 rows total**. Every original ID remains traceable. The live Sheet was read through a fresh browser export on 18 September Eastern and its 86-row prior review was compared with this rewrite. The Sheet and original files are unchanged. The captured snapshot establishes what was read, not that future Sheet edits are synchronized.
 
 The intended journey is an evidence-backed paid audit leading to a repeatable recurring service with low owner/client effort. ChatGPT consumer visibility is the leading measurement interest; broader platform coverage remains an ambition subject to qualification. Scope, buyer, price and one-time release policy remain unresolved. Monthly reports require owner release approval. The existing evidence frontend is an internal saved-data inspector, not the finished client report.
 
@@ -1474,3 +1474,120 @@ For each proposed requirement rewrite and priority, retain actual reviewer cover
 **Depends on:** No requirement prerequisite. **Unresolved decisions:** None recorded for this formulation.
 
 **Acceptance cases:** [T39](acceptance-tests.md#t39). Product execution: **NOT RUN**.
+
+
+## 2 October 2026 — proposed technical/NFR gap additions
+
+These eight rows close production-engineering coverage gaps found during the harmonization pass. They are **proposals, not implementation authorization**; no numerical production SLO, retention period, RPO/RTO, or rate threshold is invented here.
+
+### PROP-REL-001 — Release and configuration integrity
+
+Every production release identifies the exact source revision, build artifact, runtime/configuration version and required environment validation; missing or invalid required configuration blocks release, and rollback restores a previously verified release without losing accepted customer data.
+
+**Disposition:** proposed addition. 2 October production-engineering gap pass; exact implementation remains unapproved scope.
+
+**Authority:** project production/readiness evidence plus current delivery guidance. **Status:** Proposal; not implementation authorization.
+
+**Rubric:** [operations](rubric-profiles.md#operations). **Owner friction:** Direct: visible failures and targeted recovery reduce owner work. **Client friction:** Supporting: clear release state and recovery reduce customer-facing surprises.
+
+**Depends on:** MLX3-NFR-002, MLX3-NFR-005. **Unresolved decisions:** None recorded for this formulation.
+
+**Acceptance cases:** [T40](acceptance-tests.md#t40). Product execution: **NOT RUN**.
+
+### PROP-DATA-002 — Schema migration and recovery integrity
+
+Every persistent schema or data migration is versioned and tested from each supported prior state; destructive changes require a verified recovery point, migration failure preserves or restores the last accepted data state, and partial migration is never reported as successful.
+
+**Disposition:** proposed addition. 2 October production-engineering gap pass; exact implementation remains unapproved scope.
+
+**Authority:** project production/readiness evidence plus current delivery guidance. **Status:** Proposal; not implementation authorization.
+
+**Rubric:** [evidence](rubric-profiles.md#evidence). **Owner friction:** Resolve retained state without manual reconstruction. **Client friction:** Preserve trustworthy customer/report history across upgrades.
+
+**Depends on:** MLX3-NFR-006, MLX3-NFR-009. **Unresolved decisions:** D04.
+
+**Acceptance cases:** [T41](acceptance-tests.md#t41). Product execution: **NOT RUN**.
+
+### PROP-API-001 — Versioned interface compatibility
+
+Every internal or external interface used across independently deployable components has a versioned contract and compatibility test; incompatible changes create an explicit successor or fail before release rather than silently changing field meaning or failure semantics.
+
+**Disposition:** proposed addition. 2 October production-engineering gap pass; exact implementation remains unapproved scope.
+
+**Authority:** project production/readiness evidence plus current delivery guidance. **Status:** Proposal; not implementation authorization.
+
+**Rubric:** [operations](rubric-profiles.md#operations). **Owner friction:** Reduce hidden integration breakage and manual reconciliation. **Client friction:** Prevent silent behavior changes in customer-facing flows.
+
+**Depends on:** MLX3-NFR-010, MLX3-MEA-014. **Unresolved decisions:** None recorded for this formulation.
+
+**Acceptance cases:** [T42](acceptance-tests.md#t42). Product execution: **NOT RUN**.
+
+### PROP-PERF-001 — Bounded performance and timeout budgets
+
+Each accepted production-critical flow has explicit measurable response, execution and timeout budgets derived from the approved journey and economics; long-running work remains asynchronous, and an undefined or exceeded material budget is surfaced rather than hidden as success.
+
+**Disposition:** proposed addition. 2 October production-engineering gap pass; exact implementation remains unapproved scope.
+
+**Authority:** project production/readiness evidence plus current delivery guidance. **Status:** Proposal; not implementation authorization.
+
+**Rubric:** [operations](rubric-profiles.md#operations). **Owner friction:** Make slow/stuck work visible instead of creating rescue work. **Client friction:** Keep waits and failures understandable without pretending success.
+
+**Depends on:** MLX3-NFR-008, MLX3-OPS-003. **Unresolved decisions:** D08.
+
+**Acceptance cases:** [T43](acceptance-tests.md#t43). Product execution: **NOT RUN**.
+
+### PROP-OBS-001 — Production observability and alerting
+
+Production-critical flows emit tenant-safe correlated health, latency, failure and dependency signals, with actionable alerts for conditions requiring intervention; monitoring never fabricates product state and follows the same redaction and access rules as application data.
+
+**Disposition:** proposed addition. 2 October production-engineering gap pass; exact implementation remains unapproved scope.
+
+**Authority:** project production/readiness evidence plus current delivery guidance. **Status:** Proposal; not implementation authorization.
+
+**Rubric:** [operations](rubric-profiles.md#operations). **Owner friction:** Surface only actionable exceptions with enough context to recover. **Client friction:** Support reliable service without exposing private technical/customer detail.
+
+**Depends on:** MLX3-NFR-004, MLX3-NFR-005, MLX3-ADM-006. **Unresolved decisions:** D08.
+
+**Acceptance cases:** [T44](acceptance-tests.md#t44). Product execution: **NOT RUN**.
+
+### PROP-SUP-001 — Dependency and artifact integrity
+
+A releasable build uses locked, reviewable dependencies and a verifiable source-to-artifact chain; dependency or artifact-integrity failures are evaluated against an explicit release policy and cannot be silently ignored or rewritten as successful verification.
+
+**Disposition:** proposed addition. 2 October production-engineering gap pass; exact implementation remains unapproved scope.
+
+**Authority:** project production/readiness evidence plus current delivery guidance. **Status:** Proposal; not implementation authorization.
+
+**Rubric:** [security](rubric-profiles.md#security). **Owner friction:** Make dependency/release risk visible before it becomes production rescue work. **Client friction:** Reduce risk of unreviewed software changes affecting delivered behavior.
+
+**Depends on:** MLX3-NFR-002, PROP-REL-001. **Unresolved decisions:** D05.
+
+**Acceptance cases:** [T45](acceptance-tests.md#t45). Product execution: **NOT RUN**.
+
+### PROP-ABUSE-001 — Distributed abuse and resource protection
+
+Public or externally reachable mutation endpoints enforce production-effective body, origin, rate and abuse controls across instances, with predictable rejection and recovery behavior; a process-local counter alone cannot satisfy the production control.
+
+**Disposition:** proposed addition. 2 October production-engineering gap pass; exact implementation remains unapproved scope.
+
+**Authority:** project production/readiness evidence plus current delivery guidance. **Status:** Proposal; not implementation authorization.
+
+**Rubric:** [security](rubric-profiles.md#security). **Owner friction:** Keep abuse controls predictable and fleet-wide without manual blocking. **Client friction:** Legitimate users receive safe, understandable rejection rather than degraded or false-success behavior.
+
+**Depends on:** MLX3-AUD-005, MLX3-NFR-008. **Unresolved decisions:** D08.
+
+**Acceptance cases:** [T46](acceptance-tests.md#t46). Product execution: **NOT RUN**.
+
+### PROP-DR-001 — Off-device disaster recovery
+
+Production data and accepted report artifacts required to continue the service have an independently recoverable backup outside the primary runtime, and restore is periodically verified to a fresh destination with recorded evidence; numeric recovery objectives remain explicit decisions rather than invented defaults.
+
+**Disposition:** proposed addition. 2 October production-engineering gap pass; exact implementation remains unapproved scope.
+
+**Authority:** project production/readiness evidence plus current delivery guidance. **Status:** Proposal; not implementation authorization.
+
+**Rubric:** [operations](rubric-profiles.md#operations). **Owner friction:** Make recovery a tested procedure rather than an owner emergency. **Client friction:** Protect continuity of accepted customer records/reports without inventing SLA claims.
+
+**Depends on:** MLX3-NFR-006, MLX3-NFR-009, PROP-DATA-002. **Unresolved decisions:** D04, D08.
+
+**Acceptance cases:** [T47](acceptance-tests.md#t47). Product execution: **NOT RUN**.

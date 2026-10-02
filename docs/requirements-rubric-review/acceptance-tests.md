@@ -417,3 +417,84 @@ Each Txx section is a case family with separately scored numbered subcases (Txx.
 - [TC-EVD-001](../testing-practice.md): independent saved-data arithmetic. Its input/hash and expected 0/16 stay distinct from this package's synthetic 2/4 fixture.
 
 The implementing slice must bind each applicable subcase to actual interfaces and artifact versions before calling a requirement development-ready. Owner choices remain explicit; the tester must not invent policy or implementation setup.
+
+## T40
+
+**Claim/boundary:** release and configuration integrity. **Prerequisites:** disposable release fixture with source revision A, build artifact hash A, valid config set C1, invalid/missing config variants, previously verified release B and synthetic accepted customer data. **Actual:** NOT RUN.
+
+1. Build release A and record source revision, artifact hash, runtime version and required configuration names. **Expect:** all identities are explicit and reproducible; secrets are referenced, not exposed.
+2. Remove or invalidate one required configuration value and attempt release validation. **Expect:** release is blocked before success is claimed, with a safe actionable reason.
+3. Restore C1, deploy the disposable release, then exercise rollback to B while preserving the synthetic accepted data. **Expect:** rollback returns the prior verified behavior and retained data without silent loss or schema mismatch.
+
+**Cleanup:** remove disposable release/config fixtures and preserve only nonsecret receipts. **Not tested:** a production-specific numeric rollback-time objective.
+
+## T41
+
+**Claim/boundary:** schema migration and recovery integrity. **Prerequisites:** isolated databases representing each supported prior schema, migration target version, representative retained evidence/report bytes, and a fresh recovery destination. **Actual:** NOT RUN.
+
+1. Migrate each supported prior schema to the target. **Expect:** version changes exactly once, required records remain readable, and retained hashes/identities remain valid where the migration does not intentionally transform them.
+2. Inject failure midway through a destructive or multi-step migration. **Expect:** no partially migrated state is reported successful; the last accepted state is preserved or restored according to the declared strategy.
+3. Re-run an already completed migration and attempt downgrade/restore using the defined recovery path. **Expect:** idempotent/safe refusal behavior and a verified fresh-destination recovery, not an in-place overwrite.
+
+**Cleanup:** discard isolated databases and migration outputs. **Not tested:** production data volume or a numeric RPO/RTO.
+
+## T42
+
+**Claim/boundary:** versioned interface compatibility. **Prerequisites:** pinned producer/consumer interface contracts for one independently deployable boundary, current version V1, successor V2 fixture, and representative success/failure payloads. **Actual:** NOT RUN.
+
+1. Execute V1 producer against V1 consumer for normal and defined failure cases. **Expect:** fields, meanings and failure semantics match the pinned contract.
+2. Introduce a compatible additive V2 change. **Expect:** supported V1 consumer behavior remains valid or explicitly negotiates V2 according to the declared compatibility rule.
+3. Introduce a breaking rename/type/semantic change without a successor/version boundary. **Expect:** compatibility validation fails before release; the change cannot silently reinterpret data.
+
+**Cleanup:** remove disposable interface fixtures. **Not tested:** every historical client version beyond the declared supported set.
+
+## T43
+
+**Claim/boundary:** bounded performance and timeout budgets. **Prerequisites:** production-like test boundary for one critical synchronous flow and one long-running asynchronous flow; explicit proposed budgets derived from the selected journey/economics and labeled provisional until accepted. **Actual:** NOT RUN.
+
+1. Measure the synchronous flow under representative normal load. **Expect:** observed timing is recorded against the explicit budget; an undefined budget blocks performance acceptance rather than being assumed adequate.
+2. Force the long-running operation past the page-request budget. **Expect:** work continues asynchronously or reaches an explicit timeout/failure state while the UI remains usable and does not invent completion.
+3. Exceed a material accepted timeout or resource budget. **Expect:** observable bounded failure/recovery behavior and no hidden endless work.
+
+**Cleanup:** stop load/test workers and remove synthetic data. **Not tested:** internet-wide scale or an unapproved uptime/SLA target.
+
+## T44
+
+**Claim/boundary:** production observability and alerting. **Prerequisites:** tenant-safe synthetic run with correlation ID, healthy case, retryable failure, persistent dependency outage and stale/no-progress case; alert sink that cannot contact real customers. **Actual:** NOT RUN.
+
+1. Execute healthy and failed flows. **Expect:** health, latency, dependency/failure and correlation signals are emitted without secrets or unnecessary customer content.
+2. Trigger a transient retryable error and a persistent outage separately. **Expect:** signals distinguish recovery from intervention-required failure and avoid duplicate/noisy actionable alerts under the defined rule.
+3. Make the UI state disagree with synthetic telemetry. **Expect:** persisted product state remains authoritative; monitoring cannot fabricate completion or mutate the product record.
+
+**Cleanup:** clear synthetic alert sink and test telemetry. **Not tested:** a production on-call response-time SLA.
+
+## T45
+
+**Claim/boundary:** dependency and artifact integrity. **Prerequisites:** locked dependency manifest where applicable, source revision, build recipe, produced artifact hash, and one deliberately modified dependency/artifact fixture. **Actual:** NOT RUN.
+
+1. Build from the pinned source/dependency state twice. **Expect:** the release receipt identifies source and dependency inputs and the intended artifact; any nondeterminism is disclosed rather than hidden.
+2. Introduce an unreviewed dependency change. **Expect:** dependency review identifies the delta and applies the declared release policy before merge/release.
+3. Modify the built artifact after verification or substitute an unexpected artifact. **Expect:** source-to-artifact integrity check fails; the modified artifact is not treated as the verified release.
+
+**Cleanup:** discard modified fixtures. **Not tested:** immunity from all upstream supply-chain compromise.
+
+## T46
+
+**Claim/boundary:** distributed abuse and resource protection. **Prerequisites:** externally reachable mutation endpoint in an isolated environment, two or more application instances or equivalent shared-limit harness, valid-origin client, invalid-origin client, oversize body, honeypot/bot fixture and configured test rate policy. **Actual:** NOT RUN.
+
+1. Send valid requests below the configured policy across multiple instances. **Expect:** legitimate requests succeed consistently.
+2. Exceed the shared rate/abuse policy while distributing requests across instances. **Expect:** enforcement remains effective across the fleet; switching instances does not bypass the control.
+3. Send invalid-origin, oversize and bot/honeypot cases. **Expect:** predictable safe rejection, no durable side effect and no secret/internal detail in the response.
+
+**Cleanup:** reset shared counters/policy and remove synthetic records. **Not tested:** a production rate threshold until traffic/risk evidence sets it.
+
+## T47
+
+**Claim/boundary:** off-device disaster recovery. **Prerequisites:** disposable production-like dataset including retained evidence/report artifacts, primary runtime/storage A, independently stored backup B, documented restore procedure and fresh destination C. **Actual:** NOT RUN.
+
+1. Create backup B and record its identity, scope, time and integrity evidence. **Expect:** backup is outside the primary runtime failure domain and contains the declared required data/artifacts.
+2. Make A unavailable and restore only from B into fresh C. **Expect:** integrity/schema checks pass and required accepted records/artifacts are readable with preserved identities/hashes where applicable.
+3. Attempt restore to a nonfresh destination or from corrupt/incomplete B. **Expect:** safe refusal/failure; no overwrite of an existing accepted state and no false recovery success.
+
+**Cleanup:** destroy disposable A/B/C data according to the test policy. **Not tested:** numeric production RPO/RTO until D04/D08 approve them.
+
