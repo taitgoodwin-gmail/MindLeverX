@@ -1,0 +1,30 @@
+{
+  "url": "http://127.0.0.1:4352",
+  "results": [
+    {
+      "width": 320,
+      "result": "PASS",
+      "checks": "fresh invalid-route focus/recovery; all saved no-JS evidence URLs; Space activation without scrolling; repeated explorer/report/Back"
+    },
+    {
+      "width": 390,
+      "result": "PASS",
+      "checks": "fresh invalid-route focus/recovery; all saved no-JS evidence URLs; Space activation without scrolling; repeated explorer/report/Back"
+    },
+    {
+      "width": 1440,
+      "result": "PASS",
+      "checks": "fresh invalid-route focus/recovery; all saved no-JS evidence URLs; Space activation without scrolling; repeated explorer/report/Back"
+    },
+    {
+      "blocked": "explorer.js",
+      "result": "PASS",
+      "checks": "interrupted script load retains readable evidence/report and functional skip link"
+    },
+    {
+      "blocked": "audit-first.js",
+      "result": "PASS",
+      "checks": "interrupted script load retains readable evidence/report and functional skip link"
+    }
+  ]
+}

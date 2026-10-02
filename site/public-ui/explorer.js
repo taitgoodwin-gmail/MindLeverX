@@ -24,6 +24,11 @@
     link.setAttribute('role', 'tab');
     link.setAttribute('aria-controls', `evidence-${link.dataset.claim}`);
     link.addEventListener('keydown', event => {
+      if (event.key === ' ') {
+        event.preventDefault();
+        link.click();
+        return;
+      }
       const index = links.indexOf(link);
       const destination = { ArrowDown: (index + 1) % 3, ArrowRight: (index + 1) % 3, ArrowUp: (index + 2) % 3, ArrowLeft: (index + 2) % 3, Home: 0, End: 2 }[event.key];
       if (destination === undefined) return;
@@ -39,7 +44,7 @@
   });
   document.querySelectorAll('[data-answer-open]').forEach(link => link.addEventListener('click', () => { opener = link; }));
   function render() {
-    const match = /^#answer(?:-(local|support|leading))?$/.exec(window.location.hash);
+    const match = /^#(?:answer(?:-(local|support|leading))?|evidence-(local|support|leading))$/.exec(window.location.hash);
     view.hidden = !match;
     if (!match) {
       view.classList.remove('view-enter');
@@ -52,7 +57,7 @@
       entered = false;
       return;
     }
-    const selected = match[1] || 'support';
+    const selected = match[1] || match[2] || 'support';
     const panel = panels.find(item => item.dataset.evidence === selected);
     links.forEach(link => {
       const isSelected = link.dataset.claim === selected;

@@ -183,3 +183,15 @@ test('TC-PUB-10: the exact Figma SVG assets are local and keep their export geom
   }
   assert.doesNotMatch(html + css + script, /figma\.com\/api\/mcp\/asset|Site Unavailable/);
 });
+
+
+test('TC-PUB-16: freshly loaded invalid explorer and evidence links focus recovery', () => {
+  for (const hash of ['#answer-invalid', '#evidence-missing']) {
+    const p = setup(hash);
+    assert.equal(p.ids['sample-error'].hidden, false);
+    assert.equal(p.focused(), p.ids['sample-error']);
+    p.navigate('#sample-report');
+    assert.equal(p.ids['sample-error'].hidden, true);
+    assert.equal(p.focused(), p.pages[0].heading);
+  }
+});

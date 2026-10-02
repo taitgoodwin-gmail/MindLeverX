@@ -23,9 +23,9 @@
   function render({ focus = true } = {}) {
     const match = /^#sample-report(?:-page-([1-5]))?$/.exec(window.location.hash);
     const inReport = !!match;
-    const inAnswer = !!document.getElementById('answer') && /^#answer(?:-(local|support|leading))?$/.test(window.location.hash);
+    const inAnswer = !!document.getElementById('answer') && /^#(?:answer(?:-(local|support|leading))?|evidence-(local|support|leading))$/.test(window.location.hash);
     const pageNumber = match ? Number(match[1] || 1) : 0;
-    const invalidReport = (!inReport && /^#sample-report/.test(window.location.hash)) || (!inAnswer && /^#answer/.test(window.location.hash));
+    const invalidReport = (!inReport && /^#sample-report/.test(window.location.hash)) || (!inAnswer && /^#(?:answer|evidence-)/.test(window.location.hash));
     if (error) {
       error.hidden = !invalidReport;
       error.textContent = invalidReport ? 'That sample page does not exist. Choose Sample report to start at the overview.' : '';
@@ -33,7 +33,7 @@
     home.hidden = inReport || inAnswer;
     viewer.hidden = !inReport;
     navigation.hidden = !inReport;
-    skip.href = inReport ? `#sample-report-page-${pageNumber}` : '#main';
+    skip.href = inReport ? `#sample-report-page-${pageNumber}` : inAnswer ? '#answer' : '#main';
     document.title = inReport ? `Sample report · Page ${pageNumber} of 5 · MindLeverX` : defaultTitle;
     pages.forEach((page, index) => { page.hidden = inReport && index !== pageNumber - 1; });
     contents.forEach((link, index) => { link.setAttribute('aria-current', inReport && index === pageNumber - 1 ? 'page' : 'false'); });
@@ -61,6 +61,14 @@
   document.querySelectorAll('[data-sample-open]').forEach(link => {
     link.addEventListener('click', () => { opener = link; });
   });
+  // Keep the explorer skip target usable even if its enhancement script fails.
+  skip.addEventListener('click', event => {
+    const answerHeading = document.getElementById('answer-title');
+    if (home.hidden && viewer.hidden && answerHeading) {
+      event.preventDefault();
+      answerHeading.focus();
+    }
+  });
   window.addEventListener('hashchange', () => render());
   document.addEventListener('keydown', event => {
     if (event.key === 'Escape' && wasInReport) {
@@ -68,10 +76,10 @@
       window.location.hash = 'top';
     }
   });
-  render({ focus: /^#sample-report/.test(window.location.hash) });
+  render({ focus: /^#(?:sample-report|answer|evidence-)/.test(window.location.hash) });
   // Native cross-document fragment navigation can reset focus after deferred scripts.
   // Restore the report heading once loading settles, without stealing an active control.
   window.addEventListener('pageshow', () => requestAnimationFrame(() => {
-    if (wasInReport && document.activeElement === document.body) render();
+    if ((wasInReport || (error && !error.hidden)) && document.activeElement === document.body) render();
   }));
 })();

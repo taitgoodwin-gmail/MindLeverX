@@ -182,3 +182,7 @@ Verified mobile table-discovery and report-end enquiry gaps are corrected withou
 ### Enlarged no-JavaScript reflow — resolved
 
 The owner authorized correcting the combined no-JS/200%-zoom/320px overflow noted above. The document now measures320px rather than460px: extremely narrow container rules allow wrapping and flexible tracks while retaining full content and text sizes. [Before/after and regression evidence](public-review/2026-10-01-journeys/README.md#narrow-no-javascript-enlargement--resolved). Expanded no-JS reflow and table/enquiry matrices pass; the prior stress-case exception is resolved. Normal-width styling and logos remain unchanged. CSS zoom/Chromium was executed; physical-device/native zoom and hosted authentication limitations remain.
+
+### Offline-build public recovery checkpoint — 2 October 2026
+
+From clean local/remote2592e83, fixed freshly loaded invalid-explorer error focus, preserved saved no-JavaScript evidence anchors under enhancement, implemented Space activation for explorer tabs and repaired skip navigation when only explorer.js fails to load. No visual, logo or private product changes. [Reproductions, screenshot, regression cases and limits](public-review/2026-10-01-journeys/README.md#fresh-link-and-interrupted-navigation-recovery--2-october-2026). Draft NFR-007/RES-004 public coverage; missing Mac source, qualified collection and paid-delivery gates remain unresolved. Full product149/public19 tests and bounded browser checks are implementation evidence, not service launch or hosted acceptance.
