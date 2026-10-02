@@ -48,7 +48,7 @@ if not args.structure_only:
             source_ids.update(re.findall(pattern, source_texts[label], re.M))
         check(len(source_ids)==86, 'Source count differs from 86')
         check(represented==source_ids, 'Missing or invented source IDs: '+str(source_ids^represented))
-check(len(rows)==97,'Total draft rows differs from 97')
+check(len(rows)==105,'Total draft rows differs from 105')
 sheet=json.loads((HERE/'live-sheet-snapshot.json').read_text())['sheets']
 live_ids={r[0] for r in sheet['Evidence and MVP Review'] if r and re.fullmatch(r'MLX3-[A-Z]+-\d{3}',str(r[0]))}
 legacy_proposals={r[0] for r in sheet['Proposed additions'] if r and str(r[0]).startswith('PROP-')}
