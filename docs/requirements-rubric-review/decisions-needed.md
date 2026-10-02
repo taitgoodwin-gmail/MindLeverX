@@ -17,6 +17,7 @@ The simpler credible alternative is to apply this format only to the next measur
 5. **The current design direction remains authoritative.** Historical builder names and rejected Linear-inspired design do not govern this build. No appearance changes were made.
 6. **Usability, economics and AI value have observable evaluation proposals.** All six existing live-Sheet `PROP-*` IDs are retained; five additional proposals cover whole-journey usability, portability, AI evaluation, competitive comparison and behavioral design. They remain proposals rather than retroactively approved features, numerical targets or achieved benefits.
 7. **Verification is separated from status.** Existing local passing tests are bounded evidence. Proposed product cases are NOT RUN and name missing production prerequisites. A requirements rewrite cannot prove customer readiness.
+8. **Production-engineering gaps are now explicit proposals.** The 2 October gap pass adds release/config integrity, schema migration/recovery, interface compatibility, performance/timeouts, observability/alerting, dependency/artifact integrity, distributed abuse protection and off-device disaster recovery. These remain proposals; no arbitrary SLA, RPO/RTO, rate limit or retention number is introduced.
 
 ## Decisions and prerequisites
 
@@ -46,7 +47,7 @@ These are a dependency map, not a request to answer ten questions tonight. D10 i
 
 ## Definition of done for this review
 
-**Local draft:** all 86 recovered IDs plus all six live provisional IDs accounted for; 97 total rows including 11 clearly labeled proposals (six existing, five new); original and prior-reviewed wording/trace preserved; all rows map to seven-tenet profiles, separate owner/client friction, valid dependencies, decisions and acceptance-case families; source and internal-link checks pass; actual verification and limitations recorded.
+**Local draft:** all 86 recovered IDs plus all six live provisional IDs accounted for; 105 total rows including 19 clearly labeled proposals (six existing, thirteen new); original and prior-reviewed wording/trace preserved; all rows map to seven-tenet profiles, separate owner/client friction, valid dependencies, decisions and acceptance-case families; source and internal-link checks pass; actual verification and limitations recorded.
 
 **Not complete by this document:** live Sheet synchronization, independent specialist review of the new wording, approval of disputed commercial or production policies, implementation of new product features, execution of the proposed product scenarios, real-report acceptance and customer validation. These limitations are not reasons to repeat the completed local rewrite in a scheduled batch.
 
