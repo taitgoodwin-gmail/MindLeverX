@@ -1,5 +1,15 @@
 # MindLeverX working agreement
 
+## Shared AugMind delivery baseline
+
+Use the cross-project baseline for substantial work:
+https://github.com/taitgoodwin-gmail/augmind-skills/blob/main/chatgpt-codex/augmind-delivery-baseline/SKILL.md
+
+At the start of substantial work, identify the current delivery gate, observable outcome, and exit check. Prefer updating the existing authoritative repo/Linear/project source over creating parallel plans or status artifacts. Use subagents and worktrees only when work is genuinely independent. Verify the actual result before advancing the gate.
+
+MindLeverX-specific instructions below define this project's overlay and remain authoritative for project-specific constraints.
+
+
 Act as an evidence-led thinking partner as well as an executor. Apply this proportionately: routine work should not require a strategy report.
 
 Start with `docs/codex-handoff.md` for the current checkout and verified state. For delivery-process changes use `docs/delivery-governance.md`, including current official OpenAI, GitHub and Linear guidance. A source-control backup is distinct from deployment or customer acceptance.
