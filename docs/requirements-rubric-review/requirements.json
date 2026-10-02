@@ -1,6 +1,6 @@
 {
-  "version": "review-2026-09-18.1",
-  "date_eastern": "2026-09-18",
+  "version": "review-2026-10-02.1",
+  "date_eastern": "2026-10-02",
   "source_manifest": {
     "V4": {
       "path": "/Users/tag/Desktop/Builds/MindLeverX - Claude Code Build/01 - REQUIREMENTS INPUT/01 - MindLeverX Clean-Slate Requirements v4.0.md",
@@ -3768,6 +3768,229 @@
         "scope": "wording, provenance, rubric mapping and case/dependency consistency",
         "independent_specialist_review": "NOT RUN for this revised wording",
         "owner_scope_approval": "not inferred from rewrite request"
+      }
+    },
+    {
+      "id": "PROP-REL-001",
+      "title": "Release and configuration integrity",
+      "requirement": "Every production release identifies the exact source revision, build artifact, runtime/configuration version and required environment validation; missing or invalid required configuration blocks release, and rollback restores a previously verified release without losing accepted customer data.",
+      "profile": "operations",
+      "tests": [
+        "T40"
+      ],
+      "decisions": [],
+      "dependencies": [
+        "MLX3-NFR-002",
+        "MLX3-NFR-005"
+      ],
+      "disposition": "proposed addition",
+      "rationale": "2 October production-engineering gap pass: this closes a documented technical/NFR coverage gap without approving implementation scope or inventing numerical production targets.",
+      "authority": "Project production/readiness evidence plus current delivery guidance; proposed requirement formulation",
+      "source": null,
+      "prior_proposal": null,
+      "status": "Proposal; not implementation authorization",
+      "review_coverage": {
+        "reviewer": "Codex coordinator, same agent",
+        "scope": "wording, provenance, rubric mapping and case/dependency consistency",
+        "independent_specialist_review": "NOT RUN for this revised wording",
+        "owner_scope_approval": "not inferred from gap-pass request"
+      }
+    },
+    {
+      "id": "PROP-DATA-002",
+      "title": "Schema migration and recovery integrity",
+      "requirement": "Every persistent schema or data migration is versioned and tested from each supported prior state; destructive changes require a verified recovery point, migration failure preserves or restores the last accepted data state, and partial migration is never reported as successful.",
+      "profile": "evidence",
+      "tests": [
+        "T41"
+      ],
+      "decisions": [
+        "D04"
+      ],
+      "dependencies": [
+        "MLX3-NFR-006",
+        "MLX3-NFR-009"
+      ],
+      "disposition": "proposed addition",
+      "rationale": "2 October production-engineering gap pass: this closes a documented technical/NFR coverage gap without approving implementation scope or inventing numerical production targets.",
+      "authority": "Project production/readiness evidence plus current delivery guidance; proposed requirement formulation",
+      "source": null,
+      "prior_proposal": null,
+      "status": "Proposal; not implementation authorization",
+      "review_coverage": {
+        "reviewer": "Codex coordinator, same agent",
+        "scope": "wording, provenance, rubric mapping and case/dependency consistency",
+        "independent_specialist_review": "NOT RUN for this revised wording",
+        "owner_scope_approval": "not inferred from gap-pass request"
+      }
+    },
+    {
+      "id": "PROP-API-001",
+      "title": "Versioned interface compatibility",
+      "requirement": "Every internal or external interface used across independently deployable components has a versioned contract and compatibility test; incompatible changes create an explicit successor or fail before release rather than silently changing field meaning or failure semantics.",
+      "profile": "operations",
+      "tests": [
+        "T42"
+      ],
+      "decisions": [],
+      "dependencies": [
+        "MLX3-NFR-010",
+        "MLX3-MEA-014"
+      ],
+      "disposition": "proposed addition",
+      "rationale": "2 October production-engineering gap pass: this closes a documented technical/NFR coverage gap without approving implementation scope or inventing numerical production targets.",
+      "authority": "Project production/readiness evidence plus current delivery guidance; proposed requirement formulation",
+      "source": null,
+      "prior_proposal": null,
+      "status": "Proposal; not implementation authorization",
+      "review_coverage": {
+        "reviewer": "Codex coordinator, same agent",
+        "scope": "wording, provenance, rubric mapping and case/dependency consistency",
+        "independent_specialist_review": "NOT RUN for this revised wording",
+        "owner_scope_approval": "not inferred from gap-pass request"
+      }
+    },
+    {
+      "id": "PROP-PERF-001",
+      "title": "Bounded performance and timeout budgets",
+      "requirement": "Each accepted production-critical flow has explicit measurable response, execution and timeout budgets derived from the approved journey and economics; long-running work remains asynchronous, and an undefined or exceeded material budget is surfaced rather than hidden as success.",
+      "profile": "operations",
+      "tests": [
+        "T43"
+      ],
+      "decisions": [
+        "D08"
+      ],
+      "dependencies": [
+        "MLX3-NFR-008",
+        "MLX3-OPS-003"
+      ],
+      "disposition": "proposed addition",
+      "rationale": "2 October production-engineering gap pass: this closes a documented technical/NFR coverage gap without approving implementation scope or inventing numerical production targets.",
+      "authority": "Project production/readiness evidence plus current delivery guidance; proposed requirement formulation",
+      "source": null,
+      "prior_proposal": null,
+      "status": "Proposal; not implementation authorization",
+      "review_coverage": {
+        "reviewer": "Codex coordinator, same agent",
+        "scope": "wording, provenance, rubric mapping and case/dependency consistency",
+        "independent_specialist_review": "NOT RUN for this revised wording",
+        "owner_scope_approval": "not inferred from gap-pass request"
+      }
+    },
+    {
+      "id": "PROP-OBS-001",
+      "title": "Production observability and alerting",
+      "requirement": "Production-critical flows emit tenant-safe correlated health, latency, failure and dependency signals, with actionable alerts for conditions requiring intervention; monitoring never fabricates product state and follows the same redaction and access rules as application data.",
+      "profile": "operations",
+      "tests": [
+        "T44"
+      ],
+      "decisions": [
+        "D08"
+      ],
+      "dependencies": [
+        "MLX3-NFR-004",
+        "MLX3-NFR-005",
+        "MLX3-ADM-006"
+      ],
+      "disposition": "proposed addition",
+      "rationale": "2 October production-engineering gap pass: this closes a documented technical/NFR coverage gap without approving implementation scope or inventing numerical production targets.",
+      "authority": "Project production/readiness evidence plus current delivery guidance; proposed requirement formulation",
+      "source": null,
+      "prior_proposal": null,
+      "status": "Proposal; not implementation authorization",
+      "review_coverage": {
+        "reviewer": "Codex coordinator, same agent",
+        "scope": "wording, provenance, rubric mapping and case/dependency consistency",
+        "independent_specialist_review": "NOT RUN for this revised wording",
+        "owner_scope_approval": "not inferred from gap-pass request"
+      }
+    },
+    {
+      "id": "PROP-SUP-001",
+      "title": "Dependency and artifact integrity",
+      "requirement": "A releasable build uses locked, reviewable dependencies and a verifiable source-to-artifact chain; dependency or artifact-integrity failures are evaluated against an explicit release policy and cannot be silently ignored or rewritten as successful verification.",
+      "profile": "security",
+      "tests": [
+        "T45"
+      ],
+      "decisions": [
+        "D05"
+      ],
+      "dependencies": [
+        "MLX3-NFR-002",
+        "PROP-REL-001"
+      ],
+      "disposition": "proposed addition",
+      "rationale": "2 October production-engineering gap pass: this closes a documented technical/NFR coverage gap without approving implementation scope or inventing numerical production targets.",
+      "authority": "Project production/readiness evidence plus current delivery guidance; proposed requirement formulation",
+      "source": null,
+      "prior_proposal": null,
+      "status": "Proposal; not implementation authorization",
+      "review_coverage": {
+        "reviewer": "Codex coordinator, same agent",
+        "scope": "wording, provenance, rubric mapping and case/dependency consistency",
+        "independent_specialist_review": "NOT RUN for this revised wording",
+        "owner_scope_approval": "not inferred from gap-pass request"
+      }
+    },
+    {
+      "id": "PROP-ABUSE-001",
+      "title": "Distributed abuse and resource protection",
+      "requirement": "Public or externally reachable mutation endpoints enforce production-effective body, origin, rate and abuse controls across instances, with predictable rejection and recovery behavior; a process-local counter alone cannot satisfy the production control.",
+      "profile": "security",
+      "tests": [
+        "T46"
+      ],
+      "decisions": [
+        "D08"
+      ],
+      "dependencies": [
+        "MLX3-AUD-005",
+        "MLX3-NFR-008"
+      ],
+      "disposition": "proposed addition",
+      "rationale": "2 October production-engineering gap pass: this closes a documented technical/NFR coverage gap without approving implementation scope or inventing numerical production targets.",
+      "authority": "Project production/readiness evidence plus current delivery guidance; proposed requirement formulation",
+      "source": null,
+      "prior_proposal": null,
+      "status": "Proposal; not implementation authorization",
+      "review_coverage": {
+        "reviewer": "Codex coordinator, same agent",
+        "scope": "wording, provenance, rubric mapping and case/dependency consistency",
+        "independent_specialist_review": "NOT RUN for this revised wording",
+        "owner_scope_approval": "not inferred from gap-pass request"
+      }
+    },
+    {
+      "id": "PROP-DR-001",
+      "title": "Off-device disaster recovery",
+      "requirement": "Production data and accepted report artifacts required to continue the service have an independently recoverable backup outside the primary runtime, and restore is periodically verified to a fresh destination with recorded evidence; numeric recovery objectives remain explicit decisions rather than invented defaults.",
+      "profile": "operations",
+      "tests": [
+        "T47"
+      ],
+      "decisions": [
+        "D04",
+        "D08"
+      ],
+      "dependencies": [
+        "MLX3-NFR-006",
+        "MLX3-NFR-009",
+        "PROP-DATA-002"
+      ],
+      "disposition": "proposed addition",
+      "rationale": "2 October production-engineering gap pass: this closes a documented technical/NFR coverage gap without approving implementation scope or inventing numerical production targets.",
+      "authority": "Project production/readiness evidence plus current delivery guidance; proposed requirement formulation",
+      "source": null,
+      "prior_proposal": null,
+      "status": "Proposal; not implementation authorization",
+      "review_coverage": {
+        "reviewer": "Codex coordinator, same agent",
+        "scope": "wording, provenance, rubric mapping and case/dependency consistency",
+        "independent_specialist_review": "NOT RUN for this revised wording",
+        "owner_scope_approval": "not inferred from gap-pass request"
       }
     }
   ],
