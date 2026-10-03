@@ -31,3 +31,55 @@ jobs:
         run: npm run build:public
       - name: Run public regression and boundary tests
         run: node --test tests/public-ui/*.test.mjs
+
+  recovery-smoke:
+    name: Chromium recovery smoke
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Set up Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: "24"
+      - name: Identify existing browser and source
+        shell: bash
+        run: |
+          mkdir -p "$RUNNER_TEMP/mlx-recovery-evidence"
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          browser_path=$(command -v google-chrome || command -v chromium || true)
+          if [ -z "$browser_path" ]; then
+            echo "::error::BLOCKED: runner has no Chrome/Chromium executable; no browser download attempted."
+            exit 1
+          fi
+          "$browser_path" --version
+          echo "MLX_BROWSER_EXECUTABLE=$browser_path" >> "$GITHUB_ENV"
+          echo "MLX_QA_OUTPUT=$RUNNER_TEMP/mlx-recovery-evidence" >> "$GITHUB_ENV"
+          echo "PLAYWRIGHT_MODULE=$RUNNER_TEMP/mlx-browser-tools/node_modules/playwright-core/index.mjs" >> "$GITHUB_ENV"
+      - name: Install pinned browser driver only
+        run: npm install --prefix "$RUNNER_TEMP/mlx-browser-tools" --ignore-scripts --no-audit --no-fund playwright-core@1.57.0
+      - name: Build public artifact
+        run: npm run build:public
+      - name: Exercise public recovery journeys
+        shell: bash
+        env:
+          MLX_PUBLIC_URL: http://127.0.0.1:4354
+        run: |
+          python3 -m http.server 4354 --bind 127.0.0.1 --directory public-dist > "$RUNNER_TEMP/mlx-public-server.log" 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid" 2>/dev/null || true' EXIT
+          for attempt in $(seq 1 30); do
+            if curl --fail --silent "$MLX_PUBLIC_URL" > /dev/null; then break; fi
+            sleep 1
+          done
+          curl --fail --silent "$MLX_PUBLIC_URL" > /dev/null
+          node tests/public-ui/recovery-browser-check.mjs
+      - name: Retain commit-stamped recovery evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: recovery-${{ github.sha }}
+          path: ${{ runner.temp }}/mlx-recovery-evidence/
+          retention-days: 7
+          if-no-files-found: warn
