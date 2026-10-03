@@ -117,7 +117,31 @@ if __name__ == '__main__':
                 except ValueError:
                     continue
                 raise ValueError('Negative inventory mutation incorrectly passed')
-            result['negative_validator_checks'] = 4
+            # A row reclassification must invalidate stale totals, while updated
+            # disjoint totals must validate without hardcoded classification counts.
+            reclassified = re.sub(r'^(\| \[MLX3-INV-001\].*? \| R \| A1 \| )Partial( \|)',
+                                  r'\g<1>None\2', text, count=1, flags=re.M)
+            if reclassified == text:
+                raise ValueError('Classification regression fixture did not match')
+            try:
+                validate(reclassified)
+            except ValueError as error:
+                if 'Total mismatch' not in str(error):
+                    raise
+            else:
+                raise ValueError('Stale classification totals incorrectly passed')
+            for group in ('Review draft', 'Total'):
+                line = re.search(r'^\| ' + re.escape(group) + r' \| (.+) \|$', reclassified, re.M)
+                totals = [int(value.strip()) for value in line.group(1).split('|')]
+                totals[2] -= 1  # Partial
+                totals[3] += 1  # None
+                updated = '| ' + group + ' | ' + ' | '.join(map(str, totals)) + ' |'
+                reclassified = reclassified.replace(line.group(0), updated, 1)
+            recalculated = validate(reclassified)
+            if recalculated['summaries']['Total'][2:4] != [result['summaries']['Total'][2]-1, result['summaries']['Total'][3]+1]:
+                raise ValueError('Classification recalculation mismatch')
+            result['negative_validator_checks'] = 5
+            result['classification_recalculation_checks'] = 1
         print(json.dumps(result, indent=2))
     except (ValueError, KeyError, json.JSONDecodeError) as error:
         print(f'FAIL: {error}', file=sys.stderr)
