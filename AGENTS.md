@@ -43,6 +43,18 @@ This repository is public. Never commit credentials, secrets, private customer/p
 
 Use branches/PRs for meaningful changes. When parallel writers are justified, isolate them with worktrees or separate cloud workspaces and follow the shared skill's claim/concurrency rules.
 
+## Code Review Rules
+
+For repository-wide code review:
+- Flag consequential behavior changes that are not traceable to a current requirement and executable acceptance case.
+- Flag any secret, credential, private customer/prospect data, raw private observation, local database, or private generated evidence entering this public repository.
+- Flag unsupported customer/business claims, invented metrics/weights/thresholds, or sample data presented as measured.
+- For persistence, retry, authentication, tenant/data isolation, retention, migration, configuration, observability, or release changes, require material failure-path coverage rather than happy-path evidence only.
+- Treat CI/build/setup failure as unclassified until the evidence shows environment versus implementation versus requirement failure.
+- For UI changes, compare against the specifically approved Figma target when one exists; do not let a design draft silently redefine product scope.
+- Do not equate tests passing, PR merge, deployment READY, or production availability with owner/customer acceptance.
+- Prefer a bounded fix over widening scope during review; surface unrelated findings separately.
+
 ## Authority boundary
 
 Preserve accepted scope, spending, appearance/design authority, deployment/release boundaries, customer contact, privacy/security policy, and commercial commitments.
