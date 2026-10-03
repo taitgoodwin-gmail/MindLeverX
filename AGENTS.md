@@ -1,29 +1,50 @@
 # MindLeverX working agreement
 
-## Shared AugMind delivery baseline
+## Shared delivery method
 
-Use the cross-project baseline for substantial work:
+For substantial work, follow the cross-project AugMind Delivery Baseline:
 https://github.com/taitgoodwin-gmail/augmind-skills/blob/main/chatgpt-codex/augmind-delivery-baseline/SKILL.md
 
-At the start of substantial work, identify the current delivery gate, observable outcome, and exit check. Prefer updating the existing authoritative repo/Linear/project source over creating parallel plans or status artifacts. Use subagents and worktrees only when work is genuinely independent. Verify the actual result before advancing the gate.
+That shared skill owns the reusable delivery lifecycle, autonomy levels, task claiming/idempotency, concurrency, retry/circuit-breaker rules, subagent/worktree/cloud-environment rules, verification, review, release controls, and completion evidence. Do not duplicate that process here.
 
-MindLeverX-specific instructions below define this project's overlay and remain authoritative for project-specific constraints.
+## Start here
 
+- Read `docs/codex-handoff.md` first for the current checkout and verified project state.
+- For delivery-process changes, use `docs/delivery-governance.md`.
+- For consequential product/business/design/implementation decisions, use `docs/build-guidance.md` and `docs/product-tenets.md`.
+- For acceptance and executable cases, follow `docs/testing-practice.md`.
+- For the structured requirement review register and traceability, use `docs/requirements-rubric-review/requirements.json` with its current crosswalk/tests. A review-draft row is not automatically owner-approved merely because it exists.
+- For consequential decisions, use the repo-local `.agents/skills/evidence-led-thinking-partner/SKILL.md`.
 
-Act as an evidence-led thinking partner as well as an executor. Apply this proportionately: routine work should not require a strategy report.
+## MindLeverX project overlay
 
-Start with `docs/codex-handoff.md` for the current checkout and verified state. For delivery-process changes use `docs/delivery-governance.md`, including current official OpenAI, GitHub and Linear guidance. A source-control backup is distinct from deployment or customer acceptance.
+- GitHub source is technical truth for implemented behavior and durable repo instructions.
+- Linear is the execution view for issues, dependencies, milestones, and current work status; it is not the canonical technical contract.
+- Figma defines an approved visual/interaction target only when a specific file/frame/node has been selected for the requirement. A newer draft does not silently replace an accepted target.
+- Vercel and the real browser/runtime are deployment truth. A successful build or READY deployment is not product acceptance.
+- A source-control backup is not deployment, production verification, customer acceptance, or evidence collection.
+- Distinguish verified facts, external benchmarks, internal observations, proposed targets, sample data, and hypotheses. Unknown is not zero. Never invent weights, thresholds, business outcomes, model behavior, or measured results.
+- Preserve source date, cohort, definition, and limitation when using external benchmarks. Compare like with like.
+- Consider the seven MindLeverX tenets proportionately: premier owner/client UX, recurring revenue, repeatability, automation, AI intelligence, competitive leadership, and evidence-informed behavioral design. Do not let process work displace delivery.
+- Challenge consequential assumptions and consider a simpler credible alternative, but do not reopen settled decisions without evidence.
+- Keep owner effort low. Ask only for material decisions that cannot safely be delegated.
 
-- For meaningful product, business, design or implementation decisions, read `docs/build-guidance.md` and `docs/product-tenets.md`. Use `docs/tenet-metrics.md` when evaluating outcomes and `docs/metric-methodology.md` when selecting or interpreting benchmarks.
-- Consider all seven tenets proportionately; record material tradeoffs and use only metrics relevant to the decision. Not relevant is different from not measured. The reusable method is `.agents/skills/evidence-led-thinking-partner/SKILL.md`. Consider: premier owner/client UI/UX, recurring revenue, repeatability, automation, AI intelligence, competitive leadership and evidence-informed behavioral design (consumer psychology for buyers; I-O psychology for human work and teams). Keep automation distinct from intelligence and assess owner/client friction separately.
-- Challenge consequential assumptions, including your own earlier recommendations. Consider a simpler credible alternative and explain what evidence would change the recommendation. Do not manufacture objections or add process for trivial decisions.
-- Apply the owner's 19 September continuous-improvement direction on every turn, proportionately: look for an evidenced way to improve usefulness, speed, business value, implementation simplicity, owner/client effort or model/tool usage. Make reversible, low-risk improvements within the authorized work and disclose meaningful changes; bring consequential tradeoffs to the owner with a concrete recommendation before changing an accepted direction. Treat legacy assumptions as revisitable, not automatically invalid. Do not force an improvement, reopen settled decisions without a reason, or let process work displace delivery. Record material outcomes in the existing authoritative document and active Linear issue; see the continuous-improvement practice in `docs/build-guidance.md`.
-- Distinguish verified facts, external benchmarks, internal observations, proposed targets and hypotheses. Never present invented weights, thresholds, metrics or sample outcomes as official standards or measured results.
-- Use current applicable primary sources for consequential recommendations. Preserve source dates, scope and evidence. Match benchmark definitions and cohorts before comparing numbers.
-- Offer a clear recommendation, material tradeoffs and the smallest useful validation. Keep the owner's workload low; ask only for a missing decision that matters, one question at a time when possible.
-- For consequential acceptance requirements, provide discrete executable test cases: fixed prerequisites/input/version, numbered actions, expected observable results, pass/fail/blocked rules, actual evidence and cleanup. Separate independent checks from product-system tests and unexecuted scenarios. Follow `docs/testing-practice.md`; do not leave the owner to invent missing steps.
-- Record accepted decisions and corrections in the relevant project document, preserving superseded context where useful. Unknown is not zero. Temporary specialist reviews are not continuously running staff or proof of independent human/customer validation.
-- Before each implementation chunk, show the owner a short numbered plan, outcome, time estimate, current step, and linked requirement IDs/titles with the current full narrative and applicable pillar rationale visible in the plan itself, not only linked or abbreviated. Map each step and verification to the requirements; label draft wording, owner corrections and partial coverage explicitly. During work report Step N of M; finish with evidence and what the owner can try. See [chunk-plan.md](</Users/tag/Documents/ChatGPT/MindLeverX Build/docs/chunk-plan.md>) for the accepted format and current PDF example.
-- Preserve existing scope, spending, appearance, deployment, customer-contact and release boundaries. These instructions do not authorize additional work, purchases, agents, schedules, global settings or policy changes.
+## Acceptance and evidence
 
-Recorded from the owner's thinking-partner and tenet requests on 17 September 2026. Project-specific persistence choice based on OpenAI's customization guidance, checked 17 September 2026: https://learn.chatgpt.com/docs/customization/overview . Local instructions are inspectable guidance, not a guarantee of flawless future adherence; verify their discovery in a fresh session when testing persistence.
+- Consequential acceptance criteria must be executable by another tester without inventing setup or expected behavior.
+- Record fixed prerequisites/input/version, numbered actions, observable expected results, PASS/FAIL/BLOCKED rules, actual evidence, cleanup, and what was NOT RUN.
+- NOT RUN is not PASS. BLOCKED is not FAIL.
+- Local implementation, passing CI, a merged PR, a preview, a production deployment, production verification, and owner/customer acceptance are separate states.
+- Temporary specialist or AI review is not proof of independent human/customer validation.
+
+## Repository and data safety
+
+This repository is public. Never commit credentials, secrets, private customer/prospect data, raw private observations, local databases, private generated evidence, or other material that should not be public. Preserve existing ignore/boundary controls and verify staged content before publishing.
+
+Use branches/PRs for meaningful changes. When parallel writers are justified, isolate them with worktrees or separate cloud workspaces and follow the shared skill's claim/concurrency rules.
+
+## Authority boundary
+
+Preserve accepted scope, spending, appearance/design authority, deployment/release boundaries, customer contact, privacy/security policy, and commercial commitments.
+
+This file and the shared delivery skill do not independently authorize purchases, external outreach, production data changes, publication, merges/releases that bypass required controls, new recurring schedules, or material product/business decisions.
