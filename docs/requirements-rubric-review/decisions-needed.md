@@ -2,6 +2,8 @@
 
 Prepared 18 September 2026 Eastern. This is the short reading path for the owner. The [revised register](revised-requirements.md) contains the full wording and [source crosswalk](source-crosswalk.md) accounts for every original ID.
 
+**8 October product priority proposal:** [Market evidence to prioritized requirements](market-priority-slice-2026-10-08.md) ranks the next buyer-facing outcomes, includes fixed acceptance cases and UI/UX implications, and preserves the unresolved 97-versus-105-row source mismatch. It is proposed, not a replacement or approval of this register.
+
 ## Recommendation
 
 Use this review copy to prepare the next evidence-to-report slice. Keep the original IDs, qualitative seven-tenet assessments, explicit owner/client friction and linked test cases. Do not require every feature to score positively on every tenet. An authorization boundary may create useful, necessary friction; deterministic automation does not become AI intelligence because a model helped write it.
