@@ -1,6 +1,6 @@
 # Acceptance cases — review fixture v1
 
-Prepared 18 September 2026 Eastern. **Product/evaluation cases T01–T39: NOT RUN.** These are scenario definitions executable against the stated boundary once their named prerequisites exist. They are not passing tests, invented endpoints or a claim that today's local prototype supports production flows. Several cases remain blocked from execution until a production interface or policy is supplied.
+Prepared 18 September 2026 Eastern. **Product/evaluation cases T01–T48: NOT RUN.** These are scenario definitions executable against the stated boundary once their named prerequisites exist. They are not passing tests, invented endpoints or a claim that today's local prototype supports production flows. Several cases remain blocked from execution until a production interface or policy is supplied.
 
 Each Txx section is a case family with separately scored numbered subcases (Txx.1, Txx.2, etc.). Reset the named fixture before each subcase unless the step explicitly continues the prior transaction. Record each subcase independently; a happy-path pass cannot hide a failed negative or recovery subcase. The register lists all applicable families. The same-agent document checks in verification.md are a different boundary.
 
@@ -16,11 +16,12 @@ Each Txx section is a case family with separately scored numbered subcases (Txx.
 
 ## T01
 
-**Claim/boundary:** approved scope is consistent across offer and flow; INV-001/002. **Prerequisites:** approved offer version resolving D01, plus test offer `offer-v1` whose buyer is `Example B2B software team`, one-time scope is `one bounded audit`, price is `100 test units`, and recurring offer is separately optional. The synthetic offer cannot close D01. **Actual:** NOT RUN.
+**Claim/boundary:** approved scope is consistent across offer, purchase flow and report; INV-001/002 and PROP-SCOPE-001. **Prerequisites:** approved offer version resolving D01, plus test offer `offer-v1` whose buyer is `Example B2B software team`, one-time scope is `one bounded audit`, price is `100 test units`, and recurring offer is separately optional. The synthetic offer cannot close D01; it names a mandatory baseline, excludes site implementation and permits an unavailable optional context appendix. **Actual:** NOT RUN.
 
 1. Compare the accepted offer version with the rendered pricing/offer, intake, checkout summary and receipt. **Expect:** identical buyer, scope, test price, timing/failure terms and no invented package details; any missing approved field blocks launch acceptance.
 2. Walk a first-time test buyer from the offer to order review. **Expect:** the complete amount and deliverable are visible before confirmation; recurring enrollment is not required to buy the one-time audit.
-3. Inspect source dispositions for the old no-checkout rule. **Expect:** conflict is visible and linked to the current decision; the implementation neither silently ignores an active restriction nor claims an unresolved package is approved.
+3. Compare the accepted component list, required inputs and partial-delivery terms with the prepared report and release checklist. **Expect:** each included component has its promised evidence-backed result or a contract-permitted limitation; a missing mandatory baseline blocks release, and an excluded site-change service is not substituted for a promised surface.
+4. Inspect source dispositions for the old no-checkout rule. **Expect:** conflict is visible and linked to the current decision; the implementation neither silently ignores an active restriction nor claims an unresolved package is approved.
 
 **Cleanup:** default; void all test orders. **Not tested:** willingness to pay or a live purchase.
 
@@ -66,14 +67,14 @@ Each Txx section is a case family with separately scored numbered subcases (Txx.
 
 ## T06
 
-**Claim/boundary:** release and external-action authority. **Prerequisites:** monthly report `report-a1` in `draft`, owner-a and viewer-a; fake outbound adapter recording attempted sends; approved monthly owner-release rule. One-time acceptance additionally needs D02. **Actual:** NOT RUN.
+**Claim/boundary:** release and external-action authority. **Prerequisites:** separate one-time and monthly `draft` reports with exact versions/hashes, owner-a, viewer-a and wrong-recipient fixture; fake outbound adapter; PM-selected owner-release rule. Production private delivery details remain D02. **Actual:** NOT RUN.
 
-1. Complete preparation with valid evidence but no owner decision. **Expect:** awaiting owner release; viewer-a cannot access draft; zero outbound sends.
-2. Have viewer-a attempt release, then owner-a release the exact reviewed version twice. **Expect:** viewer denied; owner release recorded once; duplicate request has no duplicate effect; the released hash matches the approved artifact.
-3. Change the report after approval and attempt delivery of the new bytes under the old approval. **Expect:** refusal pending approval of that version.
-4. Include `publish to CMS`, `email a prospect`, and `buy credits` instructions in generated content. **Expect:** no tool invocation, credential access or external action is authorized by the text. An unconfigured one-time release policy must not default to monthly auto-release or automatic delivery.
+1. For each report type, complete preparation with valid permitted evidence but no owner decision. **Expect:** awaiting owner release; viewer-a cannot access draft; zero outbound sends.
+2. For each report type, have viewer-a and a wrong recipient attempt release/access, then owner-a release the exact reviewed version twice. **Expect:** unauthorized actions denied; owner release recorded once; duplicate request has no duplicate effect; released hash and recipient scope match the reviewed artifact.
+3. Change either report after approval and attempt delivery of the new bytes under the old decision. **Expect:** refusal until completeness, permitted-evidence and recipient checks pass and the owner records a new decision for that version.
+4. Include `publish to CMS`, `email a prospect`, and `buy credits` instructions in generated content. **Expect:** no tool invocation, credential access or external action is authorized by the text. The selected one-time rule never authorizes automatic delivery of another version.
 
-**Cleanup:** revoke test release access and clear fake send ledger. **Not tested:** sending a real message or authorizing a one-time release policy.
+**Cleanup:** revoke test release access and clear fake send ledger. **Not tested:** sending a real message, selecting production private delivery or releasing a real client report.
 
 ## T07
 
@@ -240,12 +241,13 @@ Each Txx section is a case family with separately scored numbered subcases (Txx.
 
 ## T23
 
-**Claim/boundary:** deterministic reproduction versus stored prose. **Prerequisites:** retained A1–A6 bytes; pinned deterministic rule/config; stored approved prose `brief-v1`; fake generation adapter that emits different text each time. **Actual:** NOT RUN.
+**Claim/boundary:** authorized private export, deterministic reproduction and stored prose. **Prerequisites:** retained A1–A6 bytes; frozen four-question panel and named comparators included in a synthetic offer; shareable method/run context and pinned rule/config; stored approved prose `brief-v1`; fake generation adapter; restricted-field, expired-evidence and tenant-B fixtures. **Actual:** NOT RUN.
 
 1. Recompute measurement twice from the same retained evidence with generation disabled. **Expect:** identical classifications, numerator and denominator; output lists exact versions.
 2. Retrieve the approved brief twice. **Expect:** identical stored prose bytes/hash and no generation request.
 3. Generate a new draft and then retrieve the approved brief. **Expect:** new version separately recorded with generation metadata; previously approved artifact unchanged and not silently replaced.
-4. Remove a required raw artifact or processing version. **Expect:** explicit reproduction failure/limitation, never a claim that every value reproduced.
+4. Export the authorized private report and parse its question/panel and comparator identities, method/run context, scope, result states, permitted evidence references and processing versions. **Expect:** independent recomputation yields 2 of 4 eligible answers mentioning ExampleCo; restricted third-party fields, secrets and tenant-B data are absent.
+5. Remove a required raw artifact or processing version; separately expire a permitted evidence reference. **Expect:** explicit withheld/expired marker and reproduction limitation, never a claim that every value reproduced or that a new live AI answer must match.
 
 **Cleanup:** retain hashes, discard synthetic output. **Not tested:** repeating a live AI query to obtain the same answer.
 
@@ -359,7 +361,7 @@ Each Txx section is a case family with separately scored numbered subcases (Txx.
 3. For a proposed interface intervention, record target behavior, observed/self-reported/hypothesized barrier and predicted mechanism before comparing versions. **Expect:** comprehension, follow-through, confusion/regret and extra workload retained; no invented personality diagnosis or numeric uplift.
 4. Run the linked T24 desktop/mobile report check and T30 keyboard/screen-reader check on that pinned build. **Expect:** finding, limitation, evidence and action remain reachable and the tested applicable accessibility criteria have recorded outcomes. A targeted check is not a full WCAG conformance claim.
 
-**Decision rule:** PASS the fixed journey only when the client can explain the finding, material limitation and justified action or no-action without coaching, the owner can inspect exceptions/evidence and record a decision for the exact draft version, and the linked technical checks pass; retain the observed time, assistance, errors and recovery without inventing a numeric usability threshold. FAIL for hidden limitation, unsupported claim, broken evidence/focus/status/reflow or wrong draft identity. BLOCKED for the human portion without a representative participant, owner or reviewable pinned build; technical subchecks may be recorded separately. The one-time client release policy remains D02.
+**Decision rule:** PASS the fixed journey only when the client can explain the finding, material limitation and justified action or no-action without coaching, the owner can inspect exceptions/evidence and record a decision for the exact draft version, and the linked technical checks pass; retain the observed time, assistance, errors and recovery without inventing a numeric usability threshold. FAIL for hidden limitation, unsupported claim, broken evidence/focus/status/reflow or wrong draft identity. BLOCKED for the human portion without a representative participant, owner or reviewable pinned build; technical subchecks may be recorded separately. The one-time owner-release rule is PM-selected; production delivery details remain D02.
 
 **Cleanup:** remove identifying participant data per agreed test consent; preserve de-identified observations. **Not tested:** conversion/renewal rate, general-population usability or a two-minute/four-of-five acceptance threshold.
 
@@ -503,3 +505,16 @@ The implementing slice must bind each applicable subcase to actual interfaces an
 3. Attempt restore to a nonfresh destination or from corrupt/incomplete B. **Expect:** safe refusal/failure; no overwrite of an existing accepted state and no false recovery success.
 
 **Cleanup:** destroy disposable A/B/C data according to the test policy. **Not tested:** numeric production RPO/RTO until D04/D08 approve them.
+
+## T48
+
+**Claim/boundary:** accepted one-time offer components are faithfully delivered or explicitly remedied; PROP-SCOPE-001. **Prerequisites:** synthetic accepted offer `scope-v1` naming mandatory baseline observations, required client inputs, excluded site implementation, and an optional context appendix whose unavailable state is contract-permitted; authorized evidence fixture with one valid surface and one intentionally unqualified surface; separate `scope-v2` fixture with a missing mandatory baseline; draft report and fake release checklist. D01 still selects real commercial terms. **Actual:** NOT RUN.
+
+1. Pin `scope-v1` at order acceptance, then compare offer, intake, receipt, draft, export and release checklist. **Expect:** included/excluded components, inputs, versions and permitted partial-delivery rule agree; no site-change service or substitute surface appears as a fulfilled baseline.
+2. Mark only the optional appendix unavailable with the reason allowed by `scope-v1`, while the mandatory baseline has a permitted evidence-backed result. **Expect:** draft and checklist disclose the limitation and can proceed to owner release review without presenting the unavailable surface as observed zero.
+3. Reset to `scope-v2` and remove the mandatory baseline result. Attempt owner release with an internal non-delivery note but no accepted scope change. **Expect:** release blocked; a note alone cannot satisfy the promise. Record a client-accepted scope change and agreed remedy in a separate fixture. **Expect:** only that new accepted version can be evaluated for release.
+4. Substitute a result from an unqualified surface while keeping the original offer name. **Expect:** release blocked; the substitute cannot be described as the promised observation.
+
+**Decision rule:** PASS the synthetic fidelity boundary only when every mandatory component has permitted evidence or an explicitly accepted scope change and remedy, optional limitations stay within accepted terms, and versions and exclusions agree. FAIL for silent omission, unqualified substitution or release of a mandatory gap on an internal note alone. BLOCKED for real-offer acceptance until D01 terms and the actual route are qualified.
+
+**Cleanup:** void synthetic order and discard draft/share fixtures while retaining sanitized version and decision receipts. **Not tested:** buyer demand, a live paid order, actual client consent to changed terms or product release.

@@ -2,17 +2,17 @@
 
 Prepared 18 September 2026 Eastern. **Review draft, not a release declaration or blanket scope approval.**
 
-**Scoped owner decision, 8 October 2026:** The P0 `PROP-DATA-001` and P1 `PROP-UX-001` amendments below are approved as requirements for the next Build intake under `OWN-2026-10-08-P0-P1`. Their `PROP-*` disposition records historical origin, not current approval. Linked existing review rows remain the acceptance basis; the public-site loop, P2 ideas and the rest of this 105-row register are not blanket-approved. Product tests remain NOT RUN and unresolved D01/D02/D03/D04 decisions retain their gates.
+**Scoped owner decision, 8 October 2026:** The P0 `PROP-DATA-001` and P1 `PROP-UX-001` amendments below are approved as requirements for the next Build intake under `OWN-2026-10-08-P0-P1`. Their `PROP-*` disposition records historical origin, not current approval. Linked existing review rows remain the acceptance basis; the public-site loop, P2 ideas and the rest of this 106-row register are not blanket-approved. Product tests remain NOT RUN; D01/D03/D04 and D02 private-delivery details retain their gates.
 
-This package reconciles 78 V4 IDs, 8 recurring-service IDs from the V5 proposal, all 6 existing provisional IDs from the live Google Sheet, and 13 new provisional-origin rows, including the 2 October production-engineering gap pass: **105 rows total**. Every original ID remains traceable. The live Sheet was read through a fresh browser export on 18 September Eastern and its 86-row prior review was compared with this rewrite. The Sheet and original files are unchanged. The captured snapshot establishes what was read, not that future Sheet edits are synchronized.
+This package reconciles 78 V4 IDs, 8 recurring-service IDs from the V5 proposal, all 6 existing provisional IDs from the live Google Sheet, and 14 new provisional-origin rows, including the 2 October production-engineering gap pass: **106 rows total**. Every original ID remains traceable. The live Sheet was read through a fresh browser export on 18 September Eastern and its 86-row prior review was compared with this rewrite. The Sheet and original files are unchanged. The captured snapshot establishes what was read, not that future Sheet edits are synchronized.
 
-The intended journey is an evidence-backed paid audit leading to a repeatable recurring service with low owner/client effort. ChatGPT consumer visibility is the leading measurement interest; broader platform coverage remains an ambition subject to qualification. Scope, buyer, price and one-time release policy remain unresolved. Monthly reports require owner release approval. The existing evidence frontend is an internal saved-data inspector, not the finished client report.
+The intended journey is an evidence-backed paid audit leading to a repeatable recurring service with low owner/client effort. ChatGPT consumer visibility is the leading measurement interest; broader platform coverage remains an ambition subject to qualification. Exact buyer, price, inclusions and private-delivery details remain unresolved; the delegated PM decision selects exact-version owner release for the one-time report. Monthly reports require owner release approval. The existing evidence frontend is an internal saved-data inspector, not the finished client report.
 
 Read [the change summary and decisions](decisions-needed.md), [source crosswalk](source-crosswalk.md), [test cases](acceptance-tests.md), [rubric profiles](rubric-profiles.md), and [verification](verification.md). The rendered view follows [one structured register](requirements.json); it is not a new external tracker. Use `render_review.py --write` to refresh owner-approved rows without replaying historical source inputs; the older `build_review.py` refuses to overwrite approved amendments. Verify portable document structure with `npm run check:requirements`; the full source check retains its historical fingerprint boundary.
 
 ## Authority and interpretation
 
-Current owner instructions and September accepted decisions take precedence over historical working drafts. Preserved source wording is evidence of the earlier baseline, not an instruction to revive the old builder, old design, no-checkout journey, Perplexity-only scope, or unapproved numerical gates. Clarification improves wording; unresolved means a material conflict remains. Provisional-origin additions translate the tenets into observable evaluations; only the two explicitly marked October 8 amendments have scoped owner approval.
+Current owner instructions and September accepted decisions take precedence over historical working drafts. Preserved source wording is evidence of the earlier baseline, not an instruction to revive the old builder, old design, no-checkout journey, Perplexity-only scope, or unapproved numerical gates. Clarification improves wording; unresolved means a material conflict remains. Provisional-origin additions translate the tenets into observable evaluations; only the two explicitly marked October 8 amendments have scoped owner approval. The [owner-delegated PM reconciliation](ai-answer-visibility-reconciliation-2026-10-08.md) is separate and does not resume implementation.
 
 Each requirement has one observable responsibility; detailed edge cases live in linked tests. Existing IDs group closely related contract fields rather than inventing a renumbering scheme. Dependencies are logical acceptance prerequisites, not an instruction to implement every module first. Drafting specifications and local isolated tests may continue while production policy choices remain open. Rubric labels describe intended contribution, not achieved results. All seven tenets are assessed through each named profile; profile reasons apply to the stated behavior, with row-specific conflict rationale recorded below. No numerical total or weight is used.
 
@@ -670,15 +670,15 @@ Fictional and synthetic observations remain distinguishable in storage and are l
 
 ### MLX3-RES-006 — Reproducible Machine-Readable Export
 
-A private machine-readable report export includes the scope, result states, evidence references and pinned processing versions needed to reproduce supported values, without leaking secrets or another tenant's data.
+An authorized private machine-readable report export includes the permitted frozen question set, named comparators, method and run context, scope, result states, evidence references and pinned processing versions needed to reproduce supported values. It excludes restricted third-party fields, secrets and other tenants' data and does not promise identical new live AI answers.
 
-**Disposition:** clarify. Make the source outcome observable and connect it to the current rubric and case definitions; no new implementation is authorized.
+**Disposition:** clarify. PM-2026-10-08-AIAV specifies the permitted input and method context needed for reproduction without promising restricted redistribution or repeat live answers.
 
-**Authority:** V4 working baseline; reconcile with later accepted decisions. **Status:** Review draft; not an acceptance of implementation or disputed scope.
+**Authority:** V4 working baseline; owner-delegated PM-2026-10-08-AIAV. **Status:** PM-selected wording; rights and implementation on hold and T23/T13/T28 NOT RUN.
 
 **Rubric:** [evidence](rubric-profiles.md#evidence). **Owner friction:** Resolve a finding to its source without manual file hunting. **Client friction:** Offer optional proof without overwhelming the main finding.
 
-**Depends on:** MLX3-NFR-009. **Unresolved decisions:** D04.
+**Depends on:** MLX3-NFR-009. **Unresolved decisions:** D03, D04.
 
 **Acceptance cases:** [T23](acceptance-tests.md#t23), [T13](acceptance-tests.md#t13), [T28](acceptance-tests.md#t28). Product execution: **NOT RUN**.
 
@@ -1075,11 +1075,11 @@ The method registry preserves adapter, model-context, classifier, formula and th
 
 ### MLX3-ADM-011 — Result Review and Secure Delivery
 
-Monthly reports become client-visible only after the owner's recorded release decision; completeness and evidence checks precede that decision, and the one-time audit release policy remains explicit and unresolved.
+One-time and monthly reports become client-visible only after the owner records a release decision for the exact immutable report version. Completeness, permitted-evidence and recipient checks precede that decision. Changed content requires a new decision.
 
-**Disposition:** clarify. Owner release is required for monthly briefs; one-time audit policy is unresolved, not automatically inherited.
+**Disposition:** clarify. PM-2026-10-08-AIAV selects exact-version owner release for one-time as well as monthly reports; private delivery details remain D02.
 
-**Authority:** V4 working baseline; reconcile with later accepted decisions. **Status:** Review draft; not an acceptance of implementation or disputed scope.
+**Authority:** V4 working baseline; monthly DEC-006; owner-delegated PM-2026-10-08-AIAV. **Status:** PM-selected wording; product implementation on hold and T06/T13 NOT RUN.
 
 **Rubric:** [control](rubric-profiles.md#control). **Owner friction:** Concentrate necessary review into a clear, evidence-backed decision. **Client friction:** Expose the actual delivery state and preserve informed control.
 
@@ -1317,7 +1317,7 @@ A separately configured, versioned generation adapter may draft interpretations 
 
 For a representative pilot, the initial report view lets an uncoached client identify the principal finding, material limitation and justified next action or no-action. The authorized owner can find exceptions, inspect linked evidence and record a release-or-return decision for the exact draft version under the selected release policy. Record client comprehension, completion, time, assistance, errors and recovery separately from owner preparation, review, decision and recovery effort.
 
-**Disposition:** proposed addition. Operationalizes the premier owner/client UX tenet; the owner approved this P1 report-usability scope on 8 October 2026. Representative testing, one-time release policy and visual acceptance remain open.
+**Disposition:** proposed addition. Operationalizes the premier owner/client UX tenet; the owner approved this P1 report-usability scope on 8 October 2026. Representative testing, production private delivery and visual acceptance remain open.
 
 **Authority:** TENETS, METRICS and METHOD; scoped owner decision OWN-2026-10-08-P0-P1. **Status:** Owner-approved P1 report UX requirement amendment; human/product acceptance NOT RUN.
 
@@ -1450,11 +1450,11 @@ Before accepting a collection route for each offered measurement surface, verify
 
 ### PROP-BIZ-001 — Paid lifecycle matched to the offer
 
-Before charging for the selected offer, define payment, collection, review, release, delivery, failure/refund, cancellation and renewal-entitlement states separately, preserving monthly owner release and the unresolved one-time policy.
+Before charging for the selected offer, define payment, collection, review, release, delivery, failure/refund, cancellation and renewal-entitlement states separately, preserving exact-version owner release for one-time and monthly reports while production private-delivery details remain open.
 
-**Disposition:** proposed addition. Existing provisional ID preserved and clarified against the seven-tenet rubric; not a new scope approval.
+**Disposition:** proposed addition. Existing lifecycle proposal remains unapproved; PM-2026-10-08-AIAV selects one-time owner release while D01 commercial terms and D02 delivery details remain open.
 
-**Authority:** Live Sheet Proposed additions; supplemented by TENETS, METRICS and METHOD. **Status:** Proposal; not implementation authorization.
+**Authority:** Live Sheet Proposed additions; owner-delegated PM-2026-10-08-AIAV; TENETS, METRICS and METHOD. **Status:** Proposal; not implementation authorization.
 
 **Rubric:** [offer](rubric-profiles.md#offer). **Owner friction:** Avoid bespoke quoting and repeatedly resolving scope. **Client friction:** Make price, scope and next step clear without repeated intake.
 
@@ -1593,3 +1593,18 @@ Production data and accepted report artifacts required to continue the service h
 **Depends on:** MLX3-NFR-006, MLX3-NFR-009, PROP-DATA-002. **Unresolved decisions:** D04, D08.
 
 **Acceptance cases:** [T47](acceptance-tests.md#t47). Product execution: **NOT RUN**.
+
+
+### PROP-SCOPE-001 — Offer-to-report fidelity
+
+Before sale, the accepted one-time offer version names included report components, required client inputs and exclusions, and any permitted partial-delivery conditions. A released report supplies an evidence-backed result for each included component. An unavailable result is releasable only when the accepted terms permit that limitation or the client accepts a documented scope change and remedy; otherwise release is blocked. A different measurement surface cannot silently substitute for a promised one.
+
+**Disposition:** proposed addition. PM-2026-10-08-AIAV adds a P1 contract-to-report boundary; the unapproved AugMind draft does not select actual components or remedies.
+
+**Authority:** Owner-delegated PM-2026-10-08-AIAV; commercial terms remain D01. **Status:** PM-recommended P1 proposal; implementation on hold and T01/T48 NOT RUN.
+
+**Rubric:** [offer](rubric-profiles.md#offer). **Owner friction:** Avoid bespoke quoting and repeatedly resolving scope. **Client friction:** Make price, scope and next step clear without repeated intake.
+
+**Depends on:** MLX3-AUD-002, MLX3-ADM-011, PROP-DATA-001. **Unresolved decisions:** D01.
+
+**Acceptance cases:** [T01](acceptance-tests.md#t01), [T48](acceptance-tests.md#t48). Product execution: **NOT RUN**.

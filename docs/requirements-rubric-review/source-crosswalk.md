@@ -47,7 +47,7 @@ Source rows and exact original wording are retained in requirements.json. All 86
 | MLX3-RES-003 | clarify | MLX3-RES-003 | Make the source outcome observable and connect it to the current rubric and case definitions; no new implementation is authorized. |
 | MLX3-RES-004 | clarify | MLX3-RES-004 | Make the source outcome observable and connect it to the current rubric and case definitions; no new implementation is authorized. |
 | MLX3-RES-005 | clarify | MLX3-RES-005 | Make the source outcome observable and connect it to the current rubric and case definitions; no new implementation is authorized. |
-| MLX3-RES-006 | clarify | MLX3-RES-006 | Make the source outcome observable and connect it to the current rubric and case definitions; no new implementation is authorized. |
+| MLX3-RES-006 | clarify | MLX3-RES-006 | PM-2026-10-08-AIAV adds permitted frozen inputs and run context to private export; real rights and implementation remain open. |
 | MLX3-RES-007 | clarify | MLX3-RES-007 | Make the source outcome observable and connect it to the current rubric and case definitions; no new implementation is authorized. |
 | MLX3-OPS-001 | clarify | MLX3-OPS-001 | Keep this outcome ID linked to ADM-006 rather than silently ratifying the proposed V5 merge. |
 | MLX3-OPS-002 | clarify | MLX3-OPS-002 | Make the source outcome observable and connect it to the current rubric and case definitions; no new implementation is authorized. |
@@ -74,7 +74,7 @@ Source rows and exact original wording are retained in requirements.json. All 86
 | MLX3-ADM-008 | clarify | MLX3-ADM-008 | Make the source outcome observable and connect it to the current rubric and case definitions; no new implementation is authorized. |
 | MLX3-ADM-009 | clarify | MLX3-ADM-009 | Make the source outcome observable and connect it to the current rubric and case definitions; no new implementation is authorized. |
 | MLX3-ADM-010 | clarify | MLX3-ADM-010 | Make the source outcome observable and connect it to the current rubric and case definitions; no new implementation is authorized. |
-| MLX3-ADM-011 | clarify | MLX3-ADM-011 | Owner release is required for monthly briefs; one-time audit policy is unresolved, not automatically inherited. |
+| MLX3-ADM-011 | clarify | MLX3-ADM-011 | PM-2026-10-08-AIAV selects exact-version owner release for one-time and monthly reports; private delivery and implementation remain open. |
 | MLX3-ADM-012 | unresolved | MLX3-ADM-012 | Access control remains necessary; a dedicated UI versus selected provider administration remains a release choice. |
 | MLX3-ADM-013 | clarify | MLX3-ADM-013 | Make the source outcome observable and connect it to the current rubric and case definitions; no new implementation is authorized. |
 | MLX3-ADM-014 | unresolved | MLX3-ADM-014 | Incident safety retained; a separate incident workspace is not assumed necessary before first delivery. |
@@ -102,7 +102,8 @@ Source rows and exact original wording are retained in requirements.json. All 86
 - PROP-BEH-001: Informed action and follow-through — new proposal only.
 - PROP-SEO-001: Evidence-supported SEO and GEO advice — existing live-Sheet proposal preserved and clarified.
 - PROP-DATA-001: Collection rights and evidence portability — existing live-Sheet provisional ID preserved; P0 evidence-qualification amendment approved by owner on 8 October 2026 under OWN-2026-10-08-P0-P1. Actual collection qualification remains unresolved.
-- PROP-BIZ-001: Paid lifecycle matched to the offer — existing live-Sheet proposal preserved and clarified.
+- PROP-BIZ-001: Paid lifecycle matched to the offer — existing live-Sheet proposal preserved and clarified; PM-2026-10-08-AIAV updates its release-state clause without approving commercial terms.
+- PROP-SCOPE-001: Offer-to-report fidelity — new P1 PM proposal from the owner-supplied AugMind draft reconciliation; outside the earlier OWN-2026-10-08-P0-P1 approval. T01/T48 NOT RUN.
 - PROP-GOV-001: Team review and decision trace — existing live-Sheet proposal preserved and clarified.
 
 ## Non-ID authority text reconciliation
@@ -117,7 +118,7 @@ Source rows and exact original wording are retained in requirements.json. All 86
 | V4 §5 Flow | Current proposed first-sale flow is essential intake/authority, verified payment, evidence, preparation, review policy, private delivery, then recurring value. An operator-provisioned pilot is a simpler alternative, not an imposed package. |
 | V4 §7 Objects | Preserve required domain concepts; exact schema follows an accepted slice. The historical ban on checkout/subscription objects cannot decide today's commercial design. Do not create those objects in this documentation task. |
 | V4 §8 Builder contract | Retain stable IDs, evidence, version separation and permission boundaries. Historical builder choice and universal implementation hold do not override later authorized local work. |
-| V4 §9 Decisions | Reconciled into D01–D10; monthly release approval is settled, while one-off policy is not. Do not re-ask provider signup or Vercel upgrade timing. |
+| V4 §9 Decisions | Reconciled into D01–D10; monthly release approval is settled, while delegated PM-2026-10-08-AIAV selects one-time exact-version owner release. Production delivery remains open. Do not re-ask provider signup or Vercel upgrade timing. |
 | V4 §10 Done | Product done requires supported real evidence, approved service workflow, tested access/recovery and accepted report. Rewrite tests do not establish launch readiness; remove stale no-checkout and full-module assumptions from any claimed current done state. |
 | V4 §11 Removed process | Keep internal process outside product UX. This review package is a build artifact; it does not add customer-facing ceremony. |
 | V5 accepted reproducibility decision | Preserve deterministic measurement and stored-prose retrieval; generative interpretation is separate. |
@@ -130,7 +131,7 @@ Source rows and exact original wording are retained in requirements.json. All 86
 
 The current Google Sheet was read through a browser XLSX export after native connector discovery found no Drive/Sheets reader. Requirements has 78 original rows; Evidence and MVP Review has 86 reviewed IDs; Proposed additions has six provisional IDs. All are retained. Prior proposed wording, acceptance, decisions and review notes are preserved per ID in requirements.json and in live-sheet-snapshot.json. Relevant strengths from the earlier review were retained: JavaScript dependence is not inherently failure, backup retention remains in scope, cancellation and entitlement are explicit, anchoring differs from question intent, and unknown comparability is not an approved comparison. The prior suggested OPS merges remain proposals; this draft keeps both trace IDs with linked operator implementations.
 
-The Owner decisions sheet still asks whether monthly release should be automatic and names Perplexity Sonar as the initial channel; later local accepted decisions supersede those stale questions. The live overview/old review's 55-test and unresolved-access statements predate the verified Otterly export and 68-test local frontend checkpoint. No Sheet or Linear values were changed; synchronization is pending. Fresh source checking is required immediately before any eventual write.
+The Owner decisions sheet still asks whether monthly release should be automatic and names Perplexity Sonar as the initial channel; later local accepted decisions supersede those stale questions. The live overview/old review's 55-test and unresolved-access statements predate the verified Otterly export and 68-test local frontend checkpoint. At that historical review, no Sheet or Linear values were changed. The 8 October PM reconciliation is in the dated decision record; Linear synchronization is recorded in the linked issues. Fresh source checking remains required before a future Sheet write.
 
 
 ## 2 October 2026 technical/NFR proposals

@@ -1,3 +1,9 @@
+## 8 October 2026 — AugMind model reconciliation and GitHub/Linear requirements sync
+
+`PM-2026-10-08-AIAV` records the owner-delegated PM decision against the supplied draft deck. The structured register advances to `review-2026-10-08.2`: 106 rows (20 provisional-origin, two with prior scoped owner approval) and 48 acceptance-case families. New `PROP-SCOPE-001` remains a P1 proposal; `MLX3-ADM-011`, `MLX3-RES-006` and provisional `PROP-BIZ-001` are clarified. The exact approved wording of `PROP-DATA-001` and `PROP-UX-001` is unchanged. All product cases remain NOT RUN; the implementation/client-release hold remains.
+
+Actual local verification: `npm run check:requirements` **PASS** for targeted rendering, portable structure (no errors) and nine validator regression cases. `git diff --check` **PASS**. Full `validate_review.py` reports **BLOCKED** with no document errors because the recorded `CURRENT` and `GUIDANCE` source fingerprints no longer match the current files; those historical hashes were not altered. This is documentation consistency evidence only, not qualified collection, acceptance testing, buyer demand or production readiness. GitHub push and Linear receipts are linked separately when verified.
+
 ## 8 October 2026 — scoped owner-approved P0/P1 requirement amendment
 
 The owner explicitly chose **“Approve P0 + report UX”** in the current Codex conversation and confirmed it in a follow-up on 8 October Eastern. `OWN-2026-10-08-P0-P1` records the two approved requirement amendments in `requirements.json` version `review-2026-10-08.1`: P0 `PROP-DATA-001` and P1 `PROP-UX-001`. The P0 case is integrated into T12/T37 and the report/client-owner UX case into T24/T30/T34. Existing linked basis rows retain their review provenance, and D01/D02/D03/D04 retain the decisions still needed for production. The public-site loop, P2 ideas and other provisional rows were not approved by this choice.

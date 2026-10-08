@@ -48,7 +48,7 @@ if not args.structure_only:
             source_ids.update(re.findall(pattern, source_texts[label], re.M))
         check(len(source_ids)==86, 'Source count differs from 86')
         check(represented==source_ids, 'Missing or invented source IDs: '+str(source_ids^represented))
-check(len(rows)==105,'Total draft rows differs from 105')
+check(len(rows)==106,'Total draft rows differs from 106')
 sheet=json.loads((HERE/'live-sheet-snapshot.json').read_text())['sheets']
 live_ids={r[0] for r in sheet['Evidence and MVP Review'] if r and re.fullmatch(r'MLX3-[A-Z]+-\d{3}',str(r[0]))}
 legacy_proposals={r[0] for r in sheet['Proposed additions'] if r and str(r[0]).startswith('PROP-')}
@@ -78,6 +78,9 @@ for r in rows:
         check(bool(r.get('prior_sheet_review')),r['id']+' missing prior live review')
 rendered = (HERE/'revised-requirements.md').read_text()
 by_id = {r['id']: r for r in rows}
+for rid, row in by_id.items():
+    section = rendered.split('### '+rid+' — ', 1)[-1].split('\n### ', 1)[0] if '### '+rid+' — ' in rendered else ''
+    check(bool(section) and row['requirement'] in section and row['status'] in section, rid+' rendered wording/status differs from structured source')
 for decision in data.get('owner_scope_decisions', []):
     check(bool(decision.get('id')) and bool(decision.get('source')), 'Owner decision lacks identity or source')
     check(bool(decision.get('accepted_amendment_ids')), 'Owner decision lacks accepted amendments')

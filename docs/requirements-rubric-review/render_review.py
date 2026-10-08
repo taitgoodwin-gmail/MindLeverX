@@ -35,23 +35,26 @@ def main():
     expected = current
     by_id = {row['id']: row for row in register['requirements']}
     # October 2 technical rows carry reviewed, row-specific prose not encoded in
-    # the older generator. Touch only rows named in an owner approval decision.
+    # the older generator. Touch only rows named in owner or dated PM decisions.
     approved = [rid for decision in register.get('owner_scope_decisions', [])
                 for rid in decision['accepted_amendment_ids']]
-    for rid in approved:
+    pm_rows = [rid for decision in register.get('pm_reconciliation_decisions', [])
+               for rid in decision.get('rendered_ids', [])]
+    targeted = list(dict.fromkeys(approved + pm_rows))
+    for rid in targeted:
         if rid not in by_id:
-            raise SystemExit('Owner-approved row missing from structured register: ' + rid)
+            raise SystemExit('Targeted row missing from structured register: ' + rid)
         pattern = re.compile(r'^### ' + re.escape(rid) + r' — [^\n]+\n.*?(?=\n\n### |\n\n## |\Z)', re.M | re.S)
         expected, count = pattern.subn(lambda _: render_row(by_id[rid], register['friction']), expected, count=1)
         if count != 1:
-            raise SystemExit('Owner-approved row missing from rendered register: ' + rid)
+            raise SystemExit('Targeted row missing from rendered register: ' + rid)
     if args.write:
         RENDERED.write_text(expected)
-        print('Rendered ' + str(len(approved)) + ' owner-approved rows from ' + register['version'])
+        print('Rendered ' + str(len(targeted)) + ' targeted rows from ' + register['version'])
         return
     if current != expected:
-        raise SystemExit('Owner-approved rendered rows differ from requirements.json; review and run render_review.py --write')
-    print('Owner-approved rendered rows match ' + register['version'])
+        raise SystemExit('Targeted rendered rows differ from requirements.json; review and run render_review.py --write')
+    print('Targeted rendered rows match ' + register['version'])
 
 
 if __name__ == '__main__':

@@ -1,5 +1,5 @@
 {
-  "version": "review-2026-10-08.1",
+  "version": "review-2026-10-08.2",
   "date_eastern": "2026-10-08",
   "source_manifest": {
     "V4": {
@@ -1717,7 +1717,7 @@
     {
       "id": "MLX3-RES-006",
       "title": "Reproducible Machine-Readable Export",
-      "requirement": "A private machine-readable report export includes the scope, result states, evidence references and pinned processing versions needed to reproduce supported values, without leaking secrets or another tenant's data.",
+      "requirement": "An authorized private machine-readable report export includes the permitted frozen question set, named comparators, method and run context, scope, result states, evidence references and pinned processing versions needed to reproduce supported values. It excludes restricted third-party fields, secrets and other tenants' data and does not promise identical new live AI answers.",
       "profile": "evidence",
       "tests": [
         "T23",
@@ -1725,14 +1725,15 @@
         "T28"
       ],
       "decisions": [
+        "D03",
         "D04"
       ],
       "dependencies": [
         "MLX3-NFR-009"
       ],
       "disposition": "clarify",
-      "rationale": "Make the source outcome observable and connect it to the current rubric and case definitions; no new implementation is authorized.",
-      "authority": "V4 working baseline; reconcile with later accepted decisions",
+      "rationale": "PM-2026-10-08-AIAV specifies the permitted input and method context needed for reproduction without promising restricted redistribution or repeat live answers.",
+      "authority": "V4 working baseline; owner-delegated PM-2026-10-08-AIAV",
       "source": {
         "id": "MLX3-RES-006",
         "title": "Reproducible Machine-Readable Export",
@@ -1747,7 +1748,7 @@
         "decision": "No new owner decision; proposed wording and priority await review.",
         "review_note": "Coordinator/product + independent engineering review. No material issue found Resolution: No change required by this review; proposal remains subject to owner scope decisions.\n\n2026-09-13 MIN-7 bounded build/trial — Product coordinator + Engineering implementation/checks + AI quality review: Markdown/JSON draft outputs and their hashes are retained; no client export or release service is implemented. Trial result: adjust; ongoing adoption undecided and owner-review effort unmeasured. Existing acceptance is not fully closed. https://linear.app/mindleverx-codex-build/issue/MIN-7/batch-13-produce-and-independently-review-an-evidence-linked-report"
       },
-      "status": "Review draft; not an acceptance of implementation or disputed scope",
+      "status": "PM-selected wording; rights and implementation on hold and T23/T13/T28 NOT RUN",
       "review_coverage": {
         "reviewer": "Codex coordinator, same agent",
         "scope": "wording, provenance, rubric mapping and case/dependency consistency",
@@ -2777,7 +2778,7 @@
     {
       "id": "MLX3-ADM-011",
       "title": "Result Review and Secure Delivery",
-      "requirement": "Monthly reports become client-visible only after the owner's recorded release decision; completeness and evidence checks precede that decision, and the one-time audit release policy remains explicit and unresolved.",
+      "requirement": "One-time and monthly reports become client-visible only after the owner records a release decision for the exact immutable report version. Completeness, permitted-evidence and recipient checks precede that decision. Changed content requires a new decision.",
       "profile": "control",
       "tests": [
         "T06",
@@ -2791,8 +2792,8 @@
         "MLX3-RES-006"
       ],
       "disposition": "clarify",
-      "rationale": "Owner release is required for monthly briefs; one-time audit policy is unresolved, not automatically inherited.",
-      "authority": "V4 working baseline; reconcile with later accepted decisions",
+      "rationale": "PM-2026-10-08-AIAV selects exact-version owner release for one-time as well as monthly reports; private delivery details remain D02.",
+      "authority": "V4 working baseline; monthly DEC-006; owner-delegated PM-2026-10-08-AIAV",
       "source": {
         "id": "MLX3-ADM-011",
         "title": "Result Review and Secure Delivery",
@@ -2807,7 +2808,7 @@
         "decision": "DEC-006 is settled for monthly reports. Define the release policy of any additional one-time offer explicitly; owner review is the proposed default, not an already-approved broader policy.",
         "review_note": "Coordinator/product + independent engineering review. The rewrite and decision note characterize DEC-006 as settled for every client release. The inspected decision record explicitly covers monthly briefs; applying it to any one-time pilot report would broaden its recorded scope. Resolution: Incorporated in the proposed wording, priority, classification or decision note: State monthly/cycle release explicitly, or cite a newer owner instruction that extends the gate. If no such extension exists, label broader application as proposed rather than ask the owner to reconfirm the already-settled monthly rule. Preserve completeness and recipient controls for all delivery.\n\n2026-09-13 MIN-7 bounded build/trial — Product coordinator + Engineering implementation/checks + AI quality review: Builder always emits drafts and has no approval/release action. DEC-006 monthly owner approval remains required. Trial result: adjust; ongoing adoption undecided and owner-review effort unmeasured. Existing acceptance is not fully closed. https://linear.app/mindleverx-codex-build/issue/MIN-7/batch-13-produce-and-independently-review-an-evidence-linked-report"
       },
-      "status": "Review draft; not an acceptance of implementation or disputed scope",
+      "status": "PM-selected wording; product implementation on hold and T06/T13 NOT RUN",
       "review_coverage": {
         "reviewer": "Codex coordinator, same agent",
         "scope": "wording, provenance, rubric mapping and case/dependency consistency",
@@ -3440,7 +3441,7 @@
         "MLX3-ADM-011"
       ],
       "disposition": "proposed addition",
-      "rationale": "Operationalizes the premier owner/client UX tenet; the owner approved this P1 report-usability scope on 8 October 2026. Representative testing, one-time release policy and visual acceptance remain open.",
+      "rationale": "Operationalizes the premier owner/client UX tenet; the owner approved this P1 report-usability scope on 8 October 2026. Representative testing, production private delivery and visual acceptance remain open.",
       "authority": "TENETS, METRICS and METHOD; scoped owner decision OWN-2026-10-08-P0-P1",
       "source": null,
       "prior_proposal": null,
@@ -3710,7 +3711,7 @@
     {
       "id": "PROP-BIZ-001",
       "title": "Paid lifecycle matched to the offer",
-      "requirement": "Before charging for the selected offer, define payment, collection, review, release, delivery, failure/refund, cancellation and renewal-entitlement states separately, preserving monthly owner release and the unresolved one-time policy.",
+      "requirement": "Before charging for the selected offer, define payment, collection, review, release, delivery, failure/refund, cancellation and renewal-entitlement states separately, preserving exact-version owner release for one-time and monthly reports while production private-delivery details remain open.",
       "profile": "offer",
       "tests": [
         "T01",
@@ -3726,8 +3727,8 @@
         "MLX3-AUD-002"
       ],
       "disposition": "proposed addition",
-      "rationale": "Existing provisional ID preserved and clarified against the seven-tenet rubric; not a new scope approval.",
-      "authority": "Live Sheet Proposed additions; supplemented by TENETS, METRICS and METHOD",
+      "rationale": "Existing lifecycle proposal remains unapproved; PM-2026-10-08-AIAV selects one-time owner release while D01 commercial terms and D02 delivery details remain open.",
+      "authority": "Live Sheet Proposed additions; owner-delegated PM-2026-10-08-AIAV; TENETS, METRICS and METHOD",
       "source": null,
       "prior_proposal": {
         "sheet_row": 6,
@@ -3997,6 +3998,35 @@
         "independent_specialist_review": "NOT RUN for this revised wording",
         "owner_scope_approval": "not inferred from gap-pass request"
       }
+    },
+    {
+      "id": "PROP-SCOPE-001",
+      "title": "Offer-to-report fidelity",
+      "requirement": "Before sale, the accepted one-time offer version names included report components, required client inputs and exclusions, and any permitted partial-delivery conditions. A released report supplies an evidence-backed result for each included component. An unavailable result is releasable only when the accepted terms permit that limitation or the client accepts a documented scope change and remedy; otherwise release is blocked. A different measurement surface cannot silently substitute for a promised one.",
+      "profile": "offer",
+      "tests": [
+        "T01",
+        "T48"
+      ],
+      "decisions": [
+        "D01"
+      ],
+      "dependencies": [
+        "MLX3-AUD-002",
+        "MLX3-ADM-011",
+        "PROP-DATA-001"
+      ],
+      "disposition": "proposed addition",
+      "rationale": "PM-2026-10-08-AIAV adds a P1 contract-to-report boundary; the unapproved AugMind draft does not select actual components or remedies.",
+      "authority": "Owner-delegated PM-2026-10-08-AIAV; commercial terms remain D01",
+      "source": null,
+      "status": "PM-recommended P1 proposal; implementation on hold and T01/T48 NOT RUN",
+      "review_coverage": {
+        "reviewer": "Codex PM and requirements-quality specialist",
+        "scope": "wording, provenance, dependencies and synthetic acceptance",
+        "independent_specialist_review": "Read-only specialist review completed 8 October 2026; no product or customer validation",
+        "owner_scope_approval": "Specific inclusions, terms and product implementation remain unapproved"
+      }
     }
   ],
   "rubric_profiles": {
@@ -4204,6 +4234,21 @@
       "decision": "Approve the P0 evidence-qualification and P1 report/owner-client UX requirement amendments and their executable acceptance cases for the Build intake.",
       "deferred": "The public-site learning loop and P2 comparable-cohort/optional measurement proposals remain in review.",
       "limits": "Scope approval is not provider qualification, product acceptance, visual-design approval, spending, publication, one-time client release, or approval of the whole 105-row review draft."
+    }
+  ],
+  "pm_reconciliation_decisions": [
+    {
+      "id": "PM-2026-10-08-AIAV",
+      "authority": "Owner delegated independent PM decisions and requested resulting GitHub and Linear updates on 8 October 2026.",
+      "source": "Owner-supplied AugMind AI Answer Visibility Offering deck v0.1, 8 October 2026, SHA-256 32829f6cde6700ac2e75266043f51ff3d29a8dbe2f3a152f5a35aaa82ac7c990. Unapproved draft, not buyer validation.",
+      "decision": "First paid output is a separately purchasable one-time evidence-backed baseline report. AugMind AI Answer Visibility is initially an add-on; Implement and Run are separately scoped services. Select exact-version owner release for one-time and monthly reports. Add offer-to-report fidelity and clarify permitted private export.",
+      "rendered_ids": [
+        "MLX3-ADM-011",
+        "MLX3-RES-006",
+        "PROP-SCOPE-001",
+        "PROP-BIZ-001"
+      ],
+      "limits": "Exact commercial terms, private delivery, collection rights and retention remain open under D01-D04. Requirements sync authorized; product implementation and release on hold. Product acceptance NOT RUN."
     }
   ]
 }
