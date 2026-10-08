@@ -1,3 +1,25 @@
+## 8 October 2026 — 105-row source reconciliation and PM priority slice
+
+The verified GitHub branch `codex/technical-nfr-gap-pass-2026-10-02` at `9eb31f0` supplied the complete `review-2026-10-02.1` package. A full structured-object comparison found the prior 97 rows unchanged and exactly eight new `PROP-*` rows, all still proposals. The corresponding rendered narratives, T40–T47 cases, crosswalk, validator and review notes were brought into this checkout. The dated [market-to-requirements priority proposal](market-priority-slice-2026-10-08.md) is linked from the existing decision index and tracked as proposed in Linear MIN-30. No new row or accepted wording is inferred from that proposal.
+
+Actual local checks: `validate_review.py --structure-only` **PASS** (105 rows, 19 proposals, 47 case families, no errors); `test_validate_review.py` **PASS** (seven regression scenarios); `git diff --check` **PASS** after removing one extra trailing blank line. Full `validate_review.py` reports **BLOCKED** with no document errors because the saved `CURRENT` and `GUIDANCE` source fingerprints differ from today's handoff/build-guidance files. Do not rewrite those hashes to force PASS. PM-01–PM-05 and T40–T47 product cases, human comprehension, customer value and production readiness are **NOT RUN / NOT VERIFIED**. This documentation merge did not alter product code or release state.
+
+## 2 October 2026 — technical/NFR gap-pass verification
+
+The review branch `codex/technical-nfr-gap-pass-2026-10-02` extends the structured register from 97 to **105 rows**, with **19 proposals** and **47 acceptance-case families**.
+
+A connector-side parity check against the branch content passed the structure rules for:
+- unique requirement IDs;
+- exact 86-source/live-review coverage and six existing provisional IDs;
+- profile/friction completeness;
+- valid acceptance-case and decision references;
+- valid requirement dependencies with no dependency cycles;
+- proposal labeling/source boundaries;
+- the preserved golden synthetic eligibility/arithmetic fixture; and
+- internal Markdown/file/anchor links.
+
+The eight new technical/NFR product cases T40–T47 remain **NOT RUN**. GitHub CI run `37065261613` on PR #3 passed the repository application checks, canonical requirements structure validator plus validator regression suite, and public-build verification. That CI validates the requirements machinery and existing product regressions; it does **not** execute T40–T47 or establish product acceptance/production readiness.
+
 # Requirements rewrite verification
 
 ## Current validation behavior — 19 September 2026
