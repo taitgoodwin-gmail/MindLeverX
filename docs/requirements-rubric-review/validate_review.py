@@ -76,6 +76,22 @@ for r in rows:
         check(r['disposition']=='proposed addition' and r['source'] is None,r['id']+' proposal mislabeled')
     if r['source']:
         check(bool(r.get('prior_sheet_review')),r['id']+' missing prior live review')
+rendered = (HERE/'revised-requirements.md').read_text()
+by_id = {r['id']: r for r in rows}
+for decision in data.get('owner_scope_decisions', []):
+    check(bool(decision.get('id')) and bool(decision.get('source')), 'Owner decision lacks identity or source')
+    check(bool(decision.get('accepted_amendment_ids')), 'Owner decision lacks accepted amendments')
+    for rid in decision.get('accepted_amendment_ids', []):
+        check(rid in by_id, 'Owner-approved amendment missing: '+rid)
+        if rid not in by_id:
+            continue
+        row = by_id[rid]
+        check(row['status'].startswith('Owner-approved'), rid+' owner approval status lost')
+        check(decision.get('id', '') in row['authority'], rid+' owner decision authority lost')
+        section = rendered.split('### '+rid+' — ', 1)[-1].split('\n### ', 1)[0] if '### '+rid+' — ' in rendered else ''
+        check(row['requirement'] in section and row['status'] in section, rid+' rendered wording/status differs from structured source')
+    for rid in decision.get('linked_existing_basis_ids', []):
+        check(rid in by_id, 'Owner decision references unknown basis: '+rid)
 for case in case_ids:
     section=cases.split('## '+case+'\n',1)[1].split('\n## ',1)[0]
     for expected in ['**Claim/boundary:**','**Prerequisites:**','**Actual:** NOT RUN','**Cleanup:**','**Not tested:**','1.','2.','**Expect:**']:
@@ -113,6 +129,6 @@ check([o['id'] for o in eligible]==f['expected']['eligible_ids'],'Golden eligibi
 check(hits==2 and len(eligible)==4 and hits/len(eligible)*100==50,'Golden arithmetic mismatch')
 check(len(f['observations'])==6 and sum(o['status']=='completed' for o in f['observations'])==5,'Golden outcome counts mismatch')
 
-summary={'boundary':'document structure and independent synthetic-fixture arithmetic; no product tests', 'source_ids':len(source_ids) if source_ids else None, 'live_original_rows':len(original_sheet),'live_review_rows':len(live_ids),'existing_proposal_ids':len(legacy_proposals), 'revised_rows':len(rows),'proposals':sum(r['source'] is None for r in rows),'case_families':len(case_ids),'decision_records':len(decisions),'dispositions':dict(Counter(r['disposition'] for r in rows)), 'mode':'structure-only' if args.structure_only else 'full', 'errors':errors, 'blockers':blockers, 'structure_result':'FAIL' if errors else 'PASS', 'source_verification':'NOT RUN' if args.structure_only else ('BLOCKED' if blockers else 'PASS'), 'result':'FAIL' if errors else ('BLOCKED' if blockers else 'PASS')}
+summary={'boundary':'document structure and independent synthetic-fixture arithmetic; no product tests', 'source_ids':len(source_ids) if source_ids else None, 'live_original_rows':len(original_sheet),'live_review_rows':len(live_ids),'existing_proposal_ids':len(legacy_proposals), 'revised_rows':len(rows),'proposals':sum(r['source'] is None for r in rows),'owner_approved_amendments':sum(len(d.get('accepted_amendment_ids', [])) for d in data.get('owner_scope_decisions', [])),'unapproved_provisional_rows':sum(r['source'] is None and not r['status'].startswith('Owner-approved') for r in rows),'case_families':len(case_ids),'decision_records':len(decisions),'dispositions':dict(Counter(r['disposition'] for r in rows)), 'mode':'structure-only' if args.structure_only else 'full', 'errors':errors, 'blockers':blockers, 'structure_result':'FAIL' if errors else 'PASS', 'source_verification':'NOT RUN' if args.structure_only else ('BLOCKED' if blockers else 'PASS'), 'result':'FAIL' if errors else ('BLOCKED' if blockers else 'PASS')}
 print(json.dumps(summary,indent=2))
 raise SystemExit(1 if errors else (2 if blockers else 0))

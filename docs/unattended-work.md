@@ -2,6 +2,8 @@
 
 Owner authorized review, red-team corrections and activation on 13 September 2026 Eastern. This activates orchestration, not public-site deployment or client release. It supersedes the earlier “standing loop undecided” statement only for this bounded coordinator and daily reporting. Product package, price, provider and expansion decisions remain open.
 
+**8 October scoped intake:** The owner subsequently approved P0 evidence qualification and P1 report/owner-client UX requirement amendments (`OWN-2026-10-08-P0-P1`). This adds one bounded, independent saved-report validation unit under MIN-10 to the existing queue below. It does not approve a provider, the public-site loop, new appearance, purchase or client release. The original collection-to-qualified-report dependency chain remains intact.
+
 ## Operating choice
 
 Reuse the existing mindleverx-progress-monitor automation as MindLeverX delivery and daily briefing, returning to task 01a0985e-3da7-76b0-b83b-9dda802952aa. On 14 September the owner approved the postmortem improvements and an independent test. Reduce idle opportunities to once daily at 8 a.m., America/New_York, while the current queue is blocked. The same coordinator owns work and the daily briefing; do not create a second automation. If the scheduled run is missed, prepare the briefing at the next actual run after 8 a.m.; this is a handling rule, not a promise that the scheduler catches up. Dated delivery records prevent duplicates. More frequent opportunities require a ready backlog and an explicit cadence decision; the coordinator must not silently reschedule itself.
@@ -13,10 +15,11 @@ One coordinator, up to three useful specialist assignments, one code writer per 
 ## Finite work queue and acceptance
 
 1. MIN-5: qualify actual collection access and included allowances, prepare/freeze the authorized internal-site specification, distinguish consumer AI from API benchmarks. No claim of completion until method and access are qualified.
-2. MIN-6, dependent on MIN-5: retain real website and AI-answer evidence, account for all attempts, label failures.
-3. MIN-7, dependent on real evidence: generate and independently review a private evidence-linked report. Reuse the tested local builder; do not redo its fictional trial.
-4. Parallel bounded preparation: one proposed paid-pilot offer (customer/problem/scope/price hypothesis/turnaround/failure terms/recurring follow-on), then one minimum payment/authorization/secure-delivery gap assessment. Drafts do not approve commercial choices.
-5. UI/UX review only for an applicable customer-facing milestone; suggestions are allowed, appearance implementation retains owner approval, and further report styling remains parked.
+2. MIN-10, independent accepted P1 validation: inspect the pinned retained-data report and owner draft against T24/T30/T34 and PM-02's finding, limitation, evidence path, justified action and exact-version review. Use no new provider call or purchase. Record executable technical subchecks separately from the representative client/owner human portion, which stays BLOCKED until participants and a reviewable build are available. This may proceed while MIN-5/MIN-12 collection qualification is blocked; it cannot clear full MIN-7 acceptance.
+3. MIN-6, dependent on MIN-5 and the final MIN-13 pilot freeze: retain real website and AI-answer evidence, account for all attempts, label failures.
+4. MIN-7, dependent on real evidence: generate and independently review a private evidence-linked report. Reuse the tested local builder; do not redo its fictional trial.
+5. Parallel bounded preparation: one proposed paid-pilot offer (customer/problem/scope/price hypothesis/turnaround/failure terms/recurring follow-on), then one minimum payment/authorization/secure-delivery gap assessment. Drafts do not approve commercial choices; the existing drafts are complete and must not be repeated without changed evidence.
+6. UI/UX review for an applicable customer-facing milestone may suggest changes; appearance implementation retains owner approval, and further report styling remains parked.
 
 Eligible local engineering within agreed scope may proceed and be tested/committed in isolation. No automatic pushes/merges, since pushes can deploy previews. Purchases, new paid usage, outbound messages, customer changes, appearance changes and release remain under existing owner decisions. New backlog proposals are not implementation authorization.
 

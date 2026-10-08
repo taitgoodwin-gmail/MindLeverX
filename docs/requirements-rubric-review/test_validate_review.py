@@ -97,6 +97,14 @@ class ReviewValidationTests(unittest.TestCase):
         self.assertEqual(code, 1)
         self.assertTrue(any('Dependency cycle' in e for e in result['errors']))
 
+    def test_owner_approved_wording_must_match_rendered_register(self):
+        row = next(r for r in self.data['requirements'] if r['id'] == 'PROP-DATA-001')
+        row['requirement'] = 'Silently changed approved wording.'
+        self.save()
+        code, result = self.run_check('--structure-only')
+        self.assertEqual(code, 1)
+        self.assertIn('PROP-DATA-001 rendered wording/status differs from structured source', result['errors'])
+
 
 if __name__ == '__main__':
     unittest.main()

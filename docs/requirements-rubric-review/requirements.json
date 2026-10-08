@@ -1,6 +1,6 @@
 {
-  "version": "review-2026-10-02.1",
-  "date_eastern": "2026-10-02",
+  "version": "review-2026-10-08.1",
+  "date_eastern": "2026-10-08",
   "source_manifest": {
     "V4": {
       "path": "/Users/tag/Desktop/Builds/MindLeverX - Claude Code Build/01 - REQUIREMENTS INPUT/01 - MindLeverX Clean-Slate Requirements v4.0.md",
@@ -3424,29 +3424,32 @@
     {
       "id": "PROP-UX-001",
       "title": "Whole-journey usability",
-      "requirement": "For a representative pilot, record client completion and comprehension and owner preparation, review and recovery effort separately, using the same defined journey and recording assistance and failures.",
+      "requirement": "For a representative pilot, the initial report view lets an uncoached client identify the principal finding, material limitation and justified next action or no-action. The authorized owner can find exceptions, inspect linked evidence and record a release-or-return decision for the exact draft version under the selected release policy. Record client comprehension, completion, time, assistance, errors and recovery separately from owner preparation, review, decision and recovery effort.",
       "profile": "experience",
       "tests": [
+        "T24",
+        "T30",
         "T34"
       ],
       "decisions": [
-        "D01"
+        "D01",
+        "D02"
       ],
       "dependencies": [
         "MLX3-RES-001",
         "MLX3-ADM-011"
       ],
       "disposition": "proposed addition",
-      "rationale": "Operationalizes an accepted tenet; this exact requirement is a new proposal, not approved product scope.",
-      "authority": "TENETS, METRICS and METHOD; proposed requirement formulation",
+      "rationale": "Operationalizes the premier owner/client UX tenet; the owner approved this P1 report-usability scope on 8 October 2026. Representative testing, one-time release policy and visual acceptance remain open.",
+      "authority": "TENETS, METRICS and METHOD; scoped owner decision OWN-2026-10-08-P0-P1",
       "source": null,
       "prior_proposal": null,
-      "status": "Proposal; not implementation authorization",
+      "status": "Owner-approved P1 report UX requirement amendment; human/product acceptance NOT RUN",
       "review_coverage": {
         "reviewer": "Codex coordinator, same agent",
         "scope": "wording, provenance, rubric mapping and case/dependency consistency",
         "independent_specialist_review": "NOT RUN for this revised wording",
-        "owner_scope_approval": "not inferred from rewrite request"
+        "owner_scope_approval": "Explicit owner approval of P1 report and owner/client UX in the 8 October 2026 Codex popup reply; not appearance, one-time release or implementation approval"
       }
     },
     {
@@ -3669,9 +3672,10 @@
     {
       "id": "PROP-DATA-001",
       "title": "Collection rights and evidence portability",
-      "requirement": "Before accepting a collection route, verify the exact service and permitted collection, commercial reporting, retention, export, sensitive-data and cost boundaries; an unmet mandatory right or evidence field blocks acceptance or requires an explicitly narrowed offer.",
+      "requirement": "Before accepting a collection route for each offered measurement surface, verify the exact service, qualified collection method, and permitted collection, commercial reporting, retention, export, sensitive-data and cost boundaries. The release record identifies the method and conditions. A surface missing a mandatory right or evidence field is unavailable or explicitly excluded with a reason; its absence is never sold or displayed as observed zero visibility.",
       "profile": "evidence",
       "tests": [
+        "T12",
         "T37"
       ],
       "decisions": [
@@ -3680,11 +3684,12 @@
       ],
       "dependencies": [
         "MLX3-MEA-006",
-        "MLX3-EVD-006"
+        "MLX3-EVD-006",
+        "MLX3-MEA-012"
       ],
       "disposition": "proposed addition",
-      "rationale": "Existing provisional ID preserved and clarified against the seven-tenet rubric; not a new scope approval.",
-      "authority": "Live Sheet Proposed additions; supplemented by TENETS, METRICS and METHOD",
+      "rationale": "Existing provisional ID retained; the owner approved this P0 evidence-qualification scope and clarification on 8 October 2026. Exact collection rights, route and policy remain to be qualified under D03/D04.",
+      "authority": "Live Sheet Proposed additions; TENETS, METRICS and METHOD; scoped owner decision OWN-2026-10-08-P0-P1",
       "source": null,
       "prior_proposal": {
         "sheet_row": 5,
@@ -3694,12 +3699,12 @@
         "boundary": "Provider and account terms are not yet selected or verified by this task; no purchase authorized.",
         "prior_review": "Coordinator + requirements quality review. The conditional repeatability and enabler classifications are appropriate. Material acceptance risk: 'demonstrates permitted evidence export or explicitly records the limitation' could mark validation complete even when the missing export or unresolved rights prevent the customer promise. Download capability and a vendor's collection claim do not by themselves establish source-platform authorization or commercial redistribution rights. Incorporated: Keep the ID provisional. List which evidence, context and rights are mandatory for the proposed offer; distinguish verified documentation, contract-specific confirmation and unresolved questions. A documented limitation may complete an investigation, but provider selection must fail, pause or narrow the offer if a mandatory requirement is unmet. Preserve exact service/plan/terms versions, evidence retention and client-export restrictions; do not run a trial or purchase through this markup task."
       },
-      "status": "Proposal; not implementation authorization",
+      "status": "Owner-approved P0 requirement amendment; real-route qualification BLOCKED and T12/T37 product cases NOT RUN",
       "review_coverage": {
         "reviewer": "Codex coordinator, same agent",
         "scope": "wording, provenance, rubric mapping and case/dependency consistency",
         "independent_specialist_review": "NOT RUN for this revised wording",
-        "owner_scope_approval": "not inferred from rewrite request"
+        "owner_scope_approval": "Explicit owner approval of P0 evidence qualification in the 8 October 2026 Codex popup reply; not provider, policy or implementation approval"
       }
     },
     {
@@ -4179,5 +4184,26 @@
       "Record work barriers without inventing motivation or adding needless surveys.",
       "Preserve informed choice and observe confusion, regret and follow-through."
     ]
-  }
+  },
+  "owner_scope_decisions": [
+    {
+      "id": "OWN-2026-10-08-P0-P1",
+      "source": "Owner reply in the current Codex conversation to the popup option \"Approve P0 + report UX\" on 8 October 2026 Eastern: \"Approve PO report UIX, yes.\"",
+      "accepted_amendment_ids": [
+        "PROP-DATA-001",
+        "PROP-UX-001"
+      ],
+      "linked_existing_basis_ids": [
+        "MLX3-MEA-012",
+        "MLX3-RES-001",
+        "MLX3-RES-002",
+        "MLX3-RES-007",
+        "MLX3-ADM-011",
+        "MLX3-NFR-007"
+      ],
+      "decision": "Approve the P0 evidence-qualification and P1 report/owner-client UX requirement amendments and their executable acceptance cases for the Build intake.",
+      "deferred": "The public-site learning loop and P2 comparable-cohort/optional measurement proposals remain in review.",
+      "limits": "Scope approval is not provider qualification, product acceptance, visual-design approval, spending, publication, one-time client release, or approval of the whole 105-row review draft."
+    }
+  ]
 }

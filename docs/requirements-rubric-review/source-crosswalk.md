@@ -93,7 +93,7 @@ Source rows and exact original wording are retained in requirements.json. All 86
 
 ## Provisional ID continuity
 
-- PROP-UX-001: Whole-journey usability — new proposal only.
+- PROP-UX-001: Whole-journey usability — new provisional-origin ID; P1 report UX amendment approved by owner on 8 October 2026 under OWN-2026-10-08-P0-P1. Product acceptance NOT RUN.
 - PROP-VAL-001: Buyer and renewal validation — existing live-Sheet proposal preserved and clarified.
 - PROP-REP-001: Second-customer portability — new proposal only.
 - PROP-OPS-001: Delivery economics and owner effort — existing live-Sheet proposal preserved and clarified.
@@ -101,7 +101,7 @@ Source rows and exact original wording are retained in requirements.json. All 86
 - PROP-LEAD-001: Evidence of useful differentiation — new proposal only.
 - PROP-BEH-001: Informed action and follow-through — new proposal only.
 - PROP-SEO-001: Evidence-supported SEO and GEO advice — existing live-Sheet proposal preserved and clarified.
-- PROP-DATA-001: Collection rights and evidence portability — existing live-Sheet proposal preserved and clarified.
+- PROP-DATA-001: Collection rights and evidence portability — existing live-Sheet provisional ID preserved; P0 evidence-qualification amendment approved by owner on 8 October 2026 under OWN-2026-10-08-P0-P1. Actual collection qualification remains unresolved.
 - PROP-BIZ-001: Paid lifecycle matched to the offer — existing live-Sheet proposal preserved and clarified.
 - PROP-GOV-001: Team review and decision trace — existing live-Sheet proposal preserved and clarified.
 

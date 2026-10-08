@@ -2,7 +2,7 @@
 
 Prepared 18 September 2026 Eastern. This is the short reading path for the owner. The [revised register](revised-requirements.md) contains the full wording and [source crosswalk](source-crosswalk.md) accounts for every original ID.
 
-**8 October product priority proposal:** [Market evidence to prioritized requirements](market-priority-slice-2026-10-08.md) ranks the next buyer-facing outcomes and includes fixed acceptance cases and UI/UX implications. It sits within the reconciled 105-row review: all earlier 97 rows are unchanged and the eight October 2 engineering additions remain proposals. It is proposed, not approval of this register.
+**8 October scoped owner decision:** [Market evidence to prioritized requirements](market-priority-slice-2026-10-08.md) ranked the next buyer-facing outcomes. The owner then approved **P0 evidence qualification (`PROP-DATA-001`) and P1 report/owner-client UX (`PROP-UX-001`)** for requirements promotion under `OWN-2026-10-08-P0-P1`; their clarified wording and linked T12/T24/T30/T34/T37 cases are in the structured and rendered register. The public-site loop and P2 ideas remain proposed. The other rows are not blanket-approved, all product cases remain NOT RUN, and collection rights, commercial policy, one-time release and appearance gates remain open. The 105-row review still preserves the earlier 97 source rows and eight October 2 engineering additions.
 
 ## Recommendation
 
@@ -17,7 +17,7 @@ The simpler credible alternative is to apply this format only to the next measur
 3. **Missing evidence stays distinct from no change or zero.** Method boundaries and unavailable metadata are explicit. Vendor labels are not independent proof of consumer-platform equivalence.
 4. **Reproducibility has two relevant contracts.** Deterministic measurements are recalculated; approved AI prose is retrieved from its stored version. No promise of identical new live AI answers is made.
 5. **The current design direction remains authoritative.** Historical builder names and rejected Linear-inspired design do not govern this build. No appearance changes were made.
-6. **Usability, economics and AI value have observable evaluation proposals.** All six existing live-Sheet `PROP-*` IDs are retained; five additional proposals cover whole-journey usability, portability, AI evaluation, competitive comparison and behavioral design. They remain proposals rather than retroactively approved features, numerical targets or achieved benefits.
+6. **Usability, economics and AI value have observable evaluations.** All six existing live-Sheet `PROP-*` IDs are retained; five additional provisional IDs cover whole-journey usability, portability, AI evaluation, competitive comparison and behavioral design. The owner approved the scoped P0 data and P1 report UX amendments on 8 October; the other additions remain proposals. This does not establish implementation, numerical targets or achieved benefits.
 7. **Verification is separated from status.** Existing local passing tests are bounded evidence. Proposed product cases are NOT RUN and name missing production prerequisites. A requirements rewrite cannot prove customer readiness.
 8. **Production-engineering gaps are now explicit proposals.** The 2 October gap pass adds release/config integrity, schema migration/recovery, interface compatibility, performance/timeouts, observability/alerting, dependency/artifact integrity, distributed abuse protection and off-device disaster recovery. These remain proposals; no arbitrary SLA, RPO/RTO, rate limit or retention number is introduced.
 
@@ -49,7 +49,7 @@ These are a dependency map, not a request to answer ten questions tonight. D10 i
 
 ## Definition of done for this review
 
-**Local draft:** all 86 recovered IDs plus all six live provisional IDs accounted for; 105 total rows including 19 clearly labeled proposals (six existing, thirteen new); original and prior-reviewed wording/trace preserved; all rows map to seven-tenet profiles, separate owner/client friction, valid dependencies, decisions and acceptance-case families; source and internal-link checks pass; actual verification and limitations recorded.
+**Local draft:** all 86 recovered IDs plus all six live provisional IDs accounted for; 105 total rows including 19 provisional-origin rows (six existing, thirteen new), of which two have scoped owner approval as of 8 October; original and prior-reviewed wording/trace preserved; all rows map to seven-tenet profiles, separate owner/client friction, valid dependencies, decisions and acceptance-case families; source and internal-link checks pass or retain their named blockers; actual verification and limitations recorded.
 
 **Not complete by this document:** live Sheet synchronization, independent specialist review of the new wording, approval of disputed commercial or production policies, implementation of new product features, execution of the proposed product scenarios, real-report acceptance and customer validation. These limitations are not reasons to repeat the completed local rewrite in a scheduled batch.
 

@@ -6,6 +6,11 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 OUT = Path(__file__).resolve().parent
+current_register = OUT / 'requirements.json'
+if current_register.exists():
+    existing = json.loads(current_register.read_text())
+    if existing.get('owner_scope_decisions'):
+        raise SystemExit('Refusing to regenerate over owner-approved amendments. Reconcile the embedded source and approval decisions before replacing requirements.json or rendered views.')
 BASE = Path('/Users/tag/Desktop/Builds/MindLeverX - Claude Code Build')
 SOURCES = {
     'V4': BASE / '01 - REQUIREMENTS INPUT/01 - MindLeverX Clean-Slate Requirements v4.0.md',

@@ -2,15 +2,17 @@
 
 Prepared 18 September 2026 Eastern. **Review draft, not a release declaration or blanket scope approval.**
 
-This package reconciles 78 V4 IDs, 8 recurring-service IDs from the V5 proposal, all 6 existing provisional IDs from the live Google Sheet, and 13 new proposals, including the 2 October production-engineering gap pass: **105 rows total**. Every original ID remains traceable. The live Sheet was read through a fresh browser export on 18 September Eastern and its 86-row prior review was compared with this rewrite. The Sheet and original files are unchanged. The captured snapshot establishes what was read, not that future Sheet edits are synchronized.
+**Scoped owner decision, 8 October 2026:** The P0 `PROP-DATA-001` and P1 `PROP-UX-001` amendments below are approved as requirements for the next Build intake under `OWN-2026-10-08-P0-P1`. Their `PROP-*` disposition records historical origin, not current approval. Linked existing review rows remain the acceptance basis; the public-site loop, P2 ideas and the rest of this 105-row register are not blanket-approved. Product tests remain NOT RUN and unresolved D01/D02/D03/D04 decisions retain their gates.
+
+This package reconciles 78 V4 IDs, 8 recurring-service IDs from the V5 proposal, all 6 existing provisional IDs from the live Google Sheet, and 13 new provisional-origin rows, including the 2 October production-engineering gap pass: **105 rows total**. Every original ID remains traceable. The live Sheet was read through a fresh browser export on 18 September Eastern and its 86-row prior review was compared with this rewrite. The Sheet and original files are unchanged. The captured snapshot establishes what was read, not that future Sheet edits are synchronized.
 
 The intended journey is an evidence-backed paid audit leading to a repeatable recurring service with low owner/client effort. ChatGPT consumer visibility is the leading measurement interest; broader platform coverage remains an ambition subject to qualification. Scope, buyer, price and one-time release policy remain unresolved. Monthly reports require owner release approval. The existing evidence frontend is an internal saved-data inspector, not the finished client report.
 
-Read [the change summary and decisions](decisions-needed.md), [source crosswalk](source-crosswalk.md), [test cases](acceptance-tests.md), [rubric profiles](rubric-profiles.md), and [verification](verification.md). The generated views share [one structured draft](requirements.json); they are not a new external tracker. Regeneration command: `python3 docs/requirements-rubric-review/build_review.py` from the project root. Verify with `python3 docs/requirements-rubric-review/validate_review.py`.
+Read [the change summary and decisions](decisions-needed.md), [source crosswalk](source-crosswalk.md), [test cases](acceptance-tests.md), [rubric profiles](rubric-profiles.md), and [verification](verification.md). The rendered view follows [one structured register](requirements.json); it is not a new external tracker. Use `render_review.py --write` to refresh owner-approved rows without replaying historical source inputs; the older `build_review.py` refuses to overwrite approved amendments. Verify portable document structure with `npm run check:requirements`; the full source check retains its historical fingerprint boundary.
 
 ## Authority and interpretation
 
-Current owner instructions and September accepted decisions take precedence over historical working drafts. Preserved source wording is evidence of the earlier baseline, not an instruction to revive the old builder, old design, no-checkout journey, Perplexity-only scope, or unapproved numerical gates. Clarification improves wording; unresolved means a material conflict remains. Proposed additions translate the tenets into observable evaluations without approving new product modules.
+Current owner instructions and September accepted decisions take precedence over historical working drafts. Preserved source wording is evidence of the earlier baseline, not an instruction to revive the old builder, old design, no-checkout journey, Perplexity-only scope, or unapproved numerical gates. Clarification improves wording; unresolved means a material conflict remains. Provisional-origin additions translate the tenets into observable evaluations; only the two explicitly marked October 8 amendments have scoped owner approval.
 
 Each requirement has one observable responsibility; detailed edge cases live in linked tests. Existing IDs group closely related contract fields rather than inventing a renumbering scheme. Dependencies are logical acceptance prerequisites, not an instruction to implement every module first. Drafting specifications and local isolated tests may continue while production policy choices remain open. Rubric labels describe intended contribution, not achieved results. All seven tenets are assessed through each named profile; profile reasons apply to the stated behavior, with row-specific conflict rationale recorded below. No numerical total or weight is used.
 
@@ -1313,17 +1315,17 @@ A separately configured, versioned generation adapter may draft interpretations 
 
 ### PROP-UX-001 — Whole-journey usability
 
-For a representative pilot, record client completion and comprehension and owner preparation, review and recovery effort separately, using the same defined journey and recording assistance and failures.
+For a representative pilot, the initial report view lets an uncoached client identify the principal finding, material limitation and justified next action or no-action. The authorized owner can find exceptions, inspect linked evidence and record a release-or-return decision for the exact draft version under the selected release policy. Record client comprehension, completion, time, assistance, errors and recovery separately from owner preparation, review, decision and recovery effort.
 
-**Disposition:** proposed addition. Operationalizes an accepted tenet; this exact requirement is a new proposal, not approved product scope.
+**Disposition:** proposed addition. Operationalizes the premier owner/client UX tenet; the owner approved this P1 report-usability scope on 8 October 2026. Representative testing, one-time release policy and visual acceptance remain open.
 
-**Authority:** TENETS, METRICS and METHOD; proposed requirement formulation. **Status:** Proposal; not implementation authorization.
+**Authority:** TENETS, METRICS and METHOD; scoped owner decision OWN-2026-10-08-P0-P1. **Status:** Owner-approved P1 report UX requirement amendment; human/product acceptance NOT RUN.
 
 **Rubric:** [experience](rubric-profiles.md#experience). **Owner friction:** Measure owner effort, errors and assistance separately. **Client friction:** Measure client effort, comprehension and accessibility separately.
 
-**Depends on:** MLX3-RES-001, MLX3-ADM-011. **Unresolved decisions:** D01.
+**Depends on:** MLX3-RES-001, MLX3-ADM-011. **Unresolved decisions:** D01, D02.
 
-**Acceptance cases:** [T34](acceptance-tests.md#t34). Product execution: **NOT RUN**.
+**Acceptance cases:** [T24](acceptance-tests.md#t24), [T30](acceptance-tests.md#t30), [T34](acceptance-tests.md#t34). Product execution: **NOT RUN**.
 
 
 ### PROP-VAL-001 — Buyer and renewal validation
@@ -1433,17 +1435,17 @@ Each proposed improvement identifies the affected platform, observed problem and
 
 ### PROP-DATA-001 — Collection rights and evidence portability
 
-Before accepting a collection route, verify the exact service and permitted collection, commercial reporting, retention, export, sensitive-data and cost boundaries; an unmet mandatory right or evidence field blocks acceptance or requires an explicitly narrowed offer.
+Before accepting a collection route for each offered measurement surface, verify the exact service, qualified collection method, and permitted collection, commercial reporting, retention, export, sensitive-data and cost boundaries. The release record identifies the method and conditions. A surface missing a mandatory right or evidence field is unavailable or explicitly excluded with a reason; its absence is never sold or displayed as observed zero visibility.
 
-**Disposition:** proposed addition. Existing provisional ID preserved and clarified against the seven-tenet rubric; not a new scope approval.
+**Disposition:** proposed addition. Existing provisional ID retained; the owner approved this P0 evidence-qualification scope and clarification on 8 October 2026. Exact collection rights, route and policy remain to be qualified under D03/D04.
 
-**Authority:** Live Sheet Proposed additions; supplemented by TENETS, METRICS and METHOD. **Status:** Proposal; not implementation authorization.
+**Authority:** Live Sheet Proposed additions; TENETS, METRICS and METHOD; scoped owner decision OWN-2026-10-08-P0-P1. **Status:** Owner-approved P0 requirement amendment; real-route qualification BLOCKED and T12/T37 product cases NOT RUN.
 
 **Rubric:** [evidence](rubric-profiles.md#evidence). **Owner friction:** Resolve a finding to its source without manual file hunting. **Client friction:** Offer optional proof without overwhelming the main finding.
 
-**Depends on:** MLX3-MEA-006, MLX3-EVD-006. **Unresolved decisions:** D03, D04.
+**Depends on:** MLX3-MEA-006, MLX3-EVD-006, MLX3-MEA-012. **Unresolved decisions:** D03, D04.
 
-**Acceptance cases:** [T37](acceptance-tests.md#t37). Product execution: **NOT RUN**.
+**Acceptance cases:** [T12](acceptance-tests.md#t12), [T37](acceptance-tests.md#t37). Product execution: **NOT RUN**.
 
 
 ### PROP-BIZ-001 — Paid lifecycle matched to the offer
