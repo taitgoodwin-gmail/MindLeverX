@@ -2,7 +2,7 @@
 
 Prepared 18 September 2026 Eastern. This is the short reading path for the owner. The [revised register](revised-requirements.md) contains the full wording and [source crosswalk](source-crosswalk.md) accounts for every original ID.
 
-**8 October product priority proposal:** [Market evidence to prioritized requirements](market-priority-slice-2026-10-08.md) ranks the next buyer-facing outcomes, includes fixed acceptance cases and UI/UX implications, and preserves the unresolved 97-versus-105-row source mismatch. It is proposed, not a replacement or approval of this register.
+**8 October product priority proposal:** [Market evidence to prioritized requirements](market-priority-slice-2026-10-08.md) ranks the next buyer-facing outcomes and includes fixed acceptance cases and UI/UX implications. It sits within the reconciled 105-row review: all earlier 97 rows are unchanged and the eight October 2 engineering additions remain proposals. It is proposed, not approval of this register.
 
 ## Recommendation
 
@@ -23,7 +23,7 @@ The simpler credible alternative is to apply this format only to the next measur
 
 ## Decisions and prerequisites
 
-These are a dependency map, not a request to answer ten questions tonight. D10 is remaining source/scoping reconciliation work; the live-Sheet readback is now complete. D03 begins with evidence qualification rather than a new provider-selection question. Only a genuinely missing owner choice should come back to the owner when the affected slice needs it.
+These are a dependency map, not a request to answer ten questions tonight. D10 is remaining scope and independent-review work; the 105-row structured source is reconciled locally and the live-Sheet readback is complete. D03 begins with evidence qualification rather than a new provider-selection question. Only a genuinely missing owner choice should come back to the owner when the affected slice needs it.
 
 | ID | Unresolved item | What is already settled | Smallest next resolution / affected work |
 |---|---|---|---|
